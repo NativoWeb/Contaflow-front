@@ -72,8 +72,8 @@ export default {
       isMenuOpen: false,
       menuItems: [
         { name: "Dashboard", link: "#", image: require("@/assets/circulo.svg") },
-        { name: "Gestión de roles y usuarios", link: "#", image: require("@/assets/usuario.svg") },
-        { name: "Configuración", link: "#", image: require("@/assets/configuracion.svg") },
+        { name: "Gestión de roles y usuarios", link: "@/components/ManageUser.vue", image: require("@/assets/usuario.svg") },
+        { name: "Configuración", link: "Q/Admi/EmpresaRegistro.vue", image: require("@/assets/configuracion.svg") },
         { name: "Bancos y ERPs", link: "#", image: require("@/assets/banco.svg") },
         { name: "Conciliaciones", link: "#", image: require("@/assets/conciliacion.svg") },
         { name: "Reportes financieros y auditoría", link: "#", image: require("@/assets/informe.svg") },
