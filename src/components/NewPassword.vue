@@ -15,17 +15,14 @@
 
 <script setup>
 import Cookies from 'js-cookie';
-import { onMounted, reactive } from 'vue';
-import checkTempPassword from '@/hooks/tempPassword';
+import { reactive } from 'vue';
+// import checkTempPassword from '@/hooks/tempPassword';
 
 const password = reactive({
     old_password: "",
     new_password: ""
 })
 
-onMounted(() => {
-    checkTempPassword();
-})
 
 function changePassword(){
     let token = Cookies.get('jwt');

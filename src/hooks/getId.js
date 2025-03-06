@@ -1,5 +1,5 @@
 // Decodificar el JWT
-export default function parseJWT(token){
+export default function getIdByToken(token){
     try {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -7,9 +7,11 @@ export default function parseJWT(token){
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
         
-        return JSON.parse(jsonPayload)
+        // Parsear el json para tomar el id del usuario
+        let json = JSON.parse(jsonPayload)
+        return json.user_id;
     }
     catch (e) {
-        return false
+        return null
     }
 }

@@ -198,10 +198,10 @@ function login() {
             else {
                 router.push('/usuario');
             }
-            console.log(json)
         }
     })
     .catch(err => {
+        router.push('/')
         console.error(err)
     })
 }
