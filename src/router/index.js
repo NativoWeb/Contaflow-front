@@ -1,18 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
 import RegisterComponent from '../components/RegisterComponent.vue';
-import EmpresaRegistro from '../components/Admi/EmpresaRegistro.vue';
-// import Cookies from 'js-cookie';
+import EmpresaRegistro from '@/components/Admi/EmpresaRegistro.vue';// import Cookies from 'js-cookie';
 import ManageUsers from "@/components/ManageUsers.vue";
 
 import EditarUsuario from "../components/Admi/EditarUsuario.vue";
+import EditarEmpresa from '../components/Admi/EditarEmpresa.vue'
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: "/empresa",
-            name: "EmpresaRegistro",
-            component: EmpresaRegistro,
+            path: '/empresa', 
+            name: 'Empresa',
+            component: EmpresaRegistro
+        },
+        {
+        
         },
         {
             path: "/",
@@ -20,7 +23,8 @@ const router = createRouter({
             component: RegisterComponent,
         },
         {
-            path: "/admin",
+            path: "/usuario",
+            name: "Usuario",
             component: ManageUsers,
             // beforeEnter: (to, from, next) => {
             //     if (!Cookies.get('jwt')) {
@@ -35,6 +39,11 @@ const router = createRouter({
             path: "/editarUser",
             name: "EditarUsuario",
             component: EditarUsuario,
+        },
+        {
+            path: "/editarEmpresa",
+            name: "EditarEmpresa",
+            component: EditarEmpresa,
         },
     ],
 });

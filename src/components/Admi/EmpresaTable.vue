@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col md:flex-row bg-[#F5F5F5] pt-[30px]">
       <!-- Tabla -->
-      <div class="relative overflow-x-auto shadow-md flex-1">
+      <div class="relative overflow-x-auto shadow-md flex-1 bg-[#FFFFFF]">
         <div class="p-6 flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-[#F5F5F5] dark:bg-gray-900">
           <label for="table-search" class="sr-only">Buscar</label>
           <div class="relative">
@@ -13,7 +13,7 @@
             <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar">
           </div>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto ">
           <table class="w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
             <thead class="text-xs uppercase">
               <tr>
@@ -23,7 +23,7 @@
                 <th scope="col" class="px-6 py-3 hidden md:table-cell">Sector económico</th>
               </tr>
             </thead>
-            <tbody class="rounded-full">
+            <tbody>
               <tr>
 
               </tr>

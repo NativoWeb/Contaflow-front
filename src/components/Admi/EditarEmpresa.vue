@@ -2,23 +2,21 @@
     <SidebarMenu/>
   
     <section class="contenido z-10">
-      <div class="relative overflow-x-auto shadow-md">
-        <section class="w-full bg-white shadow-md p-6">
+      <div class="relative overflow-x-auto shadow-md ">
+        <section class="w-full bg-white shadow-md">
           <h2 class="text-left text-[#2A5CAA] font-bold text-2xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
-            Registro de Empresa
+            Editar Empresa
           </h2>
-          <EmpresaForm/>
+          <EditarFormEm/>
         </section>
       </div>
   
-      <EmpresaTable/>
     </section>
   </template>
   
   <script setup>
   import SidebarMenu from '../SidebarMenu.vue';
-  import EmpresaForm from '../Admi/EmpresaForm.vue';
-  import EmpresaTable from '../Admi/EmpresaTable.vue';
+  import EditarFormEm from '../Admi/EditarFormEm.vue'
   </script>
   
   <style scoped>
@@ -35,7 +33,7 @@
   .menu-lateral.open ~ .contenido {
     margin-left: 309px;
     width: calc(100% - 309px);
-
+  
   }
   
   /* Media query para pantallas móviles */

@@ -26,10 +26,11 @@
         </div>
       </li>
       <li v-for="(item, index) in menuItems" :key="index">
-        <a class="button_slide slide_right" :href="item.link">
+        <!-- Usamos router-link para navegación -->
+        <router-link class="button_slide slide_right" :to="item.link">
           <img :src="item.image" :alt="item.name" class="icon-img" />
           <span class="link_name" v-show="isOpen">{{ item.name }}</span>
-        </a>
+        </router-link>
         <span class="tooltip" v-show="!isOpen">{{ item.name }}</span>
       </li>
     </ul>
@@ -49,10 +50,11 @@
         </div>
       </li>
       <li v-for="(item, index) in menuItems" :key="index">
-        <a class="button_slide slide_right" :href="item.link">
+        <!-- Aquí cambiamos <a> por <router-link> -->
+        <router-link class="button_slide slide_right" :to="item.link">
           <img :src="item.image" :alt="item.name" class="icon-img" />
           <span class="link_name">{{ item.name }}</span>
-        </a>
+        </router-link>
       </li>
     </ul>
   </header>
@@ -72,9 +74,9 @@ export default {
       isMenuOpen: false,
       menuItems: [
         { name: "Dashboard", link: "#", image: require("@/assets/circulo.svg") },
-        { name: "Gestión de roles y usuarios", link: "@/components/ManageUser.vue", image: require("@/assets/usuario.svg") },
-        { name: "Configuración", link: "Q/Admi/EmpresaRegistro.vue", image: require("@/assets/configuracion.svg") },
-        { name: "Bancos y ERPs", link: "#", image: require("@/assets/banco.svg") },
+        { name: "Gestión de roles y usuarios", link: "/usuario", image: require("@/assets/usuario.svg") },
+        { name: "Empresas", link: "/empresa", image: require("@/assets/empresass.svg") },
+        { name: "Configuración", link: "/configuracion", image: require("@/assets/configuracion.svg") }, 
         { name: "Conciliaciones", link: "#", image: require("@/assets/conciliacion.svg") },
         { name: "Reportes financieros y auditoría", link: "#", image: require("@/assets/informe.svg") },
         { name: "Cerrar sesión", link: "#", image: require("@/assets/cerrar-sesion.svg") }
@@ -369,6 +371,8 @@ body {
   max-width: auto;
   opacity: 1;
   transition: all 0.4s ease;
+  margin-left: 20px; /* Esto agrega espacio entre el icono y el texto */
+
 }
 
 /* Media query para pantallas móviles */
