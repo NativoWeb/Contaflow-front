@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import ManageUsers from "@/components/ManageUsers.vue";
 
 import EditarUsuario from "../components/Admi/EditarUsuario.vue";
+import NewPassword from "@/components/NewPassword.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -36,6 +37,10 @@ const router = createRouter({
             name: "EditarUsuario",
             component: EditarUsuario,
         },
+        {
+            path: "/password",
+            component: NewPassword
+        }
     ],
 });
 

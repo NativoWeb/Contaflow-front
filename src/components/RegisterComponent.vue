@@ -158,7 +158,6 @@ button[type="submit"]:hover {
 
 <script setup>
 import { reactive } from 'vue';
-import Cookies from 'js-cookie';
 import router from '@/router';
 
 const registerCompany = reactive({
@@ -171,8 +170,9 @@ function login() {
         method: 'POST',
         body: JSON.stringify(registerCompany),
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
+        credentials: 'include'
     })
     .then(res => {
         if (!res.ok) {
@@ -190,9 +190,12 @@ function login() {
             return null
         }
         else{
-            Cookies.set('jwt', json.jwt)
             router.push('/admin')
+            console.log(json)
         }
+    })
+    .catch(err => {
+        console.error(err)
     })
 }
 </script>
