@@ -15,6 +15,8 @@ import CambiarPasswordCon from '@/components/Contador/Cuneta/CambiarPasswordCon.
 import EmpresaConciliacion from '@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue'
 import EmpresasConta from '@/components/Contador/EmpresaContador/EmpresasConta.vue'
 import BancosConciliacion from '@/components/Contador/ConciliacionContador/BancosConciliacion.vue'
+import getIdByToken from "@/hooks/getId";
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -72,11 +74,27 @@ const router = createRouter({
             name: "Usuario",
             component: ManageUsers,
             beforeEnter: (to, from, next) => {
-                if (!Cookies.get('jwt')) {
+                // tomar el token y el id 
+                const token = Cookies.get('jwt');
+                const userId = getIdByToken(token);
+
+                // en caso de que no alla un token en las cookies redirecciona al registro
+                if (!token) {
                     next('/')
                 }
                 else {
-                    next()
+                    fetch(`http://127.0.0.1:8000/api/users/${userId}/`)
+                    .then(res => res.json())
+                    .then(json => {
+                        // si la contraseña es temporal ir directamente al cambio de contraseña
+                        if (json.is_temp_password){
+                            next('/password');
+                        }
+                        // si la contraseña no es temporal ir directamente a user
+                        else {
+                            next();
+                        }
+                    })
                 }
             }
         },
@@ -92,7 +110,19 @@ const router = createRouter({
         },
         {
             path: "/password",
-            component: NewPassword
+            component: NewPassword,
+            // En caso de que no haya un token
+            beforeEnter: (to, from, next) => {
+                const token = Cookies.get('jwt')
+                
+                if (!token) {
+                    next('/')
+                }
+                else {
+                    next()
+                }
+                
+            }
         }
     ],
 });

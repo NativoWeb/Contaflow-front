@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <label for="email">Usuario o Email</label>
                         <div class="input-container">
-                            <input v-model="registerCompany.email" type="text" id="email">
+                            <input v-model="registerCompany.username" type="text" id="email">
                             <img class="icon" src="../assets/user.svg"/>
                         </div>
                     </div>
@@ -159,20 +159,21 @@ button[type="submit"]:hover {
 <script setup>
 import { reactive } from 'vue';
 import router from '@/router';
+import Cookies from 'js-cookie';
 
 const registerCompany = reactive({
-    email: "",
+    username: "",
     password: "",
 })
 
 function login() {
-    fetch('http://127.0.0.1:8000/api/login/', {
+    fetch('http://127.0.0.1:8000/api/token/', {
         method: 'POST',
         body: JSON.stringify(registerCompany),
         headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Cookies.get('jwt')}`
+        }
     })
     .then(res => {
         if (!res.ok) {
@@ -190,11 +191,17 @@ function login() {
             return null
         }
         else{
-            router.push('/admin')
-            console.log(json)
+            Cookies.set('jwt', json.access)
+            if (json.is_temp_password){
+                router.push('/password');
+            }
+            else {
+                router.push('/usuario');
+            }
         }
     })
     .catch(err => {
+        router.push('/')
         console.error(err)
     })
 }

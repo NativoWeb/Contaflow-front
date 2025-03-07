@@ -3,10 +3,10 @@
     <div>
         <form @submit.prevent="changePassword">
             <label for="newPassword">Nueva Contraseña</label>
-            <input v-model="password.password" id="newPassword" type="text">
+            <input v-model="password.old_password" id="newPassword" type="text">
 
             <label for="confirmPassword">Confirmar Contraseña</label>
-            <input v-model="password.repeatPassword" id="confirmPassword" type="text">
+            <input v-model="password.new_password" id="confirmPassword" type="text">
             
             <button type="submit">Enviar</button>
         </form>
@@ -16,25 +16,33 @@
 <script setup>
 import Cookies from 'js-cookie';
 import { reactive } from 'vue';
+// import checkTempPassword from '@/hooks/tempPassword';
 
 const password = reactive({
-    password: "",
-    repeatPassword: ""
+    old_password: "",
+    new_password: ""
 })
 
+
 function changePassword(){
+    let token = Cookies.get('jwt');
+
     fetch('http://127.0.0.1:8000/api/password/', {
         method: 'POST',
-        body: JSON.stringify(changePassword),
+        body: JSON.stringify(password),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${Cookies.get('jwt')}`
-        },
-        credentials: 'include' // Para manejar cookies
+            'Authorization': `Bearer ${token}`
+        }
     })
     .then(res => {
-        res.json()
+        return res.json()
     })
-    .then(json => console.log(json))
+    .then(json => {
+        console.log(json)
+    })
+    .catch(err => {
+        console.error(err)
+    })
 }
 </script>
