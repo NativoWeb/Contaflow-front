@@ -8,21 +8,21 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Nombres:
           </label>
-          <input v-model="form.nombres" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+          <input v-model="form.first_name" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese sus nombres">
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Apellidos:
           </label>
-          <input v-model="form.apellidos" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+          <input v-model="form.last_name" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese sus apellidos">
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Celular:
           </label>
-          <input v-model="form.celular" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+          <input v-model="form.phone_numbre" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese su celular">
         </div>
       </div>
@@ -33,7 +33,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Correo:
           </label>
-          <input v-model="form.correo" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+          <input v-model="form.email" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="email" placeholder="Ingrese su correo">
         </div>
         <div>
@@ -41,7 +41,7 @@
             Rol:
           </label>
           <div class="relative">
-            <select v-model="form.rol" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+            <select v-model="form.role" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
               <option value="Administrador">Administrador</option>
               <option value="Contador">Contador</option>
               <option value="Auditor">Auditor</option>
@@ -87,15 +87,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 // Estado del formulario
-const form = ref({
-  nombres: "",
-  apellidos: "",
-  celular: "",
-  correo: "",
-  rol: "Administrador",
+const form = reactive({
+  first_name: "",
+  last_name: "",
+  phone_numbre: "",
+  email: "",
+  role: "Cliente PYME",
 });
 
 // Estado del modal
@@ -105,6 +105,17 @@ const modalVisible = ref(false);
 const enviarFormulario = () => {
   modalVisible.value = true;
 };
+
+// fetch("", {
+
+// })
+// .then(res => res.json())
+// .then(json => {
+//   console.log(json)
+// })
+// .catch(err => {
+//   console.error(err)
+// })
 </script>
 
 <style scoped>
