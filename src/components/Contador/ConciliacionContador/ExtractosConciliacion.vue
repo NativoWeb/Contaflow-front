@@ -54,7 +54,7 @@
   
   <style scoped>
   .contenido {
-    padding: 20px;
+    padding: 21px;
     transition: margin-left 0.3s ease;
     padding-top: 250px;
     background-color: #F5F5F5;
