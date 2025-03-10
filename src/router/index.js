@@ -16,7 +16,7 @@ import EmpresaConciliacion from '@/components/Contador/ConciliacionContador/Empr
 import EmpresasConta from '@/components/Contador/EmpresaContador/EmpresasConta.vue'
 import BancosConciliacion from '@/components/Contador/ConciliacionContador/BancosConciliacion.vue'
 import getIdByToken from "@/hooks/getId";
-
+import ExtractosConciliacion from '@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,6 +25,11 @@ const router = createRouter({
             path: '/empresa', 
             name: 'Empresa',
             component: EmpresaRegistro
+        },
+        {
+            path: '/ExtractosConciliacion', 
+            name: 'ExtractosConciliacion',
+            component: ExtractosConciliacion
         },
         {
             path: '/BancosConciliacion', 
