@@ -1,56 +1,124 @@
 <template>
-    <MenuContador />
-    <section class="contenido z-10 ">
-        <div class="relative overflow-x-auto shadow-md w-full bg-white " style="height: 100%;">
-            <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
-                Carga de Extractos Bancarios y Contables
-            </h2>   
-             <!-- Contenedor de los archivos alineados -->
-             <div class="flex flex-col items-center space-y-12 p-3" >
-                <!-- Primera fila de archivos -->
-                <div class="flex flex-wrap justify-center gap-20 w-full">
-                    <!-- Primer archivo -->
-                    <div class="flex flex-col items-center ">
-                        <h3 class="text-lg font-semibold text-[#2A5CAA] mb-2">Extracto Bancario</h3>
-                        <label for="extracto-bancario" class="flex flex-col items-center justify-center w-72 h-52 border-2 border-[#2A5CAA] border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <img class="w-12 h-12 mb-3 text-gray-500" src="@/assets/Archivos.svg" alt="Archivos">
-
-                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click para subir</span> o arrastra aquí</p>
-                                <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
-                            </div>
-                            <input id="extracto-bancario" type="file" class="hidden" />
-                        </label>
-                    </div>
-
-                    <!-- Segundo archivo -->
-                    <div class="flex flex-col items-center">
-                        <h3 class="text-lg font-semibold text-[#2A5CAA] mb-2">Extracto Contable</h3>
-                        <label for="extracto-contable" class="flex flex-col items-center justify-center w-72 h-52 border-2 border-[#2A5CAA] border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <img class="w-12 h-12 mb-3 text-gray-500" src="@/assets/Archivos.svg" alt="Archivos">
-                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click para subir</span> o arrastra aquí</p>
-                                <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
-                            </div>
-                            <input id="extracto-contable" type="file" class="hidden" />
-                        </label>
-                    </div>
-                </div>
-
-                 <!-- Botón para enviar -->
-                 <button class="mt-6 px-6 py-3 bg-[#08245B] hover:bg-[#2a4b8d] text-white text-lg font-semibold rounded-full  transition duration-300">
-                    Procesar Conciliación
-                </button>
-
-            </div>
+  <MenuContador />
+  <section class="contenido z-10" >
+    <div class="relative overflow-x-auto shadow-md w-full bg-white h-full">
+      <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
+        Carga de Extractos Bancarios y Contables
+      </h2>
+      
+      <div class="flex flex-wrap justify-center gap-20 p-3">
+        <!-- Extractos Bancarios -->
+        <div 
+          class="drop-zone w-[48%] h-64 md:w-1/3 border-2 border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center text-center p-6 cursor-pointer transition-all hover:border-blue-500 hover:bg-blue-100"
+          :class="{ 'is-active': isDraggingBank }"
+          @dragover.prevent="isDraggingBank = true"
+          @dragleave="isDraggingBank = false"
+          @drop="(event) => dropFile(event, 'bank')"
+          @click="selectFile('bank')"
+        >
+          <img src="@/assets/Archivos.svg" alt="Upload Icon" class="h-10 mb-3">
+          <p>Subir Extracto Bancario</p>
+          <input type="file" ref="fileInputBank" hidden @change="(event) => handleFileChange(event, 'bank')">
+          <progress v-if="uploadProgressBank !== null" :value="uploadProgressBank" max="100" class="w-4/5 h-5 mt-2"></progress>
+          <span v-if="uploadProgressBank !== null" class="text-sm font-bold">{{ fileNameBank }} - {{ uploadProgressBank }}%</span>
         </div>
-    </section>
+
+        <!-- Extractos Contables -->
+        <div 
+          class="drop-zone w-1/2 h-64 md:w-1/3 border-2 border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center text-center p-6 cursor-pointer transition-all hover:border-blue-500 hover:bg-blue-100"
+          :class="{ 'is-active': isDraggingAccounting }"
+          @dragover.prevent="isDraggingAccounting = true"
+          @dragleave="isDraggingAccounting = false"
+          @drop="(event) => dropFile(event, 'accounting')"
+          @click="selectFile('accounting')"
+        >
+          <img src="@/assets/Archivos.svg" alt="Upload Icon" class="h-10 mb-3">
+          <p>Subir Extracto Contable</p>
+          <input type="file" ref="fileInputAccounting" hidden @change="(event) => handleFileChange(event, 'accounting')">
+          <progress v-if="uploadProgressAccounting !== null" :value="uploadProgressAccounting" max="100" class="w-4/5 h-5 mt-2"></progress>
+          <span v-if="uploadProgressAccounting !== null" class="text-sm font-bold">{{ fileNameAccounting }} - {{ uploadProgressAccounting }}%</span>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-6 p-3">
+        <button class="px-6 py-3 bg-[#08245B] hover:bg-[#2a4b8d] text-white text-lg font-semibold rounded-full transition duration-300">
+          Procesar Conciliación
+        </button>
+      </div>
+    </div>
+  </section>
 </template>
 
-  
-  <script setup>
-  import MenuContador from '../MenuContador.vue';
-  </script>
+<script setup>
+import { ref } from "vue";
+import axios from "axios";
+import MenuContador from "../MenuContador.vue";
+
+// Variables reactivas
+const isDraggingBank = ref(false);
+const isDraggingAccounting = ref(false);
+const uploadProgressBank = ref(null);
+const uploadProgressAccounting = ref(null);
+const fileNameBank = ref("");
+const fileNameAccounting = ref("");
+
+// Refs para los inputs de archivo
+const fileInputBank = ref(null);
+const fileInputAccounting = ref(null);
+
+const selectFile = (type) => {
+  if (type === "bank") fileInputBank.value.click();
+  else fileInputAccounting.value.click();
+};
+
+const handleFileChange = (event, type) => {
+  const file = event.target.files[0];
+  if (file) uploadFile(file, type);
+};
+
+const dropFile = (event, type) => {
+  event.preventDefault();
+  if (type === "bank") isDraggingBank.value = false;
+  else isDraggingAccounting.value = false;
+
+  const file = event.dataTransfer.files[0];
+  if (file) uploadFile(file, type);
+};
+
+const uploadFile = async (file, type) => {
+  if (type === "bank") {
+      fileNameBank.value = file.name;
+      uploadProgressBank.value = 0;
+  } else {
+      fileNameAccounting.value = file.name;
+      uploadProgressAccounting.value = 0;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("type", type);
+
+  try {
+      const response = await axios.post("http://127.0.0.1:8000/api/upload/", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+          onUploadProgress: (progressEvent) => {
+              const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+              if (type === "bank") uploadProgressBank.value = progress;
+              else uploadProgressAccounting.value = progress;
+          }
+      });
+
+      console.log("Archivo subido con éxito:", response.data);
+      setTimeout(() => {
+          if (type === "bank") uploadProgressBank.value = null;
+          else uploadProgressAccounting.value = null;
+      }, 3000);
+  } catch (error) {
+      console.error("Error al subir el archivo", error);
+  }
+};
+</script>
+
   
   <style scoped>
   .contenido {
@@ -92,5 +160,9 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
   }
+  .drop-zone.is-active {
+  border-color: #2A5CAA;
+  background-color: #b7e2fc;
+}
   </style>
   
