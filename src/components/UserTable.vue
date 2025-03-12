@@ -13,7 +13,7 @@
           <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar">
         </div>
       </div>
-      <div class="overflow-x-auto">
+      <div>
         <table class="w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
           <thead class="text-xs uppercase">
             <tr>
@@ -30,8 +30,10 @@
               <th scope="col" class="px-6 py-3">Estado</th>
             </tr>
           </thead>
+
           <tbody class="rounded-full">
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+            <tr v-for="user in users" :key="user" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td class="w-4 p-4">
                 <div class="flex items-center">
                   <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -41,15 +43,12 @@
               <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                 <img class="w-10 h-10 rounded-full" src="../assets/img_usuario.svg" alt="Jese image">
                 <div class="ps-3">
-                  <div class="text-base font-semibold">Maria Rivera</div>
-                  <div class="font-normal text-gray-500 md:hidden">Mariarivera@ejemplo.com</div>
-                  <div class="font-normal text-gray-500 md:hidden">555 555 5555</div>
-                  <div class="font-normal text-gray-500 md:hidden">Administrador</div>
+                  <div class="text-base font-semibold">{{ user.first_name }}</div>
                 </div>  
               </th>
-              <td class="px-6 py-4 hidden md:table-cell">Mariarivera@ejemplo.com</td>
-              <td class="px-6 py-4 hidden md:table-cell">555 555 5555</td>
-              <td class="px-6 py-4 hidden md:table-cell">Administrador</td>
+              <td class="px-6 py-4 hidden md:table-cell">{{ user.username }}</td>
+              <td class="px-6 py-4 hidden md:table-cell">{{ user.phone_number }}</td>
+              <td class="px-6 py-4 hidden md:table-cell">{{ user.role }}</td>
               <td class="px-6 py-4">
                 <div class="flex items-center">
                   <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
@@ -85,7 +84,17 @@
 </template>
 
 <script setup>
-// Lógica de la tabla si es necesaria
+  import { ref } from 'vue';
+
+  const users = ref([])
+
+  fetch('http://127.0.0.1:8000/api/users/')
+    .then(res => res.json())
+    .then(json => {
+      users.value = json;
+    })
+    .catch(err => console.log(err))
+
 </script>
 
 <style scoped>

@@ -76,7 +76,7 @@ export default {
         { name: "Dashboard", link: "#", image: require("@/assets/circulo.svg") },
         { name: "Gestión de roles y usuarios", link: "/usuario", image: require("@/assets/usuario.svg") },
         { name: "Empresas", link: "/empresa", image: require("@/assets/empresass.svg") },
-        { name: "Configuración", link: "/configuracion", image: require("@/assets/configuracion.svg") }, 
+        // { name: "Configuración", link: "/configuracion", image: require("@/assets/configuracion.svg") }, 
         { name: "Conciliaciones", link: "#", image: require("@/assets/conciliacion.svg") },
         { name: "Reportes financieros y auditoría", link: "#", image: require("@/assets/informe.svg") },
         { name: "Cerrar sesión", link: "#", image: require("@/assets/cerrar-sesion.svg") }
