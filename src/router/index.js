@@ -18,6 +18,8 @@ import BancosConciliacion from '@/components/Contador/ConciliacionContador/Banco
 import getIdByToken from "@/hooks/getId";
 import ExtractosConciliacion from '@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue'
 import InformeGeneral from '@/components/Contador/Reportes/InformeGeneral.vue'
+import MenuContador from '@/components/Contador/MenuContador.vue'
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -25,6 +27,11 @@ const router = createRouter({
             path: '/empresa', 
             name: 'Empresa',
             component: EmpresaRegistro
+        },
+        {
+            path: '/MenuContador', 
+            name: 'MenuContador',
+            component: MenuContador
         },
         
         {

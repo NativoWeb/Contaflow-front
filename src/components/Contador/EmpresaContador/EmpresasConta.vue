@@ -68,10 +68,12 @@
         </section>
       </div>
     </section>
+    <FooterContaflow />
   </template>
   
   <script setup>
   import MenuContador from '../MenuContador.vue';
+  import FooterContaflow from '@/components/FooterContaflow.vue'
   </script>
   
   <style scoped>
@@ -87,6 +89,7 @@
   .menu-lateral.open ~ .contenido {
     margin-left: 309px;
     width: calc(100% - 309px);
+    height: 90%;
   }
   
   /* Media query para pantallas móviles */

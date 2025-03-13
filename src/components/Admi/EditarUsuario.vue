@@ -12,11 +12,13 @@
     </div>
 
   </section>
+  <FooterContaflow />
 </template>
 
 <script setup>
 import SidebarMenu from '../SidebarMenu.vue';
-import EditarUser from '../Admi/EditarUser.vue'
+import EditarUser from '../Admi/EditarUser.vue';
+import FooterContaflow from '@/components/FooterContaflow.vue'
 </script>
 
 <style scoped>
@@ -33,7 +35,7 @@ import EditarUser from '../Admi/EditarUser.vue'
 .menu-lateral.open ~ .contenido {
   margin-left: 309px;
   width: calc(100% - 309px);
-
+  height: 90%;
 }
 
 /* Media query para pantallas móviles */

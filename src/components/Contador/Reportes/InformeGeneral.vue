@@ -94,7 +94,6 @@
   import * as XLSX from "xlsx";   // Para generar archivos Excel
   import { saveAs } from "file-saver";  // Para descargar archivos en el navegador
   import html2canvas from "html2canvas"; // Para capturar contenido como imagen
-  
   export default {
   components: {
     MenuContador
@@ -196,7 +195,7 @@
       padding-top: 250px;
       background-color: #F5F5F5;
       margin-left: 80px; /* Esto se aplica por defecto en pantallas de escritorio */
-      height: 100vh;
+      height: 90vh;
     }
     
     .menu-lateral.open ~ .contenido {

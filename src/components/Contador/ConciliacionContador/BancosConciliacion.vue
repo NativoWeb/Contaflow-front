@@ -61,10 +61,13 @@
       </section>
     </div>
   </section>
+  <FooterContaflow />
+
 </template>
 
   
   <script setup>
+  import FooterContaflow from '@/components/FooterContaflow.vue'
   import MenuContador from '../MenuContador.vue';
   </script>
   
@@ -81,6 +84,7 @@
   .menu-lateral.open ~ .contenido {
     margin-left: 309px;
     width: calc(100% - 309px);
+    height: 90%;
   }
   
   /* Media query para pantallas móviles */
@@ -88,12 +92,14 @@
     .contenido {
       margin-left: 0; /* Esto se aplica en pantallas móviles */
       padding-top: 110px;
+
     }
   
     .menu-lateral.open ~ .contenido {
       margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
       width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
       padding-top: 110px;
+      height: 100vh;
     }
   }
   

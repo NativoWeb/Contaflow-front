@@ -13,12 +13,16 @@
   
       <EmpresaTable/>
     </section>
+    <FooterContaflow/>
+
   </template>
+
   
   <script setup>
   import SidebarMenu from '../SidebarMenu.vue';
   import EmpresaForm from '../Admi/EmpresaForm.vue';
   import EmpresaTable from '../Admi/EmpresaTable.vue';
+import FooterContaflow from '../FooterContaflow.vue';
   </script>
   
   <style scoped>
@@ -29,7 +33,6 @@
     padding-top: 250px;
     background-color: #F5F5F5;
     margin-left: 80px; /* Esto se aplica por defecto en pantallas de escritorio */
-    height: 100vh
   }
   
   .menu-lateral.open ~ .contenido {
@@ -49,6 +52,7 @@
       margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
       width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
       padding-top: 110px;
+      height: 100%
     }
   }
   

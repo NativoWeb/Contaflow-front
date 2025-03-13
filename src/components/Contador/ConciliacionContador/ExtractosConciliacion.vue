@@ -1,7 +1,7 @@
 <template>
   <MenuContador />
   <section class="contenido z-10" >
-    <div class="relative overflow-x-auto shadow-md w-full bg-white h-full">
+    <div class="relative overflow-x-auto shadow-md w-full bg-white h-[95%]">
       <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
         Carga de Extractos Bancarios y Contables
       </h2>
@@ -47,12 +47,14 @@
       </div>
     </div>
   </section>
+  <FooterContaflow />
 </template>
 
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
 import MenuContador from "../MenuContador.vue";
+import FooterContaflow from '@/components/FooterContaflow.vue'
 
 // Variables reactivas
 const isDraggingBank = ref(false);
@@ -133,6 +135,7 @@ const uploadFile = async (file, type) => {
   .menu-lateral.open ~ .contenido {
     margin-left: 309px;
     width: calc(100% - 309px);
+    height: 90%;
   }
   
   /* Media query para pantallas móviles */
@@ -147,6 +150,7 @@ const uploadFile = async (file, type) => {
       margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
       width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
       padding-top: 110px;
+      height: 90%
     }
   }
   
