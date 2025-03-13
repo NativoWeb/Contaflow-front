@@ -85,28 +85,32 @@
         </div>
       </div>
     </section>
+    <FooterContaflow/>
   </template>
   
 
   <script>
- import MenuContador from '../MenuContador.vue';
+  import MenuContador from '../MenuContador.vue';
+  import FooterContaflow from '@/components/FooterContaflow.vue';
   import { jsPDF } from "jspdf";  // Para generar archivos PDF
   import * as XLSX from "xlsx";   // Para generar archivos Excel
   import { saveAs } from "file-saver";  // Para descargar archivos en el navegador
   import html2canvas from "html2canvas"; // Para capturar contenido como imagen
+  
   export default {
-  components: {
-    MenuContador
-  },
-  data() {
-    return {
-      dropdownVisible: false,
-      data: [
-        { id: 1, nombre: "Juan Pérez", email: "juan@example.com" },
-        { id: 2, nombre: "María López", email: "maria@example.com" }
-      ]
-    };
-  },
+    components: {
+      MenuContador,
+      FooterContaflow // ✅ Agregado aquí para evitar el error
+    },
+    data() {
+      return {
+        dropdownVisible: false,
+        data: [
+          { id: 1, nombre: "Juan Pérez", email: "juan@example.com" },
+          { id: 2, nombre: "María López", email: "maria@example.com" }
+        ]
+      };
+    },
     methods: {
       toggleDropdown() {
         this.dropdownVisible = !this.dropdownVisible;

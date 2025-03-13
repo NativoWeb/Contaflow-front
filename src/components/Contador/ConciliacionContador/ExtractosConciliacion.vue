@@ -127,7 +127,6 @@ const uploadFile = async (file, type) => {
     padding: 21px;
     transition: margin-left 0.3s ease;
     padding-top: 250px;
-    background-color: #F5F5F5;
     margin-left: 80px; /* Esto se aplica por defecto en pantallas de escritorio */
     height: 100vh;
   }

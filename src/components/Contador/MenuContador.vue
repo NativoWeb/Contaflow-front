@@ -74,13 +74,12 @@
         isOpen: true,
         isMenuOpen: false,
         menuItems: [
-          { name: "Dashboard", link: "#", image: require("@/assets/circulo.svg") },
-          { name: "Conciliaciones", link: "#", image: require("@/assets/conciliacion.svg") },
-          { name: "Reportes", link: "#", image: require("@/assets/informe.svg") },
-          { name: "Empresas", link: "", image: require("@/assets/empresass.svg") },
-          { name: "Cuenta", link: "", image: require("@/assets/usuario.svg") },
-          { name: "Configuración", link: "", image: require("@/assets/configuracion.svg") }, 
-          { name: "Cerrar sesión", link: "#", image: require("@/assets/cerrar-sesion.svg") }
+          { name: "Dashboard", link: "/DashboarContador", image: require("@/assets/circulo.svg") },
+          { name: "Conciliaciones", link: "/conciliaciones", image: require("@/assets/conciliacion.svg") },
+          { name: "Reportes", link: "/reportes", image: require("@/assets/informe.svg") },
+          { name: "Empresas", link: "/empresas", image: require("@/assets/empresass.svg") },
+          { name: "Cuenta", link: "/cuenta", image: require("@/assets/usuario.svg") },
+          { name: "Cerrar sesión", link: "#", image: require("@/assets/cerrar-sesion.svg") } // Podrías manejar logout aquí
         ]
       };
     },

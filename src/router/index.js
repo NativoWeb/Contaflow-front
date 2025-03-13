@@ -17,8 +17,13 @@ import EmpresasConta from '@/components/Contador/EmpresaContador/EmpresasConta.v
 import BancosConciliacion from '@/components/Contador/ConciliacionContador/BancosConciliacion.vue'
 import getIdByToken from "@/hooks/getId";
 import ExtractosConciliacion from '@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue'
-import InformeGeneral from '@/components/Contador/Reportes/InformeGeneral.vue'
-import MenuContador from '@/components/Contador/MenuContador.vue'
+import MenuContador from '@/components/Contador/MenuContador.vue'; // Ajusta la ruta si es necesario
+import DashboarContador from "@/components/Contador/DashboarContador/DashboarContador.vue";
+import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
+import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
+import InformeGeneral from "@/components/Contador/Reportes/InformeGeneral.vue";
+import ListaConciliaciones from '@/components/Contador/ConciliacionContador/ListaConciliaciones.vue';
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -33,16 +38,15 @@ const router = createRouter({
             name: 'MenuContador',
             component: MenuContador
         },
-        
         {
-            path: '/InformeGeneral', 
-            name: 'InformeGeneral',
-            component: InformeGeneral
+            path: '/DashboarContador',
+            name: 'DashboarContador',
+            component: DashboarContador
         },
         {
-            path: '/ExtractosConciliacion', 
-            name: 'ExtractosConciliacion',
-            component: ExtractosConciliacion
+            path: '/conciliaciones', 
+            name: 'EmpresaConciliacion',
+            component: EmpresaConciliacion
         },
         {
             path: '/BancosConciliacion', 
@@ -50,34 +54,54 @@ const router = createRouter({
             component: BancosConciliacion
         },
         {
-            path: '/EmpresasConta', 
+            path: '/ListaConciliaciones',
+            name: 'ListaConciliaciones',
+            component: ListaConciliaciones
+        },
+        {
+            path: '/ExtractosConciliacion', 
+            name: 'ExtractosConciliacion',
+            component: ExtractosConciliacion
+        },
+        {
+            path: '/reportes', 
+            name: 'ReportesContador',
+            component: ReportesContador
+        },
+        {
+            path: '/EmpresaReporte', 
+            name: 'EmpresaReporte',
+            component: EmpresaReporte
+        },
+        {
+            path: '/InformeGeneral',
+            name: 'InformeGeneral',
+            component: InformeGeneral
+        },
+        {
+            path: '/empresas', 
             name: 'EmpresasConta',
             component: EmpresasConta
         },
         {
-            path: '/EmpresaConciliacion', 
-            name: 'EmpresaConciliacion',
-            component: EmpresaConciliacion
+            path: '/cuenta', 
+            name: 'CuentaContador',
+            component: CuentaContador
         },
         {
-            path: '/CambiarPasswordCon', 
-            name: 'CambiarPasswordCon',
-            component: CambiarPasswordCon
-        },
-        {
-            path: '/EditarPerfilCon', 
+            path: '/editar-perfil', 
             name: 'EditarPerfilCon',
             component: EditarPerfilCon
+        },
+        {
+            path: '/cambiar-contrasena', 
+            name: 'CambiarPasswordCon',
+            component: CambiarPasswordCon
         },
         {
             path: '/ManageUsers', 
             name: 'ManageUsers',
             component: ManageUsers
-        },
-        {
-            path: '/contador', 
-            name: 'CuentaContador',
-            component: CuentaContador
         },
         {
         
