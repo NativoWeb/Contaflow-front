@@ -95,7 +95,7 @@ label {
 
 .container {
     width: 80%;
-    max-width: 1000px;
+    max-width: 700px;
     min-width: 815px;
     height: 70vh;
     max-height: 850px;
