@@ -99,7 +99,7 @@
     transition: margin-left 0.3s ease;
     padding-top: 250px;
     background-color: #F5F5F5;
-    margin-left: 80px; /* Esto se aplica por defecto en pantallas de escritorio */
+    margin-left: 80px;
     height: 100vh;
   }
   

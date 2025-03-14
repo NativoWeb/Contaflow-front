@@ -66,8 +66,6 @@
     </section>
   </template>
   
-  
-  
   <script setup>
   import MenuContador from '../MenuContador.vue';
   </script>

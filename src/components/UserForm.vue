@@ -85,11 +85,14 @@ function addUser(){
     if (!res.ok) {
       if (res.status === 401) {
         alert("Acceso denegado")
-        
       }
+      if (res.status === 400 ){
+        alert("Los datos no pueden estar vacios")
+      }
+      throw new Error(`Hubo un error de estado ${res.status}`)
     }
     else {
-            return res.json()
+      return res.json()
     }
   })
   .then(() => {
@@ -98,7 +101,6 @@ function addUser(){
   })
   .catch(err => {
     console.error(err)
-    alert("Errores en el formulario")
   })
 }
 </script>

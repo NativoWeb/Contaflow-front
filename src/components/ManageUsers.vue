@@ -20,4 +20,3 @@ import SidebarMenu from './SidebarMenu.vue';
 import UserForm from './UserForm.vue';
 import UserTable from './UserTable.vue';
 </script>
-
