@@ -24,7 +24,6 @@ import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
 import InformeGeneral from "@/components/Contador/Reportes/InformeGeneral.vue";
 import ListaConciliaciones from '@/components/Contador/ConciliacionContador/ListaConciliaciones.vue';
 
-
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -33,6 +32,7 @@ const router = createRouter({
             name: 'Empresa',
             component: EmpresaRegistro
         },
+        
         {
             path: '/MenuContador', 
             name: 'MenuContador',
