@@ -47,14 +47,12 @@
       </div>
     </div>
   </section>
-  <FooterContaflow />
 </template>
 
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
 import MenuContador from "../MenuContador.vue";
-import FooterContaflow from '@/components/FooterContaflow.vue'
 
 // Variables reactivas
 const isDraggingBank = ref(false);

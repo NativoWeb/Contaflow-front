@@ -12,13 +12,11 @@
     </div>
 
   </section>
-  <FooterContaflow />
 </template>
 
 <script setup>
 import SidebarMenu from '../SidebarMenu.vue';
 import EditarUser from '../Admi/EditarUser.vue';
-import FooterContaflow from '@/components/FooterContaflow.vue'
 </script>
 
 <style scoped>

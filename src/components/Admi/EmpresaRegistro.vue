@@ -13,7 +13,6 @@
   
       <EmpresaTable/>
     </section>
-    <FooterContaflow/>
 
   </template>
 
@@ -22,7 +21,6 @@
   import SidebarMenu from '../SidebarMenu.vue';
   import EmpresaForm from '../Admi/EmpresaForm.vue';
   import EmpresaTable from '../Admi/EmpresaTable.vue';
-import FooterContaflow from '../FooterContaflow.vue';
   </script>
   
   <style scoped>

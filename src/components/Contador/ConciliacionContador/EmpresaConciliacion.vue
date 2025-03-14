@@ -53,12 +53,10 @@
       </section>
     </div>
   </section>
-  <FooterContaflow />
 </template>
 
   
   <script setup>
-  import FooterContaflow from '@/components/FooterContaflow.vue'
   import MenuContador from '../MenuContador.vue';
   </script>
   

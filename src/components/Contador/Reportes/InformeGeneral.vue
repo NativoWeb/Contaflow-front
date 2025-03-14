@@ -85,13 +85,11 @@
         </div>
       </div>
     </section>
-    <FooterContaflow/>
   </template>
   
 
   <script>
   import MenuContador from '../MenuContador.vue';
-  import FooterContaflow from '@/components/FooterContaflow.vue';
   import { jsPDF } from "jspdf";  // Para generar archivos PDF
   import * as XLSX from "xlsx";   // Para generar archivos Excel
   import { saveAs } from "file-saver";  // Para descargar archivos en el navegador
@@ -99,8 +97,7 @@
   
   export default {
     components: {
-      MenuContador,
-      FooterContaflow // ✅ Agregado aquí para evitar el error
+      MenuContador
     },
     data() {
       return {

@@ -28,7 +28,6 @@
         </div>
         
     </div>
-    <FooterContaflow />
 </template>
 
 <style>
@@ -161,7 +160,6 @@ button[type="submit"]:hover {
 import { reactive } from 'vue';
 import router from '@/router';
 import Cookies from 'js-cookie';
-import FooterContaflow from '@/components/FooterContaflow.vue'
 
 const registerCompany = reactive({
     username: "",

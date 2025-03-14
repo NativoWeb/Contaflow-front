@@ -13,14 +13,12 @@
 
     <UserTable/>
   </section>
-  <FooterContaflow />
 </template>
 
 <script setup>
 import SidebarMenu from './SidebarMenu.vue';
 import UserForm from './UserForm.vue';
 import UserTable from './UserTable.vue';
-import FooterContaflow from '@/components/FooterContaflow.vue'
 </script>
 
 <style scoped>

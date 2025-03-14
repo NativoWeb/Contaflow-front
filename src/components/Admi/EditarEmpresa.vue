@@ -18,7 +18,6 @@
   <script setup>
   import SidebarMenu from '../SidebarMenu.vue';
   import EditarFormEm from '../Admi/EditarFormEm.vue';
-  import FooterContaflow from '@/components/FooterContaflow.vue'
   </script>
   
   <style scoped>
