@@ -23,10 +23,17 @@ import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vu
 import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
 import InformeGeneral from "@/components/Contador/Reportes/InformeGeneral.vue";
 import ListaConciliaciones from '@/components/Contador/ConciliacionContador/ListaConciliaciones.vue';
+import DashboardComponent from "@/components/pages/DashboardComponent.vue";
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        {
+            path: '/',
+            name: 'Dashboard',
+            component: DashboardComponent
+        },
+        
         {
             path: '/empresa', 
             name: 'Empresa',
