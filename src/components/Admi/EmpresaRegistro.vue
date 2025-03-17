@@ -1,6 +1,4 @@
 <template>
-    <SidebarMenu/>
-  
     <section class="contenido z-10">
       <div class="relative overflow-x-auto shadow-md">
         <section class="w-full bg-white shadow-md p-6">
@@ -18,7 +16,6 @@
 
   
   <script setup>
-  import SidebarMenu from '../SidebarMenu.vue';
   import EmpresaForm from '../Admi/EmpresaForm.vue';
   import EmpresaTable from '../Admi/EmpresaTable.vue';
   </script>

@@ -1,5 +1,4 @@
 <template>
-  <SidebarMenu/>
 
   <section class="contenido z-10">
     <div class="relative overflow-x-auto shadow-md ">
@@ -10,14 +9,11 @@
         <UserForm/>
       </section>
     </div>
-
     <UserTable/>
   </section>
 </template>
 
 <script setup>
-import SidebarMenu from './SidebarMenu.vue';
 import UserForm from './UserForm.vue';
 import UserTable from './UserTable.vue';
 </script>
-

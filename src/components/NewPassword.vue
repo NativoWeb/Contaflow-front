@@ -1,5 +1,4 @@
 <template>
-	<SidebarMenu />
 	<div class="contenido">
 		<div class="w-[80%] m-auto bg-white shadow-md p-6">
 			<h2
@@ -67,7 +66,6 @@
 <script setup>
 import Cookies from 'js-cookie';
 import { reactive, ref } from 'vue';
-import SidebarMenu from './SidebarMenu.vue';
 
 const password = reactive({
 	new_password: ""
