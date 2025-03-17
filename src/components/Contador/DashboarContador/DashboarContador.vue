@@ -24,17 +24,17 @@
     <div class="p-8 bg-[white] min-h-screen flex flex-col items-center w-full">
       <!-- Tarjetas de Estadísticas -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-20 w-full font-bold">
-        <div class="bg-[#4CAF50] p-6 rounded-lg shadow-md text-center w-full flex flex-col justify-center items-center h-40">
+        <div class="bg-[#64CCC5] p-6 rounded-lg shadow-md text-center w-full flex flex-col justify-center items-center h-40">
           <h3 class="text-white text-lg">Conciliaciones Exitosas</h3>
           <p class="text-3xl text-white">{{ selectedData.successful }}</p>
         </div>
 
-        <div class="bg-[#2A5CAA] p-6 rounded-lg shadow-md text-center w-full flex flex-col justify-center items-center h-40">
+        <div class="bg-[#5F9DF7] p-6 rounded-lg shadow-md text-center w-full flex flex-col justify-center items-center h-40">
           <h3 class="text-white text-lg">Conciliaciones Pendientes</h3>
           <p class="text-3xl text-white">{{ selectedData.pending }}</p>
         </div>
 
-        <div class="bg-[#E53935] p-6 rounded-lg shadow-md text-center w-full flex flex-col justify-center items-center h-40">
+        <div class="bg-[#FF6969] p-6 rounded-lg shadow-md text-center w-full flex flex-col justify-center items-center h-40">
           <h3 class="text-white text-lg">Discrepancias</h3>
           <p class="text-3xl text-white">{{ selectedData.discrepancies }}</p>
         </div>
@@ -115,17 +115,17 @@ chartInstance.value = new Chart(ctx, {
       {
         label: 'Conciliaciones Exitosas',
         data: monthlyData.map(row => row.successful),
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#64CCC5',
       },
       {
         label: 'Conciliaciones Pendientes',
         data: monthlyData.map(row => row.pending),
-        backgroundColor: '#2A5CAA',
+        backgroundColor: '#5F9DF7',
       },
       {
         label: 'Discrepancias',
         data: monthlyData.map(row => row.discrepancies),
-        backgroundColor: '#E53935',
+        backgroundColor: '#FF6969',
       }
     ]
   },
