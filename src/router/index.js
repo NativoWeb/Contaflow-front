@@ -69,6 +69,12 @@ const router = createRouter({
                     name: 'Empresa',
                     component: EmpresaRegistro
                 },
+                {
+                    path: '/BancosERPs',
+                    name : 'BancosERPs',
+                    component: BancosERPs
+                }
+
             ]
         },
     
@@ -169,11 +175,7 @@ const router = createRouter({
                 
             }
         },
-        {
-            path: '/BancosERPs',
-            name : 'BancosERPs',
-            component: BancosERPs
-        }
+        
     ],
 });
 
