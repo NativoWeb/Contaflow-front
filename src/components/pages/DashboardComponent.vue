@@ -1,22 +1,21 @@
 <template>
-  <div class="w-creen h-screen flex">
-    <div class="z-20 relative top-20 bg-white w-[300px] h-full">
-      <nav :class="{ 'open': isOpen }" class="fixed bg-white h-full">  
-        <div>
-          <button class="close" @click="toggleSidebar">X</button>
-        </div>
-        <ul>
-          <li>
-            <div class="flex flex-col gap-2 items-center" id="profile">
-              <div id="photo">
-                <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil" />
+  <div class="navbar w-creen h-screen flex">
+      <nav :class="{ 'open': isOpen }"> 
+          <div>
+            <button class="close" @click="toggleSidebar">X</button>
+          </div>
+          <ul>
+            <li>
+              <div id="profile">
+                <div id="photo">
+                  <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
+                </div>
+                <span>Maria Rivera</span>
+                <span>Admin</span>
               </div>
-              <span>Maria Rivera</span>
-              <span>Admin</span>
-            </div>
-          </li>
-          <div class="items-container flex gap-4 flex-col items-start mt-5">
-            <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
+            </li>
+            <div class="list-container">
+              <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
               <router-link class="flex gap-2 justify-center items-center" :to="item.link">
                 <img :src="item.image" :alt="item.name" class="icon-img" />
                 <span>{{ item.name }}</span>
@@ -25,23 +24,23 @@
           </div>
         </ul>
       </nav>
-    </div>
 
     <div class="fixed w-full">
-      <header class=" bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4">
-        <button @click="toggleSidebar" class="mobile-menu-button">
-          <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
-        </button>
+      <header class="bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4">
 
-        <img class="max-w-[200px] max-h-[200px]" src="../../../public/logo.svg" alt="Logo">
-      </header>
+        <div class="relative left-6">
+          <button @click="toggleSidebar" class="mobile-menu-button">
+            <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
+          </button>
+        </div>
+          
+          <img class="max-w-[200px] max-h-[200px]" src="../../../public/logo.svg" alt="Logo">
+        </header>
     </div>
     
-    <div>
+    <div class="m-auto">
       <main>
-        <router-view>
-          
-        </router-view>
+        <router-view/>
       </main>
     </div>
   </div>
@@ -87,7 +86,15 @@ export default {
 
 <style scoped>
 
-/* nav {
+header{
+  z-index:1000;
+}
+
+#profile{
+  border:none;
+}
+
+nav {
   margin-right:30px;
   width: 19%;
   max-width: 280px;
@@ -105,6 +112,14 @@ export default {
   z-index: 30;
 }
 
+.list-container{
+  display:flex;
+  flex-direction:column;
+  align-items:start;
+  gap:20px;
+  justify-content: center;
+}
+
 .close{
   width:60px;
   height:60px;
@@ -115,15 +130,15 @@ export default {
 }
 
 .items-container{
-    align-content:start;
-  }
+  align-content:start;
+}
 
 .mobile-menu-button {
   display: none;
   top:40px;
   left:20px;
   position: fixed;
-  z-index: 20;
+  z-index: 250;
   scale:2;
   border: none;
   padding: 10px;
@@ -136,8 +151,26 @@ span {
   color: #08245B;
 }
 
-*/
-/* @media (max-width: 768px) {
+a:hover{
+    scale:1.1;
+    transition:all ease-in-out .2s;
+  }
+
+  a:active{
+    scale:1;
+    color:#163a8369 ;
+    transition:all ease-in-out .2s;
+  }
+
+ @media (max-width: 768px) {
+
+  .mobile-menu-button{
+    display:block;
+    width:48px;
+    height:48px;
+  }
+
+
 
   ul{
     width:100%;
@@ -205,17 +238,5 @@ span {
   .mobile-menu-button {
     display: block;
   }
-
-  /*
-header{
-    background-color:#08245B;
-    z-index:20;
-    position:fixed;
-    width:100%;
-  }
-  img{
-    width:50%;
-    max-width:185px;
-    height:100px;
-  } */
+}
 </style>

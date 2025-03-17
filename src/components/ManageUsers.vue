@@ -1,6 +1,6 @@
 <template>
 
-  <section class="contenido z-10">
+  <section class="contenido">
     <div class="relative overflow-x-auto shadow-md ">
       <section class="w-full bg-white shadow-md p-6">
         <h2 class="text-left text-[#2A5CAA] font-bold text-2xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
