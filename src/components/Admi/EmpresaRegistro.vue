@@ -1,5 +1,4 @@
 <template>
-  
     <section class="contenido z-10">
       <div class="relative overflow-x-auto shadow-md">
         <section class="w-full bg-white shadow-md p-6">

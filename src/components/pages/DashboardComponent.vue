@@ -1,44 +1,51 @@
 <template>
-  <header class="flex items-center justify-center px-6 py-4">
-    <img src="../../../public/logo.svg" alt="Logo">
-  </header>
-
-  <button @click="toggleSidebar" class="mobile-menu-button">
-    <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
-  </button>
-  
-  <div>
-    <nav :class="{ 'open': isOpen }">  
-      <div>
-        <button class="close" @click="toggleSidebar">X</button>
-      </div>
-      <ul>
-        <li>
-          <div class="flex flex-col gap-2 items-center" id="profile">
-            <div id="photo">
-              <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil" />
-            </div>
-            <span>Maria Rivera</span>
-            <span>Admin</span>
-          </div>
-        </li>
-        <div class="items-container flex gap-4 flex-col items-start mt-5">
-          <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
-            <router-link class="flex gap-2 justify-center items-center" :to="item.link">
-              <img :src="item.image" :alt="item.name" class="icon-img" />
-              <span>{{ item.name }}</span>
-            </router-link>
-          </li>
+  <div class="w-creen h-screen flex">
+    <div class="z-20 relative top-20 bg-white w-[300px] h-full">
+      <nav :class="{ 'open': isOpen }" class="fixed bg-white h-full">  
+        <div>
+          <button class="close" @click="toggleSidebar">X</button>
         </div>
-      </ul>
-    </nav>
-  </div>
-  <main>
-    <router-view>
+        <ul>
+          <li>
+            <div class="flex flex-col gap-2 items-center" id="profile">
+              <div id="photo">
+                <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil" />
+              </div>
+              <span>Maria Rivera</span>
+              <span>Admin</span>
+            </div>
+          </li>
+          <div class="items-container flex gap-4 flex-col items-start mt-5">
+            <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
+              <router-link class="flex gap-2 justify-center items-center" :to="item.link">
+                <img :src="item.image" :alt="item.name" class="icon-img" />
+                <span>{{ item.name }}</span>
+              </router-link>
+            </li>
+          </div>
+        </ul>
+      </nav>
+    </div>
 
-    </router-view>
-  </main>
-</template>
+    <div class="fixed w-full">
+      <header class=" bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4">
+        <button @click="toggleSidebar" class="mobile-menu-button">
+          <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
+        </button>
+
+        <img class="max-w-[200px] max-h-[200px]" src="../../../public/logo.svg" alt="Logo">
+      </header>
+    </div>
+    
+    <div>
+      <main>
+        <router-view>
+          
+        </router-view>
+      </main>
+    </div>
+  </div>
+  </template>
 
 <script setup>
 import { ref } from 'vue';
@@ -79,9 +86,6 @@ export default {
 </script>
 
 <style scoped>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* nav {
   margin-right:30px;
@@ -132,7 +136,8 @@ span {
   color: #08245B;
 }
 
-@media (max-width: 768px) {
+*/
+/* @media (max-width: 768px) {
 
   ul{
     width:100%;
@@ -200,7 +205,8 @@ span {
   .mobile-menu-button {
     display: block;
   }
-}
+
+  /*
 header{
     background-color:#08245B;
     z-index:20;
