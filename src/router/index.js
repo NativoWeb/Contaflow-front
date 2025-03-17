@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import RegisterComponent from '../components/RegisterComponent.vue';
 
 import EmpresaRegistro from '../components/Admi/EmpresaRegistro.vue';
 import Cookies from 'js-cookie';
@@ -31,14 +30,45 @@ const router = createRouter({
         {
             path: '/',
             name: 'Dashboard',
-            component: DashboardComponent
-        },
+            component: DashboardComponent,
+            children: [
+                {
+                    path: "/usuario",
+                    name: "Usuario",
+                    component: ManageUsers,
+                    beforeEnter: (to, from, next) => {
+                        // tomar el token y el id 
+                        const token = Cookies.get('jwt');
+                        const userId = getIdByToken(token);
         
-        {
-            path: '/empresa', 
-            name: 'Empresa',
-            component: EmpresaRegistro
+                        // en caso de que no alla un token en las cookies redirecciona al registro
+                        if (!token) {
+                            next('/')
+                        }
+                        else {
+                            fetch(`http://127.0.0.1:8000/api/users/${userId}/`)
+                            .then(res => res.json())
+                            .then(json => {
+                                // si la contraseña es temporal ir directamente al cambio de contraseña
+                                if (json.is_temp_password){
+                                    next('/password');
+                                }
+                                // si la contraseña no es temporal ir directamente a user
+                                else {
+                                    next();
+                                }
+                            })
+                        }
+                    }
+                },
+                {
+                    path: '/empresa', 
+                    name: 'Empresa',
+                    component: EmpresaRegistro
+                },
+            ]
         },
+    
         
         {
             path: '/MenuContador', 
@@ -109,43 +139,6 @@ const router = createRouter({
             path: '/ManageUsers', 
             name: 'ManageUsers',
             component: ManageUsers
-        },
-        {
-        
-        },
-        {
-            path: "/",
-            name: "RegisterComponent",
-            component: RegisterComponent,
-        },
-        {
-            path: "/usuario",
-            name: "Usuario",
-            component: ManageUsers,
-            beforeEnter: (to, from, next) => {
-                // tomar el token y el id 
-                const token = Cookies.get('jwt');
-                const userId = getIdByToken(token);
-
-                // en caso de que no alla un token en las cookies redirecciona al registro
-                if (!token) {
-                    next('/')
-                }
-                else {
-                    fetch(`http://127.0.0.1:8000/api/users/${userId}/`)
-                    .then(res => res.json())
-                    .then(json => {
-                        // si la contraseña es temporal ir directamente al cambio de contraseña
-                        if (json.is_temp_password){
-                            next('/password');
-                        }
-                        // si la contraseña no es temporal ir directamente a user
-                        else {
-                            next();
-                        }
-                    })
-                }
-            }
         },
         {
             path: "/editarUser",

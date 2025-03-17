@@ -1,37 +1,42 @@
 <template>
   <header class="flex items-center justify-center px-6 py-4">
-    <img src="../../public/logo.svg" alt="Logo">
+    <img src="../../../public/logo.svg" alt="Logo">
   </header>
 
   <button @click="toggleSidebar" class="mobile-menu-button">
     <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
   </button>
-  <nav :class="{ 'open': isOpen }">  
-    <div>
-      <button class="close" @click="toggleSidebar">X</button>
-    </div>
-    <ul>
-      <li>
-        <div class="flex flex-col gap-2 items-center" id="profile">
-          <div id="photo">
-            <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil" />
-          </div>
-          <span>Maria Rivera</span>
-          <span>Admin</span>
-        </div>
-      </li>
-      <div class="items-container flex gap-4 flex-col items-start mt-5">
-        <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
-          <router-link class="flex gap-2 justify-center items-center" :to="item.link">
-            <img :src="item.image" :alt="item.name" class="icon-img" />
-            <span>{{ item.name }}</span>
-          </router-link>
-        </li>
+  
+  <div>
+    <nav :class="{ 'open': isOpen }">  
+      <div>
+        <button class="close" @click="toggleSidebar">X</button>
       </div>
-    </ul>
-  </nav>
+      <ul>
+        <li>
+          <div class="flex flex-col gap-2 items-center" id="profile">
+            <div id="photo">
+              <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil" />
+            </div>
+            <span>Maria Rivera</span>
+            <span>Admin</span>
+          </div>
+        </li>
+        <div class="items-container flex gap-4 flex-col items-start mt-5">
+          <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
+            <router-link class="flex gap-2 justify-center items-center" :to="item.link">
+              <img :src="item.image" :alt="item.name" class="icon-img" />
+              <span>{{ item.name }}</span>
+            </router-link>
+          </li>
+        </div>
+      </ul>
+    </nav>
+  </div>
   <main>
-    
+    <router-view>
+
+    </router-view>
   </main>
 </template>
 
@@ -78,7 +83,7 @@ export default {
 @tailwind components;
 @tailwind utilities;
 
-nav {
+/* nav {
   margin-right:30px;
   width: 19%;
   max-width: 280px;
@@ -206,5 +211,5 @@ header{
     width:50%;
     max-width:185px;
     height:100px;
-  }
+  } */
 </style>

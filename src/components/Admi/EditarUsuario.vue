@@ -1,5 +1,4 @@
 <template>
-  <SidebarMenu/>
 
   <section class="contenido z-10">
     <div class="relative overflow-x-auto shadow-md ">
@@ -15,7 +14,6 @@
 </template>
 
 <script setup>
-import SidebarMenu from '../SidebarMenu.vue';
 import EditarUser from '../Admi/EditarUser.vue';
 </script>
 
