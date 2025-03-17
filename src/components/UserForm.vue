@@ -40,7 +40,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Rol:
           </label>
-          <div class="relative">
+          <div>
             <select v-model="userForm.role" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
               <option value="ADMIN">Administrador</option>
               <option value="CONTADOR">Contador</option>
@@ -104,16 +104,3 @@ function addUser(){
   })
 }
 </script>
-
-<style scoped>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-}
-</style>

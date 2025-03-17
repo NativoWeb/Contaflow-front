@@ -106,41 +106,5 @@ function changePassword() {
 }
 
 </script>
-
-<style>
-.contenido {
-	padding: 20px;
-	height: 100vh;
-	transition: margin-left 0.3s ease;
-	padding-top: 250px;
-	background-color: #F5F5F5;
-	margin-left: 80px;
-	/* Esto se aplica por defecto en pantallas de escritorio */
-}
-
-.menu-lateral.open~.contenido {
-	margin-left: 309px;
-	width: calc(100% - 309px);
-}
-
-/* Media query para pantallas móviles */
-@media (max-width: 768px) {
-	.contenido {
-		margin-left: 0;
-		/* Esto se aplica en pantallas móviles */
-		padding-top: 110px;
-	}
-
-	.menu-lateral.open~.contenido {
-		margin-left: 0;
-		/* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
-		width: 100%;
-		/* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
-		padding-top: 110px;
-	}
-}
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+<style scoped>
 </style>
