@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- Formulario -->
     <form @submit.prevent="addCompany" class="w-full">
       <!-- Primera fila -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             NIT:
@@ -28,7 +27,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-            Sector Económico:
+            Sector económico:
           </label>
           <div class="relative">
             <select v-model="companyForm.sector" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
@@ -121,15 +120,3 @@ function addCompany(){
 
 </script>
   
-<style scoped>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-}
-</style>
