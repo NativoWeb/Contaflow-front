@@ -62,7 +62,7 @@ const router = createRouter({
                             next('/')
                         }
                         else {
-                            fetch(`http://127.0.0.1:8000/api/users/${userId}/`)
+                            fetch(`http://127.0.0.1:8000/users/${userId}/`)
                             .then(res => res.json())
                             .then(json => {
                                 // si la contraseña es temporal ir directamente al cambio de contraseña

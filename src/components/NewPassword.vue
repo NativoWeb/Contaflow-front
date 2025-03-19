@@ -85,7 +85,7 @@ function toggleShowRepeatPassword() {
 
 function changePassword() {
 	let token = Cookies.get('jwt');
-	fetch('http://127.0.0.1:8000/api/password/', {
+	fetch('http://127.0.0.1:8000/users/password/', {
 		method: 'POST',
 		body: JSON.stringify(password),
 		headers: {
