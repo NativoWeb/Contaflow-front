@@ -1,29 +1,29 @@
-<template>
-  <div class="navbar w-screen h-screen flex flex-col">
-    <nav :class="{ 'open': isOpen }"> 
-      <div>
-        <button class="close" @click="toggleSidebar">X</button>
-      </div>
-      <ul>
-        <li>
-          <div id="profile">
-            <div id="photo">
-              <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
-            </div>
-            <span>Maria Rivera</span>
-            <span>Admin</span>
+<template> 
+  <div class="navbar w-screen h-screen flex">
+      <nav :class="{ 'open': isOpen }"> 
+          <div>
+            <button class="close" @click="toggleSidebar">X</button>
           </div>
-        </li>
-        <div class="list-container">
-          <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
-            <router-link class="flex gap-2 justify-center items-center" :to="item.link">
-              <img :src="item.image" :alt="item.name" class="icon-img" />
-              <span>{{ item.name }}</span>
-            </router-link>
-          </li>
-        </div>
-      </ul>
-    </nav>
+          <ul>
+            <li>
+              <div id="profile">
+                <div id="photo">
+                  <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
+                </div>
+                <span>Maria Rivera</span>
+                <span>Admin</span>
+              </div>
+            </li>
+            <div class="list-container">
+              <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
+              <router-link class="flex gap-2 justify-center items-center" :to="item.link">
+                <img :src="item.image" :alt="item.name" class="icon-img" />
+                <span>{{ item.name }}</span>
+              </router-link>
+            </li>
+          </div>
+        </ul>
+      </nav>
 
     <div class="fixed w-full">
       <header class="bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4" style="z-index: 1000;">
@@ -39,13 +39,6 @@
     <div class="flex-1 p-5 mt-[140px] w-full lg:ml-[275px]">
       <router-view/>
     </div>
-
-    <!-- Footer Moderno y Responsivo -->
-    <footer class="bg-gradient-to-r from-[#08245B] to-[#0A3D91] text-white text-center py-6 mt-auto w-full">
-      <!-- Derechos Reservados -->
-      <div class="text-sm opacity-75 mt-3">&copy; 2024 Todos los derechos reservados - Tramicat.</div>
-    </footer>
-
   </div>
 </template>
 
@@ -58,6 +51,7 @@ const toggleSidebar = () => {
 };
 </script>
 
+  
 <script>
 export default {
   data() {
