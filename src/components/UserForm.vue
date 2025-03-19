@@ -41,7 +41,7 @@
             Rol:
           </label>
           <div>
-            <select v-model="userForm.role" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+            <select  class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
               <option value="ADMIN">Administrador</option>
               <option value="CONTADOR">Contador</option>
               <option value="AUDITOR">Auditor</option>
