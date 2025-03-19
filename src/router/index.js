@@ -8,9 +8,9 @@ import ManageUsers from "@/components/ManageUsers.vue";
 import EditarEmpresa from "@/components/Admi/EditarEmpresa.vue"
 import EditarUsuario from "../components/Admi/EditarUsuario.vue";
 import NewPassword from "@/components/NewPassword.vue";
-import CuentaContador from '@/components/Contador/Cuneta/CuentaContador.vue'
-import EditarPerfilCon from '@/components/Contador/Cuneta/EditarPerfilCon.vue'
-import CambiarPasswordCon from '@/components/Contador/Cuneta/CambiarPasswordCon.vue'
+import CuentaContador from '@/components/Contador/Cuenta/CuentaContador.vue'
+import EditarPerfilCon from '@/components/Contador/Cuenta/EditarPerfilCon.vue'
+import CambiarPasswordCon from '@/components/Contador/Cuenta/CambiarPasswordCon.vue'
 import EmpresaConciliacion from '@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue'
 import EmpresasConta from '@/components/Contador/EmpresaContador/EmpresasConta.vue'
 import BancosConciliacion from '@/components/Contador/ConciliacionContador/BancosConciliacion.vue'
@@ -20,12 +20,25 @@ import MenuContador from '@/components/Contador/MenuContador.vue'; // Ajusta la 
 import DashboarContador from "@/components/Contador/DashboarContador/DashboarContador.vue";
 import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
 import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
-import InformeGeneral from "@/components/Contador/Reportes/InformeGeneral.vue";
 import ListaConciliaciones from '@/components/Contador/ConciliacionContador/ListaConciliaciones.vue';
 import DashboardComponent from "@/components/pages/DashboardComponent.vue";
-
+import ListaCon from "@/components/Admi/Conciliacion/ListaCon.vue";
 
 import BancosERPs from "@/components/Admi/Bancos/BancosERPs.vue";
+import EmpresaCon from "@/components/Admi/Conciliacion/EmpresaCon.vue";
+import ExtractoCon from "@/components/Admi/Conciliacion/ExtractoCon.vue";
+import ResultadoCon from "@/components/Admi/Conciliacion/ResultadoCon.vue.vue";
+import ModificarCon from "@/components/Admi/Conciliacion/ModificarCon.vue";
+
+import ReporteEmpre from "@/components/Admi/ReportesAuditorias/ReporteEmpre.vue";
+import ListaReporte from "@/components/Admi/ReportesAuditorias/ListaReporte.vue";
+import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue";
+
+
+import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
+import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
+import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
+import RegisterComponent from "@/components/RegisterComponent.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -36,8 +49,8 @@ const router = createRouter({
             component: DashboardComponent,
             children: [
                 {
-                    path: "/usuario",
-                    name: "Usuario",
+                    path: "/usuarios",
+                    name: "usuarios",
                     component: ManageUsers,
                     beforeEnter: (to, from, next) => {
                         // tomar el token y el id 
@@ -73,12 +86,76 @@ const router = createRouter({
                     path: '/BancosERPs',
                     name : 'BancosERPs',
                     component: BancosERPs
-                }
+                },
+                {
+                    path: '/conciliacion', 
+                    name: 'EmpresaCon',
+                    component: EmpresaCon
+                },
+                {
+                    path: '/EditarEmpresa', 
+                    name: 'EditarEmpresa',
+                    component: EditarEmpresa,
+                },
+                {
+                    path: '/ListaCon',
+                    name: 'ListaCon',
+                    component: ListaCon
+                },
+                {
+                    path: '/ExtractoCon',
+                    name: 'ExtractoCon',
+                    component: ExtractoCon
+                },
+                {
+                    path: '/ResultadoCon',
+                    name: 'ResultadoCon',
+                    component: ResultadoCon
+                },
+                {
+                    path: '/ModificarCon',
+                    name: 'ModificarCon',
+                    component: ModificarCon
+                },
+                {
+                    path: '/ReporteEmpre',
+                    name: 'ReporteEmpre',
+                    component: ReporteEmpre
+                },
+                {
+                    path: '/ListaReporte',
+                    name: 'ListaReporte',
+                    component: ListaReporte
+                },
+                {
+                    path: '/ReporteAdmin',
+                    name: 'ReporteAdmin',
+                    component: ReporteAdmin
+                },
 
+                {
+                    path: '/PerfilAdmin',
+                    name: 'PerfilAdmin',
+                    component: PerfilAdmin
+                },
+                {
+                    path: '/EditarPerfilAdmin',
+                    name: 'EditarPerfilAdmin',
+                    component: EditarPerfilAdmin
+                },
+                {
+                    path: '/ContraseñaAdmin',
+                    name: 'ContraseñaAdmin',
+                    component: ContraseñaAdmin
+                }
+                
             ]
         },
-    
-        
+        {
+            path: "/login",
+            name: "Login",
+            component: RegisterComponent
+        },
         {
             path: '/MenuContador', 
             name: 'MenuContador',
@@ -120,11 +197,6 @@ const router = createRouter({
             component: EmpresaReporte
         },
         {
-            path: '/InformeGeneral',
-            name: 'InformeGeneral',
-            component: InformeGeneral
-        },
-        {
             path: '/empresas', 
             name: 'EmpresasConta',
             component: EmpresasConta
@@ -154,11 +226,7 @@ const router = createRouter({
             name: "EditarUsuario",
             component: EditarUsuario,
         },
-        {
-            path: '/EditarEmpresa', 
-            name: 'EditarEmpresa',
-            component: EditarEmpresa,
-        },
+        
         {
             path: "/password",
             component: NewPassword,

@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- Formulario -->
-    <form @submit.prevent="addUser" class="w-full">
+    <form @submit.prevent="addUser" class="w-full p-8">
       <!-- Primera fila -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Nombres:

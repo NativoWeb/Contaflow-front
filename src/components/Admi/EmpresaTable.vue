@@ -35,10 +35,10 @@
   
       <!-- Botones en columna -->
       <aside class="flex flex-row md:flex-col space-y-0 md:space-y-4 space-x-4 md:space-x-0 md:ml-4 mt-4 md:mt-0 bg-[#F5F5F5] p-4 md:p-0">
-        <button type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF]/80 focus:ring-4 focus:outline-none focus:ring-[#08245B]/50 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 ">
+        <router-link  to="/EditarEmpresa" type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF]/80 focus:ring-4 focus:outline-none focus:ring-[#08245B]/50 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 ">
           <img src="@/assets/edit.svg" alt="">
           <span class="hidden md:inline">Editar</span>
-        </button>
+        </router-link>
         <button type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF]/80 focus:ring-4 focus:outline-none focus:ring-[#08245B]/50 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 md:mb-4">
           <img src="@/assets/slash.svg" alt="">
           <span class="hidden md:inline">Inactivar</span>

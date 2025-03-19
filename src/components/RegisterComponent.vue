@@ -73,7 +73,7 @@ function login() {
                 router.push('/password');
             }
             else {
-                router.push('/usuario');
+                router.push('/usuarios');
             }
         }
     })
