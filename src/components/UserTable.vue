@@ -93,7 +93,7 @@
 
   const users = ref([])
 
-  fetch('http://127.0.0.1:8000/api/users/')
+  fetch('http://127.0.0.1:8000/users/')
     .then(res => res.json())
     .then(json => {
       users.value = json;

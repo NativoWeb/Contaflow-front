@@ -26,8 +26,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-
+              <tr v-for="company in companies" :key="company" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4 hidden md:table-cell">{{ company.nit }}</td>
+                <td class="px-6 py-4 hidden md:table-cell">{{ company.name }}</td>
+                <td class="px-6 py-4 hidden md:table-cell">{{ company.address }}</td>
+                <td class="px-6 py-4 hidden md:table-cell">{{ company.sector }}</td>
               </tr>
               <!-- Repetir filas según sea necesario -->
             </tbody>
@@ -53,4 +56,17 @@
     </div>
   </section>
   </template>
+  <script setup>
+  import { ref } from 'vue';
+
+  const companies = ref([])
+
+  fetch('http://127.0.0.1:8000/companies/')
+  .then(res => res.json())
+  .then(json => {
+    companies.value = json;
+  })
+  .catch(err => console.error(err))
+
+  </script>
   

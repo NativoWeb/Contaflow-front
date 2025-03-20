@@ -85,7 +85,6 @@
     .contenido {
       margin-left: 0; /* Esto se aplica en pantallas móviles */
       padding-top: 150px;
-      z-index: 1;
     }
   }
   

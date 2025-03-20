@@ -44,7 +44,7 @@ const registerCompany = reactive({
 })
 
 function login() {
-    fetch('http://127.0.0.1:8000/api/token/', {
+    fetch('http://127.0.0.1:8000/users/token/', {
         method: 'POST',
         body: JSON.stringify(registerCompany),
         headers: {
@@ -57,7 +57,10 @@ function login() {
             if (res.status == 403){
                 alert('Acceso denegado')
             }
-            console.log(`Error HTTP:${res.status}`)
+            if (res.status == 401){
+                alert("Contraseña o correo incorrecto")
+            }
+            throw new Error(`Error HTTP:${res.status}`)
         }
         else {
             return res.json()

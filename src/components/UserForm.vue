@@ -73,7 +73,7 @@ const userForm = reactive({
 });
 
 function addUser(){
-  fetch('http://127.0.0.1:8000/api/email/', {
+  fetch('http://127.0.0.1:8000/users/email/', {
     method: 'POST',
     body: JSON.stringify(userForm),
     headers: {
@@ -88,6 +88,9 @@ function addUser(){
       }
       if (res.status === 400 ){
         alert("Los datos no pueden estar vacios")
+      }
+      if (res.status === 403){
+        alert("Tu rol no permite registrar usuarios")
       }
       throw new Error(`Hubo un error de estado ${res.status}`)
     }
