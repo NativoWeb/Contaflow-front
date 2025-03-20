@@ -1,20 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import EmpresaRegistro from '../components/Admi/EmpresaRegistro.vue';
 import Cookies from 'js-cookie';
-import ManageUsers from "@/components/ManageUsers.vue";
+import ManageUsers from "@/components/Admi/Usuarios/ManageUsers.vue";
 
 
-import EditarEmpresa from "@/components/Admi/EditarEmpresa.vue"
-import EditarUsuario from "../components/Admi/EditarUsuario.vue";
 import NewPassword from "@/components/NewPassword.vue";
+import getIdByToken from "@/hooks/getId";
+
 import CuentaContador from '@/components/Contador/Cuenta/CuentaContador.vue'
 import EditarPerfilCon from '@/components/Contador/Cuenta/EditarPerfilCon.vue'
 import CambiarPasswordCon from '@/components/Contador/Cuenta/CambiarPasswordCon.vue'
 import EmpresaConciliacion from '@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue'
 import EmpresasConta from '@/components/Contador/EmpresaContador/EmpresasConta.vue'
 import BancosConciliacion from '@/components/Contador/ConciliacionContador/BancosConciliacion.vue'
-import getIdByToken from "@/hooks/getId";
 import ExtractosConciliacion from '@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue'
 import MenuContador from '@/components/Contador/MenuContador.vue'; // Ajusta la ruta si es necesario
 import DashboarContador from "@/components/Contador/DashboarContador/DashboarContador.vue";
@@ -39,6 +37,14 @@ import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
 import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
 import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
 import RegisterComponent from "@/components/RegisterComponent.vue";
+
+import EditarUsuario from "@/components/Admi/Usuarios/EditarUsuario.vue";
+
+
+//Empresa Admin
+import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
+import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -78,10 +84,22 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/empresa', 
-                    name: 'Empresa',
+                    path: '/EditarUsuario',
+                    name: 'EditarUsuario',
+                    component: EditarUsuario
+                },
+
+                {
+                    path: '/EmpresaRegistro',
+                    name: 'EmpresaRegistro',
                     component: EmpresaRegistro
                 },
+                {
+                    path: '/EditarEmpresa',
+                    name: 'EditarEmpresa',
+                    component: EditarEmpresa
+                },
+            
                 {
                     path: '/BancosERPs',
                     name : 'BancosERPs',
@@ -91,11 +109,6 @@ const router = createRouter({
                     path: '/conciliacion', 
                     name: 'EmpresaCon',
                     component: EmpresaCon
-                },
-                {
-                    path: '/EditarEmpresa', 
-                    name: 'EditarEmpresa',
-                    component: EditarEmpresa,
                 },
                 {
                     path: '/ListaCon',
@@ -220,11 +233,6 @@ const router = createRouter({
             path: '/ManageUsers', 
             name: 'ManageUsers',
             component: ManageUsers
-        },
-        {
-            path: "/editarUser",
-            name: "EditarUsuario",
-            component: EditarUsuario,
         },
         
         {

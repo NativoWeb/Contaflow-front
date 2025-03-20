@@ -1,5 +1,5 @@
 <template>
-  <section class="contenido z-10 w-full p-6 bg-white shadow-lg rounded-lg">
+  <section class="contenido z-10 w-full h-full p-6 bg-white shadow-lg rounded-lg">
     <h2 class="w-full text-xl font-bold bg-gradient-to-r from-gray-100 to-blue-100 text-blue-800 p-4 rounded-t-lg">
       Resultados de la Conciliación
     </h2>

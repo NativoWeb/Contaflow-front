@@ -1,11 +1,15 @@
 <template>
-    <div>
-      <!-- Formulario -->
-      <form id="editForm" class="p-6 w-ful">
+  <section class="w-full bg-white shadow-md">
+    <h2 class="text-left text-[#2A5CAA] font-bold text-2xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
+      Gestión de Usuarios y Roles
+    </h2>
+
+    <!-- Formulario -->
+    <form id="editForm" class="p-6 w-ful">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
                 <!-- Columna de la foto -->
                 <div class="flex flex-col items-center">
-                    <img class="rounded-full w-[160px] h-[160px] mb-2" src="../../assets/empresass.svg" alt="image description">
+                    <img class="rounded-full w-[160px] h-[160px] mb-2" src="@/assets/empresass.svg" alt="image description">
                     <input type="file" id="photo" name="photo" accept="image/*" class="mt-2">
                 </div>
 
@@ -41,7 +45,7 @@
             <!-- Contenedor de los botones alineados a la derecha -->
             <div class="flex justify-end p-3">
                 <div class="flex gap-4">
-                    <button type="button" id="cancelar" class="px-4 py-2 border border-gray-800 rounded-lg bg-white text-gray-800">
+                    <button @click="router.push('/EmpresaRegistro')"  type="button" id="cancelar" class="px-4 py-2 border border-gray-800 rounded-lg bg-white text-gray-800">
                         Cancelar
                     </button>
                     <button type="submit" id="guardar" class="px-4 py-2 bg-[#08245B] text-white rounded-lg">
@@ -50,19 +54,14 @@
                 </div>
             </div>
         </form>
-    </div>
-  </template>
     
-  <style scoped>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  </style>
-  
+  </section>
+
+  </template>
+
+<script setup>
+import { useRouter } from "vue-router"; // Importar useRouter
+
+const router = useRouter(); // Instancia de router
+
+</script>

@@ -1,5 +1,5 @@
 <template>
-    <section class="contenido z-10 p-4 sm:p-6 pt-[100px] sm:pt-[250px] bg-gray-100 ml-2 sm:ml-20 min-h-screen transition-all">
+    <section class="h-full w-full">
       <div class="relative text-right z-10">
         <button @click="toggleDropdown" class="bg-[#08245B] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#2A5CAA] w-40">
           Descargar

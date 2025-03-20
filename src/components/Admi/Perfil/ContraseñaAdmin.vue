@@ -31,11 +31,14 @@
       </div>
 
       <!-- Botón de guardar -->
-      <div class="flex justify-center items-center w-full">
-        <button type="submit" class="w-48 bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
-          Guardar
-        </button>
-      </div>
+      <div class="flex justify-center items-center w-full space-x-6">
+                  <button @click="router.push('/PerfilAdmin')"  type="button" class="w-48 bg-[#F0F0F0] hover:bg-[#DCF2F1] text-[#08245B] font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
+                      Cancelar
+                  </button>
+                  <button type="submit" class="w-48 bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
+                      Guardar
+                  </button>
+              </div>
     </form>
   </div>
       </div>
@@ -48,19 +51,7 @@
   
   <script setup>
 
-  </script>
-  
-  <style scoped>
+import { useRouter } from "vue-router"; // Importar useRouter
 
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  </style>
-  
+const router = useRouter(); // Instancia de router
+  </script>

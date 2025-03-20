@@ -1,7 +1,6 @@
 <template>
-  <section class="contenido z-10 w-full" >
-    <div class="relative overflow-x-auto shadow-md w-full bg-white h-[95%]">
-      <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
+  <section class="w-full bg-white shadow-md  h-full">
+    <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
         Carga de Extractos Bancarios y Contables
       </h2>
       
@@ -44,9 +43,10 @@
           Procesar Conciliación
         </button>
       </div>
-    </div>
+ 
   </section>
 </template>
+
 
 <script setup>
 import { ref } from "vue";

@@ -1,23 +1,23 @@
 <template>
 
-<section class="w-full bg-white shadow-md">
-
-  <div class="flex flex-col md:flex-row bg-[white] pt-[40px]">
-    <!-- Tabla -->
-    <div class=" overflow-x-auto shadow-md flex-1">
-      <div class="p-6 flex flex-col md:flex-row items-center justify-between dark:bg-gray-900 shadow-lg space-y-4 md:space-y-0">
-  <label for="table-search" class="sr-only">Buscar</label>
-  <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
-    <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-    </svg>
-    <input type="text" id="table-search-users" class="block w-full py-2 pr-4 text-sm text-gray-900 bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar...">
+  <section class="w-full bg-white">
+  
+    <div class="p-2 flex flex-col md:flex-row bg-[white] pt-[40px]">
+      <!-- Tabla -->
+      <div class=" overflow-x-auto flex-1">
+        <div class="p-6 flex flex-col md:flex-row items-center justify-between dark:bg-gray-900 shadow-lg space-y-4 md:space-y-0">
+    <label for="table-search" class="sr-only">Buscar</label>
+    <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
+      <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+      <input type="text" id="table-search-users" class="block w-full py-2 pr-4 text-sm text-gray-900 bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar...">
+    </div>
   </div>
-</div>
 
-      <div>
-        <table class="w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
-          <thead class="text-xs uppercase">
+        <div class="overflow-x-auto ">
+          <table class=" w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
+            <thead class="text-xs uppercase">
             <tr>
               <th scope="col" class="p-4">
                 <div class="flex items-center">
@@ -43,7 +43,7 @@
                 </div>
               </td>
               <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                <img class="w-10 h-10 rounded-full" src="../assets/img_usuario.svg" alt="Jese image">
+                <img class="w-10 h-10 rounded-full" src="@/assets/img_usuario.svg" alt="Jese image">
                 <div class="ps-3">
                   <div class="text-base font-semibold">{{ user.first_name }}</div>
                 </div>  
@@ -65,20 +65,20 @@
 
     <!-- Botones en columna -->
     <aside class="flex flex-row md:flex-col space-y-0 md:space-y-4 space-x-4 md:space-x-0  bg-white p-6 mt-14">
-      <button type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center">        
-        <img src="../assets/edit.svg" alt="">
+      <button @click="router.push('/EditarUsuario')" type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center">        
+        <img src="@/assets/edit.svg" alt="">
         <span class="hidden md:inline">Editar</span>
       </button>
       <button type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center">        
-        <img src="../assets/slash.svg" alt="">
+        <img src="@/assets/slash.svg" alt="">
         <span class="hidden md:inline">Inactivar</span>
       </button>
       <button type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center">        
-        <img src="../assets/x.svg" alt="">
+        <img src="@/assets/x.svg" alt="">
         <span class="hidden md:inline">Eliminar</span>
       </button>
       <button type="button" class="shadow-lg text-[#08245B] bg-[#FFFFFF] hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center">
-        <img src="../assets/repeat.svg" alt="">
+        <img src="@/assets/repeat.svg" alt="">
         <span class="hidden md:inline">Reenviar invitación</span>
       </button>
     </aside>
@@ -89,6 +89,11 @@
 </template>
 
 <script setup>
+
+import { useRouter } from "vue-router"; // Importar useRouter
+
+const router = useRouter(); // Instancia de router
+
   import { ref } from 'vue';
 
   const users = ref([])

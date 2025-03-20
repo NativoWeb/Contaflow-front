@@ -18,22 +18,26 @@
           </div>
         </div>
   
-       <!-- División 2 -->
+<!-- División 2 -->
 <div class="w-full bg-white shadow-lg rounded-lg">
   <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-3 rounded-t-lg">
     Mis Bancos
   </h2>
-  <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4  place-items-center">
-    <img  
-      v-for="(banco, index) in bancosAgregados" 
-      :key="index" 
-      :src="banco.imagen" 
-      alt="Banco"
-      class="rounded-full w-30 h-30 cursor-pointer" 
-      @click="mostrarDetalles(banco)"
-    />
+  <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 place-items-center">
+    <div v-for="(banco, index) in bancosAgregados" :key="index" class="flex flex-col items-center">
+      <img  
+        :src="banco.imagen" 
+        alt="Banco"
+        class="rounded-full w-30 h-30 cursor-pointer" 
+        @click="mostrarDetalles(banco)"
+      />
+      <!-- Mostrar Titular y Número de Cuenta -->
+      <p class="text-sm text-[#2A5CAA] font-semibold mt-2">{{ banco.titular }}</p>
+      <p class="text-sm text-gray-600">{{ banco.numeroCuenta }}</p>
+    </div>
   </div>
 </div>
+
       </div>
     </section>
 

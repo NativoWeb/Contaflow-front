@@ -1,20 +1,17 @@
-<template>
-  <div class="navbar w-screen h-screen flex flex-col">
-    <nav :class="{ 'open': isOpen }"> 
-      <div>
-        <button class="close" @click="toggleSidebar">X</button>
-      </div>
-      <ul>
+<template> 
+  <div class="navbar w-screen h-screen flex">
+      <nav :class="{ 'open': isOpen }"> 
+          <div>
+            <button class="close" @click="toggleSidebar">X</button>
+          </div>
+          <ul>
             <li>
-              <div v-if="user" id="profile">
+              <div id="profile">
                 <div id="photo">
                   <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
                 </div>
-                <span>{{ user.first_name }}</span>
-                <span>{{ user.role }}</span>
-              </div>
-              <div v-else>
-                <p>Cargando Usuario...</p>
+                <span>Maria Rivera</span>
+                <span>Admin</span>
               </div>
             </li>
             <div class="list-container">
@@ -29,7 +26,7 @@
       </nav>
 
     <div class="fixed w-full">
-      <header class="bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4" style="z-index: 1000;">
+      <header class="z-10 bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4">
         <div class="relative left-6">
           <button @click="toggleSidebar" class="mobile-menu-button">
             <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
@@ -39,8 +36,8 @@
       </header>
     </div>
     
-    <div class="flex-1 p-5 mt-[140px] w-full lg:ml-[275px]">
-      <router-view/>
+    <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px]">
+        <router-view/>   
     </div>
   </div>
 </template>
@@ -78,7 +75,7 @@ export default {
       menuItems: [
         { name: "Dashboard", link: "/UsuariosAdmin", image: require("@/assets/circulo.svg") },
         { name: "Gestión de roles y usuarios", link: "/usuarios", image: require("@/assets/usuario.svg") },
-        { name: "Empresas", link: "/empresa", image: require("@/assets/empresass.svg") },
+        { name: "Empresas", link: "/EmpresaRegistro", image: require("@/assets/empresass.svg") },
         { name: "Bancos y ERPs", link: "/BancosERPs", image: require("@/assets/BancoErps.svg") },
         { name: "Configuración", link: "/PerfilAdmin", image: require("@/assets/configuracion.svg") }, 
         { name: "Conciliaciones", link: "/conciliacion", image: require("@/assets/conciliacion.svg") },
@@ -96,4 +93,6 @@ export default {
     }
   }
 };
+
+
 </script>

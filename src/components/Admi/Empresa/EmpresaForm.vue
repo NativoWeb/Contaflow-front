@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addCompany" class="w-full">
+    <form @submit.prevent="addCompany" class="w-full p-6">
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>

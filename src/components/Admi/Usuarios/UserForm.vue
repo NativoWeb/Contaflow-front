@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Formulario -->
-    <form @submit.prevent="addUser" class="w-full p-8">
+    <form @submit.prevent="addUser" class="w-full p-6">
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
@@ -58,6 +58,7 @@
     </form>
   </div>
 </template>
+
 
 <script setup>
 import { reactive } from "vue";

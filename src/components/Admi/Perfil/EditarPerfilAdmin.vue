@@ -58,7 +58,7 @@
                 </div>
               </div>
               <div class="flex justify-center items-center w-full space-x-6">
-                  <button type="button" class="w-48 bg-[#F0F0F0] hover:bg-[#DCF2F1] text-[#08245B] font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
+                  <button @click="router.push('/PerfilAdmin')"  type="button" class="w-48 bg-[#F0F0F0] hover:bg-[#DCF2F1] text-[#08245B] font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
                       Cancelar
                   </button>
                   <button type="submit" class="w-48 bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
@@ -75,28 +75,8 @@
   </template>
   
   <script setup>
-  </script>
-  
-  <style scoped>
 
-  
-  /* Media query para pantallas móviles */
-  @media (max-width: 768px) {
-    .contenido {
-      margin-left: 0; /* Esto se aplica en pantallas móviles */
-      padding-top: 150px;
-    }
-  }
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  </style>
-  
+import { useRouter } from "vue-router"; // Importar useRouter
+
+const router = useRouter(); // Instancia de router
+  </script>

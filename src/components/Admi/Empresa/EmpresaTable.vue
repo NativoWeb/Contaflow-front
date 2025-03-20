@@ -1,10 +1,10 @@
 <template>
 
-  <section class="w-full bg-white shadow-md">
+  <section class="w-full bg-white">
   
-    <div class="flex flex-col md:flex-row bg-[white] pt-[40px]">
+    <div class="p-2 flex flex-col md:flex-row bg-[white] pt-[40px]">
       <!-- Tabla -->
-      <div class=" overflow-x-auto shadow-md flex-1">
+      <div class=" overflow-x-auto flex-1">
         <div class="p-6 flex flex-col md:flex-row items-center justify-between dark:bg-gray-900 shadow-lg space-y-4 md:space-y-0">
     <label for="table-search" class="sr-only">Buscar</label>
     <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
@@ -16,7 +16,7 @@
   </div>
 
         <div class="overflow-x-auto ">
-          <table class="w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
+          <table class=" w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
             <thead class="text-xs uppercase">
               <tr>
                 <th scope="col" class="px-6 py-3">NIT</th>
@@ -39,11 +39,11 @@
       </div>
   
        <!-- Botones -->
-       <aside class="flex flex-wrap md:flex-col gap-4 bg-white p-6 mt-10 justify-center">
-        <router-link to="/EditarEmpresa" class="shadow-lg text-[#08245B] bg-white hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 flex items-center justify-center w-full md:w-auto">
+       <aside class="flex flex-wrap md:flex-col gap-4 bg-white p-4 mt-10 justify-center">
+        <button @click="router.push('/EditarEmpresa')"  class="shadow-lg text-[#08245B] bg-white hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 flex items-center justify-center w-full md:w-auto">
           <img src="@/assets/edit.svg" alt="Editar" class="mr-2">
           <span class="hidden md:inline">Editar</span>
-        </router-link>
+        </button>
         <button class="shadow-lg text-[#08245B] bg-white hover:bg-[#E5EAFF] font-medium rounded-full text-sm px-5 py-2.5 flex items-center justify-center w-full md:w-auto">        
           <img src="@/assets/slash.svg" alt="Inactivar" class="mr-2">
           <span class="hidden md:inline">Inactivar</span>
@@ -57,8 +57,14 @@
   </section>
   </template>
   <script setup>
-  import { ref } from 'vue';
 
+  
+import { useRouter } from "vue-router"; // Importar useRouter
+
+
+import { ref } from 'vue';
+
+const router = useRouter(); // Instancia de router
   const companies = ref([])
 
   fetch('http://127.0.0.1:8000/companies/')
