@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addCompany" class="w-full p-6">
+    <form class="w-full p-6" @submit.prevent="addCompany">
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="flex items-end">
-          <button class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
+          <button type="submit" class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
             Añadir Empresa
           </button>
         </div>
@@ -64,7 +64,7 @@
           ¡Empresa agregada con éxito!
         </p>
         <p class="text-gray-800 font-medium mb-4 text-center">
-          La empresa <span class="font-bold">{{ form.razonSocial }}</span> ha sido agregada exitosamente a ContaFlow.
+          La empresa <span class="font-bold">{{ companyForm.name }}</span> ha sido agregada exitosamente a ContaFlow.
         </p>
       </div>
     </div>
@@ -73,7 +73,7 @@
   
 <script setup>
 import Cookies from "js-cookie";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 // Estado del formulario
 const companyForm = reactive({
@@ -82,6 +82,9 @@ const companyForm = reactive({
   address: "",
   sector: ""
 });
+
+// Estado del modal
+const modalVisible = ref(false);
 
 function addCompany(){
   fetch('http://127.0.0.1:8000/companies/register/', {
@@ -95,28 +98,23 @@ function addCompany(){
   .then(res => {
     if (!res.ok) {
       if (res.status === 401) {
-        alert("Acceso denegado")
+        alert("Acceso denegado");
       }
-      if (res.status === 400 ){
-        alert("Los datos no pueden estar vacios")
+      if (res.status === 400){
+        alert("Los datos no pueden estar vacíos");
       }
       if (res.status === 403){
-        alert("Tu rol no permite registrar empresas")
+        alert("Tu rol no permite registrar empresas");
       }
-      throw new Error(`Hubo un error de estado ${res.status}`)
+      throw new Error(`Hubo un error de estado ${res.status}`);
     }
-    else {
-      return res.json()
-    }
+    return res.json();
   })
   .then(() => {
-    alert("Se registro la empresa de manera correcta")
-    location.reload()
+    modalVisible.value = true; // Muestra el modal
   })
   .catch(err => {
-    console.error(err)
-  })
+    console.error(err);
+  });
 }
-
 </script>
-  

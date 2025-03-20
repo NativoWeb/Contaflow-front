@@ -7,18 +7,6 @@ import ManageUsers from "@/components/Admi/Usuarios/ManageUsers.vue";
 import NewPassword from "@/components/NewPassword.vue";
 import getIdByToken from "@/hooks/getId";
 
-import CuentaContador from '@/components/Contador/Cuenta/CuentaContador.vue'
-import EditarPerfilCon from '@/components/Contador/Cuenta/EditarPerfilCon.vue'
-import CambiarPasswordCon from '@/components/Contador/Cuenta/CambiarPasswordCon.vue'
-import EmpresaConciliacion from '@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue'
-import EmpresasConta from '@/components/Contador/EmpresaContador/EmpresasConta.vue'
-import BancosConciliacion from '@/components/Contador/ConciliacionContador/BancosConciliacion.vue'
-import ExtractosConciliacion from '@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue'
-import MenuContador from '@/components/Contador/MenuContador.vue'; // Ajusta la ruta si es necesario
-import DashboarContador from "@/components/Contador/DashboarContador/DashboarContador.vue";
-import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
-import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
-import ListaConciliaciones from '@/components/Contador/ConciliacionContador/ListaConciliaciones.vue';
 import DashboardComponent from "@/components/pages/DashboardComponent.vue";
 import ListaCon from "@/components/Admi/Conciliacion/ListaCon.vue";
 
@@ -45,12 +33,21 @@ import EditarUsuario from "@/components/Admi/Usuarios/EditarUsuario.vue";
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
 
+// Contador
+import MenuContador from "@/components/Contador/MenuContador.vue";
+import EmpresaConciliacion from "@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue";
+
+
+
+
+
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/',
+            path: '/Dashboard',
             name: 'Dashboard',
             component: DashboardComponent,
             children: [
@@ -165,74 +162,9 @@ const router = createRouter({
             ]
         },
         {
-            path: "/login",
+            path: "/",
             name: "Login",
             component: RegisterComponent
-        },
-        {
-            path: '/MenuContador', 
-            name: 'MenuContador',
-            component: MenuContador
-        },
-        {
-            path: '/DashboarContador',
-            name: 'DashboarContador',
-            component: DashboarContador
-        },
-        {
-            path: '/conciliaciones', 
-            name: 'EmpresaConciliacion',
-            component: EmpresaConciliacion
-        },
-        {
-            path: '/BancosConciliacion', 
-            name: 'BancosConciliacion',
-            component: BancosConciliacion
-        },
-        {
-            path: '/ListaConciliaciones',
-            name: 'ListaConciliaciones',
-            component: ListaConciliaciones
-        },
-        {
-            path: '/ExtractosConciliacion', 
-            name: 'ExtractosConciliacion',
-            component: ExtractosConciliacion
-        },
-        {
-            path: '/reportes', 
-            name: 'ReportesContador',
-            component: ReportesContador
-        },
-        {
-            path: '/EmpresaReporte', 
-            name: 'EmpresaReporte',
-            component: EmpresaReporte
-        },
-        {
-            path: '/empresas', 
-            name: 'EmpresasConta',
-            component: EmpresasConta
-        },
-        {
-            path: '/cuenta', 
-            name: 'CuentaContador',
-            component: CuentaContador
-        },
-        {
-            path: '/editar-perfil', 
-            name: 'EditarPerfilCon',
-            component: EditarPerfilCon
-        },
-        {
-            path: '/cambiar-contrasena', 
-            name: 'CambiarPasswordCon',
-            component: CambiarPasswordCon
-        },
-        {
-            path: '/ManageUsers', 
-            name: 'ManageUsers',
-            component: ManageUsers
         },
         
         {
@@ -250,6 +182,20 @@ const router = createRouter({
                 }
                 
             }
+        },
+
+         // 🔹 RUTA DE CONTADOR 
+         {
+            path: '/MenuContador',
+            name: 'MenuContador',
+            component: MenuContador,
+            children: [
+                {
+                    path: '/EmpresaConciliacion',
+                    name: 'EmpresaConciliacion',
+                    component: EmpresaConciliacion
+                }
+            ]
         },
         
     ],

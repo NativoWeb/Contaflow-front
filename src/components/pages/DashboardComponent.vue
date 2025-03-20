@@ -6,12 +6,15 @@
           </div>
           <ul>
             <li>
-              <div id="profile">
+              <div v-if="user" id="profile">
                 <div id="photo">
                   <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
                 </div>
-                <span>Maria Rivera</span>
-                <span>Admin</span>
+                <span>{{ user.first_name }}</span>
+                <span>{{ user.role }}</span>
+              </div>
+              <div v-else>
+                <p>Cargando usuario...</p>
               </div>
             </li>
             <div class="list-container">
@@ -36,10 +39,12 @@
       </header>
     </div>
     
-    <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px]">
+    <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px] h-full">
         <router-view/>   
     </div>
+    
   </div>
+
 </template>
 
 <script setup>
@@ -60,6 +65,7 @@ const user = ref()
 fetch(`http://127.0.0.1:8000/users/${userId}/`)
 .then(res => res.json())
 .then(json => {
+  console.log(json)
   user.value = json
 })
 
