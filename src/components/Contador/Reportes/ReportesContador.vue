@@ -1,104 +1,131 @@
 <template>
-    <MenuContador />
-    <section class="contenido z-10 ">
-      <div class="relative overflow-x-auto shadow-md">
-        <section class="w-full  shadow-md">
-          <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
-            Reporte de Conciliación Bancaria y Contable
-          </h2>
-          <!-- Contenedor para las tarjetas (flexible en filas) -->
-           <div>
-            <div class=" p-3 flex justify-between items-center bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
-                <!-- Título -->
-                 <h2 class="text-[#2A5CAA] font-bold text-2xl">
-                    Seleccióne Empresa
-                </h2>
-                <!-- Formulario de búsqueda -->
-                <form class="flex items-center max-w-sm ">
-                  <label for="simple-search" class="sr-only">Search</label>
-                  <div class="relative w-full">
-                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar" required />
-                  </div>
-                  <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                    <span class="sr-only">Search</span>
-                  </button>
-                </form>
-            </div>
-        </div>
-        
-        <div class="bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-8">        
-          <!-- Tarjeta 1 -->
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex flex-col items-center pb-10">
-              <img class="w-45 h-45 rounded-full p-6" src="@/assets/E2.svg" alt="Bonnie image"/>
-              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Empresa 1</h5>
-              <p class="mb-1 text-xl text-gray-900 dark:text-white">900123456-7</p>
-            </div>
-          </div>
+  <section class="h-full w-full">
+    <div class="relative text-right z-10">
+      <button @click="toggleDropdown" class="bg-[#08245B] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#2A5CAA] w-40">
+        Descargar
+      </button>
+      <ul v-if="dropdownVisible" class="absolute right-0 mt-2 bg-white shadow-md rounded-md w-40 text-left">
+        <li @click="exportToPDF" class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Descargar PDF</li>
+        <li @click="exportToExcel" class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Descargar Excel</li>
+        <li @click="exportToCSV" class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Descargar CSV</li>
+      </ul>
+    </div>
 
-          <!-- Tarjeta 2 -->
-          
+    <div class="informacion relative shadow-md w-full bg-white p-4 md:p-6 mt-6">
+      <h2 class="text-lg sm:text-2xl font-semibold text-[#193368] text-center">
+          Reporte de Conciliación Bancaria y Contable
+      </h2>
+      
+      <div class="grid gap-4 mt-6">
+        <p class="text-[#193368] text-left"><strong>Número de Reporte:</strong> 00123</p>
+        <p class="text-[#193368] text-left"><strong>Cuenta Bancaria:</strong> 1234567890</p>
+        <p class="text-[#193368] text-left"><strong>Fecha de conciliación:</strong> 10/03/2025</p>
+        <p class="text-[#193368] text-left"><strong>Periodo Analizado:</strong> Febrero 2025</p>
+        <p class="text-[#193368] text-left"><strong>Usuario Responsable:</strong> Juan Pérez</p>
+      </div>
 
-          <!-- Tarjeta 3 -->
-          
+      <div class="mt-6">
+        <h3 class="text-lg md:text-xl font-semibold text-[#193368]">Resumen General de la Conciliación</h3>
+      </div>
 
-          <!-- Tarjeta 4 -->
-                   
-        </div>
-
-        <!--Siguiente fila-->
-      </section>
+      <div class="overflow-x-auto">
+        <table ref="tableRef" class="w-full text-sm text-left text-gray-500 border border-gray-200 rounded-lg">
+          <thead class="text-xs text-blue-900 uppercase bg-gradient-to-r from-gray-100 to-blue-100">
+            <tr>
+              <th class="px-6 py-3">Fecha</th>
+              <th class="px-6 py-3">Concepto</th>
+              <th class="px-6 py-3">Monto Banco</th>
+              <th class="px-6 py-3">Monto Contable</th>
+              <th class="px-6 py-3">Tipo de Transacción</th>
+              <th class="px-6 py-3">Estado</th>
+              <th class="px-6 py-3">Justificación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(row, index) in rows" :key="index" class="bg-white border-b hover:bg-gray-50">
+              <td class="px-6 py-4">{{ row.fecha }}</td>
+              <td class="px-6 py-4">{{ row.concepto }}</td>
+              <td class="px-6 py-4">{{ row.montoBanco }}</td>
+              <td class="px-6 py-4">{{ row.montoContable }}</td>
+              <td class="px-6 py-4">{{ row.transaccion }}</td>
+              <td class="px-6 py-4">{{ row.estado }}</td>
+              <td class="px-6 py-4">{{ row.justificacion }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </template>
 
-  
-  <script setup>
-  import MenuContador from '../MenuContador.vue';
-  </script>
-  
-  <style scoped>
-  .contenido {
-    padding: 20px;
-    transition: margin-left 0.3s ease;
-    padding-top: 250px;
-    background-color: #F5F5F5;
-    margin-left: 80px; /* Esto se aplica por defecto en pantallas de escritorio */
-    height: 100vh;
-  }
-  
-  .menu-lateral.open ~ .contenido {
-    margin-left: 309px;
-    width: calc(100% - 309px);
-    height: 90%;
-  }
-  
-  /* Media query para pantallas móviles */
-  @media (max-width: 768px) {
-    .contenido {
-      margin-left: 0; /* Esto se aplica en pantallas móviles */
-      padding-top: 110px;
+<script>
+import { jsPDF } from "jspdf";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import html2canvas from "html2canvas";
+import "jspdf-autotable";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+
+export default {
+setup() {
+  const route = useRoute();
+  const rows = ref([]);
+  const dropdownVisible = ref(false);
+
+  onMounted(() => {
+    if (route.query.data) {
+      rows.value = JSON.parse(route.query.data);
     }
-  
-    .menu-lateral.open ~ .contenido {
-      margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
-      width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
-      padding-top: 110px;
-    }
-  }
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  </style>
-  
+  });
+
+  const toggleDropdown = () => {
+    dropdownVisible.value = !dropdownVisible.value;
+  };
+
+  const exportToPDF = () => {
+    const informacion = document.querySelector(".informacion");
+    html2canvas(informacion, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const doc = new jsPDF("p", "mm", "a4");
+      const imgWidth = 190;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      doc.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      doc.save("reporte.pdf");
+    });
+  };
+
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(rows.value);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+    XLSX.writeFile(wb, "reporte_conciliacion.xlsx");
+  };
+
+  const exportToCSV = () => {
+    let csvContent = "";
+    document.querySelectorAll(".informacion p, h2, h3").forEach((element) => {
+      csvContent += `"${element.innerText.replace(/"/g, '""')}"\n`;
+    });
+    document.querySelectorAll("table tr").forEach((row) => {
+      let rowData = [];
+      row.querySelectorAll("th, td").forEach((cell) => {
+        rowData.push(`"${cell.innerText.replace(/"/g, '""')}"`);
+      });
+      csvContent += rowData.join(",") + "\n";
+    });
+    const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(csvBlob, "reporte_completo.csv");
+  };
+
+  return {
+    rows,
+    dropdownVisible,
+    toggleDropdown,
+    exportToPDF,
+    exportToExcel,
+    exportToCSV
+  };
+}
+};
+</script>

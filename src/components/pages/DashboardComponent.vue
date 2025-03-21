@@ -29,14 +29,28 @@
       </nav>
 
     <div class="fixed w-full">
-      <header class="z-10 bg-[#08245B] h-[130px] flex items-center justify-center px-6 py-4">
-        <div class="relative left-6">
-          <button @click="toggleSidebar" class="mobile-menu-button">
-            <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
-          </button>
-        </div>
-        <img class="max-w-[200px] max-h-[200px]" src="../../../public/logo.svg" alt="Logo">
-      </header>
+      <header class="z-10 bg-[#08245B] h-[130px] flex items-center justify-between px-6 py-4">
+  <!-- Menú lateral -->
+  <div>
+    <button @click="toggleSidebar" class="mobile-menu-button">
+      <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
+    </button>
+  </div>
+
+  <!-- Logo -->
+  <img class="max-w-[200px] max-h-[200px] mx-auto" src="../../../public/logo.svg" alt="Logo">
+
+  <!-- Botón de cerrar sesión -->
+  <button title="Cerrar Sesión"
+  @click="CerrarSesion"
+  class="bg-white flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-[#EEEEEE] transition-all duration-300
+         absolute right-6 top-1/2 transform -translate-y-1/2 md:static md:translate-y-0"
+>
+  <img src="@/assets/cerrar-sesion.svg" alt="Cerrar sesión" class="w-6 h-6" />
+</button>
+
+</header>
+
     </div>
     
     <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px] h-full">
@@ -51,7 +65,9 @@
 import getIdByToken from '@/hooks/getId';
 import Cookies from 'js-cookie';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isOpen = ref(false);
 const toggleSidebar = () => {
   isOpen.value = !isOpen.value;
@@ -67,7 +83,13 @@ fetch(`http://127.0.0.1:8000/users/${userId}/`)
 .then(json => {
   console.log(json)
   user.value = json
-})
+});
+
+// Función para cerrar sesión
+const CerrarSesion = () => {
+  Cookies.remove('jwt'); // Eliminar token
+  router.push('/'); // Redirigir al login
+};
 
 </script>
 
@@ -85,8 +107,7 @@ export default {
         { name: "Bancos y ERPs", link: "/BancosERPs", image: require("@/assets/BancoErps.svg") },
         { name: "Configuración", link: "/PerfilAdmin", image: require("@/assets/configuracion.svg") }, 
         { name: "Conciliaciones", link: "/conciliacion", image: require("@/assets/conciliacion.svg") },
-        { name: "Reportes financieros y auditoría", link: "/ReporteEmpre", image: require("@/assets/informe.svg") },
-        { name: "Cerrar sesión", link: "#", image: require("@/assets/cerrar-sesion.svg") }
+        { name: "Reportes financieros y auditoría", link: "/ReporteEmpre", image: require("@/assets/informe.svg") }
       ]
     };
   },

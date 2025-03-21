@@ -1,8 +1,6 @@
 <template>
-  <MenuContador />
-  <section class="contenido z-10" >
-    <div class="relative overflow-x-auto shadow-md w-full bg-white h-[95%]">
-      <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
+  <section class="w-full bg-white shadow-md  h-full">
+    <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
         Carga de Extractos Bancarios y Contables
       </h2>
       
@@ -41,18 +39,22 @@
       </div>
 
       <div class="flex justify-center mt-6 p-3">
-        <button class="px-6 py-3 bg-[#08245B] hover:bg-[#2a4b8d] text-white text-lg font-semibold rounded-full transition duration-300">
+        <button @click="router.push('/ResultadoConcilliacion')"  class="px-6 py-3 bg-[#08245B] hover:bg-[#2a4b8d] text-white text-lg font-semibold rounded-full transition duration-300">
           Procesar Conciliación
         </button>
       </div>
-    </div>
+ 
   </section>
 </template>
+
 
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-import MenuContador from "../MenuContador.vue";
+
+import { useRouter } from "vue-router"; // Importar useRouter
+
+const router = useRouter(); // Instancia de router
 
 // Variables reactivas
 const isDraggingBank = ref(false);
@@ -118,52 +120,3 @@ const uploadFile = async (file, type) => {
   }
 };
 </script>
-
-  
-  <style scoped>
-  .contenido {
-    padding: 21px;
-    transition: margin-left 0.3s ease;
-    padding-top: 250px;
-    margin-left: 80px; /* Esto se aplica por defecto en pantallas de escritorio */
-    height: 100vh;
-  }
-  
-  .menu-lateral.open ~ .contenido {
-    margin-left: 309px;
-    width: calc(100% - 309px);
-    height: 90%;
-  }
-  
-  /* Media query para pantallas móviles */
-  @media (max-width: 768px) {
-    .contenido {
-      margin-left: 0; /* Esto se aplica en pantallas móviles */
-      padding-top: 110px;
-      height: 100%;
-    }
-  
-    .menu-lateral.open ~ .contenido {
-      margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
-      width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
-      padding-top: 110px;
-      height: 90%
-    }
-  }
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  .drop-zone.is-active {
-  border-color: #2A5CAA;
-  background-color: #b7e2fc;
-}
-  </style>
-  

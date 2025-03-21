@@ -36,11 +36,14 @@ import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
 // Contador
 import MenuContador from "@/components/Contador/MenuContador.vue";
 import EmpresaConciliacion from "@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue";
-
-
-
-
-
+import ListaConciliaciones from "@/components/Contador/ConciliacionContador/ListaConciliaciones.vue";
+import ExtractosConciliacion from "@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue";
+import ResultadoConcilliacion from "@/components/Contador/ConciliacionContador/ResultadoConcilliacion.vue";
+import ModificarConciliacion from "@/components/Contador/ConciliacionContador/ModificarConciliacion.vue";
+import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
+import ListaReporteContador from "@/components/Contador/Reportes/ListaReporteContador.vue";
+import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
+import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasContador.vue";
 
 
 const router = createRouter({
@@ -194,6 +197,46 @@ const router = createRouter({
                     path: '/EmpresaConciliacion',
                     name: 'EmpresaConciliacion',
                     component: EmpresaConciliacion
+                },
+                {
+                    path: '/ListaConciliaciones',
+                    name: 'ListaConciliaciones',
+                    component: ListaConciliaciones
+                },
+                {
+                    path: '/ExtractosConciliacion',
+                    name: 'ExtractosConciliacion',
+                    component: ExtractosConciliacion
+                },
+                {
+                    path: '/ResultadoConcilliacion',
+                    name: 'ResultadoConcilliacion',
+                    component: ResultadoConcilliacion
+                },
+                {
+                    path: '/ModificarConciliacion',
+                    name: 'ModificarConciliacion',
+                    component: ModificarConciliacion
+                },
+                {
+                    path: '/EmpresaReporte',
+                    name: 'EmpresaReporte',
+                    component: EmpresaReporte
+                },
+                {
+                    path: '/ListaReporteContador',
+                    name: 'ListaReporteContador',
+                    component: ListaReporteContador
+                },
+                {
+                    path: '/ReportesContador',
+                    name: 'ReportesContador',
+                    component: ReportesContador
+                },
+                {
+                    path: '/EmpresasContador',
+                    name: 'EmpresasContador',
+                    component: EmpresasContador
                 }
             ]
         },

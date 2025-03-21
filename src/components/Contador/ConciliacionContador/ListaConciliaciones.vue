@@ -1,10 +1,7 @@
 <template>
-    <MenuContador />
-    <section class="contenido z-10 ">
-      <div class="relative overflow-x-auto shadow-md">
-        <section class="w-full  shadow-md">
-          <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
-            Reporte de Conciliación Bancaria y Contable
+  <section class="w-full bg-white shadow-md">
+    <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
+            Conciliación Bancaria y Contable
           </h2>
 
           <div class="p-4 flex flex-col sm:flex-row sm:justify-between items-center w-full pb-4 space-y-4 sm:space-y-0">
@@ -38,6 +35,9 @@
                     Banco
                   </th>
                   <th scope="col" class="px-6 py-3">
+                    Numero de Cuenta
+                  </th>
+                  <th scope="col" class="px-6 py-3">
                     Fecha de Colciliacion
                   </th>
                   <th scope="col" class="px-6 py-3">
@@ -47,7 +47,7 @@
                     Estado
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Acci'on
+                    Acción
                   </th>
                 </tr>
               </thead>
@@ -61,6 +61,9 @@
                     Bancolombia
                   </td>
                   <td class="px-6 py-4">
+                    1234567890
+                  </td>
+                  <td class="px-6 py-4">
                     21/03/25025
                   </td>
                   <td class="px-6 py-4">
@@ -70,7 +73,7 @@
                     Finalizado
                   </td>
                   <td class="px-6 py-4">
-                    <button>
+                    <button @click="router.push('/ResultadoConcilliacion')" >
                         ver
                     </button>
                   </td>
@@ -79,59 +82,15 @@
                 </tr>
               </tbody>
             </table>
-      </section>
-    </div>
   </section>
 </template>
 
+
   
   <script setup>
-  import MenuContador from '../MenuContador.vue';
   import { useRouter } from "vue-router"; // Importar useRouter
 
   const router = useRouter(); // Instancia de router
   
   </script>
-  
-  <style scoped>
-  .contenido {
-    padding: 20px;
-    transition: margin-left 0.3s ease;
-    padding-top: 250px;
-    background-color: #F5F5F5;
-    margin-left: 80px;
-    height: 100vh;
-  }
-  
-  .menu-lateral.open ~ .contenido {
-    margin-left: 309px;
-    width: calc(100% - 309px);
-    height: 90%;
-  }
-  
-  /* Media query para pantallas móviles */
-  @media (max-width: 768px) {
-    .contenido {
-      margin-left: 0; /* Esto se aplica en pantallas móviles */
-      padding-top: 110px;
-    }
-  
-    .menu-lateral.open ~ .contenido {
-      margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
-      width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
-      padding-top: 110px;
-    }
-  }
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  </style>
   
