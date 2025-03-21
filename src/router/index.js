@@ -44,7 +44,7 @@ import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
 import ListaReporteContador from "@/components/Contador/Reportes/ListaReporteContador.vue";
 import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
 import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasContador.vue";
-
+import CuentaContador from "@/components/Contador/Cuenta/CuentaContador.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -237,6 +237,11 @@ const router = createRouter({
                     path: '/EmpresasContador',
                     name: 'EmpresasContador',
                     component: EmpresasContador
+                },
+                {
+                    path: '/CuentaContador',
+                    name: 'CuentaContador',
+                    component: CuentaContador
                 }
             ]
         },

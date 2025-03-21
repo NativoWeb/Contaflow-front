@@ -73,7 +73,7 @@
           { name: "Conciliaciones", link: "/EmpresaConciliacion", image: require("@/assets/conciliacion.svg") },
           { name: "Reportes", link: "/EmpresaReporte", image: require("@/assets/informe.svg") },
           { name: "Empresas", link: "/EmpresasContador", image: require("@/assets/empresass.svg") },
-          { name: "Cuenta", link: "#", image: require("@/assets/usuario.svg") }, 
+          { name: "Cuenta", link: "/CuentaContador", image: require("@/assets/usuario.svg") }, 
         ]
       };
     },

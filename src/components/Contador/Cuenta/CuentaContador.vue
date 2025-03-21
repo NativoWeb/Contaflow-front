@@ -23,7 +23,7 @@
 
         <!-- Botón Editar Perfil (solo en escritorio) -->
         <div class="hidden md:flex items-end">
-          <button @click="router.push('/EditarPerfilAdmin')" class="w-full md:w-[80%] bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
+          <button @click="router.push('/EditarPerfilCon')" class="w-full md:w-[80%] bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
             Editar perfil
           </button>
         </div>
@@ -41,7 +41,7 @@
 
         <!-- Botón Cambiar Contraseña (solo en escritorio) -->
         <div class="hidden md:flex items-end">
-          <button @click="router.push('/ContraseñaAdmin')" class="w-full md:w-[80%] bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
+          <button @click="router.push('/CambiarPasswordCon')" class="w-full md:w-[80%] bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
             Cambiar contraseña
           </button>
         </div>
