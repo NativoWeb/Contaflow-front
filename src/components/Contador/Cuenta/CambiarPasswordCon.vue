@@ -1,5 +1,4 @@
 <template> 
-  <section class="contenido z-10">
     <div class="p-6 flex flex-col gap-6 w-full">
       <!-- División 1 -->
       <div class="w-full bg-white shadow-lg rounded-lg">
@@ -32,7 +31,7 @@
 
       <!-- Botón de guardar -->
       <div class="flex justify-center items-center w-full space-x-6">
-                  <button @click="router.push('/PerfilAdmin')"  type="button" class="w-48 bg-[#F0F0F0] hover:bg-[#DCF2F1] text-[#08245B] font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
+                  <button @click="router.push('/CuentaContador')"  type="button" class="w-48 bg-[#F0F0F0] hover:bg-[#DCF2F1] text-[#08245B] font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
                       Cancelar
                   </button>
                   <button type="submit" class="w-48 bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-gray-500/50 transition-transform duration-300 hover:scale-105 focus:outline-none">
@@ -43,8 +42,6 @@
   </div>
       </div>
     </div>
-  
-    </section>
   </template>
   
   

@@ -1,10 +1,12 @@
 <template>
-  <section class="contenido z-10 w-full h-full p-6 bg-white shadow-lg rounded-lg">
-    <h2 class="w-full text-xl font-bold bg-gradient-to-r from-gray-100 to-blue-100 text-blue-800 p-4 rounded-t-lg">
+  <div class="p-6 flex flex-col w-full h-full">
+    <!-- Título -->
+    <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368] p-4 rounded-lg shadow-md text-center md:text-left">
       Resultados de la Conciliación
     </h2>
-    
-    <div class="flex justify-end gap-4 my-8">
+
+    <!-- Botones -->
+    <div class="flex justify-end gap-4 my-8 flex flex-col md:flex-row">
       <button @click="goToModify" class="bg-blue-900 text-white px-6 py-3 rounded-lg shadow-md border border-gray-300 transition-all hover:bg-white hover:text-blue-900 hover:border-blue-900 w-full sm:w-60">
         Modificar
       </button>
@@ -13,35 +15,38 @@
       </button>
     </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm text-left text-gray-500 border border-gray-200 rounded-lg">
-        <thead class="text-xs text-blue-900 uppercase bg-gradient-to-r from-gray-100 to-blue-100">
+
+   <!-- Tabla -->
+   <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
+      <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+        <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
-            <th class="px-6 py-3">Fecha</th>
-            <th class="px-6 py-3">Concepto</th>
-            <th class="px-6 py-3">Monto Banco</th>
-            <th class="px-6 py-3">Monto Contable</th>
-            <th class="px-6 py-3">Tipo de Transacción</th>
-            <th class="px-6 py-3">Estado</th>  
-            <th class="px-6 py-3">Justificación</th>  
+            <th scope="col" class="px-6 py-3">Fecha</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Concepto</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Monto Banco</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Monto Contable</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Tipo de Transacción</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Justificación</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, index) in rows" :key="index" class="bg-white border-b hover:bg-gray-50">
+          <tr v-for="(row, index) in rows" :key="index" class="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ row.fecha }}</td>
-            <td class="px-6 py-4">{{ row.concepto }}</td>
-            <td class="px-6 py-4">{{ row.montoBanco }}</td>
-            <td class="px-6 py-4">{{ row.montoContable }}</td>
-            <td class="px-6 py-4">{{ row.transaccion }}</td>
-            <td class="px-6 py-4">{{ row.estado }}</td>
-            <td class="px-6 py-4">{{ row.justificacion }}</td>
+            <td class="px-6 py-4  md:table-cell">{{ row.concepto }}</td>
+            <td class="px-6 py-4  md:table-cell">{{ row.montoBanco }}</td>
+            <td class="px-6 py-4  md:table-cell">{{ row.montoContable }}</td>
+            <td class="px-6 py-4  md:table-cell">{{ row.transaccion }}</td>
+            <td class="px-6 py-4  md:table-cell">{{ row.estado }}</td>
+            <td class="px-6 py-4  md:table-cell">{{ row.justificacion }}</td>
+
           </tr>
         </tbody>
       </table>
     </div>
-  </section>
+  </div>
 </template>
-
+  
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";

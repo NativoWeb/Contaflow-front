@@ -1,138 +1,81 @@
 <template>
-  <section class="w-full bg-white shadow-md">
-    <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
-            Conciliación Bancaria y Contable
-          </h2>
+  <div class="p-6 flex flex-col w-full h-full">
+    <!-- Título -->
+    <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368] p-4 rounded-lg shadow-md text-center md:text-left">
+      Conciliación Contable y Bancaria
+    </h2>
 
-          <div class="p-4 flex flex-col sm:flex-row sm:justify-between items-center w-full pb-4 space-y-4 sm:space-y-0">
-        <!-- Botón primero en móviles -->
-        <button @click="router.push('/ExtractoCon')" class="bg-[#08245B] text-white px-4 py-2 rounded-lg shadow-md border border-gray-300 hover:bg-[#FFFFFF] hover:text-[#08245B] hover:border-[#08245B] w-full sm:w-60">
-            Iniciar Conciliación
-        </button>
+    <!-- Contenedor de búsqueda y selección de empresa -->
+    <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+      
+      <!-- Botón primero en móviles -->
+       <button @click="router.push('/ExtractoCon')" class="bg-[#08245B] text-white px-4 py-2 rounded-lg shadow-md border border-gray-300 hover:bg-[#FFFFFF] hover:text-[#08245B] hover:border-[#08245B] w-full sm:w-60">
+        Iniciar Conciliación
+      </button>
 
-
-        <!-- Barra de búsqueda debajo en móviles, derecha en escritorio -->
-        <div class="relative w-full sm:w-auto">
-            <div class="absolute inset-y-0 left-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-            </svg>
-            </div>
-            <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar">
+      <div class="w-full md:w-1/2">
+        <label for="table-search" class="sr-only">Buscar</label>
+        <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
+          <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+          <input  type="text" 
+          v-model="searchQuery" 
+           id="table-search-conciliation" placeholder="Buscar..."
+            class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
-        </div>
-
-
-
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-[#08245B] uppercase bg-gradient-to-r from-gray-100 to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  
-                  <th scope="col" class="px-6 py-3">
-                    Empresa
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Banco
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Numero de Cuenta
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Fecha de Colciliacion
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Numero de reporte
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Estado
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Acción
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="bg-white border-b text-[#08245B] dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  
-                  <th scope="row" class="px-6 py-4 font-medium text-[#08245B] whitespace-nowrap dark:text-white">
-                    Empresa A
-                  </th>
-                  <td class="px-6 py-4">
-                    Bancolombia
-                  </td>
-                  <td class="px-6 py-4">
-                    1234567890
-                  </td>
-                  <td class="px-6 py-4">
-                    21/03/25025
-                  </td>
-                  <td class="px-6 py-4">
-                    EMP001-202503-002
-                  </td>
-                  <td class="px-6 py-4">
-                    Finalizado
-                  </td>
-                  <td class="px-6 py-4">
-                    <button @click="router.push('/ResultadoCon')" >
-                        ver
-                    </button>
-                  </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                </tr>
-              </tbody>
-            </table>
-  </section>
+      </div>
+    </div>
+   <!-- Tabla -->
+   <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
+      <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+        <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
+          <tr>
+            <th scope="col" class="px-6 py-3">Empresa</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Banco</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Numero de Cuenta</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Fecha de Colciliacion</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Numero de reporte</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="empresa in filteredEmpresas" :key="empresa.nreporte" class="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+            <td class="px-6 py-4">{{ empresa.empresa }}</td>
+            <td class="px-6 py-4 md:table-cell">{{ empresa.banco }}</td>
+            <td class="px-6 py-4 md:table-cell">{{ empresa.nCuenta }}</td>
+            <td class="px-6 py-4 md:table-cell">{{ empresa.fecha }}</td>
+            <td class="px-6 py-4 md:table-cell">{{ empresa.nreporte }}</td>
+            <td class="px-6 py-4 md:table-cell">{{ empresa.estado }}</td>
+            <td class="px-6 py-4 md:table-cell"><button @click="router.push('/ResultadoCon')">Ver</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
+  
+<script setup>
+import { useRouter } from "vue-router";
+import { ref, computed } from 'vue';
 
+const router = useRouter();
+const searchQuery = ref("");
 
-  
-  <script setup>
-  import { useRouter } from "vue-router"; // Importar useRouter
+const empresas = ref([
+  { empresa: "Empresa A", banco: "Bancolombia", nCuenta: "1234567890", fecha: "21/03/2025", nreporte: "EMP001-202503-002", estado: "Finalizado" },
+  { empresa: "Empresa B", banco: "Davivienda", nCuenta: "9876543210", fecha: "15/02/2025", nreporte: "EMP002-202502-001", estado: "Pendiente" }
+]);
 
-  const router = useRouter(); // Instancia de router
-  
-  </script>
-  
-  <style scoped>
-  .contenido {
-    padding: 20px;
-    transition: margin-left 0.3s ease;
-    padding-top: 250px;
-    background-color: #F5F5F5;
-    margin-left: 80px;
-    height: 100vh;
-  }
-  
-  .menu-lateral.open ~ .contenido {
-    margin-left: 309px;
-    width: calc(100% - 309px);
-    height: 90%;
-  }
-  
-  /* Media query para pantallas móviles */
-  @media (max-width: 768px) {
-    .contenido {
-      margin-left: 0; /* Esto se aplica en pantallas móviles */
-      padding-top: 110px;
-    }
-  
-    .menu-lateral.open ~ .contenido {
-      margin-left: 0; /* Asegúrate de que el margen izquierdo sea 0 en móviles incluso cuando el menú esté abierto */
-      width: 100%; /* Asegúrate de que el contenido ocupe el 100% del ancho en móviles */
-      padding-top: 110px;
-    }
-  }
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  </style>
-  
+const filteredEmpresas = computed(() => {
+  return empresas.value.filter(empresa =>
+    empresa.empresa.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    empresa.banco.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    empresa.nCuenta.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    empresa.fecha.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    empresa.nreporte.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    empresa.estado.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+});
+</script>

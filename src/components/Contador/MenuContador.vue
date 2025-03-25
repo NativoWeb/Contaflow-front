@@ -6,12 +6,13 @@
             </div>
             <ul>
               <li>
-                <div v-if="user" id="profile">
+                <!-- <div v-if="user" id="profile"> -->
+                <div id="profile"> 
                   <div id="photo">
                     <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
                   </div>
-                  <!-- <span>{{ user.first_name }}</span>
-                  <span>{{ user.role }}</span> -->
+                  <span>f</span>
+                  <span>fd</span>
                 </div>
                 <!-- <div v-else>
                   <p>Cargando usuario...</p>
@@ -41,13 +42,15 @@
   <img class="max-w-[200px] max-h-[200px] mx-auto" src="../../../public/logo.svg" alt="Logo">
 
   <!-- Botón de cerrar sesión -->
-  <button title="Cerrar Sesión"
+<button 
+  title="Cerrar Sesión"
   @click="CerrarSesion"
-  class="bg-white flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-[#EEEEEE] transition-all duration-300
-         absolute right-6 top-1/2 transform -translate-y-1/2 md:static md:translate-y-0"
+  class="absolute right-6 top-1/2 transform -translate-y-1/2 md:static md:translate-y-0 
+         flex items-center justify-center p-2 rounded-full hover:scale-110 transition-all duration-300"
 >
-  <img src="@/assets/cerrar-sesion.svg" alt="Cerrar sesión" class="w-6 h-6" />
+  <img src="@/assets/Salir.svg" alt="Cerrar sesión" class="w-8 h-8" />
 </button>
+
 
 </header>
       </div>

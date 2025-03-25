@@ -45,6 +45,10 @@ import ListaReporteContador from "@/components/Contador/Reportes/ListaReporteCon
 import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
 import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasContador.vue";
 import CuentaContador from "@/components/Contador/Cuenta/CuentaContador.vue";
+import CambiarPasswordCon from "@/components/Contador/Cuenta/CambiarPasswordCon.vue";
+import EditarPerfilCon from "@/components/Contador/Cuenta/EditarPerfilCon.vue";
+import PruebaEjemplo from "@/components/Contador/EmpresaContador/PruebaEjemplo.vue";
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -242,9 +246,24 @@ const router = createRouter({
                     path: '/CuentaContador',
                     name: 'CuentaContador',
                     component: CuentaContador
+                },
+                {
+                    path: '/CambiarPasswordCon',
+                    name: 'CambiarPasswordCon',
+                    component: CambiarPasswordCon
+                },
+                {
+                    path: '/EditarPerfilCon',
+                    name: 'EditarPerfilCon',
+                    component: EditarPerfilCon
                 }
             ]
         },
+        {
+            path: '/PruebaEjemplo',
+            name: 'PruebaEjemplo',
+            component: PruebaEjemplo
+        }
         
     ],
 });

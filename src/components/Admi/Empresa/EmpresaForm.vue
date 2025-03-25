@@ -1,28 +1,49 @@
 <template>
   <div>
-    <form class="w-full p-6" @submit.prevent="addCompany">
+    <form class="w-full p-6" @submit.prevent="validateForm">
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             NIT:
           </label>
-          <input v-model="companyForm.nit" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Ingrese su NIT">
+          <input 
+            v-model="companyForm.nit" 
+            class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" 
+            type="text" 
+            placeholder="Ingrese su NIT"
+            @input="validateField('nit')"
+          >
+          <p v-if="errors.nit" class="text-red-500 text-xs mt-1">{{ errors.nit }}</p>
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Razón Social:
           </label>
-          <input v-model="companyForm.name" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Ingrese la Razón Social">
+          <input 
+            v-model="companyForm.name" 
+            class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" 
+            type="text" 
+            placeholder="Ingrese la Razón Social"
+            @input="validateField('name')"
+          >
+          <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Dirección:
           </label>
-          <input v-model="companyForm.address" class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Ingrese la Dirección">
+          <input 
+            v-model="companyForm.address" 
+            class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" 
+            type="text" 
+            placeholder="Ingrese la Dirección"
+            @input="validateField('address')"
+          >
+          <p v-if="errors.address" class="text-red-500 text-xs mt-1">{{ errors.address }}</p>
         </div>
       </div>
-  
+
       <!-- Segunda fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
@@ -30,7 +51,12 @@
             Sector económico:
           </label>
           <div class="relative">
-            <select v-model="companyForm.sector" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+            <select 
+              v-model="companyForm.sector" 
+              class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500"
+              @change="validateField('sector')"
+            >
+              <option value="">Seleccione un sector</option>
               <option value="Comercio y Ventas">Comercio y Ventas</option>
               <option value="Restaurantes y Gastronomía">Restaurantes y Gastronomía</option>
               <option value="Construcción e Infraestructura">Construcción e Infraestructura</option>
@@ -42,10 +68,14 @@
               <option value="Educación y Formación">Educación y Formación</option>
               <option value="Tecnología e Informática">Tecnología e Informática</option>
             </select>
+            <p v-if="errors.sector" class="text-red-500 text-xs mt-1">{{ errors.sector }}</p>
           </div>
         </div>
         <div class="flex items-end">
-          <button type="submit" class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
+          <button 
+            type="submit" 
+            class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline"
+          >
             Añadir Empresa
           </button>
         </div>
@@ -55,7 +85,6 @@
     <!-- Modal -->
     <div v-if="modalVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
       <div class="bg-white p-6 shadow-lg w-96 relative rounded-tl-3xl">
-        <!-- Botón de cerrar (X) -->
         <button @click="modalVisible = false" 
           class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center">
           &times;
@@ -70,12 +99,12 @@
     </div>
   </div>
 </template>
-  
+
 <script setup>
 import Cookies from "js-cookie";
 import { reactive, ref } from "vue";
 
-// Estado del formulario
+// Estado del formulario y errores
 const companyForm = reactive({
   nit: "",
   name: "",
@@ -83,10 +112,64 @@ const companyForm = reactive({
   sector: ""
 });
 
-// Estado del modal
+const errors = reactive({
+  nit: "",
+  name: "",
+  address: "",
+  sector: ""
+});
+
 const modalVisible = ref(false);
 
-function addCompany(){
+// Función de validación individual
+function validateField(field) {
+  if (field === "nit") {
+    if (!/^[0-9]+(-[0-9]+)?$/.test(companyForm.nit)) {
+      errors.nit = "El NIT solo debe contener números.";
+    } else {
+      errors.nit = "";
+    }
+  }
+
+  if (field === "name") {
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]+$/.test(companyForm.name)) {
+      errors.name = "El nombre de la empresa solo debe contener letras.";
+    } else {
+      errors.name = "";
+    }
+  }
+
+  if (field === "address") {
+    if (!/^[A-Za-z0-9\s#.,-]+$/.test(companyForm.address)) {
+      errors.address = "Ingrese una dirección válida.";
+    } else {
+      errors.address = "";
+    }
+  }
+
+  if (field === "sector") {
+    if (!companyForm.sector) {
+      errors.sector = "Debe seleccionar un sector económico.";
+    } else {
+      errors.sector = "";
+    }
+  }
+}
+
+// Validar todo el formulario antes de enviarlo
+function validateForm() {
+  validateField("nit");
+  validateField("name");
+  validateField("address");
+  validateField("sector");
+
+  if (!errors.nit && !errors.name && !errors.address && !errors.sector) {
+    addCompany();
+  }
+}
+
+// Enviar datos si la validación es correcta
+function addCompany() {
   fetch('http://127.0.0.1:8000/companies/register/', {
     method: 'POST',
     body: JSON.stringify(companyForm),
@@ -97,15 +180,9 @@ function addCompany(){
   })
   .then(res => {
     if (!res.ok) {
-      if (res.status === 401) {
-        alert("Acceso denegado");
-      }
-      if (res.status === 400){
-        alert("Los datos no pueden estar vacíos");
-      }
-      if (res.status === 403){
-        alert("Tu rol no permite registrar empresas");
-      }
+      if (res.status === 401) alert("Acceso denegado");
+      if (res.status === 400) alert("Los datos no pueden estar vacíos");
+      if (res.status === 403) alert("Tu rol no permite registrar empresas");
       throw new Error(`Hubo un error de estado ${res.status}`);
     }
     return res.json();

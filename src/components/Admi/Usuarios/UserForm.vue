@@ -26,6 +26,19 @@
         
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
+            Número de Identificación:
+          </label>
+          <input v-model="userForm.phone_number" @input="validatePhoneNumber"
+            class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+            type="text" placeholder="Ingrese su numero de identificación">
+          <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
+        </div>
+      </div>
+
+      <!-- Segunda fila -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Celular:
           </label>
           <input v-model="userForm.phone_number" @input="validatePhoneNumber"
@@ -33,10 +46,6 @@
             type="text" placeholder="Ingrese su celular">
           <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
         </div>
-      </div>
-
-      <!-- Segunda fila -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Correo:
@@ -62,6 +71,12 @@
           </div>
         </div>
 
+        
+      </div>
+
+      <!-- Botón de Añadir Usuario -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div class="md:col-span-2"></div> <!-- Espacio vacío para empujar el botón a la derecha -->
         <div class="flex items-end">
           <button type="submit" :disabled="hasErrors"
             class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">

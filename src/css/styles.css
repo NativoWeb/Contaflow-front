@@ -181,3 +181,26 @@ a:hover{
     display: block;
   }
 }
+
+
+
+
+
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+.btn-action:hover {
+  background-color: #E5EAFF;
+  transform: scale(1.05);
+}

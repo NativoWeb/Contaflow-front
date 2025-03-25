@@ -15,9 +15,13 @@
             <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
   
             <label for="password">Contraseña</label>
-            <div :class="['input-group', { 'error': errors.password }]">
-              <input v-model="registerCompany.password" type="password" id="password" @input="validatePassword" />
-            </div>
+          <div :class="['input-group', { 'error': errors.password }]">
+            <input :type="showPassword ? 'text' : 'password'" v-model="registerCompany.password" id="password" @input="validatePassword" />
+            <button type="button" @click="togglePasswordVisibility" class="toggle-password">
+              <img :src="showPassword ? eyeOpenIcon : eyeClosedIcon" alt="Toggle Password" class="password-icon" />
+            </button>
+          </div>
+
             <p v-if="errors.password" class="error-message">{{ errors.password }}</p>
   
             <p><a href="#">¿Olvidó su contraseña?</a></p>
@@ -30,7 +34,7 @@
   </template>
 
   <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import router from '@/router';
 import Cookies from 'js-cookie';
 
@@ -44,6 +48,13 @@ const errors = reactive({
   password: "",
   general: "",
 });
+const showPassword = ref(false);
+const eyeOpenIcon = ref(require('@/assets/VerPassword.svg')); // Ruta del icono de ojo abierto
+const eyeClosedIcon = ref(require('@/assets/OcultarPassword.svg')); // Ruta del icono de ojo cerrado
+
+function togglePasswordVisibility() {
+  showPassword.value = !showPassword.value;
+}
 
 function validateEmail() {
   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -108,8 +119,20 @@ function login() {
 }
 </script>
 
-  
-  <style>
+<style>
+.toggle-password {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.password-icon {
+  width: 20px; /* Ajusta el tamaño según lo necesites */
+  height: 20px;
+}
+
+
   .error {
   border: 2px solid red;
 }

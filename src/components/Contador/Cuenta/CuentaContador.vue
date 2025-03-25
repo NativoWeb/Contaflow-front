@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full bg-white shadow-md">
+  <section class="w-full h-full bg-white shadow-md">
     <!-- Contenedor del título con imagen -->
     <div class="flex items-center gap-4 h-[99px] mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-6 rounded-md">
       <img src="@/assets/img_usuario.svg" alt="Empresa Logo" class="w-16 h-16 object-cover rounded-full">

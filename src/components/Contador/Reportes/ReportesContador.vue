@@ -1,6 +1,6 @@
 <template>
   <section class="h-full w-full">
-    <div class="relative text-right z-10">
+    <div class="text-right z-10">
       <button @click="toggleDropdown" class="bg-[#08245B] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#2A5CAA] w-40">
         Descargar
       </button>
@@ -11,7 +11,7 @@
       </ul>
     </div>
 
-    <div class="informacion relative shadow-md w-full bg-white p-4 md:p-6 mt-6">
+    <div class="informacion shadow-md w-full bg-white p-4 md:p-6 mt-6">
       <h2 class="text-lg sm:text-2xl font-semibold text-[#193368] text-center">
           Reporte de Conciliación Bancaria y Contable
       </h2>

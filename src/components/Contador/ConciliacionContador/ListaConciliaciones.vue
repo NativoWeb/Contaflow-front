@@ -1,91 +1,59 @@
 <template>
-  <section class="w-full bg-white shadow-md">
-    <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3">
-            Conciliación Bancaria y Contable
-          </h2>
+  <div class="p-6 flex flex-col w-full h-full">
+    <!-- Título -->
+    <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368] p-4 rounded-lg shadow-md text-center md:text-left">
+      Conciliación Contable y Bancaria
+    </h2>
 
-          <div class="p-4 flex flex-col sm:flex-row sm:justify-between items-center w-full pb-4 space-y-4 sm:space-y-0">
-        <!-- Botón primero en móviles -->
-        <button @click="router.push('/ExtractosConciliacion')" class="bg-[#08245B] text-white px-4 py-2 rounded-lg shadow-md border border-gray-300 hover:bg-[#FFFFFF] hover:text-[#08245B] hover:border-[#08245B] w-full sm:w-60">
-            Iniciar Conciliación
-        </button>
+    <!-- Contenedor de búsqueda y selección de empresa -->
+    <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+      
+      <!-- Botón primero en móviles -->
+       <button @click="router.push('/ExtractosConciliacion')" class="bg-[#08245B] text-white px-4 py-2 rounded-lg shadow-md border border-gray-300 hover:bg-[#FFFFFF] hover:text-[#08245B] hover:border-[#08245B] w-full sm:w-60">
+        Iniciar Conciliación
+      </button>
 
-
-        <!-- Barra de búsqueda debajo en móviles, derecha en escritorio -->
-        <div class="relative w-full sm:w-auto">
-            <div class="absolute inset-y-0 left-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-            </svg>
-            </div>
-            <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar">
+      <div class="w-full md:w-1/2">
+        <label for="table-search" class="sr-only">Buscar</label>
+        <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
+          <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+          <input type="text" id="table-search-users" placeholder="Buscar..."
+            class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
-        </div>
+      </div>
+    </div>
+   <!-- Tabla -->
+   <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
+      <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+        <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
+          <tr>
+            <th scope="col" class="px-6 py-3">Empresa</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Banco</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Numero de Cuenta</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Fecha de Colciliacion</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Numero de reporte</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+            <td class="px-6 py-4">Empresa A</td>
+            <td class="px-6 py-4  md:table-cell">Bancolombia</td>
+            <td class="px-6 py-4  md:table-cell">1234567890</td>
+            <td class="px-6 py-4  md:table-cell">21/03/25025</td>
+            <td class="px-6 py-4  md:table-cell">EMP001-202503-002</td>
+            <td class="px-6 py-4  md:table-cell">Finalizado</td>
+            <td class="px-6 py-4  md:table-cell"><button @click="router.push('/ResultadoConcilliacion')">Ver</button></td>
 
-
-
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-[#08245B] uppercase bg-gradient-to-r from-gray-100 to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  
-                  <th scope="col" class="px-6 py-3">
-                    Empresa
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Banco
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Numero de Cuenta
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Fecha de Colciliacion
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Numero de reporte
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Estado
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Acción
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="bg-white border-b text-[#08245B] dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  
-                  <th scope="row" class="px-6 py-4 font-medium text-[#08245B] whitespace-nowrap dark:text-white">
-                    Empresa A
-                  </th>
-                  <td class="px-6 py-4">
-                    Bancolombia
-                  </td>
-                  <td class="px-6 py-4">
-                    1234567890
-                  </td>
-                  <td class="px-6 py-4">
-                    21/03/25025
-                  </td>
-                  <td class="px-6 py-4">
-                    EMP001-202503-002
-                  </td>
-                  <td class="px-6 py-4">
-                    Finalizado
-                  </td>
-                  <td class="px-6 py-4">
-                    <button @click="router.push('/ResultadoConcilliacion')" >
-                        ver
-                    </button>
-                  </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                </tr>
-              </tbody>
-            </table>
-  </section>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
-
-
   
   <script setup>
   import { useRouter } from "vue-router"; // Importar useRouter
