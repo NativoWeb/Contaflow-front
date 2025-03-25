@@ -6,12 +6,11 @@
     </h2>
 
     <UserForm/>
-    <UserTable/>
+
     
   </div>
 </template>
 
 <script setup>
 import UserForm from './UserForm.vue';
-import UserTable from './UserTable.vue';
 </script>

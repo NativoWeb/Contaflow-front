@@ -5,11 +5,9 @@
       Registro de Empresas
     </h2>
     <EmpresaForm/>
-    <EmpresaTable/>
   </div>
 </template>
 
 <script setup>
 import EmpresaForm from './EmpresaForm.vue';
-import EmpresaTable from './EmpresaTable.vue';
 </script>
