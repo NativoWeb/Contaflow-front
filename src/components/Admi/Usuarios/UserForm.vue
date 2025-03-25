@@ -50,7 +50,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Correo:
           </label>
-          <input v-model="userForm.username" @input="validateEmail" @blur="checkEmailExists"
+          <input v-model="userForm.username" @input="validateEmail"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="email" placeholder="Ingrese su correo">
           <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
@@ -78,9 +78,14 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div class="md:col-span-2"></div> <!-- Espacio vacío para empujar el botón a la derecha -->
         <div class="flex items-end">
-          <button type="submit" :disabled="hasErrors"
+          <button type="submit"
             class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
-            Añadir usuario
+            <span v-if="!isLoading" class="text-white">
+              Añadir usuario
+            </span>
+            <span v-else class="text-white flex items-center justify-center">
+              Cargando
+            </span>
           </button>
         </div>
       </div>
@@ -89,7 +94,8 @@
 </template>
 
 <script setup>
-import { reactive, computed } from "vue";
+// , computed
+import { reactive, ref } from "vue";
 import Cookies from 'js-cookie';
 
 // Estado del formulario
@@ -99,6 +105,7 @@ const userForm = reactive({
   phone_number: "",
   username: "",
   role: "CLIENTE",
+  companies: []
 });
 
 // Estado de errores
@@ -106,8 +113,11 @@ const errors = reactive({
   first_name: "",
   last_name: "",
   phone_number: "",
-  username: ""
+  username: "",
+  
 });
+
+const isLoading = ref(false);
 
 // Expresiones regulares
 const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
@@ -132,8 +142,8 @@ const validateEmail = () => {
 };
 
 // Verificación de correo único
-const checkEmailExists = () => {
-  fetch(`http://127.0.0.1:8000/users/check-email?email=${userForm.username}`, {
+/*const checkEmailExists = () => {
+  fetch(`http://127.0.0.1:8000/users/email/`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${Cookies.get('jwt')}`
@@ -147,18 +157,20 @@ const checkEmailExists = () => {
   })
   .catch(err => console.error("Error verificando el correo:", err));
 };
+*/
 
 // Comprobar si hay errores
-const hasErrors = computed(() => {
-  return Object.values(errors).some(error => error);
-});
+// const hasErrors = computed(() => {
+//   return Object.values(errors).some(error => error);
+// });
 
 // Envío del formulario
 function addUser() {
-  if (hasErrors.value) {
-    alert("Corrija los errores antes de enviar.");
-    return;
-  }
+  isLoading.value = true;
+  // if (hasErrors.value) {
+  //   alert("Corrija los errores antes de enviar.");
+  //   return;
+  // }
 
   fetch('http://127.0.0.1:8000/users/email/', {
     method: 'POST',
@@ -169,9 +181,10 @@ function addUser() {
     }
   })
   .then(res => {
+    isLoading.value = false;
     if (!res.ok) {
       if (res.status === 401) alert("Acceso denegado");
-      if (res.status === 400) alert("Este usuario ya esta registrado");
+      // if (res.status === 400) alert("Este usuario ya esta registrado");
       if (res.status === 403) alert("Tu rol no permite registrar usuarios");
       throw new Error(`Error ${res.status}`);
     }
@@ -181,6 +194,9 @@ function addUser() {
     alert("Se envió un correo al usuario");
     location.reload();
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+    isLoading.value = false;
+    console.error(err)
+  });
 }
 </script>

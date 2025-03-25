@@ -2,6 +2,7 @@
   <section class="w-full bg-white p-4">
     <div class="flex flex-col md:flex-row gap-6">
       <!-- Tabla -->
+<<<<<<< HEAD
       <div class="overflow-x-auto flex-1 bg-white shadow-lg rounded-lg p-4">
         <div class="flex items-center justify-between mb-4">
           <label for="table-search" class="sr-only">Buscar</label>
@@ -22,6 +23,22 @@
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-700 bg-white rounded-lg">
             <thead class="text-xs bg-gradient-to-r from-gray-100 to-[#E5EAFF] uppercase">
+=======
+      <div class=" overflow-x-auto flex-1">
+        <div class="p-6 flex flex-col md:flex-row items-center justify-between dark:bg-gray-900 shadow-lg space-y-4 md:space-y-0">
+    <label for="table-search" class="sr-only">Buscar</label>
+    <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
+      <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+      <input type="text" id="table-search-users" class="block w-full py-2 pr-4 text-sm text-gray-900 bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar...">
+    </div>
+  </div>
+
+        <div class="overflow-x-auto ">
+          <table class=" w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
+            <thead class="text-xs uppercase">
+>>>>>>> e498c2c79b95c241cc489afb340726a53cd4d44b
               <tr>
                 <th scope="col" class="p-4">
                   <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
