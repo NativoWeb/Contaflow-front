@@ -81,7 +81,6 @@ const user = ref()
 fetch(`http://127.0.0.1:8000/users/${userId}/`)
 .then(res => res.json())
 .then(json => {
-  console.log(json)
   user.value = json
 });
 

@@ -16,7 +16,7 @@
   </div>
 
         <div class="overflow-x-auto ">
-          <table class=" w-full text-sm text-left rtl:text-right text-[2A5CAA] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
+          <table class=" w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400 bg-gradient-to-r from-gray-100 to-[#E5EAFF]">
             <thead class="text-xs uppercase">
               <tr>
                 <th scope="col" class="px-6 py-3">NIT</th>
