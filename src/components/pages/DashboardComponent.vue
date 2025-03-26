@@ -19,51 +19,77 @@
             </li>
             <div class="list-container">
               <li>
-            <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                     <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
-                  </svg>
-                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">E-commerce</span>
-                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                  </svg>
-            </button>
-            <ul id="dropdown-example" class="hidden py-2 space-y-2">
-                  <li>
-                     <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
-                  </li>
-                  <li>
-                     <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
-                  </li>
-                  <li>
-                     <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
-                  </li>
-            </ul>
-         </li>
-              <li class="li-container" @click="toggleSidebar" v-for="(item, index) in menuItems" :key="index">
-              <router-link class="flex gap-2 justify-center items-center" :to="item.link">
-                <img :src="item.image" :alt="item.name" class="icon-img" />
-                <span>{{ item.name }}</span>
-              </router-link>
-            </li>
-           
+    <router-link href="#" class="flex gap-2 justify-center items-center">
+      <img src="@/assets/circulo.svg" alt="Ícono" class="icon-img">
+      <span >Dashboard</span>
+    </router-link>
+  </li>
+
+              
+              <li>
+          <button type="button" class="flex justify-center items-center transition duration-75" @click="toggleDropdown">
+            <img src="@/assets/usuario.svg" alt="Ícono" class="icon-img">
+            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap mr-2">Gestión de usuarios</span>
+            <svg class="w-3 h-3 transition-transform md:ml-1" :class="{ 'rotate-180': isOpenDropdown }" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <ul 
+  :class="{ 'max-h-0 opacity-0': !isOpenDropdown, 'max-h-40 opacity-100': isOpenDropdown }"
+  class="overflow-hidden transition-all duration-500 ease-in-out mb-1 mt-2 flex items-start justify-start flex-col gap-2"
+>
+            <li><router-link to="/RegistroContador" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
+            <li><router-link to="/RegistroAuditor" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
+            <li><router-link to="/RegistroCliente" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
+          </ul>
+        </li>
+        
+        <li>
+    <router-link to="/EmpresaRegistro" class="flex gap-2 justify-center items-center">
+      <img src="@/assets/empresass.svg" alt="Ícono" class="icon-img">
+      <span >Empresas</span>
+    </router-link>
+  </li>
+  <li>
+    <router-link to="/BancosERPs" class="flex gap-2 justify-center items-center">
+      <img src="@/assets/BancoErps.svg" alt="Ícono" class="icon-img">
+      <span >Bancos y ERPs</span>
+    </router-link>
+  </li>
+  <li>
+    <router-link to="/conciliacion" class="flex gap-2 justify-center items-center">
+      <img src="@/assets/conciliacion.svg" alt="Ícono" class="icon-img">
+      <span >Conciliaciones</span>
+    </router-link>
+  </li>
+  <li>
+    <router-link to="ReporteEmpre" class="flex gap-2 justify-center items-center">
+      <img src="@/assets/informe.svg" alt="Ícono" class="icon-img">
+      <span >Reportes financieros y auditoría</span>
+    </router-link>
+  </li>
+  <li>
+    <router-link to="/PerfilAdmin" class="flex gap-2 justify-center items-center">
+      <img src="@/assets/configuracion.svg" alt="Ícono" class="icon-img">
+      <span >Configuración</span>
+    </router-link>
+  </li>
           </div>
         </ul>
       </nav>
-
-
-    <div class="fixed w-full">
-      <header class="z-10 bg-[#08245B] h-[130px] flex items-center justify-between px-6 py-4">
-  <!-- Menú lateral -->
-  <div>
-    <button @click="toggleSidebar" class="mobile-menu-button">
-      <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
-    </button>
-  </div>
-
-  <!-- Logo -->
-  <img class="max-w-[200px] max-h-[200px] mx-auto" src="../../../public/logo.svg" alt="Logo">
-
+      
+      
+          <div class="fixed w-full">
+            <header class="z-10 bg-[#08245B] h-[130px] flex items-center justify-between px-6 py-4">
+        <!-- Menú lateral -->
+        <div>
+          <button @click="toggleSidebar" class="mobile-menu-button">
+            <img src="@/assets/menu.svg" alt="Menú" class="icon-img" />
+          </button>
+        </div>
+      
+        <!-- Logo -->
+        <img class="max-w-[200px] max-h-[200px] mx-auto" src="../../../public/logo.svg" alt="Logo">
   <!-- Botón de cerrar sesión -->
   <button 
   title="Cerrar Sesión"
@@ -94,14 +120,15 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const isOpen = ref(false);
-
+const isOpenDropdown = ref(false);
 
 const toggleSidebar = () => {
   isOpen.value = !isOpen.value;
 };
 
-
-
+const toggleDropdown = () => {
+  isOpenDropdown.value = !isOpenDropdown.value;
+};
 
 const token = Cookies.get('jwt');
 const userId = getIdByToken(token);
@@ -124,31 +151,6 @@ const CerrarSesion = () => {
 
   
 <script>
-export default {
-  data() {
-    return {
-      isOpen: true,
-      isMenuOpen: false,
-      menuItems: [
-        { name: "Dashboard", link: "/UsuariosAdmin", image: require("@/assets/circulo.svg") },
-        { name: "Gestión de roles y usuarios", link: "/usuarios", image: require("@/assets/usuario.svg") },
-        { name: "Empresas", link: "/EmpresaRegistro", image: require("@/assets/empresass.svg") },
-        { name: "Bancos y ERPs", link: "/BancosERPs", image: require("@/assets/BancoErps.svg") },
-        { name: "Configuración", link: "/PerfilAdmin", image: require("@/assets/configuracion.svg") }, 
-        { name: "Conciliaciones", link: "/conciliacion", image: require("@/assets/conciliacion.svg") },
-        { name: "Reportes financieros y auditoría", link: "/ReporteEmpre", image: require("@/assets/informe.svg") }
-      ]
-    };
-  },
-  methods: {
-    toggleSidebar() {
-      this.isOpen = !this.isOpen;
-    },
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    }
-  }
-};
 
 
 </script>

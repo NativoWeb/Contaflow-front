@@ -47,8 +47,10 @@ import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasCont
 import CuentaContador from "@/components/Contador/Cuenta/CuentaContador.vue";
 import CambiarPasswordCon from "@/components/Contador/Cuenta/CambiarPasswordCon.vue";
 import EditarPerfilCon from "@/components/Contador/Cuenta/EditarPerfilCon.vue";
-import PruebaEjemplo from "@/components/Contador/EmpresaContador/PruebaEjemplo.vue";
-
+import RegistroContador from "@/components/Admi/Registros/RegistroContador.vue";
+import RegistroAuditor from "@/components/Admi/Registros/RegistroAuditor.vue";
+import RegistroCliente from "@/components/Admi/Registros/RegistroCliente.vue";
+import DatosUsuario from "@/components/Admi/Registros/DatosUsuario.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -88,9 +90,29 @@ const router = createRouter({
                     }
                 },
                 {
+                    path: '/RegistroContador',
+                    name: 'RegistroContador',
+                    component: RegistroContador
+                },
+                {
+                    path: '/RegistroAuditor',
+                    name: 'RegistroAuditor',
+                    component: RegistroAuditor
+                },
+                {
+                    path: '/RegistroCliente',
+                    name: 'RegistroCliente',
+                    component: RegistroCliente
+                },
+                {
                     path: '/EditarUsuario',
                     name: 'EditarUsuario',
                     component: EditarUsuario
+                },
+                {
+                    path: '/DatosUsuario',
+                    name: 'DatosUsuario',
+                    component: DatosUsuario
                 },
 
                 {
@@ -190,6 +212,7 @@ const router = createRouter({
                 
             }
         },
+        
 
          // 🔹 RUTA DE CONTADOR 
          {
@@ -258,13 +281,7 @@ const router = createRouter({
                     component: EditarPerfilCon
                 }
             ]
-        },
-        {
-            path: '/PruebaEjemplo',
-            name: 'PruebaEjemplo',
-            component: PruebaEjemplo
-        }
-        
+        },        
     ],
 });
 

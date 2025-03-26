@@ -40,7 +40,7 @@ nav {
   margin-right:30px;
   width: 19%;
   max-width: 280px;
-  min-width: 200px;
+  min-width: 290px;
   position: fixed;
   display:block;
   top: 80px;
@@ -124,6 +124,9 @@ a:hover{
     margin-top:40px;
     gap:20px;
   }
+  ul a{
+    font-size: 20px;
+  }
   
   .profile{
     width:100%;
@@ -146,11 +149,18 @@ a:hover{
     transform: translateX(-100%);
   }
 
-  nav span{
-    font-size:25px;
+  nav span {
+    font-size: 26px;
+    text-align: left;
   }
 
+
   nav.open {
+    transform: translateX(0);
+  }
+
+
+  ul.open{
     transform: translateX(0);
   }
 
