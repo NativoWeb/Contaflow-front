@@ -23,7 +23,7 @@
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
             <th scope="col" class="px-6 py-3">Nombre</th>
-            <!-- <th scope="col" class="px-6 py-3  md:table-cell">Número de Identificación</th> -->
+            <th scope="col" class="px-6 py-3  md:table-cell">Número de Identificación</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Correo</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Celular</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
@@ -33,7 +33,7 @@
           <tr v-for="auditor in auditors" :key="auditor"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ auditor.first_name }} {{ auditors.last_name }}</td>
-            <!-- <td class="px-6 py-4">{{ auditor.identification_number }}</td> -->
+            <td class="px-6 py-4">{{ auditor.id_number }}</td>
             <td class="px-6 py-4">{{ auditor.username }}</td>
             <td class="px-6 py-4">{{ auditor.phone_number }}</td>
             <td class="px-6 py-4">{{ auditor.status }}</td>
