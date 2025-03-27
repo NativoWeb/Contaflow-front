@@ -98,7 +98,7 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
           </svg>
           <input  type="text" 
-          v-model="searchQuery"  
+          v-model="searchQuery"
           id="table-search-users" 
           placeholder="Buscar..."
           class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -116,16 +116,18 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Correo</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Celular</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+            <th scope="col" class="px-6 py-3 md:table-cell">Acción</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in filteredUsers" :key="user.identification_number" @click="seleccionarUsusario(usuario)"
+          <tr v-for="user in filteredUsers" :key="user.identification_number" 
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
             <td class="px-6 py-4">{{ user.identification_number }}</td>
             <td class="px-6 py-4">{{ user.username }}</td>
             <td class="px-6 py-4">{{ user.phone_number }}</td>
             <td class="px-6 py-4">{{ user.estado }}</td>
+            <td class="px-6 py-4 md:table-cell"><button @click="router.push('/DatosUsuario')">Ver</button></td>
           </tr>
         </tbody>
       </table>
@@ -253,18 +255,13 @@
   import { useRouter } from 'vue-router';
   
   const router = useRouter();
-  
+
   const users = ref([
     { first_name: 'Juan', last_name: 'Pérez', identification_number: '123456789', username: 'juanp@example.com', phone_number: '3123456789', estado: 'Activo' },
     { first_name: 'María', last_name: 'López', identification_number: '987654321', username: 'marial@example.com', phone_number: '3156784321', estado: 'Inactivo' }
   ]);
   
-  const seleccionarUsuario = (user) => {
-    router.push({
-      name: 'ListaCon',
-      query: { id: user.identification_number } // Se pasa el número de identificación como parámetro
-    });
-  };
+
   
   // Filtrado de usuarios por búsqueda
   const searchQuery = ref("");
@@ -279,16 +276,7 @@
     );
   });
   
-  export default {
-    setup() {
-      return {
-        users,
-        searchQuery,
-        filteredUsers,
-        seleccionarUsuario
-      };
-    }
-  };
+
   </script>
   
   

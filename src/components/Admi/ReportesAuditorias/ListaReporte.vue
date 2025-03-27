@@ -31,7 +31,7 @@
             <th scope="col" class="px-6 py-3 md:table-cell">Fecha de Conciliación</th>
             <th scope="col" class="px-6 py-3 md:table-cell">Número de Reporte</th>
             <th scope="col" class="px-6 py-3 md:table-cell">Estado</th>
-            <th scope="col" class="px-6 py-3md:table-cell">Acción</th>
+            <th scope="col" class="px-6 py-3 md:table-cell">Acción</th>
           </tr>
         </thead>
         <tbody>

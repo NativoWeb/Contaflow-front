@@ -8,7 +8,7 @@
             <li>
               <div v-if="user" id="profile">
                 <div id="photo">
-                  <img class="profile" src="@/assets/img_usuario.svg" alt="Perfil"/>
+                  <img class="profile" src="" alt="Perfil"/>
                 </div>
                 <span>{{ user.first_name }}</span>
                 <span>{{ user.role }}</span>
