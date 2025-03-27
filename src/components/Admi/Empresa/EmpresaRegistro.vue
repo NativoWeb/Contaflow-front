@@ -149,6 +149,8 @@
 import Cookies from "js-cookie";
 import { reactive, ref } from "vue";
 
+const VUE_APP_URL = process.env.VUE_APP_URL;
+
 // Estado del formulario y errores
 const companyForm = reactive({
   nit: "",
@@ -215,7 +217,7 @@ function validateForm() {
 
 // Enviar datos si la validación es correcta
 function addCompany() {
-  fetch('http://127.0.0.1:8000/companies/register/', {
+  fetch(`${VUE_APP_URL}/companies/`, {
     method: 'POST',
     body: JSON.stringify(companyForm),
     headers: {

@@ -88,7 +88,7 @@
       return;
     }
 
-    fetch(`${VUE_APP_URL}/users/token/`, {
+    fetch(`${VUE_APP_URL}/users/login/`, {
       method: 'POST',
       body: JSON.stringify(registerCompany),
       headers: {
