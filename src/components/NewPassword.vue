@@ -55,6 +55,7 @@
 import Cookies from 'js-cookie';
 import { reactive, ref } from 'vue';
 
+const VUE_APP_URL = process.env.VUE_APP_URL;
 const password = reactive({
 	new_password: ""
 });
@@ -73,7 +74,7 @@ function toggleShowRepeatPassword() {
 
 function changePassword() {
 	let token = Cookies.get('jwt');
-	fetch('http://127.0.0.1:8000/users/password/', {
+	fetch(`${VUE_APP_URL}/users/password/`, {
 		method: 'POST',
 		body: JSON.stringify(password),
 		headers: {

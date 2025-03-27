@@ -1,38 +1,26 @@
 import { createRouter, createWebHistory } from "vue-router";
-
 import Cookies from 'js-cookie';
 import ManageUsers from "@/components/Admi/Usuarios/ManageUsers.vue";
-
-
 import NewPassword from "@/components/NewPassword.vue";
 import getIdByToken from "@/hooks/getId";
-
 import DashboardComponent from "@/components/pages/DashboardComponent.vue";
 import ListaCon from "@/components/Admi/Conciliacion/ListaCon.vue";
-
 import BancosERPs from "@/components/Admi/Bancos/BancosERPs.vue";
 import EmpresaCon from "@/components/Admi/Conciliacion/EmpresaCon.vue";
 import ExtractoCon from "@/components/Admi/Conciliacion/ExtractoCon.vue";
 import ResultadoCon from "@/components/Admi/Conciliacion/ResultadoCon.vue.vue";
 import ModificarCon from "@/components/Admi/Conciliacion/ModificarCon.vue";
-
 import ReporteEmpre from "@/components/Admi/ReportesAuditorias/ReporteEmpre.vue";
 import ListaReporte from "@/components/Admi/ReportesAuditorias/ListaReporte.vue";
 import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue";
-
-
 import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
 import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
 import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
 import RegisterComponent from "@/components/RegisterComponent.vue";
-
 import EditarUsuario from "@/components/Admi/Usuarios/EditarUsuario.vue";
-
-
 //Empresa Admin
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
-
 // Contador
 import MenuContador from "@/components/Contador/MenuContador.vue";
 import EmpresaConciliacion from "@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue";
@@ -52,8 +40,8 @@ import RegistroAuditor from "@/components/Admi/Registros/RegistroAuditor.vue";
 import RegistroCliente from "@/components/Admi/Registros/RegistroCliente.vue";
 import DatosUsuario from "@/components/Admi/Registros/DatosUsuario.vue";
 
+const VUE_APP_URL = process.env.VUE_APP_URL;
 
-import pruebaaaMjnf from "@/components/pruebaaaMjnf.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -76,7 +64,7 @@ const router = createRouter({
                             next('/')
                         }
                         else {
-                            fetch(`http://127.0.0.1:8000/users/${userId}/`)
+                            fetch(`${VUE_APP_URL}/users/${userId}/`)
                             .then(res => res.json())
                             .then(json => {
                                 // si la contraseña es temporal ir directamente al cambio de contraseña
@@ -283,10 +271,6 @@ const router = createRouter({
                     component: EditarPerfilCon
                 }
             ]
-        },        {
-            path: '/pruebaaaMjnf',
-            name: 'pruebaaaMjnf',
-            component: pruebaaaMjnf
         }
     ],
 });

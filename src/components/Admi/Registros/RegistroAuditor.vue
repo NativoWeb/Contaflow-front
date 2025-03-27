@@ -137,6 +137,8 @@
   import { reactive, ref } from "vue";
   import Cookies from 'js-cookie';
   
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+
   // Estado del formulario
   const userForm = reactive({
   first_name: "",
@@ -219,7 +221,7 @@
   //   return;
   // }
   
-  fetch('http://127.0.0.1:8000/users/email/', {
+  fetch(`${VUE_APP_URL}/auditor/email/`, {
     method: 'POST',
     body: JSON.stringify(userForm),
     headers: {
