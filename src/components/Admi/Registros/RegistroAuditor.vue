@@ -30,11 +30,10 @@
             Tipo de Identificación:
           </label>
           <div>
-            <select  v-model="userAuditor.identification_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
-              <option selected>Seleccione</option>
-              <option value="CC">Cédula de ciudadanía</option>
-              <option value="CE">Cédula de extranjería</option>
-              <option value="PP">Pasaporte </option>
+            <select v-model="userAuditor.id_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+              <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
+              <option value="Cedula_Extranjeria">Cédula de extranjería</option>
+              <option value="Pasaporte">Pasaporte </option>
           </select>
           </div>
         </div>
@@ -46,10 +45,10 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Número de Identificación:
           </label>
-          <input  @input="validateIdentificationNumber"
+          <input v-model="userAuditor.id_number"  @input="validateIdentificationNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese su celular">
-          <!-- <p v-if="errors.identification_number" class="text-red-500 text-xs mt-1">{{ errors.identification_number }}</p> -->
+          <p v-if="errors.id_number" class="text-red-500 text-xs mt-1">{{ errors.id_number }}</p>
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
@@ -94,7 +93,6 @@
   // , computed
   import Cookies from "js-cookie";
   import { reactive, ref } from "vue";
-  // import Cookies from 'js-cookie';
   import TablaAuditor from "./TablaAuditor.vue";
   
   const VUE_APP_URL = process.env.VUE_APP_URL;
@@ -103,8 +101,8 @@
   const userAuditor = reactive({
   first_name: "",
   last_name: "",
-  // identification_type: "Seleccione",
-  // identification_number: "",
+  id_type: "Cedula_Ciudadania",
+  id_number: "",
   phone_number: "",
   username: "",
   role: "AUDITOR",
@@ -116,7 +114,7 @@
   const errors = reactive({
   first_name: "",
   last_name: "",
-  identification_number: "",
+  id_number: "",
   phone_number: "",
   username: "",
   });
@@ -125,7 +123,7 @@
   
   // Expresiones regulares
   const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
-  // const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
+  const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
   const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
   
@@ -138,9 +136,9 @@
   errors.last_name = nameRegex.test(userAuditor.last_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
-  // const validateIdentificationNumber = () => {
-  // errors.identification_number = identificationRegex.test(userAuditor.identification_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
-  // };
+  const validateIdentificationNumber = () => {
+  errors.id_number = identificationRegex.test(userAuditor.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
+  };
   
   const validatePhoneNumber = () => {
   errors.phone_number = phoneRegex.test(userAuditor.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
@@ -150,29 +148,6 @@
   errors.username = emailRegex.test(userAuditor.username) ? "" : "Ingrese un correo válido.";
   };
   
-  
-  // Verificación de correo único
-  /*const checkEmailExists = () => {
-  fetch(`http://127.0.0.1:8000/users/email/`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-    }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.exists) {
-      errors.username = "Este correo ya está registrado.";
-    }
-  })
-  .catch(err => console.error("Error verificando el correo:", err));
-  };
-  */
-  
-  // Comprobar si hay errores
-  // const hasErrors = computed(() => {
-  //   return Object.values(errors).some(error => error);
-  // });
   
   // Envío del formulario
   function addAuditor() {
