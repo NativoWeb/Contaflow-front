@@ -52,6 +52,8 @@ import RegistroAuditor from "@/components/Admi/Registros/RegistroAuditor.vue";
 import RegistroCliente from "@/components/Admi/Registros/RegistroCliente.vue";
 import DatosUsuario from "@/components/Admi/Registros/DatosUsuario.vue";
 
+
+import pruebaaaMjnf from "@/components/pruebaaaMjnf.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -281,7 +283,11 @@ const router = createRouter({
                     component: EditarPerfilCon
                 }
             ]
-        },        
+        },        {
+            path: '/pruebaaaMjnf',
+            name: 'pruebaaaMjnf',
+            component: pruebaaaMjnf
+        }
     ],
 });
 

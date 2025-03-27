@@ -261,7 +261,7 @@
   
   const seleccionarUsuario = (user) => {
     router.push({
-      name: 'DatosUsuario',
+      name: 'ListaCon',
       query: { id: user.identification_number } // Se pasa el número de identificación como parámetro
     });
   };
