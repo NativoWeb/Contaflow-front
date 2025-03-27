@@ -32,91 +32,93 @@
       </div>
     </div>
   </template>
-
   <script setup>
-import { reactive, ref } from 'vue';
-import router from '@/router';
-import Cookies from 'js-cookie';
+  import { reactive, ref } from 'vue';
+  import router from '@/router';
+  import Cookies from 'js-cookie';
 
-const registerCompany = reactive({
-  username: "",
-  password: "",
-});
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  
+  const registerCompany = reactive({
+    username: "",
+    password: "",
+  });
 
-const errors = reactive({
-  email: "",
-  password: "",
-  general: "",
-});
-const showPassword = ref(false);
-const eyeOpenIcon = ref(require('@/assets/VerPassword.svg')); // Ruta del icono de ojo abierto
-const eyeClosedIcon = ref(require('@/assets/OcultarPassword.svg')); // Ruta del icono de ojo cerrado
+  const errors = reactive({
+    email: "",
+    password: "",
+    general: "",
+  });
+  const showPassword = ref(false);
+  const eyeOpenIcon = ref(require('@/assets/VerPassword.svg')); // Ruta del icono de ojo abierto
+  const eyeClosedIcon = ref(require('@/assets/OcultarPassword.svg')); // Ruta del icono de ojo cerrado
 
-function togglePasswordVisibility() {
-  showPassword.value = !showPassword.value;
-}
-
-function validateEmail() {
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  if (!registerCompany.username) {
-    errors.email = "El correo es obligatorio.";
-  } else if (!emailPattern.test(registerCompany.username)) {
-    errors.email = "Formato de correo incorrecto.";
-  } else {
-    errors.email = "";
-  }
-}
-
-function validatePassword() {
-  if (!registerCompany.password) {
-    errors.password = "La contraseña es obligatoria.";
-  } else if (registerCompany.password.length < 4 || registerCompany.password.length > 12) {
-    errors.password = "La contraseña debe tener entre 4 y 12 caracteres.";
-  } else {
-    errors.password = "";
-  }
-}
-
-function login() {
-  validateEmail();
-  validatePassword();
-
-  if (errors.email || errors.password) {
-    errors.general = "Todos los campos son obligatorios y deben ser correctos.";
-    return;
+  function togglePasswordVisibility() {
+    showPassword.value = !showPassword.value;
   }
 
-  fetch('http://127.0.0.1:8000/users/token/', {
-    method: 'POST',
-    body: JSON.stringify(registerCompany),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${Cookies.get('jwt')}`,
-    },
-    credentials: 'include',
-  })
-    .then(async (res) => {
-      if (!res.ok) {
-        const errorMsg = await res.json();
-        if (res.status === 403) {
-          errors.general = 'Acceso denegado';
-        } else if (res.status === 401) {
-          errors.general = "Contraseña o correo incorrecto";
+
+  function validateEmail() {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!registerCompany.username) {
+      errors.email = "El correo es obligatorio.";
+    } else if (!emailPattern.test(registerCompany.username)) {
+      errors.email = "Formato de correo incorrecto.";
+    } else {
+      errors.email = "";
+    }
+  }
+
+  function validatePassword() {
+    if (!registerCompany.password) {
+      errors.password = "La contraseña es obligatoria.";
+    } else if (registerCompany.password.length < 4 || registerCompany.password.length > 12) {
+      errors.password = "La contraseña debe tener entre 4 y 12 caracteres.";
+    } else {
+      errors.password = "";
+    }
+  }
+
+  function login() {
+    validateEmail();
+    validatePassword();
+
+    if (errors.email || errors.password) {
+      errors.general = "Todos los campos son obligatorios y deben ser correctos.";
+      return;
+    }
+
+    fetch(`${VUE_APP_URL}/users/token/`, {
+      method: 'POST',
+      body: JSON.stringify(registerCompany),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Cookies.get('jwt')}`,
+      },
+      credentials: 'include',
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorMsg = await res.json();
+          if (res.status === 403) {
+            errors.general = 'Acceso denegado';
+          } else if (res.status === 401) {
+            errors.general = "Contraseña o correo incorrecto";
+          }
+          throw new Error(`Error HTTP: ${res.status} - ${errorMsg.detail}`);
         }
-        throw new Error(`Error HTTP: ${res.status} - ${errorMsg.detail}`);
-      }
-      return res.json();
-    })
-    .then((json) => {
-      if (!json) return;
-      Cookies.set('jwt', json.access);
-      router.push(json.is_temp_password ? '/password' : '/usuarios');
-    })
-    .catch((err) => {
-      console.error(err);
-      router.push('/');
-    });
-}
+        return res.json();
+      })
+      .then((json) => {
+        if (!json) return;
+        Cookies.set('jwt', json.access);
+        router.push(json.is_temp_password ? '/password' : '/usuarios');
+      })
+      .catch((err) => {
+        console.error(err);
+        router.push('/');
+      });
+  }
 </script>
 
 <style>
