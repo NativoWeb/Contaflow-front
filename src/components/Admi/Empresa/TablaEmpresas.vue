@@ -1,6 +1,6 @@
 <template>
      <!-- Contenedor de búsqueda y tabla -->
-     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+     <!-- <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Lista de Contador</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
@@ -14,7 +14,7 @@
           class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
       </div>
-    </div>
+    </div> -->
   
     <!-- Tabla -->
     <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">

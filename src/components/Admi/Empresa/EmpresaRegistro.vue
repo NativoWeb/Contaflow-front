@@ -96,6 +96,7 @@
   </div>
 </template>
 
+
 <script setup>
 import Cookies from "js-cookie";
 import { reactive, ref } from "vue";
@@ -112,16 +113,16 @@ const companyForm = reactive({
 
 const modalVisible = ref(false);
 
-// Enviar datos 
+// Enviar datos al servidor sin validación
 function addCompany() {
-  fetch(`${VUE_APP_URL}/companies/`, {
+  fetch(`${VUE_APP_URL}/companies/register/`, {
     method: 'POST',
-    body: JSON.stringify(companyForm),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-    }
-  })
+      body: JSON.stringify(companyForm),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Cookies.get('jwt')}`
+      }
+    })
   .then(response => {
     if (!response.ok){
       if (response.status == 401) alert("Acceso denegado");
