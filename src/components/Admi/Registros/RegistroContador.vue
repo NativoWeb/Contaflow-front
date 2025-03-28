@@ -11,7 +11,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Nombres:
           </label>
-          <input v-model="userForm.first_name" @input="validateFirstName"
+          <input v-model="userAccountant.first_name" @input="validateFirstName"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese sus nombres">
           <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
@@ -20,7 +20,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Apellidos:
           </label>
-          <input v-model="userForm.last_name" @input="validateLastName"
+          <input v-model="userAccountant.last_name" @input="validateLastName"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese sus apellidos">
           <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name }}</p>
@@ -30,11 +30,10 @@
             Tipo de Identificación:
           </label>
           <div>
-            <select  v-model="userForm.identification_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
-              <option selected>Seleccione</option>
-              <option value="CC">Cédula de ciudadanía</option>
-              <option value="CE">Cédula de extranjería</option>
-              <option value="PP">Pasaporte </option>
+            <select  v-model="userAccountant.id_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+              <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
+              <option value="Cedula_Extranjeria">Cédula de extranjería</option>
+              <option value="Pasaporte">Pasaporte </option>
           </select>
           </div>
         </div>
@@ -46,25 +45,25 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Número de Identificación:
           </label>
-          <input v-model="userForm.identification_number" @input="validateIdentificationNumber"
+          <input v-model="userAccountant.id_number" @input="validateIdentificationNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese su celular">
-          <p v-if="errors.identification_number" class="text-red-500 text-xs mt-1">{{ errors.identification_number }}</p>
+          <p v-if="errors.id_number" class="text-red-500 text-xs mt-1">{{ errors.id_number }}</p>
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Numero de Celular:
           </label>
-          <input v-model="userForm.phone_number" @input="validatePhoneNumber"
+          <input v-model="userAccountant.phone_number" @input="validatePhoneNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-            type="email" placeholder="Ingrese su correo">
+            type="text" placeholder="Ingrese su correo">
           <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
         </div>
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Correo Electrónico:
           </label>
-          <input v-model="userForm.username" @input="validateEmail"
+          <input v-model="userAccountant.username" @input="validateEmail"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="email" placeholder="Ingrese su correo">
           <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
@@ -87,31 +86,35 @@
         </div>
       </div>
     </form>
+    <TablaContador/>
   </template>
   
   <script setup>
   // , computed
   import { reactive, ref } from "vue";
   import Cookies from 'js-cookie';
+  import TablaContador from "./TablaContador.vue";
+
   const VUE_APP_URL = process.env.VUE_APP_URL;
 
   // Estado del formulario
   const userAccountant = reactive({
   first_name: "",
   last_name: "",
-  identification_type: "Seleccione",
-  identification_number: "",
+  id_type: "Cedula_Ciudadania",
+  id_number: "",
   phone_number: "",
   username: "",
-  estado: "Pendiente",
-  companies: []
+  role: "CONTADOR",
+  status: "Pendiente",
+  clients: []
   });
   
   // Estado de errores
   const errors = reactive({
   first_name: "",
   last_name: "",
-  identification_number: "",
+  id_number: "",
   phone_number: "",
   username: "",
   });
@@ -126,26 +129,50 @@
   
   // Validaciones
   const validateFirstName = () => {
-  errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
+  errors.first_name = nameRegex.test(userAccountant.first_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
   const validateLastName = () => {
-  errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
+  errors.last_name = nameRegex.test(userAccountant.last_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
   const validateIdentificationNumber = () => {
-  errors.identification_number = identificationRegex.test(userForm.identification_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
+  errors.id_number = identificationRegex.test(userAccountant.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
   };
   
   const validatePhoneNumber = () => {
-  errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
+  errors.phone_number = phoneRegex.test(userAccountant.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
   };
   
   const validateEmail = () => {
-  errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
+  errors.username = emailRegex.test(userAccountant.username) ? "" : "Ingrese un correo válido.";
   };
 
   // Envío del formulario
-  
+  function addAccountant() {
+    fetch(`${VUE_APP_URL}/accountants/email/`,{
+      method: "POST",
+      body: JSON.stringify(userAccountant),
+      headers: {
+        'Content-Type': 'application/json',
+      'Authorization': `Bearer ${Cookies.get('jwt')}`
+      }
+    })
+    .then(response => {
+    if (!response.ok){
+      if (response.status == 401) alert("Acceso denegado");
+      if (response.status == 403) alert("No tiene permiso para realizar esta acción");
+      throw new Error(`Error ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(() => {
+    alert("Se envio un correo al autitor para que active su cuenta");
+  })
+  .catch(err => {
+    console.error(err)
+  });
+  }
+
   </script>
   
