@@ -57,7 +57,7 @@
           </label>
           <input v-model="userForm.phone_number" @input="validatePhoneNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-            type="email" placeholder="Ingrese su correo">
+            type="text" placeholder="Ingrese su correo">
           <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
         </div>
         <div>
