@@ -43,11 +43,10 @@
     </div>
 </template>
 
-<script>
-  import { ref } from 'vue';
+<script setup>
+  import { ref } from 'vue'
   import Cookies from 'js-cookie';
   
-
   const VUE_APP_URL = process.env.VUE_APP_URL;
   
   const accountants = ref([]);
@@ -59,6 +58,7 @@
   })
   .then(response => response.json())
   .then(json => {
+    console.log(json)
     accountants.value = json;
   })
   .catch(err => console.log(err))
@@ -78,19 +78,6 @@
 //     );
 //   });
   
-
-
-
-  export default {
-    setup() {
-      return {
-        accountants
-        // searchQuery,
-        // filteredUsers,
-        // seleccionarUsuario
-      };
-    }
-  };
-  </script>
+</script>
   
   
