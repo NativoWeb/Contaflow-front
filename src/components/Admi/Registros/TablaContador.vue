@@ -52,13 +52,11 @@
   
   const accountants = ref([]);
 
-  fetch(`${VUE_APP_URL}/accountants/`,
-    {
-        headers: {
-            'Authorization': `Bearer ${Cookies.get('jwt')}`
-        }
+  fetch(`${VUE_APP_URL}/accountants/`, {
+    headers: {
+      'Authorization': `Bearer ${Cookies.get('jwt')}`
     }
-  )
+  })
   .then(response => response.json())
   .then(json => {
     accountants.value = json;

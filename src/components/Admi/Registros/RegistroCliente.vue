@@ -4,14 +4,14 @@
         Registro de Clientes PYME
     </h2>
       <!-- Formulario -->
-       <form @submit.prevent="addUser" class="w-full p-6 bg-white">
+       <form @submit.prevent="addClient" class="w-full p-6 bg-white">
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Nombres:
           </label>
-          <input v-model="userForm.first_name" @input="validateFirstName"
+          <input v-model="clientForm.first_name" @input="validateFirstName"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese sus nombres">
           <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
@@ -20,7 +20,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Apellidos:
           </label>
-          <input v-model="userForm.last_name" @input="validateLastName"
+          <input v-model="clientForm.last_name" @input="validateLastName"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese sus apellidos">
           <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name }}</p>
@@ -30,11 +30,11 @@
             Tipo de Identificación:
           </label>
           <div>
-            <select  v-model="userForm.identification_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+            <select  v-model="clientForm.id_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
               <option selected>Seleccione</option>
-              <option value="CC">Cédula de ciudadanía</option>
-              <option value="CE">Cédula de extranjería</option>
-              <option value="PP">Pasaporte </option>
+              <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
+              <option value="Cedula_Extranjeria">Cédula de extranjería</option>
+              <option value="Pasaporte">Pasaporte </option>
           </select>
           </div>
         </div>
@@ -46,7 +46,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Número de Identificación:
           </label>
-          <input v-model="userForm.identification_number" @input="validateIdentificationNumber"
+          <input v-model="clientForm.id_number" @input="validateIdentificationNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese su celular">
           <p v-if="errors.identification_number" class="text-red-500 text-xs mt-1">{{ errors.identification_number }}</p>
@@ -55,7 +55,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Numero de Celular:
           </label>
-          <input v-model="userForm.phone_number" @input="validatePhoneNumber"
+          <input v-model="clientForm.phone_number" @input="validatePhoneNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese su correo">
           <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
@@ -64,7 +64,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Correo Electrónico:
           </label>
-          <input v-model="userForm.username" @input="validateEmail"
+          <input v-model="clientForm.username" @input="validateEmail"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="email" placeholder="Ingrese su correo">
           <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
@@ -142,15 +142,17 @@
   const VUE_APP_URL = process.env.VUE_APP_URL;
 
   // Estado del formulario
-  const userForm = reactive({
+  const clientForm = reactive({
   first_name: "",
   last_name: "",
-  identification_type: "Seleccione",
-  identification_number: "",
+  id_type: "Seleccione",
+  id_number: "",
   phone_number: "",
   username: "",
-  estado: "Pendiente",
-  companies: []
+  status: "Pendiente",
+  role: "CLIENT",
+  companies: [],
+  conciliations: []
   });
   
   // Estado de errores
@@ -172,60 +174,32 @@
   
   // Validaciones
   const validateFirstName = () => {
-  errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
+  errors.first_name = nameRegex.test(clientForm.first_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
   const validateLastName = () => {
-  errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
+  errors.last_name = nameRegex.test(clientForm.last_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
   const validateIdentificationNumber = () => {
-  errors.identification_number = identificationRegex.test(userForm.identification_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
+  errors.identification_number = identificationRegex.test(clientForm.identification_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
   };
   
   const validatePhoneNumber = () => {
-  errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
+  errors.phone_number = phoneRegex.test(clientForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
   };
   
   const validateEmail = () => {
-  errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
+  errors.username = emailRegex.test(clientForm.username) ? "" : "Ingrese un correo válido.";
   };
-  
-  
-  // Verificación de correo único
-  /*const checkEmailExists = () => {
-  fetch(`http://127.0.0.1:8000/users/email/`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-    }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.exists) {
-      errors.username = "Este correo ya está registrado.";
-    }
-  })
-  .catch(err => console.error("Error verificando el correo:", err));
-  };
-  */
-  
-  // Comprobar si hay errores
-  // const hasErrors = computed(() => {
-  //   return Object.values(errors).some(error => error);
-  // });
   
   // Envío del formulario
-  function addUser() {
+  function addClient() {
   isLoading.value = true;
-  // if (hasErrors.value) {
-  //   alert("Corrija los errores antes de enviar.");
-  //   return;
-  // }
   
   fetch(`${VUE_APP_URL}/client/email/`, {
     method: 'POST',
-    body: JSON.stringify(userForm),
+    body: JSON.stringify(clientForm),
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${Cookies.get('jwt')}`
