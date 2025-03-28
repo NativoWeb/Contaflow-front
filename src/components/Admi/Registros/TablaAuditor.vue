@@ -1,7 +1,7 @@
 <template>
     <!-- Contenedor de búsqueda y tabla -->
     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
-      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Lista de Auditor</h2>
+      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Lista de Auditores</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
         <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
@@ -36,7 +36,23 @@
             <td class="px-6 py-4">{{ auditor.id_number }}</td>
             <td class="px-6 py-4">{{ auditor.username }}</td>
             <td class="px-6 py-4">{{ auditor.phone_number }}</td>
-            <td class="px-6 py-4">{{ auditor.status }}</td>
+
+            <td v-if="auditor.status == 'Pendiente'" class="px-6 py-4">
+              <span class="text-sm text-orange-500">
+                {{ auditor.status }}
+              </span>
+            </td>
+            <td v-if="auditor.status == 'Activo'" class="px-6 py-4">
+              <span class="text-sm text-green-500">
+                {{ auditor.status }}
+              </span>
+            </td>
+            <td v-if="auditor.status == 'Inactivo'" c class="px-6 py-4">
+              <span class="text-sm text-red-500">
+                {{ auditor.status }}
+              </span>
+            </td>
+            
         </tr>
         </tbody>
       </table>

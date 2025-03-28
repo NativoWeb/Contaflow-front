@@ -136,10 +136,8 @@
   errors.last_name = nameRegex.test(clientForm.last_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
-  const validateIdentificationNumber = () => {errors.identification_number = identificationRegex.test(clientForm.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
-
-  errors.identification_number = identificationRegex.test(clientForm.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
-
+  const validateIdentificationNumber = () => {
+    errors.identification_number = identificationRegex.test(clientForm.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
   };
   
   const validatePhoneNumber = () => {

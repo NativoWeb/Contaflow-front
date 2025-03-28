@@ -1,6 +1,6 @@
 <template>
   <!-- Contenedor de búsqueda y tabla -->
-  <!-- <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+  <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Lista de Clientes PYME</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
@@ -15,7 +15,7 @@
           class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
       </div>
-    </div> -->
+    </div>
   
     <!-- Tabla -->
     <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">
@@ -36,7 +36,22 @@
             <td class="px-6 py-4">{{ client.identification_number }}</td>
             <td class="px-6 py-4">{{ client.username }}</td>
             <td class="px-6 py-4">{{ client.phone_number }}</td>
-            <td class="px-6 py-4">{{ client.status }}</td>
+
+            <td v-if="client.status == 'Pendiente'" class="px-6 py-4">
+              <span class="text-sm text-orange-500">
+                {{ client.status }}
+              </span>
+            </td>
+            <td v-if="client.status == 'Activo'" class="px-6 py-4">
+              <span class="text-sm text-green-500">
+                {{ client.status }}
+              </span>
+            </td>
+            <td v-if="client.status == 'Inactivo'" c class="px-6 py-4">
+              <span class="text-sm text-red-500">
+                {{ client.status }}
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
