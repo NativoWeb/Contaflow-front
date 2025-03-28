@@ -43,7 +43,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
   import { ref } from 'vue';
   import Cookies from 'js-cookie';
   
@@ -61,6 +61,7 @@
   )
   .then(response => response.json())
   .then(json => {
+    console.log(json)
     auditors.value = json;
   })
   .catch(err => console.log(err))
@@ -79,20 +80,7 @@
 //       user.identification_number.includes(searchQuery.value)
 //     );
 //   });
-  
 
-
-
-  export default {
-    setup() {
-      return {
-        auditors
-        // searchQuery,
-        // filteredUsers,
-        // seleccionarUsuario
-      };
-    }
-  };
-  </script>
+</script>
   
   

@@ -112,7 +112,7 @@ const companyForm = reactive({
 
 const modalVisible = ref(false);
 
-// Enviar datos al servidor sin validación
+// Enviar datos 
 function addCompany() {
   fetch(`${VUE_APP_URL}/companies/`, {
     method: 'POST',
