@@ -16,7 +16,6 @@
         </div>
       </div>
     </div>
-  
     
     <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">
       <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
@@ -29,32 +28,32 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="accountants.length > 0">
-          <tr v-for="accountant in accountants" :key="accountant" 
+        <tbody v-if="users.length > 0">
+          <tr v-for="user in users" :key="user.id" @click="goToUserDetails(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">{{ accountant.first_name }} {{ accountant.last_name }}</td>
-            <td class="px-6 py-4">{{ accountant.id_number }}</td>
-            <td class="px-6 py-4">{{ accountant.username }}</td>
-            <td class="px-6 py-4">{{ accountant.phone_number }}</td>
-            <td v-if="accountant.status == 'Pendiente'" class="px-6 py-4">
+            <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
+            <td class="px-6 py-4">{{ user.id_number }}</td>
+            <td class="px-6 py-4">{{ user.username }}</td>
+            <td class="px-6 py-4">{{ user.phone_number }}</td>
+            <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
               <span class="text-sm text-orange-500">
-                {{ accountant.status }}
+                {{ user.status }}
               </span>
             </td>
-            <td v-if="accountant.status == 'Activo'" class="px-6 py-4">
+            <td v-if="user.status == 'Activo'" class="px-6 py-4">
               <span class="text-sm text-green-500">
-                {{ accountant.status }}
+                {{ user.status }}
               </span>
             </td>
-            <td v-if="accountant.status == 'Inactivo'" c class="px-6 py-4">
+            <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
               <span class="text-sm text-red-500">
-                {{ accountant.status }}
+                {{ user.status }}
               </span>
             </td>
         </tr>
       </tbody>
       <tr v-else colspan="5" class="flex flex-col justify-center">
-        <span class="ml-2 my-6">No existen contadores registrados</span>
+        <td class="ml-2 my-6">No existen contadores registrados</td>
       </tr>
       </table>
     </div>
@@ -63,12 +62,19 @@
 <script setup>
   import { ref, defineProps } from 'vue'
   import Cookies from 'js-cookie';
-  
-  const accountants = ref([]);
+  import router from "@/router";
+
+  const users = ref([]);
+
   const props = defineProps({
     apiUrl: String,
-    clientList: String
+    clientList: String,
+    routes: String
   })
+
+  const goToUserDetails = id => {
+    router.push(`/${props.routes}/${id}`)
+  }
 
   fetch(props.apiUrl, {
     headers: {
@@ -77,22 +83,10 @@
   })
   .then(response => response.json())
   .then(json => {
-    accountants.value = json;
+    users.value = json;
   })
   .catch(err => console.log(err))
   
-  // Filtrado de usuarios por búsqueda
-//   const searchQuery = ref("");
-  
-//   const filteredUsers = computed(() => {
-//     return accountants.value.filter((user) =>
-//       user.first_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-//       user.last_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-//       user.username.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-//       user.estado.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-//       user.identification_number.includes(searchQuery.value)
-//     );
-//   });
   
 </script>
   

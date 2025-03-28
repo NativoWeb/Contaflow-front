@@ -16,7 +16,6 @@ import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue"
 import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
 import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
 import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
-import RegisterComponent from "@/components/RegisterComponent.vue";
 import EditarUsuario from "@/components/Admi/Usuarios/EditarUsuario.vue";
 //Empresa Admin
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
@@ -35,10 +34,13 @@ import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasCont
 import CuentaContador from "@/components/Contador/Cuenta/CuentaContador.vue";
 import CambiarPasswordCon from "@/components/Contador/Cuenta/CambiarPasswordCon.vue";
 import EditarPerfilCon from "@/components/Contador/Cuenta/EditarPerfilCon.vue";
-import RegistroContador from "@/components/Admi/Registros/RegistroContador.vue";
 import RegistroAuditor from "@/components/Admi/Registros/RegistroAuditor.vue";
 import RegistroCliente from "@/components/Admi/Registros/RegistroCliente.vue";
 import DatosUsuario from "@/components/Admi/Registros/DatosUsuario.vue";
+import UsersDetails from "@/components/UsersDetails.vue";
+import AccountantsComponent from "@/components/pages/AccountantsComponent.vue";
+import ClientsComponent from "@/components/pages/ClientsComponent.vue";
+import LoginUser from "@/components/LoginUser.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -80,9 +82,19 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/RegistroContador',
-                    name: 'RegistroContador',
-                    component: RegistroContador
+                    path: '/contador',
+                    component: AccountantsComponent,
+                    props: true
+                },
+                {
+                    path: '/clientes',
+                    component: ClientsComponent,
+                    props: true
+                },
+                {
+                    path: '/contador/:id',
+                    component: UsersDetails,
+                    props: true
                 },
                 {
                     path: '/RegistroAuditor',
@@ -183,7 +195,7 @@ const router = createRouter({
         {
             path: "/",
             name: "Login",
-            component: RegisterComponent
+            component: LoginUser
         },
         
         {

@@ -26,9 +26,9 @@
               </button>
               <ul :class="{ 'max-h-0 opacity-0': !isOpenDropdown, 'max-h-40 opacity-100': isOpenDropdown }" class=" overflow-hidden transition-all duration-500 ease-in-out mb-1 mt-2 flex items-start justify-start flex-col gap-2"
   >
-                <li><router-link to="/RegistroContador" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
-                <li><router-link to="/RegistroAuditor" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
-                <li><router-link to="/RegistroCliente" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
+                <li><router-link to="/contador" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
+                <li><router-link to="/" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
+                <li><router-link to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
               </ul>
             </li>
 
