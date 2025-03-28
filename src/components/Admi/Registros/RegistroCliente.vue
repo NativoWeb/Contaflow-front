@@ -88,15 +88,70 @@
         </div>
       </div>
     </form>
+
+<!-- Modal -->
+<div v-if="modalVisible" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': modalVisible}">
+    <div class="relative w-full max-w-lg bg-white  p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg dark:bg-gray-800">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 ">
+                <button @click="closeModal" 
+                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                    &times;
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Invitación enviada con éxito!</h3>
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    El usuario <strong>{{ clientForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de Cliente PYME.
+                </p>
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
+                    Se ha enviado un correo a <strong>{{ clientForm.username }}</strong> con un enlace de activación.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <TablaCliente/>
   </template>
   
+  <style>
+/* Fondo del modal */
+.fixed {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro y semitransparente */
+}
+/* Puedes agregarlo dentro de tu archivo CSS o <style scoped> en Vue */
+/* Estilos para el modal */
+.modal-enter-active, .modal-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modal-enter, .modal-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Estilos para el fondo oscuro del modal */
+.modal-background {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para el modal */
+}
+
+</style>
   <script setup>
   import { reactive, ref } from "vue";
   import Cookies from 'js-cookie';
   import TablaCliente from "./TablaCliente.vue"
   
   const VUE_APP_URL = process.env.VUE_APP_URL;
+
+  const modalVisible = ref(false);
   
   const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
   const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
@@ -127,6 +182,12 @@
   username: "",
   });  
   
+
+  const closeModal = () => {
+    modalVisible.value = false; // Oculta el modal
+    location.reload(); // Recarga la página
+  };
+
   // Validaciones
   const validateFirstName = () => {
   errors.first_name = nameRegex.test(clientForm.first_name) ? "" : "Solo se permiten letras y espacios.";
@@ -171,8 +232,7 @@
       return res.json();
     })
     .then(() => {
-      alert("Se envió un correo al usuario");
-      location.reload();
+      modalVisible.value = true;
     })
     .catch(err => {
       isLoading.value = false;

@@ -1,10 +1,9 @@
 <template>
-  <div class="p-6 flex flex-col w-full h-full">
     <!-- Título -->
-    <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368] p-4 rounded-lg shadow-md text-center md:text-left">
+    <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 rounded-lg shadow-md text-center md:text-left">
       Registro de Empresas
     </h2>
-    <form class="w-full p-6" @submit.prevent="addCompany">
+    <form class="w-full p-6 bg-white" @submit.prevent="addCompany">
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
@@ -48,22 +47,22 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Sector económico:
           </label>
-          <div class="relative">
+          <div class="">
             <select 
               v-model="companyForm.sector" 
               class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500"
             >
               <option value="">Seleccione un sector</option>
               <option value="Comercio y Ventas">Comercio y Ventas</option>
-              <option value="Restaurantes y Gastronomía">Restaurantes y Gastronomía</option>
-              <option value="Construcción e Infraestructura">Construcción e Infraestructura</option>
+              <option value="Restaurantes y Gastronomia">Restaurantes y Gastronomía</option>
+              <option value="Construccion e Infraestructura">Construcción e Infraestructura</option>
               <option value="Servicios Profesionales">Servicios Profesionales</option>
               <option value="Finanzas y Seguros">Finanzas y Seguros</option>
               <option value="Industria y Manufactura">Industria y Manufactura</option>
-              <option value="Transporte y Logística">Transporte y Logística</option>
+              <option value="Transporte y Logistica">Transporte y Logística</option>
               <option value="Salud y Medicina">Salud y Medicina</option>
-              <option value="Educación y Formación">Educación y Formación</option>
-              <option value="Tecnología e Informática">Tecnología e Informática</option>
+              <option value="Educacion y Formacion">Educación y Formación</option>
+              <option value="Tecnologia e Informatica">Tecnología e Informática</option>
             </select>
           </div>
         </div>
@@ -93,13 +92,15 @@
         </p>
       </div>
     </div>
-  </div>
+
+  <TablaEmpresas/>
 </template>
 
 
 <script setup>
 import Cookies from "js-cookie";
 import { reactive, ref } from "vue";
+import TablaEmpresas from "./TablaEmpresas.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
