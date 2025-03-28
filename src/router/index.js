@@ -99,6 +99,16 @@ const router = createRouter({
                     component: UsersDetails,
                     props: true
                 },
+                {
+                  path: '/auditores/:id',
+                  component: UsersDetails,
+                  props: true
+              },
+              {
+                path: '/cliente/:id',
+                component: UsersDetails,
+                props: true
+            },
                 
                 {
                     path: '/DatosUsuario',

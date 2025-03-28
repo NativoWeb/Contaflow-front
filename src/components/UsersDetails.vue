@@ -383,7 +383,7 @@ import Cookies from 'js-cookie';
   const VUE_APP_URL = process.env.VUE_APP_URL;
   console.log(userId)
 
-  fetch(`${VUE_APP_URL}/accountants/2/`, {
+  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
       headers: {
         'Authorization': `Bearer ${Cookies.get('jwt')}`
       }
