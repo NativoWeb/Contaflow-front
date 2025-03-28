@@ -80,7 +80,6 @@
 //       user.identification_number.includes(searchQuery.value)
 //     );
 //   });
-
-</script>
+  </script>
   
   
