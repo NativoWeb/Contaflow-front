@@ -46,7 +46,7 @@
           <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
             Número de Identificación:
           </label>
-          <input v-model="clientForm.identification_number" @input="validateIdentificationNumber"
+          <input v-model="clientForm.id_number" @input="validateIdentificationNumber"
             class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
             type="text" placeholder="Ingrese su celular">
           <p v-if="errors.identification_number" class="text-red-500 text-xs mt-1">{{ errors.identification_number }}</p>
@@ -136,7 +136,7 @@
   errors.last_name = nameRegex.test(clientForm.last_name) ? "" : "Solo se permiten letras y espacios.";
   };
   
-  const validateIdentificationNumber = () => {_number = identificationRegex.test(clientForm.identification_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
+  const validateIdentificationNumber = () => {errors.identification_number = identificationRegex.test(clientForm.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
 
   errors.identification_number = identificationRegex.test(clientForm.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
 
