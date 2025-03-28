@@ -116,14 +116,16 @@
     </div>
 </div>
 
-    <TablaContador/>
+    <TablaUsers 
+      :clientList="'Lista de Contadores'"
+      :apiUrl="`${VUE_APP_URL}/accountants/`"/>
   </template>
   
   <script setup>
   // , computed
   import { reactive, ref } from "vue";
   import Cookies from 'js-cookie';
-  import TablaContador from "./TablaContador.vue";
+  import TablaUsers from "./TablaUsers.vue";
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
 

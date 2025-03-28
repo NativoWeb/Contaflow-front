@@ -29,7 +29,7 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="auditors.length > 0">
           <tr v-for="auditor in auditors" :key="auditor"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ auditor.first_name }} {{ auditors.last_name }}</td>
@@ -52,9 +52,11 @@
                 {{ auditor.status }}
               </span>
             </td>
-            
         </tr>
         </tbody>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+        <span class="ml-2 my-6">No existen auditores registrados</span>
+      </tr>
       </table>
     </div>
 </template>

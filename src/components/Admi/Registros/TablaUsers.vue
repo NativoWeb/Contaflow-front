@@ -1,7 +1,7 @@
 <template>
     <!-- Contenedor de búsqueda y tabla -->
     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
-      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Lista de Clientes</h2>
+      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
         <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
@@ -29,8 +29,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="accountant in accountants" :key="accountant"
+        <tbody v-if="accountants.length > 0">
+          <tr v-for="accountant in accountants" :key="accountant" 
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ accountant.first_name }} {{ accountant.last_name }}</td>
             <td class="px-6 py-4">{{ accountant.id_number }}</td>
@@ -52,32 +52,34 @@
               </span>
             </td>
         </tr>
-        </tbody>
+      </tbody>
+      <tr v-else colspan="5" class="flex flex-col justify-center">
+        <span class="ml-2 my-6">No existen contadores registrados</span>
+      </tr>
       </table>
     </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, defineProps } from 'vue'
   import Cookies from 'js-cookie';
   
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  
   const accountants = ref([]);
+  const props = defineProps({
+    apiUrl: String,
+    clientList: String
+  })
 
-  fetch(`${VUE_APP_URL}/accountants/`, {
+  fetch(props.apiUrl, {
     headers: {
       'Authorization': `Bearer ${Cookies.get('jwt')}`
     }
   })
   .then(response => response.json())
   .then(json => {
-    console.log(json)
     accountants.value = json;
   })
   .catch(err => console.log(err))
-  
-
   
   // Filtrado de usuarios por búsqueda
 //   const searchQuery = ref("");
