@@ -7,7 +7,7 @@
       <ul v-if="user">
         <li>
           <div id="profile">
-            <img class="w-20 h-20" src="../../assets/img_usuario.svg" alt="sa">
+            <img class="w-20 h-20" src="@/assets/img_usuario.svg" alt="sa">
             <span>{{ user.first_name }}</span>
             <span>{{ user.role }}</span>
           </div>
@@ -111,10 +111,10 @@
       <div v-else class="loader flex flex-col items-center justify-center w-40 h-40 m-auto">
         <div class="text-red-700" v-if="!isLoading">
           {{ error }}
-          <img class="mt-10 w-[100px] h-[100px]" src="../../assets/error_status.svg" alt="">
+          <img class="mt-10 w-[100px] h-[100px]" src="../assets/error_status.svg" alt="">
         </div>
         <div v-else>
-          <img src="../../assets/loader.svg" alt="carga">
+          <img src="../assets/loader.svg" alt="carga">
         </div>
       </div>
     </nav>  
@@ -129,7 +129,7 @@
       </div>
     
       <!-- Logo -->
-        <img class="max-w-[200px] max-h-[200px] mx-auto" src="../../../public/logo.svg" alt="Logo">
+        <img class="max-w-[200px] max-h-[200px] mx-auto" src="../../public/logo.svg" alt="Logo">
       <!-- Botón de cerrar sesión -->
       <button 
         title="Cerrar Sesión"

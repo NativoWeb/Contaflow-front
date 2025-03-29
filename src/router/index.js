@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import ManageUsers from "@/components/Admi/Usuarios/ManageUsers.vue";
 import NewPassword from "@/components/NewPassword.vue";
 import getIdByToken from "@/hooks/getId";
-import DashboardComponent from "@/components/pages/DashboardComponent.vue";
 import ListaCon from "@/components/Admi/Conciliacion/ListaCon.vue";
 import BancosERPs from "@/components/Admi/Bancos/BancosERPs.vue";
 import EmpresaCon from "@/components/Admi/Conciliacion/EmpresaCon.vue";
@@ -16,12 +15,15 @@ import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue"
 import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
 //Empresa Admin
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
+import LoginUser from "@/components/LoginUser.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
 import UsersDetails from "@/components/UsersDetails.vue";
-import AccountantsComponent from "@/components/pages/AccountantsComponent.vue";
-import ClientsComponent from "@/components/pages/ClientsComponent.vue";
-import AuditorsComponent from "@/components/pages/AuditorsComponent.vue";
-import LoginUser from "@/components/LoginUser.vue";
+
+
+import DashboardComponent from "@/pages/DashboardComponent.vue";
+import AccountantsComponent from "@/pages/AccountantsComponent.vue";
+import ClientsComponent from "@/pages/ClientsComponent.vue";
+import AuditorsComponent from "@/pages/AuditorsComponent.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
