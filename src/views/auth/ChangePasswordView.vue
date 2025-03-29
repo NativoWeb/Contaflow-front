@@ -14,8 +14,8 @@
 								v-model="password.new_password" :type="showNewPassword ? 'text' : 'password'" id="newPassword">
 							<button class="w-12 flex items-center justify-center bg-[#08245B] text-white rounded-r-full" type="button"
 								@click="toggleShowNewPassword">
-								<img v-if="showNewPassword" src="../assets/eyes-open.svg" alt="Ocultar contraseña" />
-								<img v-else src="../assets/eyes-close.svg" alt="Mostrar contraseña" />
+								<img v-if="showNewPassword" src="@/assets/eyes-open.svg" alt="Ocultar contraseña" />
+								<img v-else src="@/assets/eyes-close.svg" alt="Mostrar contraseña" />
 							</button>
 						</div>
 					</div>
@@ -27,8 +27,8 @@
 								:type="showRepeatPassword ? 'text' : 'password'" id="confirmPassword">
 							<button class="w-12 flex items-center justify-center bg-[#08245B] text-white rounded-r-full" type="button"
 								@click="toggleShowRepeatPassword">
-								<img v-if="showRepeatPassword" src="../assets/eyes-open.svg" alt="Ocultar contraseña" />
-								<img v-else src="../assets/eyes-close.svg" alt="Mostrar contraseña" />
+								<img v-if="showRepeatPassword" src="@/assets/eyes-open.svg" alt="Ocultar contraseña" />
+								<img v-else src="@/assets/eyes-close.svg" alt="Mostrar contraseña" />
 							</button>
 						</div>
 					</div>

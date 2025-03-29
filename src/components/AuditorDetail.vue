@@ -320,72 +320,6 @@
 
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isDeleteModalOpen: false,
-      isEditModalOpen: false,
-      isAssignModalOpen: false,
-    };
-  },
-  methods: {
-    toggleDeleteModal() {
-      this.isDeleteModalOpen = !this.isDeleteModalOpen;
-    },
-    closeDeleteModal() {
-      this.isDeleteModalOpen = false;
-    },
-    closeModal() {
-      this.isModalOpen = false; // Cierra el modal
-    },
-    confirmDelete() {
-      console.log("Registro eliminado.");
-      this.closeDeleteModal();
-    },
-    
-    toggleEditModal() {
-      this.isEditModalOpen = !this.isEditModalOpen;
-    },
-    closeEditModal() {
-      this.isEditModalOpen = false;
-    },
-    submitEdit() {
-      console.log("Registro editado:", this.editForm);
-      this.closeEditModal();
-    },
-    toggleAssignModal(){
-      this.isAssignModalOpen = !this.isAssignModalOpen;
-    },
-    closeAssignModal(){
-      this.isAssignModalOpen = false;
-    }, 
-    confirAssign(){
-      console.log("registro asignado");
-      this.closeAssignModal();
-    }
-  }
-};
-</script>
-
-<style>
-.tables-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-.tables-container > div {
-  width: 100%; 
-}
-
-@media (min-width: 768px) {
-  .tables-container > div {
-      width: 48%;
-  }
-}
-</style>
-
 <script setup>
 import { useRoute } from 'vue-router';
 import Cookies from 'js-cookie';
@@ -407,5 +341,81 @@ import { ref } from 'vue';
     user.value = json
   })
 
+// export default {
+//   data() {
+//     return {
+//       isDeleteModalOpen: false,
+//       isEditModalOpen: false,
+//       isAssignModalOpen: false,
+//     };
+//   },
+//   methods: {
+//     toggleDeleteModal() {
+//       this.isDeleteModalOpen = !this.isDeleteModalOpen;
+//     },
+//     closeDeleteModal() {
+//       this.isDeleteModalOpen = false;
+//     },
+//     closeModal() {
+//       this.isModalOpen = false; // Cierra el modal
+//     },
+//     confirmDelete() {
+//       const deleteMethod = { 
+//         methods : 'DELETE',
+//         headers: {
+//           'Authorization': `Bearer ${Cookies.get('jwt')}`
+//         }
+//       }
 
+//       fetch(`${VUE_APP_URL}/auditor/${userId}/`, deleteMethod)
+//       .then(res => res.json())
+//       .then(json => {
+//         console.log(json)
+//       })
+//       .catch(err => console.error(err))
+
+//       console.log("Registro eliminado.");
+//       this.closeDeleteModal();
+//     },
+    
+//     toggleEditModal() {
+//       this.isEditModalOpen = !this.isEditModalOpen;
+//     },
+//     closeEditModal() {
+//       this.isEditModalOpen = false;
+//     },
+//     submitEdit() {
+//       console.log("Registro editado:", this.editForm);
+//       this.closeEditModal();
+//     },
+//     toggleAssignModal(){
+//       this.isAssignModalOpen = !this.isAssignModalOpen;
+//     },
+//     closeAssignModal(){
+//       this.isAssignModalOpen = false;
+//     }, 
+//     confirAssign(){
+//       console.log("registro asignado");
+//       this.closeAssignModal();
+//     }
+//   }
+// };
 </script>
+
+<style>
+.tables-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.tables-container > div {
+  width: 100%; 
+}
+
+@media (min-width: 768px) {
+  .tables-container > div {
+      width: 48%;
+  }
+}
+</style>

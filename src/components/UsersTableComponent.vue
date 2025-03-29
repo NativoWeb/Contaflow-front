@@ -53,7 +53,7 @@
         </tr>
       </tbody>
       <tr v-else colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">No existen contadores registrados</td>
+        <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
       </tr>
       </table>
     </div>
@@ -69,6 +69,7 @@
   const props = defineProps({
     apiUrl: String,
     clientList: String,
+    roles: String,
     routes: String
   })
 

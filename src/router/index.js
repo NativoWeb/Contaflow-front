@@ -1,31 +1,30 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Cookies from 'js-cookie';
-import ManageUsers from "@/components/Admi/Usuarios/ManageUsers.vue";
-import NewPassword from "@/components/NewPassword.vue";
+import ManageUsers from "@/components/admin/ManageUsers.vue";
+import ChangePasswordView from "@/views/auth/ChangePasswordView.vue";
 import getIdByToken from "@/hooks/getId";
-import ListaCon from "@/components/Admi/Conciliacion/ListaCon.vue";
-import BancosERPs from "@/components/Admi/Bancos/BancosERPs.vue";
-import EmpresaCon from "@/components/Admi/Conciliacion/EmpresaCon.vue";
-import ExtractoCon from "@/components/Admi/Conciliacion/ExtractoCon.vue";
-import ResultadoCon from "@/components/Admi/Conciliacion/ResultadoCon.vue.vue";
-import ModificarCon from "@/components/Admi/Conciliacion/ModificarCon.vue";
-import ReporteEmpre from "@/components/Admi/ReportesAuditorias/ReporteEmpre.vue";
-import ListaReporte from "@/components/Admi/ReportesAuditorias/ListaReporte.vue";
-import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue";
-import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
-import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
-import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
+import ListaCon from "@/components/admin/ListaCon.vue";
+import BancosERPs from "@/components/admin/BancosERPs.vue";
+import EmpresaCon from "@/components/admin/EmpresaCon.vue";
+import ExtractoCon from "@/components/admin/ExtractoCon.vue";
+import ResultadoCon from "@/components/admin/ResultadoCon.vue.vue";
+import ModificarCon from "@/components/admin/ModificarCon.vue";
+import ReporteEmpre from "@/components/admin/ReporteEmpre.vue";
+import ListaReporte from "@/components/admin/ListaReporte.vue";
+import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
+import PerfilAdmin from "@/components/admin/PerfilAdmin.vue";
 //Empresa Admin
-import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
-import LoginUser from "@/components/LoginUser.vue";
-import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
+import EmpresaRegistro from "@/components/admin/EmpresaRegistro.vue";
+import LoginUser from "@/views/auth/LoginView.vue";
+import EditarEmpresa from "@/components/admin/EditarEmpresa.vue";
 import UsersDetails from "@/components/UsersDetails.vue";
+import AuditorDetail from "@/components/AuditorDetail.vue";
 
 
-import DashboardComponent from "@/views/DashboardComponent.vue";
-import AccountantsComponent from "@/views/accountant/AccountantsComponent.vue";
-import ClientsComponent from "@/views/client/ClientsComponent.vue";
-import AuditorsComponent from "@/views/auditor/AuditorsComponent.vue";
+import DashboardView from "@/components/common/DashboardView.vue";
+import AccountantsView from "@/views/accountant/AccountantsView.vue";
+import ClientsView from "@/views/client/ClientsView.vue";
+import AuditorsView from "@/views/auditor/AuditorsView.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -35,7 +34,7 @@ const router = createRouter({
         {
             path: '/Dashboard',
             name: 'Dashboard',
-            component: DashboardComponent,
+            component: DashboardView,
             children: [
                 {
                     path: "/usuarios",
@@ -68,22 +67,27 @@ const router = createRouter({
                 },
                 {
                     path: '/contador',
-                    component: AccountantsComponent,
+                    component: AccountantsView,
                     props: true
                 },
                 {
                     path: '/clientes',
-                    component: ClientsComponent,
+                    component: ClientsView,
                     props: true
                 },
                 {
                   path: '/auditores',
-                  component: AuditorsComponent,
+                  component: AuditorsView,
                   props: true
               },
                 {
                     path: '/contador/:id',
                     component: UsersDetails,
+                    props: true
+                },
+                {
+                    path: '/auditor/:id',
+                    component: AuditorDetail,
                     props: true
                 },
                 {
@@ -148,16 +152,6 @@ const router = createRouter({
                     name: 'PerfilAdmin',
                     component: PerfilAdmin
                 },
-                {
-                    path: '/EditarPerfilAdmin',
-                    name: 'EditarPerfilAdmin',
-                    component: EditarPerfilAdmin
-                },
-                {
-                    path: '/ContraseñaAdmin',
-                    name: 'ContraseñaAdmin',
-                    component: ContraseñaAdmin
-                }
                 
             ]
         },
@@ -169,7 +163,7 @@ const router = createRouter({
         
         {
             path: "/password",
-            component: NewPassword,
+            component: ChangePasswordView,
             // En caso de que no haya un token
             beforeEnter: (to, from, next) => {
                 const token = Cookies.get('jwt')
