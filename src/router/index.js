@@ -22,9 +22,9 @@ import AuditorDetail from "@/components/AuditorDetail.vue";
 
 
 import DashboardView from "@/components/common/DashboardView.vue";
-import AccountantsView from "@/views/accountant/AccountantsView.vue";
-import ClientsView from "@/views/client/ClientsView.vue";
-import AuditorsView from "@/views/auditor/AuditorsView.vue";
+import AccountantsView from "@/views/admin/AccountantsView.vue";
+import ClientsView from "@/views/admin/ClientsView.vue";
+import AuditorsView from "@/views/admin/AuditorsView.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -82,6 +82,11 @@ const router = createRouter({
               },
                 {
                     path: '/contador/:id',
+                    component: UsersDetails,
+                    props: true
+                },
+                {
+                    path: '/cliente/:id',
                     component: UsersDetails,
                     props: true
                 },
