@@ -19,21 +19,6 @@ import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
 //Empresa Admin
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
-// Contador
-import MenuContador from "@/components/Contador/MenuContador.vue";
-import EmpresaConciliacion from "@/components/Contador/ConciliacionContador/EmpresaConciliacion.vue";
-import ListaConciliaciones from "@/components/Contador/ConciliacionContador/ListaConciliaciones.vue";
-import ExtractosConciliacion from "@/components/Contador/ConciliacionContador/ExtractosConciliacion.vue";
-import ResultadoConcilliacion from "@/components/Contador/ConciliacionContador/ResultadoConcilliacion.vue";
-import ModificarConciliacion from "@/components/Contador/ConciliacionContador/ModificarConciliacion.vue";
-import EmpresaReporte from "@/components/Contador/Reportes/EmpresaReporte.vue";
-import ListaReporteContador from "@/components/Contador/Reportes/ListaReporteContador.vue";
-import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
-import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasContador.vue";
-import CuentaContador from "@/components/Contador/Cuenta/CuentaContador.vue";
-import CambiarPasswordCon from "@/components/Contador/Cuenta/CambiarPasswordCon.vue";
-import EditarPerfilCon from "@/components/Contador/Cuenta/EditarPerfilCon.vue";
-import DatosUsuario from "@/components/Admi/Registros/DatosUsuario.vue";
 import UsersDetails from "@/components/UsersDetails.vue";
 import AccountantsComponent from "@/components/pages/AccountantsComponent.vue";
 import ClientsComponent from "@/components/pages/ClientsComponent.vue";
@@ -99,13 +84,6 @@ const router = createRouter({
                     component: UsersDetails,
                     props: true
                 },
-                
-                {
-                    path: '/DatosUsuario',
-                    name: 'DatosUsuario',
-                    component: DatosUsuario
-                },
-
                 {
                     path: '/EmpresaRegistro',
                     name: 'EmpresaRegistro',
@@ -203,76 +181,6 @@ const router = createRouter({
                 
             }
         },
-        
-
-         // 🔹 RUTA DE CONTADOR 
-         {
-            path: '/MenuContador',
-            name: 'MenuContador',
-            component: MenuContador,
-            children: [
-                {
-                    path: '/EmpresaConciliacion',
-                    name: 'EmpresaConciliacion',
-                    component: EmpresaConciliacion
-                },
-                {
-                    path: '/ListaConciliaciones',
-                    name: 'ListaConciliaciones',
-                    component: ListaConciliaciones
-                },
-                {
-                    path: '/ExtractosConciliacion',
-                    name: 'ExtractosConciliacion',
-                    component: ExtractosConciliacion
-                },
-                {
-                    path: '/ResultadoConcilliacion',
-                    name: 'ResultadoConcilliacion',
-                    component: ResultadoConcilliacion
-                },
-                {
-                    path: '/ModificarConciliacion',
-                    name: 'ModificarConciliacion',
-                    component: ModificarConciliacion
-                },
-                {
-                    path: '/EmpresaReporte',
-                    name: 'EmpresaReporte',
-                    component: EmpresaReporte
-                },
-                {
-                    path: '/ListaReporteContador',
-                    name: 'ListaReporteContador',
-                    component: ListaReporteContador
-                },
-                {
-                    path: '/ReportesContador',
-                    name: 'ReportesContador',
-                    component: ReportesContador
-                },
-                {
-                    path: '/EmpresasContador',
-                    name: 'EmpresasContador',
-                    component: EmpresasContador
-                },
-                {
-                    path: '/CuentaContador',
-                    name: 'CuentaContador',
-                    component: CuentaContador
-                },
-                {
-                    path: '/CambiarPasswordCon',
-                    name: 'CambiarPasswordCon',
-                    component: CambiarPasswordCon
-                },
-                {
-                    path: '/EditarPerfilCon',
-                    name: 'EditarPerfilCon',
-                    component: EditarPerfilCon
-                }
-            ]
-        }
     ],
 });
 
