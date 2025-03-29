@@ -14,8 +14,7 @@ import ReporteEmpre from "@/components/Admi/ReportesAuditorias/ReporteEmpre.vue"
 import ListaReporte from "@/components/Admi/ReportesAuditorias/ListaReporte.vue";
 import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue";
 import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
-import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
-import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
+
 //Empresa Admin
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
@@ -31,10 +30,11 @@ import ListaReporteContador from "@/components/Contador/Reportes/ListaReporteCon
 import ReportesContador from "@/components/Contador/Reportes/ReportesContador.vue";
 import EmpresasContador from "@/components/Contador/EmpresaContador/EmpresasContador.vue";
 import CuentaContador from "@/components/Contador/Cuenta/CuentaContador.vue";
-import CambiarPasswordCon from "@/components/Contador/Cuenta/CambiarPasswordCon.vue";
-import EditarPerfilCon from "@/components/Contador/Cuenta/EditarPerfilCon.vue";
+
 import DatosUsuario from "@/components/Admi/Registros/DatosUsuario.vue";
 import UsersDetails from "@/components/UsersDetails.vue";
+import AuditorDetail from "@/components/AuditorDetail.vue";
+import ContadorDetails from "@/components/ContadorDetails.vue";
 import AccountantsComponent from "@/components/pages/AccountantsComponent.vue";
 import ClientsComponent from "@/components/pages/ClientsComponent.vue";
 import AuditorsComponent from "@/components/pages/AuditorsComponent.vue";
@@ -93,22 +93,22 @@ const router = createRouter({
                   path: '/auditores',
                   component: AuditorsComponent,
                   props: true
-              },
+                },
                 {
                     path: '/contador/:id',
-                    component: UsersDetails,
+                    component: ContadorDetails,
+                    props: true
+                },
+                    {
+                    path: '/auditores/:id',
+                    component: AuditorDetail,
                     props: true
                 },
                 {
-                  path: '/auditores/:id',
-                  component: UsersDetails,
-                  props: true
-              },
-              {
-                path: '/cliente/:id',
-                component: UsersDetails,
-                props: true
-            },
+                    path: '/cliente/:id',
+                    component: UsersDetails,
+                    props: true
+                },
                 
                 {
                     path: '/DatosUsuario',
@@ -178,16 +178,6 @@ const router = createRouter({
                     name: 'PerfilAdmin',
                     component: PerfilAdmin
                 },
-                {
-                    path: '/EditarPerfilAdmin',
-                    name: 'EditarPerfilAdmin',
-                    component: EditarPerfilAdmin
-                },
-                {
-                    path: '/ContraseñaAdmin',
-                    name: 'ContraseñaAdmin',
-                    component: ContraseñaAdmin
-                }
                 
             ]
         },
@@ -271,16 +261,6 @@ const router = createRouter({
                     name: 'CuentaContador',
                     component: CuentaContador
                 },
-                {
-                    path: '/CambiarPasswordCon',
-                    name: 'CambiarPasswordCon',
-                    component: CambiarPasswordCon
-                },
-                {
-                    path: '/EditarPerfilCon',
-                    name: 'EditarPerfilCon',
-                    component: EditarPerfilCon
-                }
             ]
         }
     ],
