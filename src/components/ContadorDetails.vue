@@ -397,7 +397,7 @@ import { ref } from 'vue';
 
   console.log(userId)
 
-  fetch(`${VUE_APP_URL}/client/${userId}/`, {
+  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
       headers: {
         'Authorization': `Bearer ${Cookies.get('jwt')}`
       }
