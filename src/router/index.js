@@ -22,10 +22,10 @@ import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
 import UsersDetails from "@/components/UsersDetails.vue";
 
 
-import DashboardComponent from "@/pages/DashboardComponent.vue";
-import AccountantsComponent from "@/pages/AccountantsComponent.vue";
-import ClientsComponent from "@/pages/ClientsComponent.vue";
-import AuditorsComponent from "@/pages/AuditorsComponent.vue";
+import DashboardComponent from "@/views/DashboardComponent.vue";
+import AccountantsComponent from "@/views/accountant/AccountantsComponent.vue";
+import ClientsComponent from "@/views/client/ClientsComponent.vue";
+import AuditorsComponent from "@/views/auditor/AuditorsComponent.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
