@@ -2,7 +2,7 @@
     <RegisterComponent
         :apiUrl="`${VUE_APP_URL}/auditor/email/`"
         :usersForm="userData"
-        :title="`Registro de los Auditores 1`"
+        :title="`Registro de los Auditores`"
     />
 
     <UsersTableComponent

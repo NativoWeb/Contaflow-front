@@ -3,7 +3,7 @@
   <RegisterComponent
     :apiUrl="`${VUE_APP_URL}/accountants/email/`"
     :usersForm="userData"
-    :title="`Registro de los Contadores PYME`"
+    :title="`Registro de los Contadores`"
     />
 
   <UsersTableComponent       

@@ -18,6 +18,7 @@ import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
 import LoginUser from "@/components/LoginUser.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
 import UsersDetails from "@/components/UsersDetails.vue";
+import AuditorDetail from "@/components/AuditorDetail.vue";
 
 
 import DashboardComponent from "@/pages/DashboardComponent.vue";
@@ -82,6 +83,11 @@ const router = createRouter({
                 {
                     path: '/contador/:id',
                     component: UsersDetails,
+                    props: true
+                },
+                {
+                    path: '/auditor/:id',
+                    component: AuditorDetail,
                     props: true
                 },
                 {
