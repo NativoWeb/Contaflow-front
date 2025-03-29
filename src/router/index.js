@@ -14,8 +14,6 @@ import ReporteEmpre from "@/components/Admi/ReportesAuditorias/ReporteEmpre.vue"
 import ListaReporte from "@/components/Admi/ReportesAuditorias/ListaReporte.vue";
 import ReporteAdmin from "@/components/Admi/ReportesAuditorias/ReporteAdmin.vue";
 import PerfilAdmin from "@/components/Admi/Perfil/PerfilAdmin.vue";
-import EditarPerfilAdmin from "@/components/Admi/Perfil/EditarPerfilAdmin.vue";
-import ContraseñaAdmin from "@/components/Admi/Perfil/ContraseñaAdmin.vue";
 //Empresa Admin
 import EmpresaRegistro from "@/components/Admi/Empresa/EmpresaRegistro.vue";
 import EditarEmpresa from "@/components/Admi/Empresa/EditarEmpresa.vue";
@@ -146,16 +144,6 @@ const router = createRouter({
                     name: 'PerfilAdmin',
                     component: PerfilAdmin
                 },
-                {
-                    path: '/EditarPerfilAdmin',
-                    name: 'EditarPerfilAdmin',
-                    component: EditarPerfilAdmin
-                },
-                {
-                    path: '/ContraseñaAdmin',
-                    name: 'ContraseñaAdmin',
-                    component: ContraseñaAdmin
-                }
                 
             ]
         },

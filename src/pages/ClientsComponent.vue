@@ -8,6 +8,7 @@
   <UsersTableComponent
     :clientList="'Lista de Clientes'"
     :apiUrl="`${VUE_APP_URL}/client/`"
+    :roles="'Clientes'"
     :routes="`cliente`"
     />
 </template>
