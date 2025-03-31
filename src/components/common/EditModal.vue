@@ -7,7 +7,7 @@
   <div class="p-10 relative w-full max-w-3xl bg-white rounded-lg shadow-lg dark:bg-gray-800">
     <!-- Encabezado -->
     <div>
-      <h3 class="text-xl font-semibold text-[#2A5CAA]">Editar registro</h3>
+      <h3 class="text-xl font-semibold text-[#2A5CAA]">{{ title }}</h3>
     </div>
 
     <!-- Contenido -->
@@ -16,11 +16,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Nombres:</label>
-            <input v-model="edituser.first_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.first_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Apellidos:</label>
-            <input v-model="edituser.last_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.last_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Tipo de Identificación:</label>
@@ -32,11 +32,11 @@
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Número de Celular:</label>
-            <input v-model="edituser.phone_number" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.phone_number" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Correo Electrónico:</label>
-            <input v-model="edituser.username" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.username" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
         </div>
       </form>
@@ -64,18 +64,15 @@
   import { ref, defineProps, reactive } from 'vue';
   import Cookies from 'js-cookie';
 
-
-
   const showEditModal = ref(false);
   const VUE_APP_URL = process.env.VUE_APP_URL;
   
-
-  
   const props = defineProps({
-    user: Object
+    user: Object,
+    title: String
   })
 
-  const edituser = reactive({
+  const editUser = reactive({
     first_name: props.user.first_name,
     last_name: props.user.last_name,
     phone_number: props.user.phone_number,
@@ -98,10 +95,10 @@
         'Authorization': `Bearer ${Cookies.get('jwt')}` 
       },
       body: JSON.stringify({
-        first_name: props.user.first_name,
-        last_name: props.user.last_name,
-        phone_number: props.user.phone_number,
-        username: props.user.username
+        first_name: editUser.first_name,
+        last_name: editUser.last_name,
+        phone_number: editUser.phone_number,
+        username: editUser.username
       })
     })
     .then(res => res.json())

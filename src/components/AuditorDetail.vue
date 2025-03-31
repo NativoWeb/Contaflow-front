@@ -66,7 +66,7 @@
 
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
-      <EditModal :user="user"/>
+      <EditModal :user="user" :title="'Actualizar Auditor'"/>
       <DeleteModal :id="user.id"/>
       <StatusModal/>
       <button class="btn-action">Reenviar invitación</button>
