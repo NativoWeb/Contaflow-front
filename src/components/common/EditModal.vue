@@ -16,11 +16,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Nombres:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{user.first_name}}</p>
+            <input v-model="edituser.first_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Apellidos:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.last_name}}</p>
+            <input v-model="edituser.last_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Tipo de Identificación:</label>
@@ -32,11 +32,11 @@
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Número de Celular:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.phone_number }}</p>
+            <input v-model="edituser.phone_number" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Correo Electrónico:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.username }}</p>
+            <input v-model="edituser.username" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
         </div>
       </form>
@@ -61,13 +61,26 @@
 </template>
 
 <script setup>
-  import { ref, defineProps } from 'vue';
+  import { ref, defineProps, reactive } from 'vue';
+  import Cookies from 'js-cookie';
+
+
 
   const showEditModal = ref(false);
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  
 
+  
   const props = defineProps({
     user: Object
   })
+
+  const edituser = reactive({
+    first_name: props.user.first_name,
+    last_name: props.user.last_name,
+    phone_number: props.user.phone_number,
+    username: props.user.username
+  });
 
   function toggleShowEditModal(){
     showEditModal.value = !showEditModal.value;
@@ -77,6 +90,25 @@
 
   // Funcion
   const submitEdit = () => {
+
+    fetch(`${VUE_APP_URL}/users/update/${props.user.id}`,{
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Cookies.get('jwt')}` 
+      },
+      body: JSON.stringify({
+        first_name: props.user.first_name,
+        last_name: props.user.last_name,
+        phone_number: props.user.phone_number,
+        username: props.user.username
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+    showEditModal.value = false;
+
     console.log("Usuario Editado")
   }
 

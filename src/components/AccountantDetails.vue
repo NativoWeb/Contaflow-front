@@ -70,8 +70,8 @@
   <div class="flex flex-col gap-6 ml-2 p-8">
       <EditModal :user="user"/>
       <DeleteModal :id="user.id"/>
-      <button class="btn-action">Activar / Inactivar</button>
-      <button class="btn-action">Reenviar invitación</button>
+      <StatusModal/>
+      <InvitationsModal/>
       <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
   </div>
 </div>
@@ -284,6 +284,8 @@ import { useRoute } from 'vue-router';
 import Cookies from 'js-cookie';
 import { ref } from 'vue';
 import EditModal from './common/EditModal.vue';
+import StatusModal from './common/StatusModal.vue';
+import InvitationsModal from './common/InvitationsModal.vue';
 
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;
