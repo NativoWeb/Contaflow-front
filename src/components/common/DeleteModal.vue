@@ -91,6 +91,7 @@ import router from '@/router';
     isDeleteModal.value = !isDeleteModal.value;
     if (isDeleteModal.value == false){
       router.back();
+      
     }
   }
 
