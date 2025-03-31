@@ -15,16 +15,17 @@ import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
 import PerfilAdmin from "@/components/admin/PerfilAdmin.vue";
 //Empresa Admin
 import EmpresaRegistro from "@/components/admin/EmpresaRegistro.vue";
-import LoginUser from "@/views/auth/LoginView.vue";
 import EditarEmpresa from "@/components/admin/EditarEmpresa.vue";
-import UsersDetails from "@/components/UsersDetails.vue";
 import AuditorDetail from "@/components/AuditorDetail.vue";
-
-
+import ClientDetails from "@/components/ClientDetails.vue";
+import AccountantDetails from "@/components/AccountantDetails.vue";
 import DashboardView from "@/components/common/DashboardView.vue";
+
+import LoginUser from "@/views/auth/LoginView.vue";
 import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
+
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -82,12 +83,12 @@ const router = createRouter({
               },
                 {
                     path: '/contador/:id',
-                    component: UsersDetails,
+                    component: AccountantDetails,
                     props: true
                 },
                 {
                     path: '/cliente/:id',
-                    component: UsersDetails,
+                    component: ClientDetails,
                     props: true
                 },
                 {

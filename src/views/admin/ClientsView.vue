@@ -1,13 +1,13 @@
 <template>
   <RegisterComponent
-    :apiUrl="`${VUE_APP_URL}/client/email/`"
+    :apiUrl="`${VUE_APP_URL}/clients/email/`"
     :usersForm="userData"
     :title="`Registro de los Clientes PYME`"
     />
 
   <UsersTableComponent
     :clientList="'Lista de Clientes'"
-    :apiUrl="`${VUE_APP_URL}/client/`"
+    :apiUrl="`${VUE_APP_URL}/clients/`"
     :roles="'Clientes'"
     :routes="`cliente`"
     />

@@ -66,8 +66,8 @@
 
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
-      <button @click="toggleEditModal" class="btn-action">Editar</button>
-      <button @click="toggleDeleteModal"   class="btn-action">Eliminar</button>
+      <EditModal :user="user"/>
+      <DeleteModal :id="user.id"/>
       <button class="btn-action">Activar / Inactivar</button>
       <button class="btn-action">Reenviar invitación</button>
       <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
@@ -142,93 +142,6 @@
           </tbody>
       </table>
   </div>
-</div>
-
-<!-- Modal para Eliminar -->
-<div v-if="isDeleteModalOpen" 
-   tabindex="-1" 
-   class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-<div class="relative p-5 w-full max-w-md max-h-full">
-  <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-    <!-- Contenido del Modal -->
-    <div class="p-6 md:p-5 text-center">
-      <img src="@/assets/Error.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
-      <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">¿ás seguro que quieres eliminar este registro?</h3>
-      <h3 class="mb-5 text-lg font-normal text-[#000000]">Este registro se elimina definitivamente.</h3>
-      
-      <!-- Botones -->
-      <button @click="closeDeleteModal"
-              class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
-                     focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
-                     dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        Cancelar
-      </button>
-      <button @click="confirmDelete"
-              type="button" 
-              class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-        Confirmar
-      </button>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- Modal para Editar -->
-<div v-if="isEditModalOpen" 
-   class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 p-4">
-<div class="p-10 relative w-full max-w-3xl bg-white rounded-lg shadow-lg dark:bg-gray-800">
-  <!-- Encabezado -->
-  <div>
-    <h3 class="text-xl font-semibold text-[#2A5CAA]">Editar registro</h3>
-  </div>
-
-  <!-- Contenido -->
-  <div class="space-y-1 p-2">
-    <form @submit.prevent="submitEdit">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-semibold text-[#193368]">Nombres:</label>
-          <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{user.first_name}}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#193368]">Apellidos:</label>
-          <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.last_name}}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#193368]">Tipo de Identificación:</label>
-          <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.id_type }}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#193368]">Número de Identificación:</label>
-          <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.id_number }}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#193368]">Número de Celular:</label>
-          <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.phone_number }}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#193368]">Correo Electrónico:</label>
-          <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.username }}</p>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- Botones -->
-  <div class="flex justify-center space-x-3 p-5 dark:border-gray-700">
-    <button @click="closeEditModal"
-            class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
-                   focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
-                   dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-      Cancelar
-    </button>
-    <button @click="submitEdit"
-            type="button" 
-            class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-      Confirmar
-    </button>
-  </div>
-</div>
 </div>
 
 <!-- Modal para asignar empresa -->
@@ -324,35 +237,12 @@
 export default {
   data() {
     return {
-      isDeleteModalOpen: false,
-      isEditModalOpen: false,
       isAssignModalOpen: false,
     };
   },
   methods: {
-    toggleDeleteModal() {
-      this.isDeleteModalOpen = !this.isDeleteModalOpen;
-    },
-    closeDeleteModal() {
-      this.isDeleteModalOpen = false;
-    },
     closeModal() {
       this.isModalOpen = false; // Cierra el modal
-    },
-    confirmDelete() {
-      console.log("Registro eliminado.");
-      this.closeDeleteModal();
-    },
-    
-    toggleEditModal() {
-      this.isEditModalOpen = !this.isEditModalOpen;
-    },
-    closeEditModal() {
-      this.isEditModalOpen = false;
-    },
-    submitEdit() {
-      console.log("Registro editado:", this.editForm);
-      this.closeEditModal();
     },
     toggleAssignModal(){
       this.isAssignModalOpen = !this.isAssignModalOpen;
@@ -387,17 +277,17 @@ export default {
 </style>
 
 <script setup>
-import { useRoute } from 'vue-router';
-import Cookies from 'js-cookie';
-import { ref } from 'vue';
+  import DeleteModal from './common/DeleteModal.vue';
+  import EditModal from './common/EditModal.vue';
+  import { useRoute } from 'vue-router';
+  import Cookies from 'js-cookie';
+  import { ref } from 'vue';
 
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const user = ref();
 
-  console.log(userId)
-
-  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
+  fetch(`${VUE_APP_URL}/clients/${userId}/`, {
       headers: {
         'Authorization': `Bearer ${Cookies.get('jwt')}`
       }

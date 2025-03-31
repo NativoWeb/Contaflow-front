@@ -1,13 +1,13 @@
 <template>
     <RegisterComponent
-        :apiUrl="`${VUE_APP_URL}/auditor/email/`"
+        :apiUrl="`${VUE_APP_URL}/auditors/email/`"
         :usersForm="userData"
         :title="`Registro de los Auditores`"
     />
 
     <UsersTableComponent
         :clientList="'Lista de Auditores'"
-        :apiUrl="`${VUE_APP_URL}/auditor/`"
+        :apiUrl="`${VUE_APP_URL}/auditors/`"
         :roles="'Auditores'"
         :routes="`auditor`"
         />
