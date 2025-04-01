@@ -58,6 +58,27 @@
     </div>
   </div>
   </div>
+
+  <!-- Edit Successfull! -->
+  <div v-if="isEditedModal" 
+   tabindex="-1" 
+   class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+    <div class="relative p-5 w-full max-w-md max-h-full">
+      <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+        <!-- Contenido del Modal -->
+        <div class="p-6 md:p-5 text-center">
+          <img src="@/assets/Error.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
+          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">Usuario eliminado de manera correcta</h3>
+
+          <button @click="isEditedToogle"
+              type="button" 
+              class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
+              Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -65,6 +86,8 @@
   import Cookies from 'js-cookie';
 
   const showEditModal = ref(false);
+  const isEditedModal =  ref(false);
+  
   const VUE_APP_URL = process.env.VUE_APP_URL;
   
   const props = defineProps({
@@ -102,11 +125,18 @@
       })
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(() => {
+      isEditedToogle()
+    })
     .catch(err => console.log(err))
     showEditModal.value = false;
+  }
 
-    console.log("Usuario Editado")
+  const isEditedToogle = () => {
+    isEditedModal.value = !isEditedModal.value;
+    if (isEditedModal.value == false){
+      location.reload()
+    }
   }
 
 </script>

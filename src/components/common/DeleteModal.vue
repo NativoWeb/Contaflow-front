@@ -42,7 +42,7 @@
           <button @click="isDeleteToggle"
               type="button" 
               class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-              Confirmar
+              Aceptar
           </button>
         </div>
       </div>
