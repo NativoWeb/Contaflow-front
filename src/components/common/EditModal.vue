@@ -67,8 +67,8 @@
       <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
         <!-- Contenido del Modal -->
         <div class="p-6 md:p-5 text-center">
-          <img src="@/assets/Error.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
-          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">Usuario eliminado de manera correcta</h3>
+          <img src="@/assets/Update.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
+          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">La informacion del usuario se actualizó correctamente</h3>
 
           <button @click="isEditedToogle"
               type="button" 
