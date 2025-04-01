@@ -1,5 +1,4 @@
 <template>
-
   <button @click="toggleShowEditModal" class="btn-action">Editar</button>
     <!-- Modal para Editar -->
   <div v-if="showEditModal" 
@@ -24,7 +23,9 @@
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Tipo de Identificación:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.id_type }}</p>
+            <p v-if="user.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">Cedula de Ciudadania</p>
+            <p v-if="user.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">Cedula de Extranjeria</p>
+            <p v-if="user.id_type == 'Pasaporte'" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">Pasaporte></p>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Número de Identificación:</label>
@@ -51,6 +52,7 @@
         Cancelar
       </button>
       <button @click="submitEdit"
+              :disabled="hasNoChange"
               type="button" 
               class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
         Confirmar
@@ -60,17 +62,17 @@
   </div>
 
   <!-- Edit Successfull! -->
-  <div v-if="isEditedModal" 
+  <div v-if="alertEditedModal" 
    tabindex="-1" 
    class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
     <div class="relative p-5 w-full max-w-md max-h-full">
       <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
         <!-- Contenido del Modal -->
         <div class="p-6 md:p-5 text-center">
-          <img src="@/assets/Update.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
+          <img src="@/assets/update.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
           <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">La informacion del usuario se actualizó correctamente</h3>
 
-          <button @click="isEditedToogle"
+          <button @click="isEditedToggle"
               type="button" 
               class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
               Aceptar
@@ -82,14 +84,13 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, reactive } from 'vue';
+  import { ref, defineProps, reactive, computed } from 'vue';
   import Cookies from 'js-cookie';
 
   const showEditModal = ref(false);
-  const isEditedModal =  ref(false);
-  
+  const alertEditedModal =  ref(false);
   const VUE_APP_URL = process.env.VUE_APP_URL;
-  
+
   const props = defineProps({
     user: Object,
     title: String
@@ -102,15 +103,8 @@
     username: props.user.username
   });
 
-  function toggleShowEditModal(){
-    showEditModal.value = !showEditModal.value;
-  }
-
-  console.log(props.user);
-
   // Funcion
   const submitEdit = () => {
-
     fetch(`${VUE_APP_URL}/users/update/${props.user.id}`,{
       method: 'PATCH',
       headers: {
@@ -126,17 +120,30 @@
     })
     .then(res => res.json())
     .then(() => {
-      isEditedToogle()
+      isEditedToggle()
     })
     .catch(err => console.log(err))
-    showEditModal.value = false;
+    .finally(() => {
+      showEditModal.value = false;
+    })
   }
 
-  const isEditedToogle = () => {
-    isEditedModal.value = !isEditedModal.value;
-    if (isEditedModal.value == false){
+  const isEditedToggle = () => {
+    alertEditedModal.value = !alertEditedModal.value;
+    if (alertEditedModal.value == false){
       location.reload()
     }
   }
+
+  function toggleShowEditModal(){
+    showEditModal.value = !showEditModal.value;
+  }
+
+  const hasNoChange = computed(() => {
+    return  editUser.first_name === props.user.first_name &&
+         editUser.last_name === props.user.last_name &&
+         editUser.phone_number === props.user.phone_number &&
+         editUser.username === props.user.username;
+  })
 
 </script>

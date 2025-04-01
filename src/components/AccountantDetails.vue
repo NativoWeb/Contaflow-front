@@ -70,8 +70,8 @@
   <div class="flex flex-col gap-6 ml-2 p-8">
       <EditModal :user="user" :title="'Actualizar Contador'"/>
       <DeleteModal :id="user.id"/>
-      <StatusModal/>
-      <InvitationsModal/>
+      <StatusModal :id="user.id" :status="user.status"/>
+      <SendInvitationModal :user="user" :apiUrl="`${VUE_APP_URL}/users/email/${user.id}`"/>
       <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
   </div>
 </div>
@@ -231,33 +231,30 @@
 <div v-else class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
 </div>
-
-
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isAssignModalOpen: false,
-    };
-  },
-  methods: {
-    closeModal() {
-      this.isModalOpen = false; // Cierra el modal
-    },
-    toggleAssignModal(){
-      this.isAssignModalOpen = !this.isAssignModalOpen;
-    },
-    closeAssignModal(){
-      this.isAssignModalOpen = false;
-    }, 
-    confirAssign(){
-      console.log("registro asignado");
-      this.closeAssignModal();
-    }
-  }
-};
+<script setup>
+import DeleteModal from './common/DeleteModal.vue';
+import { useRoute } from 'vue-router';
+import Cookies from 'js-cookie';
+import { ref } from 'vue';
+import EditModal from './common/EditModal.vue';
+import StatusModal from './common/StatusModal.vue';
+import SendInvitationModal from './common/SendInvitationModal.vue';
+
+  const userId = useRoute().params.id;
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const user = ref();
+
+  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('jwt')}`
+      }
+    })
+  .then(res => res.json())
+  .then(json => {
+    user.value = json
+  })
 </script>
 
 <style>
@@ -277,29 +274,3 @@ export default {
   }
 }
 </style>
-
-<script setup>
-import DeleteModal from './common/DeleteModal.vue';
-import { useRoute } from 'vue-router';
-import Cookies from 'js-cookie';
-import { ref } from 'vue';
-import EditModal from './common/EditModal.vue';
-import StatusModal from './common/StatusModal.vue';
-import InvitationsModal from './common/InvitationsModal.vue';
-
-  const userId = useRoute().params.id;
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const user = ref();
-
-  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
-      headers: {
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-  .then(res => res.json())
-  .then(json => {
-    user.value = json
-  })
-
-
-</script>

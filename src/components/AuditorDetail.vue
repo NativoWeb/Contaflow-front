@@ -27,7 +27,9 @@
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Tipo de Identificación:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{  user.id_type }}</p>
+              <p v-if="user.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Ciudadania</p>
+              <p v-if="user.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Extranjeria</p>
+              <p v-if="user.id_type == 'Pasaporte'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Pasaporte</p>
           </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
@@ -68,8 +70,8 @@
   <div class="flex flex-col gap-6 ml-2 p-8">
       <EditModal :user="user" :title="'Actualizar Auditor'"/>
       <DeleteModal :id="user.id"/>
-      <StatusModal/>
-      <button class="btn-action">Reenviar invitación</button>
+      <StatusModal :id="user.id" :status="user.status"/>
+      <SendInvitationModal :user="user"/>
       <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
   </div>
 </div>
@@ -240,6 +242,7 @@ import EditModal from './common/EditModal.vue';
 import Cookies from 'js-cookie';
 import { ref } from 'vue';
 import StatusModal from './common/StatusModal.vue';
+import SendInvitationModal from './common/SendInvitationModal.vue';
 
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;

@@ -9,7 +9,7 @@
         <div class="p-6 md:p-5 text-center">
           <img src="@/assets/Error.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
           <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">¿Estás seguro que quieres eliminar este registro?</h3>
-          <h3 class="mb-5 text-lg font-normal text-[#000000]">Este registro se elimina definitivamente.</h3>
+          <p class="mb-5 text-lg font-normal text-[#000000]">Este registro se elimina definitivamente.</p>
       
           <!-- Botones -->
           <button @click="toggleShowDeleteModal"
@@ -29,7 +29,7 @@
   </div>
 
   <!-- Borrado de manera exitosa -->
-  <div v-if="isDeleteModal" 
+  <div v-if="alertDeleteModal" 
    tabindex="-1" 
    class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
     <div class="relative p-5 w-full max-w-md max-h-full">
@@ -61,7 +61,7 @@ import router from '@/router';
   })
 
   const showDeleteModal = ref(false);
-  const isDeleteModal = ref(false);
+  const alertDeleteModal = ref(false);
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -83,15 +83,15 @@ import router from '@/router';
     .catch(err => {
       console.error(err)
     })
-
-    showDeleteModal.value = false;
+    .finally(() => {
+      showDeleteModal.value = false;
+    })
   }
 
   const isDeleteToggle = () => {
-    isDeleteModal.value = !isDeleteModal.value;
-    if (isDeleteModal.value == false){
+    alertDeleteModal.value = !alertDeleteModal.value;
+    if (alertDeleteModal.value == false){
       router.back();
-      
     }
   }
 

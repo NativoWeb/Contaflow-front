@@ -11,17 +11,17 @@
 
     <div class="flex items-center gap-6 justify-center">
         <div class="flex items-center gap-2">
-            <input id="bordered-radio-1" type="radio" value="" name="bordered-radio"
+            <input v-model="editStatus.status" checked id="active" type="radio" value="Activo" name="bordered-radio"
                 class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-            <label for="bordered-radio-1" class="text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label for="active" class="text-sm font-medium text-gray-900 dark:text-gray-300">
                 Activar
             </label>
         </div>
 
         <div class="flex items-center gap-2">
-            <input checked id="bordered-radio-2" type="radio" value="" name="bordered-radio"
+            <input v-model="editStatus.status" id="inactive" type="radio" value="Inactivo" name="bordered-radio"
                 class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-            <label for="bordered-radio-2" class="text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label for="inactive" class="text-sm font-medium text-gray-900 dark:text-gray-300">
                 Inactivar
             </label>
         </div>
@@ -35,9 +35,15 @@
                    dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
             Cancelar
         </button>
-        <button @click="confirmStatus"
+        <button @click="changeStatus"
+            :disabled="hasNoChange"
             type="button" 
-            class="py-3 px-5 ms-4 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
+            class="py-3 px-5 ms-4 text-sm font-medium focus:outline-none bg-[#08245B] text-white rounded-lg border"
+            :class="{
+            'bg-[#08245B] hover:bg-[#2a4b8d] text-white': !hasNoChange,
+            'bg-gray-300 text-gray-500 cursor-not-allowed': hasNoChange
+            }">
+            
             Confirmar
         </button>
     </div>
@@ -47,18 +53,18 @@
     </div>
   </div>
 
-  <!-- Borrado de manera exitosa -->
-  <div v-if="isStatusModal" 
+  <!-- Status Changed Succesfull! -->
+  <div v-if="alertStatusModal" 
    tabindex="-1" 
    class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
     <div class="relative p-5 w-full max-w-md max-h-full">
       <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
         <!-- Contenido del Modal -->
         <div class="p-6 md:p-5 text-center">
-          <img src="@/assets/Error.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
+          <img src="@/assets/check.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
           <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">El estado del usuario se ha actualizado correctamente</h3>
 
-          <button @click="isStatusToggle"
+          <button @click="isStatusChangedToggle"
               type="button" 
               class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
               Confirmar
@@ -71,46 +77,57 @@
 </template>
 
 <script setup>
-  import { ref, defineProps } from 'vue';
   import Cookies from 'js-cookie';
-import router from '@/router';
-
-  const props = defineProps({
-    id: String
-  })
+  import {  reactive, ref, defineProps, computed } from 'vue';
 
   const showStatusModal = ref(false);
-  const isStatusModal = ref(false);
-
+  const alertStatusModal =  ref(false);
   const VUE_APP_URL = process.env.VUE_APP_URL;
 
-  function toggleShowStatusModal(){
-    showStatusModal.value = !showStatusModal.value;
-  }
+  const props = defineProps({
+    id: String,
+    status: String
+  })
 
-  const confirmStatus = () => {
-    fetch(`${VUE_APP_URL}/users/delete/${props.id}`, {
-      method: 'DELETE',
+  const editStatus = reactive({
+    status: "Activo"
+  })
+
+  const changeStatus = () => {
+    fetch(`${VUE_APP_URL}/users/update/${props.id}`, {
+      method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Cookies.get('jwt')}` 
+      },
+      body: JSON.stringify(editStatus)
     })
     .then(res => res.json())
-    .then(() => {
-      isStatusToggle()
+    .then(res => {
+      console.log(res)
+      isStatusChangedToggle()
     })
     .catch(err => {
       console.error(err)
     })
-
-    showStatusModal.value = false;
+    .finally(() => {
+      showStatusModal.value = false;
+    })
   }
 
-  const isStatusToggle = () => {
-    isStatusModal.value = !isStatusModal.value;
-    if (isStatusModal.value == false){
-      router.back();
+  const toggleShowStatusModal = () => {
+    showStatusModal.value = !showStatusModal.value;
+  }
+
+  const isStatusChangedToggle = () => {
+    alertStatusModal.value = !alertStatusModal.value;
+    if (alertStatusModal.value == false){
+      location.reload()
     }
   }
+
+  const hasNoChange = computed(() => {
+    return editStatus.status === props.status
+  })
 
 </script>
