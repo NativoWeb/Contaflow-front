@@ -43,7 +43,6 @@
             'bg-[#08245B] hover:bg-[#2a4b8d] text-white': !hasNoChange,
             'bg-gray-300 text-gray-500 cursor-not-allowed': hasNoChange
             }">
-            
             Confirmar
         </button>
     </div>

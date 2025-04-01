@@ -77,7 +77,13 @@
       <div class="md:col-span-2"></div> <!-- Espacio vacío para empujar el botón a la derecha -->
       <div class="flex items-end">
         <button type="submit"
-          class="w-full bg-[#08245B] hover:bg-[#2a4b8d] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline">
+          :disabled="isFormInvalid"
+          class="w-full bg-[#08245B] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline"
+          :class="{
+            'hover:bg-[#2a4b8d]': !isFormInvalid,
+            'text-gray-500 cursor-not-allowed': isFormInvalid
+          }">
+          
           <span v-if="!isLoading" class="text-white">
             Añadir usuario
           </span>
@@ -118,6 +124,35 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div v-if="errorModal" 
+  class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+  :class="{'scale-100': errorModal}">
+  <div class="relative w-full max-w-lg bg-white  p-6 transform transition-all duration-600 ease-in-out">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg dark:bg-gray-800">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 ">
+              <button @click="closeModal" 
+                      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                  &times;
+              </button>
+          </div>
+          <!-- Modal body -->
+          <div class="p-8 text-center space-y-4">
+              <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Hubo un error de tipo {{"error"}}!</h3>
+              <p class="text-lg text-gray-700 dark:text-gray-300">
+                  El error fue porque
+              </p>
+              <p class="text-lg text-gray-700 dark:text-gray-300">
+                  <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
+                  Se ha enviado un correo a <strong>{{ userForm.username }}</strong> con un enlace de activación.
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
+
 
 </template>
 
@@ -140,7 +175,7 @@
 </style>
 
 <script setup>
-import { reactive, ref, defineProps } from "vue";
+import { reactive, ref, defineProps, computed } from "vue";
 import Cookies from 'js-cookie';
 
 const props = defineProps({
@@ -151,6 +186,7 @@ const props = defineProps({
 
 
 const modalVisible = ref(false);
+const errorModal = ref(false);
 
 const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
 const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
@@ -173,6 +209,7 @@ username: "",
 
 const closeModal = () => {
   modalVisible.value = false;
+  errorModal.value = false;
   location.reload(); 
 };
 
@@ -196,6 +233,18 @@ errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se per
 const validateEmail = () => {
 errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
 };
+
+const isFormInvalid = computed(() => {
+  return (
+    !userForm.first_name.trim() ||
+    !userForm.last_name.trim() ||
+    !userForm.id_type ||
+    !userForm.id_number.trim() ||
+    !userForm.phone_number.trim() ||
+    !userForm.username.trim()
+  );
+});
+
 
 
 function addUser() {
@@ -223,6 +272,7 @@ function addUser() {
     modalVisible.value = true;
   })
   .catch(err => {
+    errorModal.value = true;
     isLoading.value = false;
     console.error(err)
   });
