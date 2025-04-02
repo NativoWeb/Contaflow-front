@@ -37,19 +37,19 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/',
-            name: 'navbar',
-            component: NavbarHeader,            
-            beforeEnter: (to, from, next) => {
-              const token = Cookies.get('jwt')  
-                if (!token) {
-                  next('/login')
-                }
-                else {
-                  next()
-                }
-                
-            }
+          path: '/',
+          name: 'navbar',
+          component: NavbarHeader,            
+          beforeEnter: (to, from, next) => {
+            const token = Cookies.get('jwt')  
+              if (!token) {
+                next('/login')
+              }
+              else {
+                next()
+              }
+              
+          }
         },
         {
             path: '/administrador',
