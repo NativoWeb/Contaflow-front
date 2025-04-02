@@ -5,9 +5,6 @@
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
         <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
-          <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-          </svg>
           <input  type="text" 
           v-model="searchQuery"
           id="table-search-users" 
@@ -28,8 +25,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="companies in companys" :key="companies.nit"
+        <tbody v-if="company.length > 0">
+          <tr v-for="companies in company" :key="companies.nit"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ companies.nit }}</td>
             <td class="px-6 py-4">{{ companies.name }}</td>
@@ -37,6 +34,12 @@
             <td class="px-6 py-4">{{ companies.address }}</td>
           </tr>
         </tbody>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+          <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
+        </tr>
+        <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
+          <td class="ml-2 my-6">Ocurrio un error</td>
+        </tr>
       </table>
     </div>
 </template>
@@ -46,8 +49,7 @@
   import Cookies from 'js-cookie';
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
-
-  const companys = ref([]);
+  const company = ref([]);
 
   fetch(`${VUE_APP_URL}/companies/`, {
     headers: {
@@ -56,11 +58,8 @@
   })
   .then(res => res.json())
   .then(json => {
-    console.log(json)
-    companys.value = json
+    company.value = json
   })
-  .catch(err => {
-    console.error(err)
-  })
+  .catch(err => company.value = err)
 
 </script>

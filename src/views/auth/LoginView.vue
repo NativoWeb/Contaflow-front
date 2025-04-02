@@ -112,11 +112,11 @@
       .then((json) => {
         if (!json) return;
         Cookies.set('jwt', json.access);
-        router.push(json.is_temp_password ? '/password' : '/usuarios');
+        router.push(json.is_temp_password ? '/password' : '/');
       })
       .catch((err) => {
         console.error(err);
-        router.push('/');
+        router.push('/login');
       });
   }
 </script>

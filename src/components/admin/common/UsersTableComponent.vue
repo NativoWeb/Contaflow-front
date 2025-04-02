@@ -55,6 +55,9 @@
       <tr v-else colspan="5" class="flex flex-col justify-center">
         <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
       </tr>
+      <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
+        <td class="ml-2 my-6">Ocurrio un error</td>
+      </tr>
       </table>
     </div>
 </template>
@@ -65,6 +68,7 @@
   import router from "@/router";
 
   const users = ref([]);
+  const errors = ref("");
 
   const props = defineProps({
     apiUrl: String,
@@ -86,7 +90,7 @@
   .then(json => {
     users.value = json;
   })
-  .catch(err => console.log(err))
+  .catch(err => errors.value = err)
   
   
 </script>

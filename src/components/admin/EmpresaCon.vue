@@ -2,12 +2,11 @@
   <div class="p-6 flex flex-col w-full h-full">
     <!-- Título -->
     <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368] p-4 rounded-lg shadow-md text-center md:text-left">
-      Conciliación Contable y Bancaria
+      Lista de Conciliaciones
     </h2>
 
     <!-- Contenedor de búsqueda y selección de empresa -->
     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
-      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Seleccionar Empresa</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
         <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">

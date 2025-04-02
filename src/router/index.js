@@ -13,19 +13,23 @@ import ReporteEmpre from "@/components/admin/ReporteEmpre.vue";
 import ListaReporte from "@/components/admin/ListaReporte.vue";
 import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
 import PerfilAdmin from "@/components/admin/PerfilAdmin.vue";
+
 //Empresa Admin
-import EmpresaRegistro from "@/components/admin/EmpresaRegistro.vue";
-import EditarEmpresa from "@/components/admin/EditarEmpresa.vue";
+
+import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
+import EditCompanies from "@/components/admin/companies/EditCompanies.vue";
+import CompaniesView from "@/views/companies/CompaniesView.vue";
+
 import AuditorDetail from "@/components/admin/info/AuditorDetail.vue";
 import ClientDetails from "@/components/admin/info/ClientDetails.vue";
-import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
-import DashboardView from "@/components/common/DashboardView.vue";
-
 import LoginUser from "@/views/auth/LoginView.vue";
 import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
-
+// import NavbarHeader from "@/components/common/NavbarHeader.vue";
+import DashboardView from "@/components/common/DashboardView.vue";
+import AdminContext from "@/views/context/AdminContext.vue";
+import NavbarHeader from "@/components/common/NavbarHeader.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -33,9 +37,24 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/Dashboard',
-            name: 'Dashboard',
-            component: DashboardView,
+          path: '/',
+          name: 'navbar',
+          component: NavbarHeader,            
+          beforeEnter: (to, from, next) => {
+            const token = Cookies.get('jwt')  
+              if (!token) {
+                next('/login')
+              }
+              else {
+                next()
+              }
+              
+          }
+        },
+        {
+            path: '/administrador',
+            name: 'Administrador',
+            component: AdminContext,
             children: [
                 {
                     path: "/usuarios",
@@ -48,7 +67,7 @@ const router = createRouter({
         
                         // en caso de que no alla un token en las cookies redirecciona al registro
                         if (!token) {
-                            next('/')
+                            next('/login')
                         }
                         else {
                             fetch(`${VUE_APP_URL}/users/${userId}/`)
@@ -67,7 +86,7 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/contador',
+                    path: '/contadores',
                     component: AccountantsView,
                     props: true
                 },
@@ -97,14 +116,13 @@ const router = createRouter({
                     props: true
                 },
                 {
-                    path: '/EmpresaRegistro',
-                    name: 'EmpresaRegistro',
-                    component: EmpresaRegistro
+                    path: '/empresas',
+                    component: CompaniesView
                 },
                 {
-                    path: '/EditarEmpresa',
+                    path: '/empresas/editar',
                     name: 'EditarEmpresa',
-                    component: EditarEmpresa
+                    component: EditCompanies
                 },
             
                 {
@@ -157,12 +175,16 @@ const router = createRouter({
                     path: '/PerfilAdmin',
                     name: 'PerfilAdmin',
                     component: PerfilAdmin
+                },       
+                {
+                    path: '/dashboard',
+                    name: 'Dashboard',
+                    component: DashboardView
                 },
-                
             ]
         },
         {
-            path: "/",
+            path: "/login",
             name: "Login",
             component: LoginUser
         },
@@ -175,7 +197,7 @@ const router = createRouter({
                 const token = Cookies.get('jwt')
                 
                 if (!token) {
-                    next('/')
+                    next('/login')
                 }
                 else {
                     next()
