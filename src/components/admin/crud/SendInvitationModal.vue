@@ -28,6 +28,21 @@
   </div>
   </div>
 
+  <!-- Modal -->
+  <div v-if="isLoading" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': isLoading}">
+    <div class="relative w-full max-w-lg  p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative dark:bg-gray-800">
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <img src="@/assets/loader.svg" alt="">
+            </div>
+        </div>
+    </div>
+  </div>
+
   <!-- Edit Successfull! -->
   <div v-if="alertInvitationModal" 
    tabindex="-1" 
@@ -48,6 +63,31 @@
       </div>
     </div>
   </div>
+
+<!-- Modal de Error -->
+<div v-if="errorModal" 
+  class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+  :class="{'scale-100': errorModal}">
+  <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg dark:bg-gray-800">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4">
+              <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
+              <button @click="toggleError" 
+                      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                  &times;
+              </button>
+          </div>
+          <!-- Modal body -->
+          <div class="p-8 text-center space-y-4">
+              <p class="text-lg text-gray-700 dark:text-gray-300">
+                  <strong>{{ errorMessage }}</strong>
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
 </template>
 
 <script setup>
@@ -56,15 +96,18 @@
   
   const showInvitationModal = ref(false);
   const alertInvitationModal = ref(false);
+  const isLoading =  ref(false);
+  const errorModal = ref(false);
+  const errorMessage = ref("");
 
   const props = defineProps({
     user: Object,
     apiUrl: String
   })
 
-  console.log(props.user)
-
   function sendInvitation(){
+    isLoading.value =  true;
+    showInvitationModal.value = false;
     fetch(props.apiUrl, {
       method: 'PATCH',
       body: JSON.stringify(props.user),
@@ -74,22 +117,26 @@
       }
     })
     .then(res => {
-    if (!res.ok) {
-      if (res.status === 401) alert("Acceso denegado");
-      // if (res.status === 400) alert("Este usuario ya esta registrado");
-      if (res.status === 403) alert("Tu rol no permite registrar usuarios");
-      throw new Error(`Error ${res.status}`);
-    }
-    return res.json();
-  })
-  .then((json) => {
-    console.log(json)
+      isLoading.value = false;
+      if (!res.ok) {
+        if (res.status === 401) throw new Error(`Acceso denegado`);
+        if (res.status === 403) throw new Error(`Tu rol no te permite reenviar invitaciones`);
+        
+        throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
+      }
+      return res.json();
+    })
+  .then(() => {
     toggleAlertInvitation()
   })
   .catch(err => {
-    console.error(err)
+    isLoading.value = false;
+    errorMessage.value = err;
+    errorModal.value = true;
   })
   .finally(() => {
+    errorModal.value = false;
+    isLoading.value = false;
     showInvitationModal.value = false;
   });
   } 
@@ -99,10 +146,15 @@
   }
 
   const toggleAlertInvitation = () => {
+    isLoading.value = false;
     alertInvitationModal.value = !alertInvitationModal.value;
     if (alertInvitationModal.value == false){
       location.reload()
     }
+  }
+
+  const toggleError = () => {
+    errorModal.value = !errorModal.value;
   }
 
 </script>

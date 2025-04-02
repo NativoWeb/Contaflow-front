@@ -84,26 +84,71 @@
             'text-gray-500 cursor-not-allowed': isFormInvalid
           }">
           
-          <span v-if="!isLoading" class="text-white">
+          <span class="text-white">
             Añadir usuario
-          </span>
-          <span v-else class="text-white flex items-center justify-center">
-            Cargando
           </span>
         </button>
       </div>
     </div>
   </form>
 
-<!-- Modal -->
-<div v-if="modalVisible" 
+  <!-- Modal -->
+  <div v-if="isLoading" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': isLoading}">
+    <div class="relative w-full max-w-lg  p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative dark:bg-gray-800">
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <img src="@/assets/loader.svg" alt="">
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal -->
+  <div v-if="modalVisible" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': modalVisible}">
+    <div class="relative w-full max-w-lg bg-white  p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg dark:bg-gray-800">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 ">
+                <button @click="closeModal" 
+                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                    &times;
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Invitación enviada con éxito!</h3>
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    El usuario <strong>{{ userForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de Usere PYME.
+                </p>
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
+                    Se ha enviado un correo a <strong>{{ userForm.username }}</strong> con un enlace de activación.
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<!-- Modal de Error -->
+<div v-if="errorModal" 
   class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-  :class="{'scale-100': modalVisible}">
-  <div class="relative w-full max-w-lg bg-white  p-6 transform transition-all duration-600 ease-in-out">
+  :class="{'scale-100': errorModal}">
+  <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg dark:bg-gray-800">
           <!-- Modal header -->
-          <div class="flex items-center justify-between p-4 ">
+          <div class="flex items-center justify-between p-4">
+              <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
               <button @click="closeModal" 
                       class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
                   &times;
@@ -111,47 +156,14 @@
           </div>
           <!-- Modal body -->
           <div class="p-8 text-center space-y-4">
-              <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Invitación enviada con éxito!</h3>
               <p class="text-lg text-gray-700 dark:text-gray-300">
-                  El usuario <strong>{{ userForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de Usere PYME.
-              </p>
-              <p class="text-lg text-gray-700 dark:text-gray-300">
-                  <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
-                  Se ha enviado un correo a <strong>{{ userForm.username }}</strong> con un enlace de activación.
+                  <strong>{{ errorMessage }}</strong>
               </p>
           </div>
       </div>
   </div>
 </div>
 
-<!-- Modal -->
-<div v-if="errorModal" 
-  class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-  :class="{'scale-100': errorModal}">
-  <div class="relative w-full max-w-lg bg-white  p-6 transform transition-all duration-600 ease-in-out">
-      <!-- Modal content -->
-      <div class="relative bg-white rounded-lg dark:bg-gray-800">
-          <!-- Modal header -->
-          <div class="flex items-center justify-between p-4 ">
-              <button @click="closeModal" 
-                      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
-                  &times;
-              </button>
-          </div>
-          <!-- Modal body -->
-          <div class="p-8 text-center space-y-4">
-              <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Hubo un error de tipo {{"error"}}!</h3>
-              <p class="text-lg text-gray-700 dark:text-gray-300">
-                  El error fue porque
-              </p>
-              <p class="text-lg text-gray-700 dark:text-gray-300">
-                  <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
-                  Se ha enviado un correo a <strong>{{ userForm.username }}</strong> con un enlace de activación.
-              </p>
-          </div>
-      </div>
-  </div>
-</div>
 
 
 </template>
@@ -187,12 +199,14 @@ const props = defineProps({
 
 const modalVisible = ref(false);
 const errorModal = ref(false);
+const errorMessage = ref("");
+const isLoading = ref(false);
 
 const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
 const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
 const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
-const isLoading = ref(false);
+
 
 // Estado del formulario
 const userForm = reactive(props.usersForm);
@@ -261,10 +275,12 @@ function addUser() {
   .then(res => {
     isLoading.value = false;
     if (!res.ok) {
-      if (res.status === 401) alert("Acceso denegado");
+      if (res.status === 400 ) throw new Error(`El usuario que tratas de registrar ya este registrado`);
+      if (res.status === 401) throw new Error(`Acceso denegado`);
       // if (res.status === 400) alert("Este usuario ya esta registrado");
-      if (res.status === 403) alert("Tu rol no permite registrar usuarios");
-      throw new Error(`Error ${res.status}`);
+      if (res.status === 403) throw new Error(`Tu rol no te permite registrar un usuario`);
+      
+      throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
     }
     return res.json();
   })
@@ -272,6 +288,7 @@ function addUser() {
     modalVisible.value = true;
   })
   .catch(err => {
+    errorMessage.value = err;
     errorModal.value = true;
     isLoading.value = false;
     console.error(err)

@@ -16,9 +16,9 @@ import PerfilAdmin from "@/components/admin/PerfilAdmin.vue";
 //Empresa Admin
 import EmpresaRegistro from "@/components/admin/EmpresaRegistro.vue";
 import EditarEmpresa from "@/components/admin/EditarEmpresa.vue";
-import AuditorDetail from "@/components/AuditorDetail.vue";
-import ClientDetails from "@/components/ClientDetails.vue";
-import AccountantDetails from "@/components/AccountantDetails.vue";
+import AuditorDetail from "@/components/admin/info/AuditorDetail.vue";
+import ClientDetails from "@/components/admin/info/ClientDetails.vue";
+import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
 import DashboardView from "@/components/common/DashboardView.vue";
 
 import LoginUser from "@/views/auth/LoginView.vue";

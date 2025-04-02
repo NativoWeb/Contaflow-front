@@ -30,7 +30,7 @@
               <p v-if="user.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Ciudadania</p>
               <p v-if="user.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Extranjeria</p>
               <p v-if="user.id_type == 'Pasaporte'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Pasaporte</p>
-          </div>
+            </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Número de Identificación:
@@ -68,37 +68,35 @@
 
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
-      <EditModal :user="user" :title="'Actualizar Auditor'"/>
+      <EditModal :user="user" :title="'Actualizar Cliente'"/>
       <DeleteModal :id="user.id"/>
       <StatusModal :id="user.id" :status="user.status"/>
-      <SendInvitationModal :user="user"/>
-      <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
+      <SendInvitationModal :user="user" :apiUrl="`${VUE_APP_URL}/users/email/${user.id}`"/>
+      <AssignComConModal/>
   </div>
 </div>
 
-<ClientsAccAudTable/>
-
-<!-- Modal para asignar empresa -->
-<div v-if="isAssignModalOpen" 
-   class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 p-4">
-<div class="p-10 relative w-[80%] bg-white rounded-lg shadow-lg dark:bg-gray-800">
-  <!-- Encabezado -->
-  <div>
-    <h3 class="text-xl font-semibold text-[#2A5CAA]">Asignar empresa</h3>
-  </div>
-
-  <!-- Contenedor de las tablas con flexbox -->
-<div class="tables-container flex flex-wrap gap-4 p-2">
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
+<div class="tables-container p-2">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Empresas</h2>
       <table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
           <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
               <tr>
-                  <th scope="col" class="px-6 py-3">Nit</th>
-                  <th scope="col" class="px-6 py-3">Razón Social</th>
-                  <th scope="col" class="px-6 py-3">Sector Económico</th>
-                  <th scope="col" class="px-6 py-3">Dirección</th>
-                  <th scope="col" class="px-6 py-3">Acción</th>
+                  <th scope="col" class="px-6 py-3">
+                      Nit
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Razón Social
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Sector Económico
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Dirección
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Acción
+                  </th>
               </tr>
           </thead>
           <tbody>
@@ -115,15 +113,23 @@
       </table>
   </div>
 
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Bancos</h2>
       <table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
           <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
               <tr>
-                  <th scope="col" class="px-7 py-3">Bancos</th>
-                  <th scope="col" class="px-7 py-3">Número de cuenta</th>
-                  <th scope="col" class="px-7 py-3">Tipo de cuenta</th>
-                  <th scope="col" class="px-7 py-3">Acción</th>
+                  <th scope="col" class="px-7 py-3">
+                      Bancos
+                  </th>
+                  <th scope="col" class="px-7 py-3">
+                      Número de cuenta
+                  </th>
+                  <th scope="col" class="px-7 py-3">
+                      Tipo de cuenta
+                  </th>
+                  <th scope="col" class="px-7 py-3">
+                      Acción
+                  </th>
               </tr>
           </thead>
           <tbody>
@@ -139,120 +145,14 @@
       </table>
   </div>
 </div>
-
-
-  <!-- Botones -->
-  <div class="flex justify-center space-x-3 p-5 dark:border-gray-700">
-    <button @click="closeAssignModal"
-            class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
-                   focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
-                   dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-      Cancelar
-    </button>
-    <button @click="confirAssign"
-            type="button" 
-            class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-      Confirmar
-    </button>
-  </div>
 </div>
-</div>
-  </div>
   
 <!-- cargador -->
 <div v-else class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
 </div>
 
-
 </template>
-
-<script setup>
-import { useRoute } from 'vue-router';
-import DeleteModal from './common/DeleteModal.vue';
-import EditModal from './common/EditModal.vue';
-import Cookies from 'js-cookie';
-import { ref } from 'vue';
-import StatusModal from './common/StatusModal.vue';
-import SendInvitationModal from './common/SendInvitationModal.vue';
-import ClientsAccAudTable from './common/ClientsAccAudTable.vue';
-
-  const userId = useRoute().params.id;
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const user = ref();
-
-  console.log(userId)
-
-  fetch(`${VUE_APP_URL}/auditors/${userId}/`, {
-      headers: {
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-  .then(res => res.json())
-  .then(json => {
-    user.value = json
-  })
-
-// export default {
-//   data() {
-//     return {
-//       isDeleteModalOpen: false,
-//       isEditModalOpen: false,
-//       isAssignModalOpen: false,
-//     };
-//   },
-//   methods: {
-//     toggleDeleteModal() {
-//       this.isDeleteModalOpen = !this.isDeleteModalOpen;
-//     },
-//     closeDeleteModal() {
-//       this.isDeleteModalOpen = false;
-//     },
-//     closeModal() {
-//       this.isModalOpen = false; // Cierra el modal
-//     },
-//     confirmDelete() {
-//       const deleteMethod = { 
-//         methods : 'DELETE',
-//         headers: {
-//           'Authorization': `Bearer ${Cookies.get('jwt')}`
-//         }
-//       }
-
-//       fetch(`${VUE_APP_URL}/auditor/${userId}/`, deleteMethod)
-//       .then(res => res.json())
-//       .then(json => {
-//         console.log(json)
-//       })
-//       .catch(err => console.error(err))
-
-//       console.log("Registro eliminado.");
-//       this.closeDeleteModal();
-//     },
-    
-//     toggleEditModal() {
-//       this.isEditModalOpen = !this.isEditModalOpen;
-//     },
-//     closeEditModal() {
-//       this.isEditModalOpen = false;
-//     },
-//     submitEdit() {
-//       console.log("Registro editado:", this.editForm);
-//       this.closeEditModal();
-//     },
-//     toggleAssignModal(){
-//       this.isAssignModalOpen = !this.isAssignModalOpen;
-//     },
-//     closeAssignModal(){
-//       this.isAssignModalOpen = false;
-//     }, 
-//     confirAssign(){
-//       console.log("registro asignado");
-//       this.closeAssignModal();
-//     }
-//   }
-// };
-</script>
 
 <style>
 .tables-container {
@@ -271,3 +171,30 @@ import ClientsAccAudTable from './common/ClientsAccAudTable.vue';
   }
 }
 </style>
+
+<script setup>
+  import { useRoute } from 'vue-router';
+  import Cookies from 'js-cookie';
+  import { ref } from 'vue';
+  import StatusModal from '../crud/StatusModal.vue';
+  import SendInvitationModal from '../crud/SendInvitationModal.vue';
+  import EditModal from '../crud/EditModal.vue';
+  import DeleteModal from '../crud/DeleteModal.vue';
+  import AssignComConModal from '../crud/AssignComConModal.vue';
+
+  const userId = useRoute().params.id;
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const user = ref();
+
+  fetch(`${VUE_APP_URL}/clients/${userId}/`, {
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('jwt')}`
+      }
+    })
+  .then(res => res.json())
+  .then(json => {
+    user.value = json
+  })
+
+
+</script>

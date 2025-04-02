@@ -68,83 +68,14 @@
 
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
-      <EditModal :user="user" :title="'Actualizar Cliente'"/>
+      <EditModal :user="user" :title="'Actualizar Contador'"/>
       <DeleteModal :id="user.id"/>
       <StatusModal :id="user.id" :status="user.status"/>
-      <SendInvitationModal :user="user"/>
-      <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
+      <SendInvitationModal :user="user" :apiUrl="`${VUE_APP_URL}/users/email/${user.id}`"/>
   </div>
 </div>
 
-<div class="tables-container p-2">
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Empresas</h2>
-      <table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
-          <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
-              <tr>
-                  <th scope="col" class="px-6 py-3">
-                      Nit
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Razón Social
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Sector Económico
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Dirección
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Acción
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                  <td class="px-6 py-4">123456789</td>
-                  <td class="px-6 py-4">Empresa A</td>
-                  <td class="px-6 py-4">Finanzas</td>
-                  <td class="px-6 py-4">Calle 123</td>
-                  <td class="px-6 py-4">
-                      <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</button>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
-
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Bancos</h2>
-      <table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
-          <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
-              <tr>
-                  <th scope="col" class="px-7 py-3">
-                      Bancos
-                  </th>
-                  <th scope="col" class="px-7 py-3">
-                      Número de cuenta
-                  </th>
-                  <th scope="col" class="px-7 py-3">
-                      Tipo de cuenta
-                  </th>
-                  <th scope="col" class="px-7 py-3">
-                      Acción
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                  <td class="px-7 py-6">Bancolombia</td>
-                  <td class="px-7 py-6">9876543210</td>
-                  <td class="px-7 py-6">Ahorro</td>
-                  <td class="px-7 py-6">
-                      <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</button>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
-</div>
+<ClientsAccAudTable/>
 
 <!-- Modal para asignar empresa -->
 <div v-if="isAssignModalOpen" 
@@ -231,33 +162,32 @@
 <div v-else class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
 </div>
-
-
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isAssignModalOpen: false,
-    };
-  },
-  methods: {
-    closeModal() {
-      this.isModalOpen = false; // Cierra el modal
-    },
-    toggleAssignModal(){
-      this.isAssignModalOpen = !this.isAssignModalOpen;
-    },
-    closeAssignModal(){
-      this.isAssignModalOpen = false;
-    }, 
-    confirAssign(){
-      console.log("registro asignado");
-      this.closeAssignModal();
-    }
-  }
-};
+<script setup>
+import { useRoute } from 'vue-router';
+import Cookies from 'js-cookie';
+import { ref } from 'vue';
+import StatusModal from '../crud/StatusModal.vue';
+import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
+import SendInvitationModal from '../crud/SendInvitationModal.vue';
+import EditModal from '../crud/EditModal.vue';
+import DeleteModal from '../crud/DeleteModal.vue';
+
+
+  const userId = useRoute().params.id;
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const user = ref();
+
+  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('jwt')}`
+      }
+    })
+  .then(res => res.json())
+  .then(json => {
+    user.value = json
+  })
 </script>
 
 <style>
@@ -277,29 +207,3 @@ export default {
   }
 }
 </style>
-
-<script setup>
-  import DeleteModal from './common/DeleteModal.vue';
-  import EditModal from './common/EditModal.vue';
-  import { useRoute } from 'vue-router';
-  import Cookies from 'js-cookie';
-  import { ref } from 'vue';
-  import StatusModal from './common/StatusModal.vue';
-import SendInvitationModal from './common/SendInvitationModal.vue';
-
-  const userId = useRoute().params.id;
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const user = ref();
-
-  fetch(`${VUE_APP_URL}/clients/${userId}/`, {
-      headers: {
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-  .then(res => res.json())
-  .then(json => {
-    user.value = json
-  })
-
-
-</script>

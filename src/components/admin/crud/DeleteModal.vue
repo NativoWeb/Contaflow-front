@@ -49,12 +49,52 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div v-if="isLoading" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': isLoading}">
+    <div class="relative w-full max-w-lg  p-6 transform transition-all duration-600 ease-in-out">
+      <!-- Modal content -->
+      <div class="relative dark:bg-gray-800">
+        <!-- Modal body -->
+        <div class="p-8 text-center space-y-4">
+          <img src="@/assets/loader.svg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Error -->
+  <div v-if="errorModal" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': errorModal}">
+    <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg dark:bg-gray-800">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4">
+                <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
+                <button @click="toggleError" 
+                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                    &times;
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    <strong>{{ errorMessage }}</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+
 </template>
 
 <script setup>
   import { ref, defineProps } from 'vue';
   import Cookies from 'js-cookie';
-import router from '@/router';
+  import router from '@/router';
 
   const props = defineProps({
     id: String
@@ -62,37 +102,55 @@ import router from '@/router';
 
   const showDeleteModal = ref(false);
   const alertDeleteModal = ref(false);
-
+  const isLoading =  ref(false);
+  const errorModal = ref(false);
+  const errorMessage = ref("");
   const VUE_APP_URL = process.env.VUE_APP_URL;
 
-  function toggleShowDeleteModal(){
-    showDeleteModal.value = !showDeleteModal.value;
-  }
-
   const confirmDelete = () => {
+    isLoading.value = true;
+    showDeleteModal.value = false;
+
     fetch(`${VUE_APP_URL}/users/delete/${props.id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${Cookies.get('jwt')}`
       }
     })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        if (res.status === 401) throw new Error(`Acceso denegado`);
+        if (res.status === 403) throw new Error(`Tu rol no te permite eliminar un usuario`);
+        
+        throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
+      }  
+      return res.json()
+    })
     .then(() => {
       isDeleteToggle()
     })
     .catch(err => {
-      console.error(err)
+      isLoading.value = false;
+      errorMessage.value = err;
+      errorModal.value = true; 
     })
     .finally(() => {
+      errorModal.value = false;
+      isLoading.value = false;
       showDeleteModal.value = false;
     })
   }
 
   const isDeleteToggle = () => {
+    isLoading.value = false;
     alertDeleteModal.value = !alertDeleteModal.value;
     if (alertDeleteModal.value == false){
       router.back();
     }
+  }
+
+  function toggleShowDeleteModal(){
+    showDeleteModal.value = !showDeleteModal.value;
   }
 
 </script>

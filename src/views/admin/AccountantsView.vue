@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-  import UsersTableComponent from '@/components/UsersTableComponent.vue';
-  import RegisterComponent from '@/components/RegisterComponent.vue';
+  import UsersTableComponent from '@/components/admin/common/UsersTableComponent.vue';
+  import RegisterComponent from '@/components/admin/common/RegisterComponent.vue';
   
   const VUE_APP_URL = process.env.VUE_APP_URL; 
   const userData = {

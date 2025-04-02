@@ -30,7 +30,7 @@
               <p v-if="user.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Ciudadania</p>
               <p v-if="user.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Extranjeria</p>
               <p v-if="user.id_type == 'Pasaporte'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Pasaporte</p>
-            </div>
+          </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Número de Identificación:
@@ -68,11 +68,11 @@
 
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
-      <EditModal :user="user" :title="'Actualizar Contador'"/>
+      <EditModal :user="user" :title="'Actualizar Auditor'"/>
       <DeleteModal :id="user.id"/>
       <StatusModal :id="user.id" :status="user.status"/>
       <SendInvitationModal :user="user" :apiUrl="`${VUE_APP_URL}/users/email/${user.id}`"/>
-      <button @click="toggleAssignModal" class="btn-action">Asignar Empresa y Banco</button>
+      <AssignClientsModal :apiUrl="`${VUE_APP_URL}/users/`"/>
   </div>
 </div>
 
@@ -163,23 +163,28 @@
 <div v-else class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
 </div>
+
+
 </template>
 
 <script setup>
-import DeleteModal from './common/DeleteModal.vue';
 import { useRoute } from 'vue-router';
 import Cookies from 'js-cookie';
 import { ref } from 'vue';
-import EditModal from './common/EditModal.vue';
-import StatusModal from './common/StatusModal.vue';
-import SendInvitationModal from './common/SendInvitationModal.vue';
-import ClientsAccAudTable from './common/ClientsAccAudTable.vue';
+import StatusModal from '../crud/StatusModal.vue';
+import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
+import AssignClientsModal from '../crud/AssignClientsModal.vue';
+import SendInvitationModal from '../crud/SendInvitationModal.vue';
+import EditModal from '../crud/EditModal.vue';
+import DeleteModal from '../crud/DeleteModal.vue';
 
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const user = ref();
 
-  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
+  console.log(userId)
+
+  fetch(`${VUE_APP_URL}/auditors/${userId}/`, {
       headers: {
         'Authorization': `Bearer ${Cookies.get('jwt')}`
       }
