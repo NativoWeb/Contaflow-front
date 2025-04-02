@@ -1,8 +1,8 @@
 <template>
-	<div class="flex w-[90%]">
-		<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+	<div class="w-full bg-white flex flex-col md:flex-row p-8">
+		<div class="flex-1">
 			<h2 class="text-xl font-bold text-[#2A5CAA] p-3">Bancos</h2>
-			<table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
+			<table class="w-[100%] text-sm text-left rtl:text-right text-[#08245B]">
 				<thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
 					<tr>
 						<th scope="col" class="px-7 py-3">
@@ -31,8 +31,8 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="flex flex-col justify-center items-center">
-			<button>Eliminar Cliente</button>
+		<div class="flex flex-col gap-6 ml-2 p-8">
+			<button class="btn-action">Eliminar Cliente</button>
 			<AssignClientsModal :apiUrl="`${VUE_APP_URL}/clients/`"/>
 		</div>
 	</div>
