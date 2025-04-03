@@ -53,9 +53,9 @@
   </div>
 
   <!-- Modal de Error -->
-  <div v-if="errorModal" 
+  <div v-if="err" 
     class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-    :class="{'scale-100': errorModal}">
+    :class="{'scale-100': err}">
     <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg dark:bg-gray-800">
@@ -70,7 +70,7 @@
             <!-- Modal body -->
             <div class="p-8 text-center space-y-4">
                 <p class="text-lg text-gray-700 dark:text-gray-300">
-                    <strong>{{ errorMessage }}</strong>
+                    <strong>{{ err }}</strong>
                 </p>
             </div>
         </div>
@@ -115,60 +115,28 @@
 </template>
 
 <script setup>
-  import Cookies from 'js-cookie';
-  import {  reactive, ref, defineProps, computed } from 'vue';
-
-  const showStatusModal = ref(false);
-  const alertStatusModal =  ref(false);
-  const isLoading =  ref(false);
-  const errorModal = ref(false);
-  const errorMessage = ref("");
-  const VUE_APP_URL = process.env.VUE_APP_URL;
+  import GetServices from '@/services/APIService';
+  import {  reactive, defineProps, computed } from 'vue';
 
   const props = defineProps({
     id: String,
     status: String
   })
+  
+  const api = new GetServices();
+  const showStatusModal = api.getShowModal();
+  const alertStatusModal = api.getAlertModal();
+  const isLoading = api.getLoader();
+  const err = api.getError();
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const uri = `/users/update/${props.id}` 
+  const url = VUE_APP_URL + uri;
+
+
 
   const editStatus = reactive({
     status: "Activo"
   })
-
-  const changeStatus = () => {
-    isLoading.value = true;
-    showStatusModal.value = false;
-    fetch(`${VUE_APP_URL}/users/update/${props.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}` 
-      },
-      body: JSON.stringify(editStatus)
-    })
-    .then(res => {
-      if (!res.ok) {
-        if (res.status === 401) throw new Error(`Acceso denegado`);
-        if (res.status === 403) throw new Error(`Tu rol no te permite cambiar el estado un usuario`);
-        
-        throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
-      }  
-      
-      return res.json()
-    })
-    .then(() => {
-      isStatusChangedToggle()
-    })
-    .catch(err => {
-      isLoading.value = false;
-      errorMessage.value = err;
-      errorModal.value = true; 
-    })
-    .finally(() => {
-      errorModal.value = false;
-      isLoading.value = false;
-      showStatusModal.value = false;
-    })
-  }
 
   const toggleShowStatusModal = () => {
     showStatusModal.value = !showStatusModal.value;
@@ -185,5 +153,9 @@
   const hasNoChange = computed(() => {
     return editStatus.status === props.status
   })
+
+  const changeStatus = () => {
+    api.sendDataApi(url, editStatus, isStatusChangedToggle, 'PATCH')
+  }
 
 </script>

@@ -88,8 +88,32 @@ class GetServices {
       this.errors.value = err;
     })
     .finally(() => {
-      this.errors.value = false;
       this.loader.value = false;
+    })
+  }
+
+  // Eliminar Datos
+  deleteDataApi = (url, toggle) => {
+    this.loader.value = true;
+    this.showModal.value = false;
+
+    fetch(url, {
+      method: 'DELETE',  
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('jwt')}` 
+        },
+    })
+    .then(response => {
+      if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
+      return response.json()
+    })
+    .then(() => {
+      toggle()
+    })
+    .catch(err => {
+      this.loader.value = false;
+      this.errors.value = err;
     })
   }
 }

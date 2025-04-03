@@ -110,14 +110,35 @@
         return res.json();
       })
       .then((json) => {
+        console.log(json)
         if (!json) return;
         Cookies.set('jwt', json.access);
-        router.push(json.is_temp_password ? '/password' : '/home');
+        redirectByRole(json);
       })
       .catch((err) => {
         console.error(err);
         router.push('/login');
       });
+  }
+
+  const redirectByRole = (json) => {
+    if (!json.is_temp_password) {
+      if (json.role === 'ADMIN') {
+        return router.push('/administrador')
+      }
+      else if (json.role === 'CLIENTE') {
+        return router.push('/cliente')
+      }
+      else if (json.role === 'CONTADOR') {
+        return router.push('/contador')
+      }
+      else if (json.role === 'AUDITOR') {
+        return router.push('/auditor')
+      }
+    }
+    else {
+      return router.push('/password')
+    }
   }
 </script>
 

@@ -92,54 +92,27 @@
 </template>
 
 <script setup>
-  import { ref, defineProps } from 'vue';
-  import Cookies from 'js-cookie';
+  import { defineProps } from 'vue';
   import router from '@/router';
+  import GetServices from '@/services/APIService';
 
   const props = defineProps({
     id: String
   })
 
-  const showDeleteModal = ref(false);
-  const alertDeleteModal = ref(false);
-  const isLoading =  ref(false);
-  const errorModal = ref(false);
-  const errorMessage = ref("");
+  const api = new GetServices();
+  const errorModal = api.getError();
+  const isLoading = api.getLoader();
+  const showDeleteModal = api.getShowModal();
+  const alertDeleteModal = api.getAlertModal();
   const VUE_APP_URL = process.env.VUE_APP_URL;
+  const uri = `/users/delete/${props.id}`
+  const url = VUE_APP_URL + uri;
 
   const confirmDelete = () => {
-    isLoading.value = true;
-    showDeleteModal.value = false;
-
-    fetch(`${VUE_APP_URL}/users/delete/${props.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-    .then(res => {
-      if (!res.ok) {
-        if (res.status === 401) throw new Error(`Acceso denegado`);
-        if (res.status === 403) throw new Error(`Tu rol no te permite eliminar un usuario`);
-        
-        throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
-      }  
-      return res.json()
-    })
-    .then(() => {
-      isDeleteToggle()
-    })
-    .catch(err => {
-      isLoading.value = false;
-      errorMessage.value = err;
-      errorModal.value = true; 
-    })
-    .finally(() => {
-      errorModal.value = false;
-      isLoading.value = false;
-      showDeleteModal.value = false;
-    })
+    api.deleteDataApi(url, isDeleteToggle)
   }
+
 
   const isDeleteToggle = () => {
     isLoading.value = false;

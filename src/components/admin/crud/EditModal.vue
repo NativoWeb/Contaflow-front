@@ -132,8 +132,6 @@
     title: String
   })
 
-  console.log(props.user.id)
-
   const api = new GetServices();
   const err = api.getError();
   const isLoading = api.getLoader();
@@ -143,7 +141,6 @@
   const uri = `/users/update/${props.user.id}`
   const url = VUE_APP_URL + uri;
 
-
   const editUser = reactive({
     first_name: props.user.first_name,
     last_name: props.user.last_name,
@@ -151,19 +148,12 @@
     username: props.user.username
   });
 
-
-
-
   const isEditedToggle = () => {
     isLoading.value = false;
     alertEditedModal.value = !alertEditedModal.value;
     if (alertEditedModal.value == false){
       location.reload()
     }
-  }
-
-  const submitEdit = () => {
-    api.sendDataApi(url, editUser, isEditedToggle, 'PATCH')
   }
 
   function toggleShowEditModal(){
@@ -177,4 +167,7 @@
          editUser.username === props.user.username;
   })
 
+  const submitEdit = () => {
+    api.sendDataApi(url, editUser, isEditedToggle, 'PATCH')
+  }
 </script>

@@ -65,9 +65,9 @@
   </div>
 
 <!-- Modal de Error -->
-<div v-if="errorModal" 
+<div v-if="err" 
   class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-  :class="{'scale-100': errorModal}">
+  :class="{'scale-100': err}">
   <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg dark:bg-gray-800">
@@ -82,7 +82,7 @@
           <!-- Modal body -->
           <div class="p-8 text-center space-y-4">
               <p class="text-lg text-gray-700 dark:text-gray-300">
-                  <strong>{{ errorMessage }}</strong>
+                  <strong>{{ err }}</strong>
               </p>
           </div>
       </div>
@@ -91,59 +91,19 @@
 </template>
 
 <script setup>
-  import Cookies from 'js-cookie';
-  import {defineProps, ref} from 'vue'
-  
-  const showInvitationModal = ref(false);
-  const alertInvitationModal = ref(false);
-  const isLoading =  ref(false);
-  const errorModal = ref(false);
-  const errorMessage = ref("");
+  import {defineProps} from 'vue'
+  import GetServices from '@/services/APIService';
+
+  const api = new GetServices();
+  const err = api.getError();
+  const showInvitationModal = api.getShowModal();
+  const alertInvitationModal = api.getAlertModal();
+  const isLoading = api.getLoader();
 
   const props = defineProps({
     user: Object,
     apiUrl: String
   })
-
-  function sendInvitation(){
-    isLoading.value =  true;
-    showInvitationModal.value = false;
-    fetch(props.apiUrl, {
-      method: 'PATCH',
-      body: JSON.stringify(props.user),
-      headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-    .then(res => {
-      isLoading.value = false;
-      if (!res.ok) {
-        if (res.status === 401) throw new Error(`Acceso denegado`);
-        if (res.status === 403) throw new Error(`Tu rol no te permite reenviar invitaciones`);
-        
-        throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
-      }
-      return res.json();
-    })
-  .then(() => {
-    toggleAlertInvitation()
-  })
-  .catch(err => {
-    isLoading.value = false;
-    errorMessage.value = err;
-    errorModal.value = true;
-  })
-  .finally(() => {
-    errorModal.value = false;
-    isLoading.value = false;
-    showInvitationModal.value = false;
-  });
-  } 
-
-  const toggleShowInvitationModal = () => {
-    showInvitationModal.value = !showInvitationModal.value;
-  }
 
   const toggleAlertInvitation = () => {
     isLoading.value = false;
@@ -153,8 +113,16 @@
     }
   }
 
+  const toggleShowInvitationModal = () => {
+    showInvitationModal.value = !showInvitationModal.value;
+  }
+
   const toggleError = () => {
-    errorModal.value = !errorModal.value;
+    err.value = !err.value;
+  }
+
+  const sendInvitation = () => {
+    api.sendDataApi(props.apiUrl, props.user, toggleAlertInvitation, 'PATCH') 
   }
 
 </script>

@@ -25,8 +25,10 @@ import LoginUser from "@/views/auth/LoginView.vue";
 import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
-import NavbarHeader from "@/components/common/NavbarHeader.vue";
 import HomeView from "@/components/common/HomeView.vue";
+import AdminNav from "@/views/admin/AdminNav.vue";
+import ClientNav from "@/views/client/ClientNav.vue";
+import AuditorNav from "@/views/auditor/AuditorNav.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -34,9 +36,24 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
+            path: '/cliente',
+            name: 'ClienteNav',
+            component: ClientNav,
+        },
+        {
+            path: '/contador',
+            name: 'ContadorNav',
+            component: AdminNav,
+        },
+        {
+            path: '/auditor',
+            name: 'AuditorNav',
+            component: AuditorNav,
+        },
+        {
             path: '/administrador',
-            name: 'Administrador',
-            component: NavbarHeader,
+            name: 'AdministradorNav',
+            component: AdminNav,
             beforeEnter: (to, from, next) => {
                 const token = Cookies.get('jwt')  
                   if (!token) {
@@ -116,7 +133,6 @@ const router = createRouter({
                     name: 'EditarEmpresa',
                     component: EditCompanies
                 },
-            
                 {
                     path: 'BancosERPs',
                     name : 'BancosERPs',
@@ -177,7 +193,7 @@ const router = createRouter({
         },
 
         {
-            path: "/login",
+            path: "",
             name: "Login",
             component: LoginUser
         },
