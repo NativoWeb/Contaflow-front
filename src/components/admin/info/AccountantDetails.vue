@@ -77,7 +77,7 @@
 
 <ClientsAccAudTable/>
 
-<!-- Modal para asignar empresa -->
+Modal para asignar empresa
 <div v-if="isAssignModalOpen" 
    class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 p-4">
 <div class="p-10 relative w-[80%] bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -156,7 +156,7 @@
   </div>
 </div>
 </div>
-  </div>
+</div>
   
   <div v-if="err" class="flex justify-center items-start">
     <span>{{ err }}</span>

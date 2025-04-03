@@ -77,67 +77,6 @@
 </div>
 
 <ClientsAccAudTable/>
-
-<!-- Modal para asignar empresa -->
-<div v-if="isAssignModalOpen" 
-   class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 p-4">
-<div class="p-10 relative w-[80%] bg-white rounded-lg shadow-lg dark:bg-gray-800">
-  <!-- Encabezado -->
-  <div>
-    <h3 class="text-xl font-semibold text-[#2A5CAA]">Asignar empresa</h3>
-  </div>
-
-  <!-- Contenedor de las tablas con flexbox -->
-<div class="tables-container flex flex-wrap gap-4 p-2">
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
-      <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Empresas</h2>
-      <table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
-          <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
-              <tr>
-                  <th scope="col" class="px-6 py-3">Nit</th>
-                  <th scope="col" class="px-6 py-3">Razón Social</th>
-                  <th scope="col" class="px-6 py-3">Sector Económico</th>
-                  <th scope="col" class="px-6 py-3">Dirección</th>
-                  <th scope="col" class="px-6 py-3">Acción</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                  <td class="px-6 py-4">123456789</td>
-                  <td class="px-6 py-4">Empresa A</td>
-                  <td class="px-6 py-4">Finanzas</td>
-                  <td class="px-6 py-4">Calle 123</td>
-                  <td class="px-6 py-4">
-                      <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</button>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
-
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
-      <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Bancos</h2>
-      <table class="w-full text-sm text-left rtl:text-right text-[#08245B]">
-          <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF]">
-              <tr>
-                  <th scope="col" class="px-7 py-3">Bancos</th>
-                  <th scope="col" class="px-7 py-3">Número de cuenta</th>
-                  <th scope="col" class="px-7 py-3">Tipo de cuenta</th>
-                  <th scope="col" class="px-7 py-3">Acción</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                  <td class="px-7 py-6">Bancolombia</td>
-                  <td class="px-7 py-6">9876543210</td>
-                  <td class="px-7 py-6">Ahorro</td>
-                  <td class="px-7 py-6">
-                      <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</button>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
 </div>
 
 
@@ -155,15 +94,10 @@
       Confirmar
     </button>
   </div>
-</div>
-</div>
-  </div>
 
   <div v-if="err" class="flex justify-center items-start">
     <span>{{ err }}</span>
   </div>
-
-
 <!-- cargador -->
 <div v-if="isLoading" class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
