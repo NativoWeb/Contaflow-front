@@ -40,26 +40,26 @@
             <input v-model="editUser.username" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
           </div>
         </div>
+
+            <!-- Botones -->
+        <div class="flex justify-center space-x-3 p-5 dark:border-gray-700">
+          <button @click="toggleShowEditModal"
+            class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
+              focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
+              dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            Cancelar
+          </button>
+          <button 
+            :disabled="hasNoChange"
+            type="submit" 
+            class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
+            Confirmar
+          </button>
+        </div>
       </form>
     </div>
-
-    <!-- Botones -->
-    <div class="flex justify-center space-x-3 p-5 dark:border-gray-700">
-      <button @click="toggleShowEditModal"
-              class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
-                    focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
-                    dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        Cancelar
-      </button>
-      <button @click="submitEdit"
-              :disabled="hasNoChange"
-              type="button" 
-              class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-        Confirmar
-      </button>
-    </div>
   </div>
-  </div>
+</div>
 
     <!-- Modal -->
   <div v-if="isLoading" 
@@ -98,9 +98,9 @@
   </div>
 
   <!-- Modal de Error -->
-  <div v-if="errorModal" 
+  <div v-if="err" 
     class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-    :class="{'scale-100': errorModal}">
+    :class="{'scale-100': err}">
     <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg dark:bg-gray-800">
@@ -115,7 +115,7 @@
             <!-- Modal body -->
             <div class="p-8 text-center space-y-4">
                 <p class="text-lg text-gray-700 dark:text-gray-300">
-                    <strong>{{ errorMessage }}</strong>
+                    <strong>{{ err }}</strong>
                 </p>
             </div>
         </div>
@@ -124,20 +124,25 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, reactive, computed } from 'vue';
-  import Cookies from 'js-cookie';
-
-  const showEditModal = ref(false);
-  const alertEditedModal =  ref(false);
-  const isLoading =  ref(false);
-  const errorModal = ref(false);
-  const errorMessage = ref("");
-  const VUE_APP_URL = process.env.VUE_APP_URL;
+  import { defineProps, reactive, computed } from 'vue';
+  import GetServices from '@/services/APIService';
 
   const props = defineProps({
     user: Object,
     title: String
   })
+
+  console.log(props.user.id)
+
+  const api = new GetServices();
+  const err = api.getError();
+  const isLoading = api.getLoader();
+  const showEditModal = api.getShowModal();
+  const alertEditedModal =  api.getAlertModal();
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const uri = `/users/update/${props.user.id}`
+  const url = VUE_APP_URL + uri;
+
 
   const editUser = reactive({
     first_name: props.user.first_name,
@@ -146,55 +151,8 @@
     username: props.user.username
   });
 
-  const header = {
-    method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}` 
-      },
-      body: JSON.stringify(
-        editUser
-      )
-  }
 
-  // Funcion
-  const submitEdit = () => {
-    isLoading.value = true;
-    showEditModal.value = false;
-  
-    fetch(`${VUE_APP_URL}/users/update/${props.user.id}`,{
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}` 
-      },
-      body: JSON.stringify(
-        editUser
-      )
-    })
-    .then(res => {
-      if (!res.ok) {
-        if (res.status === 401) throw new Error(`Acceso denegado`);
-        if (res.status === 403) throw new Error(`Tu rol no te permite editar un usuario`);
-        
-        throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
-      }  
-      return res.json();
-    })
-    .then(() => {
-      isEditedToggle()
-    })
-    .catch(err => {
-      isLoading.value = false;
-      errorMessage.value = err;
-      errorModal.value = true; 
-    })
-    .finally(() => {
-      errorModal.value = false;
-      isLoading.value = false;
-      showEditModal.value = false;
-    })
-  }
+
 
   const isEditedToggle = () => {
     isLoading.value = false;
@@ -202,6 +160,10 @@
     if (alertEditedModal.value == false){
       location.reload()
     }
+  }
+
+  const submitEdit = () => {
+    api.sendDataApi(url, editUser, isEditedToggle, 'PATCH')
   }
 
   function toggleShowEditModal(){

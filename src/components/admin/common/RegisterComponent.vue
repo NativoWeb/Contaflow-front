@@ -140,9 +140,9 @@
   </div>
 
 <!-- Modal de Error -->
-<div v-if="errorModal" 
+<div v-if="err" 
   class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-  :class="{'scale-100': errorModal}">
+  :class="{'scale-100': err}">
   <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg dark:bg-gray-800">
@@ -157,7 +157,7 @@
           <!-- Modal body -->
           <div class="p-8 text-center space-y-4">
               <p class="text-lg text-gray-700 dark:text-gray-300">
-                  <strong>{{ errorMessage }}</strong>
+                  <strong>{{ err }}</strong>
               </p>
           </div>
       </div>
@@ -187,8 +187,8 @@
 </style>
 
 <script setup>
-import { reactive, ref, defineProps, computed } from "vue";
-import Cookies from 'js-cookie';
+import GetServices from "@/services/APIService";
+import { reactive, defineProps, computed } from "vue";
 
 const props = defineProps({
   apiUrl: String,
@@ -196,12 +196,10 @@ const props = defineProps({
   title: String,
 })
 
-
-const modalVisible = ref(false);
-const errorModal = ref(false);
-const errorMessage = ref("");
-const isLoading = ref(false);
-
+const api = new GetServices();
+const modalVisible = api.getShowModal();
+const err = api.getError();
+const isLoading = api.getLoader();
 const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
 const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
 const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
@@ -223,7 +221,7 @@ username: "",
 
 const closeModal = () => {
   modalVisible.value = false;
-  errorModal.value = false;
+  err.value = false;
   location.reload(); 
 };
 
@@ -259,40 +257,13 @@ const isFormInvalid = computed(() => {
   );
 });
 
+const toggle = () => {
+  modalVisible.value = true;
+}
 
 
 function addUser() {
-  isLoading.value = true;
-  
-  fetch(props.apiUrl, {
-    method: 'POST',
-    body: JSON.stringify(userForm),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-    }
-  })
-  .then(res => {
-    isLoading.value = false;
-    if (!res.ok) {
-      if (res.status === 400 ) throw new Error(`El usuario que tratas de registrar ya este registrado`);
-      if (res.status === 401) throw new Error(`Acceso denegado`);
-      // if (res.status === 400) alert("Este usuario ya esta registrado");
-      if (res.status === 403) throw new Error(`Tu rol no te permite registrar un usuario`);
-      
-      throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
-    }
-    return res.json();
-  })
-  .then(() => {
-    modalVisible.value = true;
-  })
-  .catch(err => {
-    errorMessage.value = err;
-    errorModal.value = true;
-    isLoading.value = false;
-    console.error(err)
-  });
+  api.sendDataApi(props.apiUrl, userForm, toggle, 'POST')
 }
 </script>
 

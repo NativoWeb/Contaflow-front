@@ -25,6 +25,18 @@ class GetServices {
     return this.errors;
   }
 
+  getLoader() {
+    return this.loader;
+  }
+
+  getShowModal(){
+    return this.showModal;
+  }
+
+  getAlertModal(){
+    return this.alertModal;
+  }
+
   headerAuth = {
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +44,8 @@ class GetServices {
     }
   }
 
-  getData = (url, loader, headers=this.headerAuth) => {
+  // Tomar Datos
+  getDataApi = (url, loader, headers=this.headerAuth) => {
     loader.value = true;
     fetch(url, headers)
     .then(response => {
@@ -42,18 +55,27 @@ class GetServices {
     })
     .then(json => {
       this.data.value = json;
+      console.log(json)
     })
     .catch(err => {
       loader.value = false;
       this.errors.value = err;
     })
-  }
+  } 
 
-  sendData = (url, headerSend, toggle) => {
+  // Enviar Datos
+  sendDataApi = (url, data, toggle, method) => {
     this.loader.value = true;
     this.showModal.value = false;
 
-    fetch(url, headerSend) 
+    fetch(url, {
+      method: method,  
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('jwt')}` 
+        },
+      body: JSON.stringify(data)
+    })
     .then(response => {
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
       return response.json()
@@ -68,10 +90,7 @@ class GetServices {
     .finally(() => {
       this.errors.value = false;
       this.loader.value = false;
-      this.showModal.value = false;
     })
-
-
   }
 }
 

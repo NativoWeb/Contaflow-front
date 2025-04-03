@@ -181,7 +181,7 @@
     isOpenDropdown.value = !isOpenDropdown.value;
   };
 
-  api.getData(urlApi, isLoading)
+  api.getDataApi(urlApi, isLoading)
 
   // Función para cerrar sesión
   const CerrarSesion = () => {

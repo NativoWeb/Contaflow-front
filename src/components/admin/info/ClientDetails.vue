@@ -109,7 +109,7 @@
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
   
-  api.getData(urlApi, isLoading)
+  api.getDataApi(urlApi, isLoading)
 </script>
 
 

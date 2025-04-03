@@ -72,7 +72,7 @@
 <script setup>
 import AssignClientsModal from '../crud/AssignClientsModal.vue';
 import { ref, defineProps } from 'vue';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const users = ref([]);
@@ -82,16 +82,17 @@ const props = defineProps({
     roles: String
   })
 
+  console.log(props)
 
-  fetch(props.apiUrl, {
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-    }
-  })
-  .then(res => res.json())
-  .then(json => {
-    users.value = json;
-  })
-  .catch(err => console.error(err))
+  // fetch(props.apiUrl, {
+  //   headers: {
+  //     'Authorization': `Bearer ${Cookies.get('jwt')}`
+  //   }
+  // })
+  // .then(res => res.json())
+  // .then(json => {
+  //   users.value = json;
+  // })
+  // .catch(err => console.error(err))
 
 </script>
