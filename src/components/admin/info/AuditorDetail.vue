@@ -72,7 +72,6 @@
       <DeleteModal :id="data.id"/>
       <StatusModal :id="data.id" :status="data.status"/>
       <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
-      <AssignClientsModal :apiUrl="`${VUE_APP_URL}/users/`"/>
   </div>
 </div>
 
@@ -96,7 +95,6 @@
   import { ref } from 'vue';
   import StatusModal from '../crud/StatusModal.vue';
   import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
-  import AssignClientsModal from '../crud/AssignClientsModal.vue';
   import SendInvitationModal from '../crud/SendInvitationModal.vue';
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';

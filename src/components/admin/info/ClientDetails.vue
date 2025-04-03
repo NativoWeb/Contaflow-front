@@ -72,7 +72,6 @@
     <DeleteModal :id="data.id"/>
     <StatusModal :id="data.id" :status="data.status"/>
     <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
-    <AssignComConModal/>
   </div>
 </div>
 <CompanysCliTable/>
@@ -98,7 +97,6 @@
   import SendInvitationModal from '../crud/SendInvitationModal.vue';
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
-  import AssignComConModal from '../crud/AssignComConModal.vue';
   
   const isLoading = ref(false);
   const userId = useRoute().params.id;
