@@ -146,6 +146,17 @@
     username: props.user.username
   });
 
+  const header = {
+    method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Cookies.get('jwt')}` 
+      },
+      body: JSON.stringify(
+        editUser
+      )
+  }
+
   // Funcion
   const submitEdit = () => {
     isLoading.value = true;
@@ -157,12 +168,9 @@
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${Cookies.get('jwt')}` 
       },
-      body: JSON.stringify({
-        first_name: editUser.first_name,
-        last_name: editUser.last_name,
-        phone_number: editUser.phone_number,
-        username: editUser.username
-      })
+      body: JSON.stringify(
+        editUser
+      )
     })
     .then(res => {
       if (!res.ok) {

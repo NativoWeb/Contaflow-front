@@ -80,24 +80,11 @@
 </div>
 
 
-  <!-- Botones -->
-  <div class="flex justify-center space-x-3 p-5 dark:border-gray-700">
-    <button @click="closeAssignModal"
-            class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
-                   focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
-                   dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-      Cancelar
-    </button>
-    <button @click="confirAssign"
-            type="button" 
-            class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-      Confirmar
-    </button>
-  </div>
-
   <div v-if="err" class="flex justify-center items-start">
     <span>{{ err }}</span>
   </div>
+
+
 <!-- cargador -->
 <div v-if="isLoading" class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
@@ -124,7 +111,7 @@
   const uri = `/auditors/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
 
-  api.callApi(urlApi, isLoading);
+  api.getData(urlApi, isLoading);
 </script>
 
 <style>

@@ -75,6 +75,7 @@
     <AssignComConModal/>
   </div>
 </div>
+<CompanysCliTable/>
 </div>
   
 <div v-if="err" class="flex justify-center items-start">
@@ -90,6 +91,7 @@
 
 <script setup>
   import GetService from '@/services/APIService';
+  import CompanysCliTable from './CompanysCliTable.vue';
   import { useRoute } from 'vue-router';
   import { ref } from 'vue';
   import StatusModal from '../crud/StatusModal.vue';
@@ -107,7 +109,7 @@
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
   
-  api.callApi(urlApi, isLoading)
+  api.getData(urlApi, isLoading)
 </script>
 
 

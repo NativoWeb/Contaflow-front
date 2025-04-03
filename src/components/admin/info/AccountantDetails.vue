@@ -77,7 +77,7 @@
 
 <ClientsAccAudTable/>
 
-Modal para asignar empresa
+<!-- Modal para asignar empresa -->
 <div v-if="isAssignModalOpen" 
    class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 p-4">
 <div class="p-10 relative w-[80%] bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -138,22 +138,6 @@ Modal para asignar empresa
       </table>
   </div>
 </div>
-
-
-  <!-- Botones -->
-  <div class="flex justify-center space-x-3 p-5 dark:border-gray-700">
-    <button @click="closeAssignModal"
-            class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
-                   focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
-                   dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-      Cancelar
-    </button>
-    <button @click="confirAssign"
-            type="button" 
-            class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
-      Confirmar
-    </button>
-  </div>
 </div>
 </div>
 </div>
@@ -206,6 +190,6 @@ Modal para asignar empresa
   const uri = `/accountants/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
 
-  api.callApi(urlApi, isLoading);
+  api.getData(urlApi, isLoading);
 
 </script>
