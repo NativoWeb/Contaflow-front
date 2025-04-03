@@ -3,7 +3,7 @@
   <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 rounded-lg shadow-md text-center md:text-left">
     Información del usuario
   </h2>
-<div v-if="user">
+<div v-if="data">
   <div class="w-full bg-white flex flex-col md:flex-row p-8">
       <!-- Sección de información -->
       <div class="flex-1">
@@ -13,13 +13,13 @@
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Nombres:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.first_name }}</p>
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.first_name }}</p>
           </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Apellidos:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.last_name }}</p>
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.last_name }}</p>
           </div>
 
           <!-- Segunda fila -->
@@ -27,15 +27,15 @@
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Tipo de Identificación:
               </label>
-              <p v-if="user.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Ciudadania</p>
-              <p v-if="user.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Extranjeria</p>
-              <p v-if="user.id_type == 'Pasaporte'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Pasaporte</p>
+              <p v-if="data.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Ciudadania</p>
+              <p v-if="data.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Extranjeria</p>
+              <p v-if="data.id_type == 'Pasaporte'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Pasaporte</p>
             </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Número de Identificación:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.id_number}}</p>
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.id_number}}</p>
           </div>
 
           <!-- Tercera fila -->
@@ -43,35 +43,35 @@
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Número de Celular:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.phone_number}}</p>
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.phone_number}}</p>
           </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Correo Electrónico:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.username }}</p>
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.username }}</p>
           </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Rol:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.role}}</p>           
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.role}}</p>           
           </div>
           <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
                   Estado:
               </label>
-              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ user.status}}</p>           
+              <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.status}}</p>           
           </div>
       </div>
   </div>
 
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
-      <EditModal :user="user" :title="'Actualizar Contador'"/>
-      <DeleteModal :id="user.id"/>
-      <StatusModal :id="user.id" :status="user.status"/>
-      <SendInvitationModal :user="user" :apiUrl="`${VUE_APP_URL}/users/email/${user.id}`"/>
+      <EditModal :user="data" :title="'Actualizar Contador'"/>
+      <DeleteModal :id="data.id"/>
+      <StatusModal :id="data.id" :status="data.status"/>
+      <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
   </div>
 </div>
 
@@ -158,37 +158,16 @@
 </div>
   </div>
   
+  <div v-if="err" class="flex justify-center items-start">
+    <span>{{ err }}</span>
+  </div>
+
+
 <!-- cargador -->
-<div v-else class="flex justify-center items-start">
+<div v-if="isLoading" class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
 </div>
 </template>
-
-<script setup>
-import { useRoute } from 'vue-router';
-import Cookies from 'js-cookie';
-import { ref } from 'vue';
-import StatusModal from '../crud/StatusModal.vue';
-import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
-import SendInvitationModal from '../crud/SendInvitationModal.vue';
-import EditModal from '../crud/EditModal.vue';
-import DeleteModal from '../crud/DeleteModal.vue';
-
-
-  const userId = useRoute().params.id;
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const user = ref();
-
-  fetch(`${VUE_APP_URL}/accountants/${userId}/`, {
-      headers: {
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-  .then(res => res.json())
-  .then(json => {
-    user.value = json
-  })
-</script>
 
 <style>
 .tables-container {
@@ -207,3 +186,26 @@ import DeleteModal from '../crud/DeleteModal.vue';
   }
 }
 </style>
+
+<script setup>
+  import { useRoute } from 'vue-router';
+  import { ref } from 'vue';
+  import StatusModal from '../crud/StatusModal.vue';
+  import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
+  import SendInvitationModal from '../crud/SendInvitationModal.vue';
+  import EditModal from '../crud/EditModal.vue';
+  import DeleteModal from '../crud/DeleteModal.vue';
+  import GetServices from '@/services/APIService';
+
+  const isLoading = ref(false);
+  const userId = useRoute().params.id;
+  const api = new GetServices();
+  const data = api.getData();
+  const err = api.getError();
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const uri = `/accountants/${userId}/`;
+  const urlApi = VUE_APP_URL + uri;
+
+  api.callApi(urlApi, isLoading);
+
+</script>

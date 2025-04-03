@@ -78,7 +78,7 @@
   })
 
   const goToUserDetails = id => {
-    router.push(`/${props.routes}/${id}`)
+    router.push(`${props.routes}/${id}`)
   }
 
   fetch(props.apiUrl, {

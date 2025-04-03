@@ -50,6 +50,9 @@
   </div>
 </template>
 
+<script setup>
+</script>
+
 <style scoped>
 /* Estilos adicionales si es necesario */
 </style>

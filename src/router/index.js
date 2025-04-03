@@ -15,7 +15,6 @@ import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
 import PerfilAdmin from "@/components/admin/PerfilAdmin.vue";
 
 //Empresa Admin
-
 import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
 import EditCompanies from "@/components/admin/companies/EditCompanies.vue";
 import CompaniesView from "@/views/companies/CompaniesView.vue";
@@ -26,10 +25,8 @@ import LoginUser from "@/views/auth/LoginView.vue";
 import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
-// import NavbarHeader from "@/components/common/NavbarHeader.vue";
-import DashboardView from "@/components/common/DashboardView.vue";
-import AdminContext from "@/views/context/AdminContext.vue";
 import NavbarHeader from "@/components/common/NavbarHeader.vue";
+import HomeView from "@/components/common/HomeView.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -37,27 +34,22 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-          path: '/',
-          name: 'navbar',
-          component: NavbarHeader,            
-          beforeEnter: (to, from, next) => {
-            const token = Cookies.get('jwt')  
-              if (!token) {
-                next('/login')
-              }
-              else {
-                next()
-              }
-              
-          }
-        },
-        {
             path: '/administrador',
             name: 'Administrador',
-            component: AdminContext,
+            component: NavbarHeader,
+            beforeEnter: (to, from, next) => {
+                const token = Cookies.get('jwt')  
+                  if (!token) {
+                    next('/login')
+                  }
+                  else {
+                    next()
+                  }
+                  
+            },
             children: [
                 {
-                    path: "/usuarios",
+                    path: "usuarios",
                     name: "usuarios",
                     component: ManageUsers,
                     beforeEnter: (to, from, next) => {
@@ -86,103 +78,104 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/contadores',
+                    path: 'contadores',
                     component: AccountantsView,
                     props: true
                 },
                 {
-                    path: '/clientes',
+                    path: 'clientes',
                     component: ClientsView,
                     props: true
                 },
                 {
-                  path: '/auditores',
+                  path: 'auditores',
                   component: AuditorsView,
                   props: true
               },
                 {
-                    path: '/contador/:id',
+                    path: 'contador/:id',
                     component: AccountantDetails,
                     props: true
                 },
                 {
-                    path: '/cliente/:id',
+                    path: 'cliente/:id',
                     component: ClientDetails,
                     props: true
                 },
                 {
-                    path: '/auditor/:id',
+                    path: 'auditor/:id',
                     component: AuditorDetail,
                     props: true
                 },
                 {
-                    path: '/empresas',
+                    path: 'empresas',
                     component: CompaniesView
                 },
                 {
-                    path: '/empresas/editar',
+                    path: 'empresas/editar',
                     name: 'EditarEmpresa',
                     component: EditCompanies
                 },
             
                 {
-                    path: '/BancosERPs',
+                    path: 'BancosERPs',
                     name : 'BancosERPs',
                     component: BancosERPs
                 },
                 {
-                    path: '/conciliacion', 
+                    path: 'conciliacion', 
                     name: 'EmpresaCon',
                     component: EmpresaCon
                 },
                 {
-                    path: '/ListaCon',
+                    path: 'ListaCon',
                     name: 'ListaCon',
                     component: ListaCon
                 },
                 {
-                    path: '/ExtractoCon',
+                    path: 'ExtractoCon',
                     name: 'ExtractoCon',
                     component: ExtractoCon
                 },
                 {
-                    path: '/ResultadoCon',
+                    path: 'ResultadoCon',
                     name: 'ResultadoCon',
                     component: ResultadoCon
                 },
                 {
-                    path: '/ModificarCon',
+                    path: 'ModificarCon',
                     name: 'ModificarCon',
                     component: ModificarCon
                 },
                 {
-                    path: '/ReporteEmpre',
+                    path: 'ReporteEmpre',
                     name: 'ReporteEmpre',
                     component: ReporteEmpre
                 },
                 {
-                    path: '/ListaReporte',
+                    path: 'ListaReporte',
                     name: 'ListaReporte',
                     component: ListaReporte
                 },
                 {
-                    path: '/ReporteAdmin',
+                    path: 'ReporteAdmin',
                     name: 'ReporteAdmin',
                     component: ReporteAdmin
                 },
 
                 {
-                    path: '/PerfilAdmin',
+                    path: 'PerfilAdmin',
                     name: 'PerfilAdmin',
                     component: PerfilAdmin
-                },       
+                },  
                 {
-                    path: '/dashboard',
-                    name: 'Dashboard',
-                    component: DashboardView
-                },
+                    path: '/home',
+                    name: 'Home',
+                    component: HomeView
+                },    
             ]
         },
+
         {
             path: "/login",
             name: "Login",

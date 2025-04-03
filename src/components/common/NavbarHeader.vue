@@ -4,25 +4,26 @@
       <div class="close-container none">
         <button class="close" @click="toggleSidebar">X</button>
       </div>
-      <ul v-if="user">
+      <ul v-if="data">
         <li>
           <div id="profile">
             <img class="w-20 h-20" src="@/assets/img_usuario.svg" alt="sa">
-            <span>{{ user.first_name }}</span>
-            <span>{{ user.role }}</span>
+            <span>{{ data.first_name }}</span>
+            <span>{{ data.role }}</span>
           </div>
         </li>
         
-        <li>
-          <router-link to="/dashboard" class="flex gap-2 justify-center items-center">
-            <span>Dashboard</span>
-          </router-link>
-        </li>
-
+        
         <div class="list-container">
+          <li>
+            <router-link to="/home" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/home.svg" alt="Home Img">
+              <span>Home</span>
+            </router-link>
+          </li>
 
           <!-- Componentes del Administrador -->
-          <div v-if="user.role == 'ADMIN'" class="flex flex-col justify-center items-start gap-4">
+          <div v-if="data.role == 'ADMIN'" class="flex flex-col justify-center items-start gap-4">
             <li class="">
               <button type="button" class="flex justify-center items-center transition duration-75" @click="toggleDropdown">
                 <img src="@/assets/usuario.svg" alt="Ícono" class="icon-img">
@@ -33,50 +34,50 @@
               </button>
               <ul :class="{ 'max-h-0 opacity-0': !isOpenDropdown, 'max-h-40 opacity-100': isOpenDropdown }" class=" overflow-hidden transition-all duration-500 ease-in-out mb-1 mt-2 flex items-start justify-start flex-col gap-2"
   >
-                <li><router-link to="/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
-                <li><router-link to="/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
-                <li><router-link to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
+                <li><router-link to="/administrador/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
+                <li><router-link to="/administrador/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
+                <li><router-link to="/administrador/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
               </ul>
             </li>
 
             <li>
-              <router-link to="/empresas" class="flex gap-2 justify-center items-center">
-                <img src="@/assets/empresass.svg" alt="Ícono" class="icon-img">
+              <router-link to="/administrador/empresas" class="flex gap-2 justify-center items-center">
+                <img src="@/assets/empresass.svg" alt="Empresas Img">
                 <span>Empresas</span>
               </router-link>
             </li>
 
             <li>
-            <router-link to="/BancosERPs" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/BancoErps.svg" alt="Ícono" class="icon-img">
+            <router-link to="/administrador/BancosERPs" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/BancoErps.svg" alt="Bancos Img">
               <span >Bancos y ERPs</span>
             </router-link>
             </li>
 
             <li>
-            <router-link to="/conciliacion" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/conciliacion.svg" alt="Ícono" class="icon-img">
+            <router-link to="/administrador/conciliacion" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/conciliacion.svg" alt="Conciliacion Img">
               <span >Conciliaciones</span>
             </router-link>
             </li>
 
             <li>
-            <router-link to="ReporteEmpre" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/informe.svg" alt="Ícono" class="icon-img">
+            <router-link to="/administrador/ReporteEmpre" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/informe.svg" alt="Informe">
               <span >Reportes financieros y auditoría</span>
             </router-link>
             </li>
           
             <li>
-            <router-link to="/PerfilAdmin" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/configuracion.svg" alt="Ícono" class="icon-img">
-              <span >Configuración</span>
+            <router-link to="/administrador/PerfilAdmin" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/manage-account.svg" alt="Cuenta">
+              <span >Mi Cuenta</span>
             </router-link>
             </li>
           </div>
           
           <!-- Componentes del Contador -->
-          <div v-if="user.role == 'CONTADOR'">
+          <div v-if="data.role == 'CONTADOR'">
             <li>
             <router-link>
               <span>Mis Conciliaciones</span>
@@ -106,7 +107,7 @@
 
 
           <!-- Componentes del Cliente -->
-          <li v-if="user.role == 'CLIENTE'">
+          <li v-if="data.role == 'CLIENTE'">
             <router-link href="#" class="flex gap-2 justify-center items-center">
               <img src="@/assets/circulo.svg" alt="Ícono" class="icon-img">
               <span>Mis Conciliaciones</span>
@@ -115,14 +116,12 @@
 
         </div>
       </ul>
-      <div v-else class="loader flex flex-col items-center justify-center w-40 h-40 m-auto">
-        <div class="text-red-700" v-if="!isLoading">
-          {{ error }}
-          <img class="mt-10 w-[100px] h-[100px]" src="@/assets/error_status.svg" alt="">
-        </div>
-        <div v-else>
-          <img src="@/assets/loader.svg" alt="carga">
-        </div>
+      <div v-if="err">
+        <span>{{ err }}</span>
+        <img class="mt-10 w-[100px] h-[100px]" src="@/assets/error_status.svg" alt="">
+      </div>
+      <div v-if="isLoading"  class="loader flex flex-col items-center justify-center w-40 h-40 m-auto">
+        <img src="@/assets/loader.svg" alt="carga">
       </div>
     </nav>  
   
@@ -148,24 +147,15 @@
       </button>
     </header>
   </div>
-    <div v-if="user" class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px] h-full">
-      <AdminContext v-if="user.role === 'ADMIN'"/>
-      <ClientContext v-if="user.role === 'CLIENTE'"/>
-      <AuditorContext v-if="user.role === 'AUDITOR'"/>
-      <AccountantContext v-if="user.role === 'CONTADOR'"/>
-    </div>
-    <div v-else>
-      ...
+    <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px] h-full">
+      <router-view/>
     </div>
   </div>
 </template>
 
 <script setup>
   import getIdByToken from '@/hooks/getId';
-  import AdminContext from '@/views/context/AdminContext.vue';
-  import ClientContext from '@/views/context/ClientContext.vue';
-  import AuditorContext from '@/views/context/AuditorContext.vue'
-  import AccountantContext from '@/views/context/AccountantContext.vue';
+  import GetService from '@/services/APIService';
   import Cookies from 'js-cookie';
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
@@ -175,9 +165,13 @@
   const isOpenDropdown = ref(false);
   const token = Cookies.get('jwt');
   const userId = getIdByToken(token);
-  const user = ref();
-  const error = ref();
   const isLoading = ref(false);
+  const api = new GetService();
+  const data = api.getData()
+  const err = api.getError()
+  const VUE_APP_URL = process.env.VUE_APP_URL; 
+  const uri = `/users/${userId}/`
+  const urlApi = VUE_APP_URL + uri;
 
   const toggleSidebar = () => {
     isOpen.value = !isOpen.value;
@@ -187,24 +181,13 @@
     isOpenDropdown.value = !isOpenDropdown.value;
   };
 
-  fetch(`http://127.0.0.1:8000/users/${userId}/`)
-  .then(res => {
-    isLoading.value = true;
-    if(!res.ok) throw new Error(`${res.status} error de tipo: ${res.statusText}`) 
-    return res.json()
-  })
-  .then(json => {
-    user.value = json
-  })
-  .catch(err => {
-    isLoading.value = false;
-    error.value = err;
-  })
+  api.callApi(urlApi, isLoading)
 
   // Función para cerrar sesión
   const CerrarSesion = () => {
     Cookies.remove('jwt'); 
     router.push('/');
   };
+
 
 </script>
