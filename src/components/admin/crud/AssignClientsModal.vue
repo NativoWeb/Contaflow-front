@@ -86,7 +86,8 @@
                     dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                     Cancelar
                   </button>
-                  <button @click="toggleModal"
+
+                  <button @click="addClient"
                       type="button" 
                       class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
                       Confirmar
@@ -100,12 +101,15 @@
 </template>
 
 <script setup>
-  import { ref, defineProps } from 'vue';
+  import { ref, defineProps, reactive } from 'vue';
   import Cookies from 'js-cookie';
 
   const users = ref([]);
   const showModal = ref(false);
   
+  const clientsId  = reactive({
+    "clients": []
+  })
 
   const toggleModal = () => {
     showModal.value = !showModal.value;
@@ -128,12 +132,17 @@
   })
   .catch(err => console.error(err))
 
+  // seleccionar al usuario
   const showUser = (event, user) => {
     if (event.target.checked){
-      console.log(user)
+      clientsId.clients.push(user)
     }
     else {
-      return ""
+      clientsId.clients.pop(user)
     }
+  }
+
+  const addClient = () => {
+    console.log(clientsId)
   }
 </script>

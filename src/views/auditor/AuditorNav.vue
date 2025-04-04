@@ -69,7 +69,6 @@
 
   const router = useRouter();
   const isOpen = ref(false);
-  const isOpenDropdown = ref(false);
   const token = Cookies.get('jwt');
   const userId = getIdByToken(token);
   const isLoading = ref(false);
@@ -82,10 +81,6 @@
 
   const toggleSidebar = () => {
     isOpen.value = !isOpen.value;
-  };
-
-  const toggleDropdown = () => {
-    isOpenDropdown.value = !isOpenDropdown.value;
   };
 
   api.getDataApi(urlApi, isLoading)
