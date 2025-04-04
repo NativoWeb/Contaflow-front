@@ -5,12 +5,6 @@
 			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
                 <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
                     <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </th>
                         <th scope="col" class="px-6 py-3">
                           Nombre
                         </th>
@@ -23,14 +17,8 @@
                     </tr>
                 </thead>
                 <tbody v-if="data">
-                    <tr v-for="user in data.clients_data" :key="user.id_number" 
+                    <tr v-for="user in data" :key="user.id_number" 
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {{ user.first_name }} {{ user.last_name }}
                         </th>
@@ -72,7 +60,7 @@
 		</div>
 		<div class="flex flex-col gap-6 ml-2 p-8">
 			<button class="btn-action">Eliminar Cliente</button>
-			<AssignClientsModal :apiUrl="`${VUE_APP_URL}/clients/`" :updateUrl="'/accountants/update/'"/>
+			<AssignClientsModal :apiUrl="`${VUE_APP_URL}/clients/`" :updateUrl="'/accountants/update/'" :user="data"/>
 		</div>
 	</div>
 </template>

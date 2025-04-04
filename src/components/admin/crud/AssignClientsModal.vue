@@ -21,24 +21,31 @@
               <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar">
             </div>
           </div>
-          <table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
-            <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
-              <tr>
-                <th scope="col" class="p-4"></th>
-                <th scope="col" class="px-6 py-3">Nombre</th>
-                <th scope="col" class="px-6 py-3">Número de Identificación</th>
-                <th scope="col" class="px-6 py-3">Estado</th>
-              </tr>
-            </thead>
-            <tbody v-if="data.length > 0">
+
+            <table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
+                <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
+                    <tr>
+                        <th scope="col" class="p-4">
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                          Nombre
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                          Número de Identificación
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                          Estado
+                        </th>
+                    </tr>
+                </thead>
+                <tbody v-if="data">
                     <tr v-for="user in data" :key="user.id_number" 
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
                                 <input @change="selectUser($event, user)" id="checkbox-table-search-2" 
                                 type="checkbox" 
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                :checked="isUserSelected(user.id)">
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
                             </div>
                         </td>
@@ -139,7 +146,8 @@
 
   const props = defineProps({
     apiUrl: String,
-    updateUrl: String 
+    updateUrl: String,
+    user: Object
   })
 
   const api = new GetServices();
@@ -147,50 +155,41 @@
   const data = api.getData();
   const isLoading = api.getLoader();
   const showModal = api.getShowModal();
-
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const urlApi = VUE_APP_URL + props.updateUrl + userId + "/";
+
   const clientsId  = reactive({
-    "clients": []
+    clients: props.user
   })
 
-  const toggleModal = () => {
-    showModal.value = !showModal.value;
-  }
+  console.log(clientsId);
+  console.log(urlApi);
 
+  const toggleModal = () => showModal.value = !showModal.value;
+
+  // Tomar los clientes
   api.getDataApi(props.apiUrl, isLoading)
 
-  const isUserSelected = (userId) => {
-    return clientsId.clients.includes(userId);
-  }
+  // const isUserSelected = (userId) => clientsId.clients.includes(userId);
 
-  console.log(clientsId.clients.includes(4))
-  console.log(clientsId.clients.includes(1))
-  console.log(clientsId.clients.includes(2))
-  console.log(clientsId.clients.includes(3))
-  console.log(clientsId.clients.includes(5))
-  console.log(clientsId.clients.includes(6))
-  console.log(clientsId.clients.includes(7))
-  console.log(clientsId.clients.includes(8))
 
   // seleccionar al usuario
-  // Como no estan seleccionados no los toma
-  const selectUser = (event, user) => {
-    if (event.target.checked){
-      clientsId.clients.push(user.id);
-    }
-    else {
-      return ""
-    }
-  }
+  // // Como no estan seleccionados no los toma
+  // const selectUser = (event, user) => {
+  //   if (event.target.checked){
+  //     clientsId.clients.push(user.id);
+  //   }
+  //   else {
+  //     return ""
+  //   }
+  // }
 
   const toggleError = () => {
     err.value = false;
   }
 
-  const addClient = () => {
-      api.sendDataApi(urlApi, clientsId, toggleModal, 'PATCH');
-  }
+  // const addClient = () =>  api.sendDataApi(urlApi, clientsId, toggleModal, 'PATCH');
+  
 
 </script>
