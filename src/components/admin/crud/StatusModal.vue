@@ -132,8 +132,6 @@
   const uri = `/users/update/${props.id}` 
   const url = VUE_APP_URL + uri;
 
-
-
   const editStatus = reactive({
     status: "Activo"
   })

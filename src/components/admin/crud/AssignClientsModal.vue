@@ -39,12 +39,15 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="users.length > 0">
-                    <tr v-for="user in users" :key="user.id_number" 
+                <tbody v-if="data.length > 0">
+                    <tr v-for="user in data" :key="user.id_number" 
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
-                                <input @change="showUser($event, user)" id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input @change="selectUser($event, user)" id="checkbox-table-search-2" 
+                                type="checkbox" 
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                :checked="isUserSelected(user.id)">
                                 <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
                             </div>
                         </td>
@@ -75,7 +78,7 @@
                     
                   </tbody>
                   <tr v-else colspan="5" class="flex flex-col justify-center">
-                    <td class="ml-2 my-6">No existen {{ users.roles }} registrados</td>
+                    <td class="ml-2 my-6">No existen {{ data.roles }} registrados</td>
                   </tr>
                 </table>
                 <!-- Botones -->
@@ -98,15 +101,65 @@
       </div>
     </div>
   </div>
+    <!-- Modal de Error -->
+    <div v-if="err" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': err}">
+    <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg dark:bg-gray-800">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4">
+                <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
+                <button @click="toggleError" 
+                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                    &times;
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    <strong>{{ err }}</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div v-if="isLoading" 
+    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+    :class="{'scale-100': isLoading}">
+    <div class="relative w-full max-w-lg  p-6 transform transition-all duration-600 ease-in-out">
+        <!-- Modal content -->
+        <div class="relative dark:bg-gray-800">
+            <!-- Modal body -->
+            <div class="p-8 text-center space-y-4">
+                <img src="@/assets/loader.svg" alt="">
+            </div>
+        </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-  import { ref, defineProps, reactive } from 'vue';
-  import Cookies from 'js-cookie';
+  import { defineProps, reactive } from 'vue';
+  import { useRoute } from 'vue-router';
+  import GetServices from '@/services/APIService';
 
-  const users = ref([]);
-  const showModal = ref(false);
-  
+  const props = defineProps({
+    apiUrl: String,
+    updateUrl: String 
+  })
+
+  const api = new GetServices();
+  const err = api.getError();
+  const data = api.getData();
+  const isLoading = api.getLoader();
+  const showModal = api.getShowModal();
+
+  const userId = useRoute().params.id;
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const urlApi = VUE_APP_URL + props.updateUrl + userId + "/";
   const clientsId  = reactive({
     "clients": []
   })
@@ -115,34 +168,29 @@
     showModal.value = !showModal.value;
   }
 
-  const props = defineProps({
-    apiUrl: String,
-    roles: String
-  })
+  api.getDataApi(props.apiUrl, isLoading)
 
+  const isUserSelected = (userId) => {
+    return clientsId.clients.includes(userId);
+  }
 
-  fetch(props.apiUrl, {
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
-    }
-  })
-  .then(res => res.json())
-  .then(json => {
-    users.value = json;
-  })
-  .catch(err => console.error(err))
+  console.log(clientsId.clients.includes(4))
 
   // seleccionar al usuario
-  const showUser = (event, user) => {
+  // Como no estan seleccionados no los toma
+  const selectUser = (event, user) => {
     if (event.target.checked){
-      clientsId.clients.push(user)
+      clientsId.clients.push(user.id);
     }
     else {
-      clientsId.clients.pop(user)
+      return ""
     }
   }
 
+  
+
   const addClient = () => {
-    console.log(clientsId)
+      api.sendDataApi(urlApi, clientsId, toggleModal, 'PATCH');
   }
+
 </script>

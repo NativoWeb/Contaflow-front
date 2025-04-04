@@ -22,8 +22,8 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="users.length > 0">
-                    <tr v-for="user in users" :key="user.id_number" 
+                <tbody v-if="data">
+                    <tr v-for="user in data.clients_data" :key="user.id_number" 
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
@@ -32,24 +32,24 @@
                             </div>
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          
+                          {{ user.first_name }} {{ user.last_name }}
                         </th>
                         <td class="px-6 py-4">
-                          
+                          {{ user.id_number }}
                         </td>
                         <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
                           <span class="text-sm text-orange-500">
-                            
+                            {{ user.status }}
                           </span>
                         </td>
                         <td v-if="user.status == 'Activo'" class="px-6 py-4">
                           <span class="text-sm text-green-500">
-                           
+                            {{ user.status }}
                           </span>
                         </td>
                         <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
                           <span class="text-sm text-red-500">
-                            
+                            {{ user.status }}
                           </span>
                         </td>
                     </tr>
@@ -60,39 +60,39 @@
                   <tr v-else colspan="5" class="flex flex-col justify-center">
                     <td class="ml-2 my-6">No existen registrados</td>
                   </tr>
+
+                  <div v-if="err">
+                    <span>{{ err }}</span>
+                    <img class="mt-10 w-[100px] h-[100px]" src="@/assets/error_status.svg" alt="">
+                  </div>
+                  <div v-if="isLoading"  class="loader flex flex-col items-center justify-center w-40 h-40 m-auto">
+                    <img src="@/assets/loader.svg" alt="carga">
+                  </div>
                 </table>
 		</div>
 		<div class="flex flex-col gap-6 ml-2 p-8">
 			<button class="btn-action">Eliminar Cliente</button>
-			<AssignClientsModal :apiUrl="`${VUE_APP_URL}/clients/`"/>
+			<AssignClientsModal :apiUrl="`${VUE_APP_URL}/clients/`" :updateUrl="'/accountants/update/'"/>
 		</div>
 	</div>
 </template>
 
 <script setup>
+import GetServices from '@/services/APIService';
 import AssignClientsModal from '../crud/AssignClientsModal.vue';
 import { ref, defineProps } from 'vue';
-// import Cookies from 'js-cookie';
+import { useRoute } from 'vue-router';
 
+const props = defineProps({ role: String })
+const api = new GetServices();
+const data = api.getData();
+const err = api.getError();
+const isLoading = ref(false);
 const VUE_APP_URL = process.env.VUE_APP_URL;
-const users = ref([]);
+const userId = useRoute().params.id;
+const uri = `/${props.role}/${userId}/`
+const urlApi = `${VUE_APP_URL}${uri}`
 
-const props = defineProps({
-    apiUrl: String,
-    roles: String
-  })
-
-  console.log(props)
-
-  // fetch(props.apiUrl, {
-  //   headers: {
-  //     'Authorization': `Bearer ${Cookies.get('jwt')}`
-  //   }
-  // })
-  // .then(res => res.json())
-  // .then(json => {
-  //   users.value = json;
-  // })
-  // .catch(err => console.error(err))
+api.getDataApi(urlApi, isLoading);
 
 </script>

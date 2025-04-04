@@ -75,7 +75,7 @@
   </div>
 </div>
 
-<ClientsAccAudTable/>
+<ClientsAccAudTable :role="'accountants'"/>
 
 <!-- Modal para asignar empresa -->
 <div v-if="isAssignModalOpen" 

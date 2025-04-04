@@ -236,7 +236,6 @@ const VUE_APP_URL = process.env.VUE_APP_URL;
 const user = ref();
 const error = ref();
 
-console.log(userId)
 
 fetch(`${VUE_APP_URL}/users/${userId}/`)
 .then(res => res.json())

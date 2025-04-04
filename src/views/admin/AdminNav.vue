@@ -128,8 +128,8 @@
   const userId = getIdByToken(token);
   const isLoading = ref(false);
   const api = new GetService();
-  const data = api.getData()
-  const err = api.getError()
+  const data = api.getData();
+  const err = api.getError();
   const VUE_APP_URL = process.env.VUE_APP_URL; 
   const uri = `/users/${userId}/`
   const urlApi = VUE_APP_URL + uri;
