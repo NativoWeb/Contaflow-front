@@ -122,6 +122,10 @@
     }
   }
 
+  const toggleError = () => {
+    errorModal.value = false;
+  }
+
   function toggleShowDeleteModal(){
     showDeleteModal.value = !showDeleteModal.value;
   }

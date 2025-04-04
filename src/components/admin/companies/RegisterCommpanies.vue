@@ -11,33 +11,39 @@
           NIT:
         </label>
         <input 
+          @input="validateNit"
           v-model="companyForm.nit" 
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" 
           type="text" 
           placeholder="Ingrese su NIT"
         >
+        <p v-if="error.nit" class="text-red-500 text-xs mt-1">{{ error.nit }}</p>
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
           Razón Social:
         </label>
         <input 
+          @input="validateName"
           v-model="companyForm.name" 
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" 
           type="text" 
           placeholder="Ingrese la Razón Social"
         >
+        <p v-if="error.name" class="text-red-500 text-xs mt-1">{{ error.name }}</p>
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
           Dirección:
         </label>
         <input 
+          @input="validateAddress"
           v-model="companyForm.address" 
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500" 
           type="text" 
           placeholder="Ingrese la Dirección"
         >
+        <p v-if="error.address" class="text-red-500 text-xs mt-1">{{ error.address }}</p>
       </div>
     </div>
 
@@ -145,6 +151,12 @@ import Cookies from "js-cookie";
 import { computed, reactive, ref } from "vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
+
+const nitRegex = /^\d{7,8}-\d{1}$/;
+const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
+const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
+
+
 const companyForm = reactive({
   nit: "",
   name: "",
@@ -152,12 +164,51 @@ const companyForm = reactive({
   sector: ""
 });
 
+const error = reactive({
+  nit: "",
+  name: "",
+  address: ""
+});
+
+// validacione
+const validateNit = () => {
+  if (!companyForm.nit.trim()) {
+    error.nit = "El NIT es obligatorio";
+  } else if (!nitRegex.test(companyForm.nit)) {
+    error.nit = "El NIT no es válido";
+  } else {
+    error.nit = "";
+  }
+}
+
+const validateName = () => {
+  if (!companyForm.name.trim()) {
+    error.name = "La razón social es obligatoria";
+  } else if (!nameRegex.test(companyForm.name)) {
+    error.name = "La razón social no es válida";
+  } else {
+    error.name = "";
+  }
+}
+
+const validateAddress = () => {
+  if (!companyForm.address.trim()) {
+    error.address = "La dirección es obligatoria";
+  } else if (!addressRegex.test(companyForm.address)) {
+    error.address = "La dirección no es válida";
+  } else {
+    error.address = "";
+  }
+}
+
+
 const isFormInvalid = computed(() => {
   return (
     !companyForm.nit.trim() ||
     !companyForm.name.trim() ||
     !companyForm.address.trim() ||
-    !companyForm.sector.trim()
+    !companyForm.sector.trim() ||
+    Object.values(error).some(error => error !== "")
   )
 })
 
@@ -174,9 +225,17 @@ const closeModal = () => {
 
 // Enviar datos al servidor sin validación
 function addCompany() {
+  // Validar el formulario antes de enviar
+  if (isFormInvalid.value) {
+    errorMessage.value = "Por favor, completa todos los campos correctamente.";
+    errorModal.value = true;
+    return;
+  }
+  // Enviar datos al servidor
   isLoading.value = true;
 
   fetch(`${VUE_APP_URL}/companies/register/`, {
+
     method: 'POST',
       body: JSON.stringify(companyForm),
       headers: {
