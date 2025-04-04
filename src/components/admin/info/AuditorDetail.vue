@@ -109,8 +109,6 @@
   const uri = `/auditors/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
 
-  // console.log(urlApi)
-
   api.getDataApi(urlApi, isLoading);
 </script>
 

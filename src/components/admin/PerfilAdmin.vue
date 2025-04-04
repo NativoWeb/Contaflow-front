@@ -92,6 +92,7 @@ const VUE_APP_URL = process.env.VUE_APP_URL;
 const uri = `/users/${userId}/`;
 const urlApi = VUE_APP_URL + uri;
 
+
 // Obtener los datos de la API
 api.getDataApi(urlApi, isLoading);
 </script>

@@ -83,8 +83,7 @@ function changePassword() {
 		}
 	})
 		.then(res => res.json())
-		.then((res) => {
-			console.log(res)
+		.then(() => {
 			// Cambiar validaciones
 			alert("Contraseña cambiada de manera correcta");
 			// Redirige al login

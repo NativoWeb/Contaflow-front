@@ -110,7 +110,6 @@
         return res.json();
       })
       .then((json) => {
-        console.log(json)
         if (!json) return;
         Cookies.set('jwt', json.access);
         redirectByRole(json);

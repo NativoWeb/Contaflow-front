@@ -55,7 +55,6 @@ class GetServices {
     })
     .then(json => {
       this.data.value = json;
-      console.log(json)
     })
     .catch(err => {
       loader.value = false;
