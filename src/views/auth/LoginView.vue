@@ -34,10 +34,6 @@
   </template>
   <script setup>
   import { reactive, ref } from 'vue';
-  import router from '@/router';
-  import Cookies from 'js-cookie';
-
-  const VUE_APP_URL = process.env.VUE_APP_URL;
   
   const registerCompany = reactive({
     username: "",
@@ -88,56 +84,58 @@
       return;
     }
 
-    fetch(`${VUE_APP_URL}/users/login/`, {
-      method: 'POST',
-      body: JSON.stringify(registerCompany),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}`,
-      },
-      credentials: 'include',
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const errorMsg = await res.json();
-          if (res.status === 403) {
-            errors.general = 'Acceso denegado';
-          } else if (res.status === 401) {
-            errors.general = "Contraseña o correo incorrecto";
-          }
-          throw new Error(`Error HTTP: ${res.status} - ${errorMsg.detail}`);
-        }
-        return res.json();
-      })
-      .then((json) => {
-        if (!json) return;
-        Cookies.set('jwt', json.access);
-        redirectByRole(json);
-      })
-      .catch((err) => {
-        console.error(err);
-        router.push('/login');
-      });
-  }
 
-  const redirectByRole = (json) => {
-    if (!json.is_temp_password) {
-      if (json.role === 'ADMIN') {
-        return router.push('/administrador')
-      }
-      else if (json.role === 'CLIENTE') {
-        return router.push('/cliente')
-      }
-      else if (json.role === 'CONTADOR') {
-        return router.push('/contador')
-      }
-      else if (json.role === 'AUDITOR') {
-        return router.push('/auditor')
-      }
-    }
-    else {
-      return router.push('/password')
-    }
+  //   fetch(`${VUE_APP_URL}/users/login/`, {
+  //     method: 'POST',
+  //     body: JSON.stringify(registerCompany),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${Cookies.get('jwt')}`,
+  //     },
+  //     credentials: 'include',
+  //   })
+  //     .then(async (res) => {
+  //       if (!res.ok) {
+  //         const errorMsg = await res.json();
+  //         if (res.status === 403) {
+  //           errors.general = 'Acceso denegado';
+  //         } else if (res.status === 401) {
+  //           errors.general = "Contraseña o correo incorrecto";
+  //         }
+  //         throw new Error(`Error HTTP: ${res.status} - ${errorMsg.detail}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((json) => {
+  //       if (!json) return;
+  //       Cookies.set('jwt', json.access);
+  //       redirectByRole(json);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       router.push('/login');
+  //     });
+  // }
+
+  // const redirectByRole = (json) => {
+  //   if (!json.is_temp_password) {
+  //     if (json.role === 'ADMIN') {
+  //       return router.push('/administrador')
+  //     }
+  //     else if (json.role === 'CLIENTE') {
+  //       return router.push('/cliente')
+  //     }
+  //     else if (json.role === 'CONTADOR') {
+  //       return router.push('/contador')
+  //     }
+  //     else if (json.role === 'AUDITOR') {
+  //       return router.push('/auditor')
+  //     }
+  //   }
+  //   else {
+  //     return router.push('/password')
+  //   }
+  // }
   }
 </script>
 

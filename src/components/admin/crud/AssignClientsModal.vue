@@ -39,15 +39,14 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="data.length > 0">
+                <tbody v-if="data">
                     <tr v-for="user in data" :key="user.id_number" 
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
                                 <input @change="selectUser($event, user)" id="checkbox-table-search-2" 
                                 type="checkbox" 
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                :checked="isUserSelected(user.id)">
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
                             </div>
                         </td>
@@ -148,7 +147,8 @@
 
   const props = defineProps({
     apiUrl: String,
-    updateUrl: String 
+    updateUrl: String,
+    user: Object
   })
 
   const api = new GetServices();
@@ -156,48 +156,39 @@
   const data = api.getData();
   const isLoading = api.getLoader();
   const showModal = api.getShowModal();
-
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const urlApi = VUE_APP_URL + props.updateUrl + userId + "/";
+
   const clientsId  = reactive({
-    "clients": []
+    clients: props.user
   })
 
-  const toggleModal = () => {
-    showModal.value = !showModal.value;
-  }
+  console.log(clientsId);
+  console.log(urlApi);
 
+  const toggleModal = () => showModal.value = !showModal.value;
+
+  // Tomar los clientes
   api.getDataApi(props.apiUrl, isLoading)
 
-  const isUserSelected = (userId) => {
-    return clientsId.clients.includes(userId);
-  }
+  // const isUserSelected = (userId) => clientsId.clients.includes(userId);
 
-  console.log(clientsId.clients.includes(4))
-  console.log(clientsId.clients.includes(1))
-  console.log(clientsId.clients.includes(2))
-  console.log(clientsId.clients.includes(3))
-  console.log(clientsId.clients.includes(5))
-  console.log(clientsId.clients.includes(6))
-  console.log(clientsId.clients.includes(7))
-  console.log(clientsId.clients.includes(8))
 
   // seleccionar al usuario
-  // Como no estan seleccionados no los toma
-  const selectUser = (event, user) => {
-    if (event.target.checked){
-      clientsId.clients.push(user.id);
-    }
-    else {
-      return ""
-    }
-  }
+  // // Como no estan seleccionados no los toma
+  // const selectUser = (event, user) => {
+  //   if (event.target.checked){
+  //     clientsId.clients.push(user.id);
+  //   }
+  //   else {
+  //     return ""
+  //   }
+  // }
 
   
 
-  const addClient = () => {
-      api.sendDataApi(urlApi, clientsId, toggleModal, 'PATCH');
-  }
+  // const addClient = () =>  api.sendDataApi(urlApi, clientsId, toggleModal, 'PATCH');
+  
 
 </script>
