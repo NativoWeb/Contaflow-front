@@ -92,24 +92,24 @@
 
 <script setup>
   import { useRoute } from 'vue-router';
-  import { ref } from 'vue';
   import StatusModal from '../crud/StatusModal.vue';
   import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
   import SendInvitationModal from '../crud/SendInvitationModal.vue';
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
-  import GetServices from '@/services/APIService';
+  import UserService from '@/services/userService';
+  
 
-  const isLoading = ref(false);
+  const getUser = new UserService();
   const userId = useRoute().params.id;
-  const api = new GetServices();
-  const data = api.getData();
-  const err = api.getError();
+  const isLoading = getUser.getLoader();
+  const data = getUser.getData();
+  const err = getUser.getError();
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/auditors/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
 
-  api.getDataApi(urlApi, isLoading);
+  getUser.getUserById(urlApi);
 </script>
 
 <style>

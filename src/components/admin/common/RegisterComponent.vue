@@ -187,85 +187,86 @@
 </style>
 
 <script setup>
-import GetServices from "@/services/APIService";
-import { reactive, defineProps, computed } from "vue";
 
-const props = defineProps({
-  apiUrl: String,
-  usersForm: Object,
-  title: String,
-})
+  import UserService from "@/services/userService";
+  import { reactive, defineProps, computed } from "vue";
 
-const api = new GetServices();
-const modalVisible = api.getShowModal();
-const err = api.getError();
-const isLoading = api.getLoader();
-const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
-const id_numberRegex = /^[0-9]{7,10}$/;  // Solo números, minimo 7 y máximo 10 caracteres
-const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
+  const props = defineProps({
+    apiUrl: String,
+    usersForm: Object,
+    title: String,
+  })
 
-
-// Estado del formulario
-const userForm = reactive(props.usersForm);
-
-// Estado de errores
-const errors = reactive({
-first_name: "",
-last_name: "",
-id_number: "",
-phone_number: "",
-username: "",
-});  
+  const sendEmailService = new UserService();
+  const modalVisible = sendEmailService.getModal();
+  const err = sendEmailService.getError();
+  const isLoading = sendEmailService.getLoader();
+  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
+  const id_numberRegex = /^[0-9]{7,10}$/;  // Solo números, minimo 7 y máximo 10 caracteres
+  const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
 
 
-const closeModal = () => {
-  modalVisible.value = false;
-  err.value = false;
-  location.reload(); 
-};
+    // Estado del formulario
+  const userForm = reactive(props.usersForm);
 
-// Validaciones
-const validateFirstName = () => {
-  errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
-};
-
-const validateLastName = () => {
-  errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
-};
-
-const validateIdentificationNumber = () => {
-  errors.id_number = id_numberRegex.test(userForm.id_number) ? "" : "Solo se permiten números (mínimo 7 y máximo 10 dígitos).";
-};
-
-const validatePhoneNumber = () => {
-  errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
-};
-
-const validateEmail = () => {
-  errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
-};
-
-const isFormInvalid = computed(() => {
-  return (
-    !userForm.first_name.trim() ||
-    !userForm.last_name.trim() ||
-    !userForm.id_type ||
-    !userForm.id_number.trim() ||
-    !userForm.phone_number.trim() ||
-    !userForm.username.trim()||
-    Object.values(errors).some(error => error !== "")
-  );
-});
-
-const toggle = () => {
-  modalVisible.value = true;
-}
+  // Estado de errores
+  const errors = reactive({
+  first_name: "",
+  last_name: "",
+  id_number: "",
+  phone_number: "",
+  username: "",
+  });  
 
 
-function addUser() {
-  if (isFormInvalid.value) return; // No hacer nada si el formulario está inválido
-  api.sendDataApi(props.apiUrl, userForm, toggle, 'POST');
-}
+  const closeModal = () => {
+    modalVisible.value = false;
+    err.value = false;
+    location.reload(); 
+  };
+
+  // Validaciones
+  const validateFirstName = () => {
+    errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
+  };
+
+  const validateLastName = () => {
+    errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
+  };
+
+  const validateIdentificationNumber = () => {
+    errors.id_number = id_numberRegex.test(userForm.id_number) ? "" : "Solo se permiten números (mínimo 7 y máximo 10 dígitos).";
+  };
+
+  const validatePhoneNumber = () => {
+    errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
+  };
+
+  const validateEmail = () => {
+    errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
+  };
+
+  const isFormInvalid = computed(() => {
+    return (
+      !userForm.first_name.trim() ||
+      !userForm.last_name.trim() ||
+      !userForm.id_type ||
+      !userForm.id_number.trim() ||
+      !userForm.phone_number.trim() ||
+      !userForm.username.trim()||
+      Object.values(errors).some(error => error !== "")
+    );
+  });
+
+  const toggle = () => {
+    modalVisible.value = true;
+  }
+
+
+  function addUser() {
+    if (isFormInvalid.value) return; // No hacer nada si el formulario está inválido
+    sendEmailService.sendEmail(props.apiUrl, userForm, toggle, 'POST');
+  }
 </script>
 

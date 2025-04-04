@@ -115,19 +115,19 @@
 </template>
 
 <script setup>
-  import GetServices from '@/services/APIService';
-  import {  reactive, defineProps, computed } from 'vue';
+  import {  reactive, defineProps, computed, ref } from 'vue';
+  import UserService from '@/services/userService';
 
   const props = defineProps({
     id: String,
     status: String
   })
   
-  const api = new GetServices();
-  const showStatusModal = api.getShowModal();
-  const alertStatusModal = api.getAlertModal();
-  const isLoading = api.getLoader();
-  const err = api.getError();
+  const statusService = new UserService();
+  const showStatusModal = statusService.getModal();
+  const alertStatusModal = ref("");
+  const isLoading = statusService.getLoader();
+  const err = statusService.getError();
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/users/update/${props.id}` 
   const url = VUE_APP_URL + uri;
@@ -153,7 +153,7 @@
   })
 
   const changeStatus = () => {
-    api.sendDataApi(url, editStatus, isStatusChangedToggle, 'PATCH')
+    statusService.editUser(url, editStatus, isStatusChangedToggle)
   }
 
   const toggleError = () => {

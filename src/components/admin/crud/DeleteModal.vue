@@ -92,25 +92,25 @@
 </template>
 
 <script setup>
-  import { defineProps } from 'vue';
+  import { defineProps, ref } from 'vue';
   import router from '@/router';
-  import GetServices from '@/services/APIService';
+  import UserService from '@/services/userService';
 
   const props = defineProps({
     id: String
   })
 
-  const api = new GetServices();
-  const errorModal = api.getError();
-  const isLoading = api.getLoader();
-  const showDeleteModal = api.getShowModal();
-  const alertDeleteModal = api.getAlertModal();
+  const deleteService = new UserService();
+  const errorModal = deleteService.getError();
+  const isLoading = deleteService.getLoader();
+  const showDeleteModal = deleteService.getModal();
+  const alertDeleteModal = ref("");
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/users/delete/${props.id}`
   const url = VUE_APP_URL + uri;
 
   const confirmDelete = () => {
-    api.deleteDataApi(url, isDeleteToggle)
+    deleteService.deleteUser(url, isDeleteToggle)
   }
 
 

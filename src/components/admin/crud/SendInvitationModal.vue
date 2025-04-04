@@ -121,8 +121,6 @@
     err.value = !err.value;
   }
 
-  
-
   const sendInvitation = () => {
     sendM.sendEmail(props.apiUrl, props.user, toggleAlertInvitation, 'PATCH') 
   }
