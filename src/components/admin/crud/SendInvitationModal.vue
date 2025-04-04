@@ -121,6 +121,8 @@
     err.value = !err.value;
   }
 
+  
+
   const sendInvitation = () => {
     api.sendDataApi(props.apiUrl, props.user, toggleAlertInvitation, 'PATCH') 
   }

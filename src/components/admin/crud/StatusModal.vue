@@ -156,4 +156,8 @@
     api.sendDataApi(url, editStatus, isStatusChangedToggle, 'PATCH')
   }
 
+  const toggleError = () => {
+    err.value = false;
+  }
+
 </script>

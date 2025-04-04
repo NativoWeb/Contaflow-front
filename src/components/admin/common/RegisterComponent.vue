@@ -49,7 +49,7 @@
         <input v-model="userForm.id_number" @input="validateIdentificationNumber"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
           type="text" placeholder="Ingrese su celular">
-        <p v-if="errors.identification_number" class="text-red-500 text-xs mt-1">{{ errors.identification_number }}</p>
+        <p v-if="errors.id_number" class="text-red-500 text-xs mt-1">{{ errors.id_number }}</p>
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
@@ -201,7 +201,7 @@ const modalVisible = api.getShowModal();
 const err = api.getError();
 const isLoading = api.getLoader();
 const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
-const identificationRegex = /^[0-9]{7,10}$/;  // Solo números, máximo 10 caracteres
+const id_numberRegex = /^[0-9]{7,10}$/;  // Solo números, minimo 7 y máximo 10 caracteres
 const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
 
@@ -213,7 +213,7 @@ const userForm = reactive(props.usersForm);
 const errors = reactive({
 first_name: "",
 last_name: "",
-identification_number: "",
+id_number: "",
 phone_number: "",
 username: "",
 });  
@@ -227,23 +227,23 @@ const closeModal = () => {
 
 // Validaciones
 const validateFirstName = () => {
-errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
+  errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
 };
 
 const validateLastName = () => {
-errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
+  errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
 };
 
 const validateIdentificationNumber = () => {
-  errors.identification_number = identificationRegex.test(userForm.id_number) ? "" : "Solo se permiten números (minimo 7 y máximo 10 dígitos). ";
+  errors.id_number = id_numberRegex.test(userForm.id_number) ? "" : "Solo se permiten números (mínimo 7 y máximo 10 dígitos).";
 };
 
 const validatePhoneNumber = () => {
-errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
+  errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
 };
 
 const validateEmail = () => {
-errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
+  errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
 };
 
 const isFormInvalid = computed(() => {
@@ -253,7 +253,8 @@ const isFormInvalid = computed(() => {
     !userForm.id_type ||
     !userForm.id_number.trim() ||
     !userForm.phone_number.trim() ||
-    !userForm.username.trim()
+    !userForm.username.trim()||
+    Object.values(errors).some(error => error !== "")
   );
 });
 
@@ -263,7 +264,8 @@ const toggle = () => {
 
 
 function addUser() {
-  api.sendDataApi(props.apiUrl, userForm, toggle, 'POST')
+  if (isFormInvalid.value) return; // No hacer nada si el formulario está inválido
+  api.sendDataApi(props.apiUrl, userForm, toggle, 'POST');
 }
 </script>
 

@@ -15,11 +15,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Nombres:</label>
-            <input v-model="editUser.first_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.first_name" @input="validateFirstName" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
           </div>
+
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Apellidos:</label>
-            <input v-model="editUser.last_name" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.last_name" @input="validateLastName" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name }}</p>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Tipo de Identificación:</label>
@@ -33,11 +36,13 @@
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Número de Celular:</label>
-            <input v-model="editUser.phone_number" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.phone_number" @input="validatePhoneNumber" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Correo Electrónico:</label>
-            <input v-model="editUser.username" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.username" @input="validateEmail" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
           </div>
         </div>
 
@@ -49,19 +54,25 @@
               dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
             Cancelar
           </button>
-          <button 
-            :disabled="hasNoChange"
-            type="submit" 
-            class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
+          <button type="submit"
+          :disabled="hasNoChange"
+          class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border"
+          :class="{
+            'hover:bg-[#2a4b8d]': !hasNoChange,
+            'text-gray-500 cursor-not-allowed': hasNoChange
+          }">
+          
+          <span class="text-white">
             Confirmar
-          </button>
+          </span>
+        </button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-    <!-- Modal -->
+  <!-- Modal -->
   <div v-if="isLoading" 
     class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
     :class="{'scale-100': isLoading}">
@@ -141,6 +152,10 @@
   const uri = `/users/update/${props.user.id}`
   const url = VUE_APP_URL + uri;
 
+  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
+  const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
+
   const editUser = reactive({
     first_name: props.user.first_name,
     last_name: props.user.last_name,
@@ -160,14 +175,52 @@
     showEditModal.value = !showEditModal.value;
   }
 
+  // Estado de errores
+  const errors = reactive({
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  username: "",
+  });  
+
+  // Validaciones
+const validateFirstName = () => {
+  errors.first_name = nameRegex.test(editUser.first_name) ? "" : "Solo se permiten letras y espacios.";
+};
+
+const validateLastName = () => {
+  errors.last_name = nameRegex.test(editUser.last_name) ? "" : "Solo se permiten letras y espacios.";
+};
+
+const validatePhoneNumber = () => {
+  errors.phone_number = phoneRegex.test(editUser.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
+};
+
+const validateEmail = () => {
+  errors.username = emailRegex.test(editUser.username) ? "" : "Ingrese un correo válido.";
+};
+
   const hasNoChange = computed(() => {
     return  editUser.first_name === props.user.first_name &&
          editUser.last_name === props.user.last_name &&
          editUser.phone_number === props.user.phone_number &&
-         editUser.username === props.user.username;
+         editUser.username === props.user.username &&
+         Object.values(errors).every(error => error === "");
   })
 
+  const toggleError = () => {
+    err.value = false;
+  }
+
   const submitEdit = () => {
+    // Validar campos antes de enviar
+    if (errors.first_name || errors.last_name || errors.phone_number || errors.username) {
+      err.value = "Por favor, corrija los errores antes de enviar el formulario.";
+      return ;
+    }
+    // Mostrar el loader
+    isLoading.value = true;
+    // Enviar datos al servidor
     api.sendDataApi(url, editUser, isEditedToggle, 'PATCH')
   }
 </script>
