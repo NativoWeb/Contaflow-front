@@ -57,7 +57,7 @@ const router = createRouter({
             beforeEnter: (to, from, next) => {
                 const token = Cookies.get('jwt')  
                   if (!token) {
-                    next('/login')
+                    next('')
                   }
                   else {
                     next()
@@ -76,7 +76,7 @@ const router = createRouter({
         
                         // en caso de que no alla un token en las cookies redirecciona al registro
                         if (!token) {
-                            next('/login')
+                            next('')
                         }
                         else {
                             fetch(`${VUE_APP_URL}/users/${userId}/`)
@@ -206,12 +206,11 @@ const router = createRouter({
                 const token = Cookies.get('jwt')
                 
                 if (!token) {
-                    next('/login')
+                    next('')
                 }
                 else {
                     next()
-                }
-                
+                }        
             }
         },
     ],

@@ -5,7 +5,7 @@
 				Cambiar Contraseña
 			</h2>
 			<div class="flex flex-col md:flex-row gap-6">
-				<form class="flex flex-col gap-6 w-full md:w-1/2" @submit.prevent="changePassword">
+				<form class="flex flex-col gap-6 w-full md:w-1/2" @submit.prevent="btnChangePassword">
 					<div class="flex flex-col w-full">
 						<label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2" for="newPassword">Nueva
 							Contraseña</label>
@@ -52,48 +52,33 @@
 	</template>
 
 <script setup>
-import Cookies from 'js-cookie';
-import { reactive, ref } from 'vue';
+	import { reactive, ref } from 'vue';
+	import AuthServices from '@/services/authService';
 
-const VUE_APP_URL = process.env.VUE_APP_URL;
-const password = reactive({
-	new_password: ""
-});
+	const changePassword = new AuthServices();
+	const err = changePassword.getError();
 
-const showNewPassword = ref(false);
-const showRepeatPassword = ref(false);
+	const password = reactive({
+		new_password: ""
+	});
 
-function toggleShowNewPassword() {
-	showNewPassword.value = !showNewPassword.value;
-}
+	const showNewPassword = ref(false);
+	const showRepeatPassword = ref(false);
 
-function toggleShowRepeatPassword() {
-	showRepeatPassword.value = !showRepeatPassword.value;
-}
+	function toggleShowNewPassword() {
+		showNewPassword.value = !showNewPassword.value;
+	}
+
+	function toggleShowRepeatPassword() {
+		showRepeatPassword.value = !showRepeatPassword.value;
+	}
 
 
-function changePassword() {
-	let token = Cookies.get('jwt');
-	fetch(`${VUE_APP_URL}/users/password/`, {
-		method: 'POST',
-		body: JSON.stringify(password),
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${token}`
-		}
-	})
-		.then(res => res.json())
-		.then(() => {
-			// Cambiar validaciones
-			alert("Contraseña cambiada de manera correcta");
-			// Redirige al login
-			window.location.href = "/"; // Ajusta la ruta según tu configuración
-		})
-		.catch((err) => {
-			console.error(err)
-			alert("La contraseña no pudo ser cambiada")
-		});
-}
+	function btnChangePassword() {
+		return changePassword.changePasswordService(password);
+	}
+
+	console.log(err);
 
 </script>
 <style scoped>

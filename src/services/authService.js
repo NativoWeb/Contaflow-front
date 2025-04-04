@@ -2,62 +2,70 @@ import router from "@/router";
 import Cookies from "js-cookie";
 import { ref } from "vue";
 
-const VUE_APP_URL = process.env.VUE_APP_URL;
-const url = `${VUE_APP_URL}/users/login/`;
 const token = Cookies.get('jwt');
+const VUE_APP_URL = process.env.VUE_APP_URL;
+const urlLogin = `${VUE_APP_URL}/users/login/`;
+const urlChangePD = `${VUE_APP_URL}/users/password/`;
 
 class AuthServices {
   data;
   errorMsg;
-
 
   constructor () {
     this.data = ref("");
     this.errorMsg = ref("");
   }
 
+  getData () {
+    this.data;
+  }
+
+  getError (){
+    this.errorMsg;
+  }
+
   // Servicio para el ingreso
-  loginService = () => {
-    fetch(url, {
+  loginService = (user) => {
+    fetch(urlLogin, {
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json'
       },
-      credentials: 'include'
+      credentials: 'include',
+      body: JSON.stringify(user)
     })
-    .then(async res => {
+    .then(res => {
       if (!res.ok) throw new Error(`${res.status} - ${res.statusText}`)
-      res.json();
+      return res.json();
     })
-    .then(async json => {
+    .then(json => {
       if (!json) return
       Cookies.set('jwt', json.access);
-      redirectByRole(json)
+      json.is_temp_password ? router.push('/password') : router.push('/home')
     })
     .catch(err => {
       this.errorMsg = err;
-      router.push(`login`)
+      router.push(``)
     })
-  }
+  };
 
-  redirectByRole = (json) => {
-    if (!json.is_temp_password) {
-      if (json.role === 'ADMIN') {
-        return router.push('/administrador')
+  changePasswordService = (password) => {
+    fetch(urlChangePD, {
+      method: 'POST',
+      body: JSON.stringify(password),
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization': `Bearer ${token}`
       }
-      else if (json.role === 'CLIENTE') {
-        return router.push('/cliente')
-      }
-      else if (json.role === 'CONTADOR') {
-        return router.push('/contador')
-      }
-      else if (json.role === 'AUDITOR') {
-        return router.push('/auditor')
-      }
-    }
-    else {
-      return router.push('/password')
-    }
+    })
+    .then(res => res.json())
+    .then(() => {
+      alert("Contraseña cambiada de manera correcta");
+			window.location.href = "/";
+    })
+    .catch(err => {
+      this.errorMsg = err;
+    })
   }
 }
 

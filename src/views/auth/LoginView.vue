@@ -10,13 +10,13 @@
           <form @submit.prevent="login">
             <label for="usuario">Correo Electrónico</label>
             <div :class="['input-group', { 'error': errors.email }]">
-              <input v-model="registerCompany.username" type="text" id="usuario" @input="validateEmail" />
+              <input v-model="authUser.username" type="text" id="usuario" @input="validateEmail" />
             </div>
             <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
   
             <label for="password">Contraseña</label>
           <div :class="['input-group', { 'error': errors.password }]">
-            <input :type="showPassword ? 'text' : 'password'" v-model="registerCompany.password" id="password" @input="validatePassword" />
+            <input :type="showPassword ? 'text' : 'password'" v-model="authUser.password" id="password" @input="validatePassword" />
             <button type="button" @click="togglePasswordVisibility" class="toggle-password">
               <img :src="showPassword ? eyeOpenIcon : eyeClosedIcon" alt="Toggle Password" class="password-icon" />
             </button>
@@ -33,9 +33,16 @@
     </div>
   </template>
   <script setup>
+  import AuthServices from '@/services/authService';
   import { reactive, ref } from 'vue';
   
-  const registerCompany = reactive({
+  const authLogin = new AuthServices();
+  const errMsg = authLogin.getError();
+  const showPassword = ref(false);
+  const eyeOpenIcon = ref(require('@/assets/VerPassword.svg')); 
+  const eyeClosedIcon = ref(require('@/assets/OcultarPassword.svg'));
+
+  const authUser = reactive({
     username: "",
     password: "",
   });
@@ -45,30 +52,26 @@
     password: "",
     general: "",
   });
-  const showPassword = ref(false);
-  const eyeOpenIcon = ref(require('@/assets/VerPassword.svg')); // Ruta del icono de ojo abierto
-  const eyeClosedIcon = ref(require('@/assets/OcultarPassword.svg')); // Ruta del icono de ojo cerrado
 
   function togglePasswordVisibility() {
     showPassword.value = !showPassword.value;
   }
 
-
   function validateEmail() {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!registerCompany.username) {
+    if (!authUser.username) {
       errors.email = "El correo es obligatorio.";
-    } else if (!emailPattern.test(registerCompany.username)) {
+    } else if (!emailPattern.test(authUser.username)) {
       errors.email = "Formato de correo incorrecto.";
     } else {
       errors.email = "";
     }
   }
-
+  
   function validatePassword() {
-    if (!registerCompany.password) {
+    if (!authUser.password) {
       errors.password = "La contraseña es obligatoria.";
-    } else if (registerCompany.password.length < 4 || registerCompany.password.length > 12) {
+    } else if (authUser.password.length < 4 || authUser.password.length > 12) {
       errors.password = "La contraseña debe tener entre 4 y 12 caracteres.";
     } else {
       errors.password = "";
@@ -83,60 +86,11 @@
       errors.general = "Todos los campos son obligatorios y deben ser correctos.";
       return;
     }
-
-
-  //   fetch(`${VUE_APP_URL}/users/login/`, {
-  //     method: 'POST',
-  //     body: JSON.stringify(registerCompany),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${Cookies.get('jwt')}`,
-  //     },
-  //     credentials: 'include',
-  //   })
-  //     .then(async (res) => {
-  //       if (!res.ok) {
-  //         const errorMsg = await res.json();
-  //         if (res.status === 403) {
-  //           errors.general = 'Acceso denegado';
-  //         } else if (res.status === 401) {
-  //           errors.general = "Contraseña o correo incorrecto";
-  //         }
-  //         throw new Error(`Error HTTP: ${res.status} - ${errorMsg.detail}`);
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((json) => {
-  //       if (!json) return;
-  //       Cookies.set('jwt', json.access);
-  //       redirectByRole(json);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       router.push('/login');
-  //     });
-  // }
-
-  // const redirectByRole = (json) => {
-  //   if (!json.is_temp_password) {
-  //     if (json.role === 'ADMIN') {
-  //       return router.push('/administrador')
-  //     }
-  //     else if (json.role === 'CLIENTE') {
-  //       return router.push('/cliente')
-  //     }
-  //     else if (json.role === 'CONTADOR') {
-  //       return router.push('/contador')
-  //     }
-  //     else if (json.role === 'AUDITOR') {
-  //       return router.push('/auditor')
-  //     }
-  //   }
-  //   else {
-  //     return router.push('/password')
-  //   }
-  // }
+    console.log(errMsg)
+    
+    return authLogin.loginService(authUser);
   }
+  
 </script>
 
 <style>
