@@ -175,6 +175,13 @@
   }
 
   console.log(clientsId.clients.includes(4))
+  console.log(clientsId.clients.includes(1))
+  console.log(clientsId.clients.includes(2))
+  console.log(clientsId.clients.includes(3))
+  console.log(clientsId.clients.includes(5))
+  console.log(clientsId.clients.includes(6))
+  console.log(clientsId.clients.includes(7))
+  console.log(clientsId.clients.includes(8))
 
   // seleccionar al usuario
   // Como no estan seleccionados no los toma
