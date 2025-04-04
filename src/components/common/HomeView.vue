@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
     <!-- Encabezado -->
-    <header class="bg-white shadow-md p-6 rounded-lg w-full max-w-4xl text-center">
+    <div class="bg-white shadow-md p-6 rounded-lg w-full max-w-4xl text-center">
       <h1 class="text-3xl font-bold text-gray-700">Bienvenido a Contaflow</h1>
       <p class="text-gray-500 mt-2">Tu solución confiable para la gestión contable y financiera.</p>
-    </header>
+    </div>
 
     <!-- Contenido principal -->
     <main class="mt-8 w-full max-w-4xl space-y-6">

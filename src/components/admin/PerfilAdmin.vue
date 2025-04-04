@@ -94,11 +94,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Nombres:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{user.first_name}}</p>
+            <input v-model="user.first_name" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3"/>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Apellidos:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.last_name}}</p>
+            <input v-model="user.last_name" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3"/>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Tipo de Identificación:</label>
@@ -110,11 +110,11 @@
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Número de Celular:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.phone_number }}</p>
+            <input v-model="user.phone_number" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3"/>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Correo Electrónico:</label>
-            <p class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">{{ user.username }}</p>
+            <input v-model="user.username" class="text-left w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3"/>
           </div>
         </div>
       </form>
