@@ -51,7 +51,7 @@ class GetServices {
     .then(response => {
       loader.value = false;
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
-      return response.json()
+      return response.json();
     })
     .then(json => {
       this.data.value = json;

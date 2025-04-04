@@ -144,20 +144,20 @@
 </template>
 
 <script setup>
-  import { defineProps, reactive, computed } from 'vue';
-  import GetServices from '@/services/APIService';
+  import { defineProps, reactive, computed, ref } from 'vue';
+  import UserService from '@/services/userService';
 
   const props = defineProps({
     user: Object,
   })
 
-  const api = new GetServices();
-  const err = api.getError();
-  const isLoading = api.getLoader();
-  const showEditModal = api.getShowModal();
-  const alertEditedModal =  api.getAlertModal();
+  const editService = new UserService();
+  const err = editService.getError();
+  const isLoading = editService.getLoader();
+  const showEditModal = editService.getModal();
+  const alertEditedModal =  ref("");
   const VUE_APP_URL = process.env.VUE_APP_URL;
-  const uri = `/users/update/${props.user.id}`
+  const uri = `/users/update/${props.user.id}`;
   const url = VUE_APP_URL + uri;
 
   const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
@@ -229,6 +229,6 @@ const validateEmail = () => {
     // Mostrar el loader
     isLoading.value = true;
     // Enviar datos al servidor
-    api.sendDataApi(url, editUser, isEditedToggle, 'PATCH')
+    editService.editUser(url, editUser, isEditedToggle, 'PATCH')
   }
 </script>

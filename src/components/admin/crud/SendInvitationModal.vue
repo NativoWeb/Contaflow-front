@@ -91,14 +91,14 @@
 </template>
 
 <script setup>
-  import {defineProps} from 'vue'
-  import GetServices from '@/services/APIService';
+  import {defineProps, ref} from 'vue'
+  import UserService from '@/services/userService';
 
-  const api = new GetServices();
-  const err = api.getError();
-  const showInvitationModal = api.getShowModal();
-  const alertInvitationModal = api.getAlertModal();
-  const isLoading = api.getLoader();
+  const sendM = new UserService();
+  const err = sendM.getError();
+  const isLoading = sendM.getLoader();
+  const showInvitationModal = sendM.getModal();
+  const alertInvitationModal = ref("");
 
   const props = defineProps({
     user: Object,
@@ -124,7 +124,7 @@
   
 
   const sendInvitation = () => {
-    api.sendDataApi(props.apiUrl, props.user, toggleAlertInvitation, 'PATCH') 
+    sendM.sendEmail(props.apiUrl, props.user, toggleAlertInvitation, 'PATCH') 
   }
 
 </script>

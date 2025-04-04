@@ -135,26 +135,25 @@
 </template>
 
 <script setup>
-  import { defineProps, reactive, computed } from 'vue';
-  import GetServices from '@/services/APIService';
+  import { defineProps, reactive, computed, ref } from 'vue';
+  import UserService from '@/services/userService';
 
   const props = defineProps({
     user: Object,
     title: String
   })
 
-  const api = new GetServices();
-  const err = api.getError();
-  const isLoading = api.getLoader();
-  const showEditModal = api.getShowModal();
-  const alertEditedModal =  api.getAlertModal();
+  const userService = new UserService();
+  const err = userService.getError();
+  const isLoading = userService.getLoader();
+  const showEditModal = userService.getModal();
+  const alertEditedModal = ref("");
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/users/update/${props.user.id}`
   const url = VUE_APP_URL + uri;
-
-  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
-  const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
+  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  
+  const phoneRegex = /^[0-9]{10,10}$/;  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
   const editUser = reactive({
     first_name: props.user.first_name,
@@ -221,6 +220,6 @@ const validateEmail = () => {
     // Mostrar el loader
     isLoading.value = true;
     // Enviar datos al servidor
-    api.sendDataApi(url, editUser, isEditedToggle, 'PATCH')
+    userService.editUser(url, editUser, isEditedToggle)
   }
 </script>
