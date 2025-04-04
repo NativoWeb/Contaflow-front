@@ -89,7 +89,7 @@
 
 <script setup>
   import getIdByToken from '@/hooks/getId';
-  import GetService from '@/services/APIService';
+  import UserService from '@/services/userService';
   import Cookies from 'js-cookie';
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
@@ -98,10 +98,10 @@
   const isOpen = ref(false);
   const token = Cookies.get('jwt');
   const userId = getIdByToken(token);
-  const isLoading = ref(false);
-  const api = new GetService();
-  const data = api.getData()
-  const err = api.getError()
+  const isLoading = getUserService.getLoader();
+  const getUserService = new UserService();
+  const data = getUserService.getData()
+  const err = getUserService.getError()
   const VUE_APP_URL = process.env.VUE_APP_URL; 
   const uri = `/users/${userId}/`
   const urlApi = VUE_APP_URL + uri;
@@ -110,7 +110,7 @@
     isOpen.value = !isOpen.value;
   };
 
-  api.getDataApi(urlApi, isLoading)
+  getUserService.getUserById(urlApi)
 
   // Función para cerrar sesión
   const CerrarSesion = () => {

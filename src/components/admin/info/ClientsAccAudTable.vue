@@ -66,21 +66,21 @@
 </template>
 
 <script setup>
-import GetServices from '@/services/APIService';
+import UserService from '@/services/userService';
 import AssignClientsModal from '../crud/AssignClientsModal.vue';
-import { ref, defineProps } from 'vue';
+import {  defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 
 const props = defineProps({ role: String })
-const api = new GetServices();
-const data = api.getData();
-const err = api.getError();
-const isLoading = ref(false);
+const getUserService = new UserService();
+const data = getUserService.getData();
+const err = getUserService.getError();
+const isLoading = getUserService.getLoader();
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const userId = useRoute().params.id;
 const uri = `/${props.role}/${userId}/`
 const urlApi = `${VUE_APP_URL}${uri}`
 
-api.getDataApi(urlApi, isLoading);
+getUserService.getUsers(urlApi);
 
 </script>

@@ -142,7 +142,7 @@
 <script setup>
   import { defineProps, reactive } from 'vue';
   import { useRoute } from 'vue-router';
-  import GetServices from '@/services/APIService';
+  import UserService from '@/services/userService';
 
   const props = defineProps({
     apiUrl: String,
@@ -150,7 +150,7 @@
     user: Object
   })
 
-  const api = new GetServices();
+  const api = new UserService();
   const err = api.getError();
   const data = api.getData();
   const isLoading = api.getLoader();
