@@ -1,6 +1,5 @@
 <template>
-  <h1>Asignar Clientes</h1>
-  <span>Hola</span>
+  <h1 class="btn-action w-[150px]">Asignar Clientes</h1>
 </template>
 
 <script setup>

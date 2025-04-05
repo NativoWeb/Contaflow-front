@@ -52,10 +52,11 @@
         </tr>
       </tbody>
       <tr v-else colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
+        <td class="ml-2 my-6">No existen registrados</td>
       </tr>
       </table>
     </div>
+    <AssignClientsModal/>
 </template>
 
 <script setup>
@@ -63,6 +64,7 @@
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import UserService from '@/services/userService';
+import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
   
 
   const userId = useRoute().params.id;
