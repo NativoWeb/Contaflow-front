@@ -65,7 +65,7 @@
   import getIdByToken from '@/hooks/getId';
   import UserService from '@/services/userService';
   import Cookies from 'js-cookie';
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
 
   const router = useRouter();
@@ -73,9 +73,9 @@
   const token = Cookies.get('jwt');
   const userId = getIdByToken(token);
   const getUserService = new UserService();
-  const isLoading = getUserService.getLoader();
-  const data = getUserService.getData()
-  const err = getUserService.getError()
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL; 
   const uri = `/users/${userId}/`
   const urlApi = VUE_APP_URL + uri;
@@ -84,7 +84,19 @@
     isOpen.value = !isOpen.value;
   };
 
-  getUserService.getUserById(urlApi)
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUserService.getUserById(urlApi)
+      data.value = getUserService.getData().value;
+    }
+    catch(error){
+      err.value = getUserService.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
 
   // Función para cerrar sesión
   const CerrarSesion = () => {

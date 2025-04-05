@@ -12,8 +12,8 @@ class UserService {
 
   constructor (){
     this.loader = ref(false);
-    this.error = ref(false);
-    this.data = ref();
+    this.error = ref(null);
+    this.data = ref(null);
     this.modal = ref(false);
   }
 
@@ -33,48 +33,31 @@ class UserService {
     return this.modal;
   }
 
-  getUsers = (url) => {
-    this.loader.value = true;
-    fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then( res => {
-      this.loader.value = false;
-      if (!res.ok) throw new Error(`${res.status} error de tipo: ${res.statusText}`)
-      return res.json();    
-    })
-    .then(json => {
-      this.data.value = json;
-    })
-    .catch((err) => {
-      this.loader.value = false;
+
+  async getUsers(urlApi, headers={}) {
+    try {
+      const url = urlApi;
+      const response = await fetch(url, headers);
+      if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`);
+      const json = await response.json();
+      this.data.value =  json;
+    }
+    catch (err) {
       this.error.value = err;
-    })
+    }
   }
 
-  getUserById = (url) => {
-    this.loader.value = true;
-    fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then( res => {
-      this.loader.value = false;
-      if (!res.ok) throw new Error(`${res.status} error de tipo: ${res.statusText}`)
-      return res.json();    
-    })
-    .then(json => {
+  async getUserById(urlApi, headers={}) {
+    try {
+      const url = urlApi;
+      const response = await fetch(url, headers);
+      if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
+      const json = await response.json();
       this.data.value = json;
-    })
-    .catch((err) => {
-      this.loader.value = false;
+    }
+    catch (err) {
       this.error.value = err;
-    })
+    }
   }
 
   sendEmail = (url, data, toggle, method) => {

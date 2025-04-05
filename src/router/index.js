@@ -12,7 +12,7 @@ import ModificarCon from "@/components/admin/ModificarCon.vue";
 import ReporteEmpre from "@/components/admin/ReporteEmpre.vue";
 import ListaReporte from "@/components/admin/ListaReporte.vue";
 import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
-import PerfilAdmin from "@/components/admin/PerfilAdmin.vue";
+import PerfilView from "@/components/common/PerfilView.vue";
 
 //Empresa Admin
 import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
@@ -29,6 +29,7 @@ import HomeView from "@/components/common/HomeView.vue";
 import AdminNav from "@/views/admin/AdminNav.vue";
 import ClientNav from "@/views/client/ClientNav.vue";
 import AuditorNav from "@/views/auditor/AuditorNav.vue";
+import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -180,15 +181,25 @@ const router = createRouter({
                 },
 
                 {
-                    path: 'PerfilAdmin',
-                    name: 'PerfilAdmin',
-                    component: PerfilAdmin
+                    path: 'perfil',
+                    name: 'Perfil',
+                    component: PerfilView
                 },  
                 {
                     path: '/home',
                     name: 'Home',
                     component: HomeView
-                },    
+                },
+                {
+                    path: 'contador/clientes_contador/:role/:id',
+                    name: 'ClientesContador',
+                    component: ClientsAccAudTable
+                },
+                {
+                    path: 'auditor/clientes_auditor/:role/:id',
+                    name: 'ClientesAuditor',
+                    component: ClientsAccAudTable
+                },
             ]
         },
 

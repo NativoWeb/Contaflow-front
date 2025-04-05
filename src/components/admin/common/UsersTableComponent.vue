@@ -28,8 +28,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="users.length > 0">
-          <tr v-for="user in users" :key="user.id" @click="goToUserDetails(user.id)"
+        <tbody v-if="data">
+          <tr v-for="user in data" :key="user.id" @click="goToUserDetails(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
             <td class="px-6 py-4">{{ user.id_number }}</td>
@@ -55,20 +55,25 @@
       <tr v-else colspan="5" class="flex flex-col justify-center">
         <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
       </tr>
-      <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
+      <tr v-if="err" colspan="5" class="flex flex-col justify-center">
         <td class="ml-2 my-6">Ocurrio un error</td>
+        <span>{{ err }}</span>
       </tr>
       </table>
     </div>
 </template>
 
 <script setup>
-  import { ref, defineProps } from 'vue'
+  import { ref, defineProps, onMounted } from 'vue'
   import Cookies from 'js-cookie';
+  import UserService from '@/services/userService';
   import router from "@/router";
 
-  const users = ref([]);
-  const errors = ref("");
+  const getUser = new UserService();
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
+  const token = Cookies.get('jwt');
 
   const props = defineProps({
     apiUrl: String,
@@ -77,20 +82,32 @@
     routes: String
   })
 
+  console.log(props.apiUrl)
+
   const goToUserDetails = id => {
     router.push(`${props.routes}/${id}`)
   }
 
-  fetch(props.apiUrl, {
+  const headers = {
     headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+  }
+
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUser.getUsers(props.apiUrl, headers)
+      data.value = getUser.getData().value;
+    }
+    catch(error){
+      err.value = getUser.getError().value;
+    }
+    finally{
+      isLoading.value = false;
     }
   })
-  .then(response => response.json())
-  .then(json => {
-    users.value = json;
-  })
-  .catch(err => errors.value = err)
   
   
 </script>

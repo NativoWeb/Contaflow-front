@@ -88,7 +88,7 @@
     }
     console.log(errMsg)
     
-    return authLogin.loginService(authUser);
+    authLogin.loginService(authUser);
   }
   
 </script>

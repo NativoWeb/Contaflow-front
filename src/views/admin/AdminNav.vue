@@ -69,7 +69,7 @@
             </li>
           
             <li>
-            <router-link to="/administrador/PerfilAdmin" class="flex gap-2 justify-center items-center">
+            <router-link to="/administrador/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
@@ -118,7 +118,7 @@
   import getIdByToken from '@/hooks/getId';
   import UserService from '@/services/userService';
   import Cookies from 'js-cookie';
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
 
   const router = useRouter();
@@ -126,10 +126,10 @@
   const isOpenDropdown = ref(false);
   const token = Cookies.get('jwt');
   const userId = getIdByToken(token);
-  const isLoading = getUserService.getLoader();
   const getUserService = new UserService();
-  const data = getUserService.getData();
-  const err = getUserService.getError();
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL; 
   const uri = `/users/${userId}/`
   const urlApi = VUE_APP_URL + uri;
@@ -142,7 +142,20 @@
     isOpenDropdown.value = !isOpenDropdown.value;
   };
 
-  getUserService.getUserById(urlApi)
+
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUserService.getUserById(urlApi)
+      data.value = getUserService.getData().value;
+    }
+    catch(error){
+      err.value = getUserService.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
 
   // Función para cerrar sesión
   const CerrarSesion = () => {

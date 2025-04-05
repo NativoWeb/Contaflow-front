@@ -76,15 +76,15 @@
 <script setup>
 import Cookies from 'js-cookie';
 import getIdByToken from '@/hooks/getId';
-import EditPerfilModal from './crud/EditPerfilModal.vue';
+import EditPerfilModal from '../admin/crud/EditPerfilModal.vue';
 import UserService from '@/services/userService';
-import ChangePasswordPerfil from './crud/ChangePasswordPerfil.vue';
+import ChangePasswordPerfil from '../admin/crud/ChangePasswordPerfil.vue';
 
 // Definición de variables
 const token = Cookies.get('jwt');
 const userId = getIdByToken(token);
-const isLoading = getUserService.getLoader();
 const getUserService = new UserService();
+const isLoading = getUserService.getLoader();
 const data = getUserService.getData();
 const err = getUserService.getError();
 const VUE_APP_URL = process.env.VUE_APP_URL;
