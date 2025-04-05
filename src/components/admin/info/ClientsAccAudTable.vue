@@ -31,22 +31,22 @@
           <tr v-for="user in data.clients_data" :key="user.id"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
-            <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
-            <td class="px-6 py-4">fd</td>
-            <td class="px-6 py-4">vc</td>
-            <td class="px-6 py-4">
+            <td class="px-6 py-4">{{ user.username}}</td>
+            <td class="px-6 py-4">{{ user.id_number}}</td>
+            <td class="px-6 py-4">{{ user.phone_number }}</td>
+            <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
               <span class="text-sm text-orange-500">
-                
+                {{ user.status }}
               </span>
             </td>
-            <td class="px-6 py-4">
+            <td v-if="user.status == 'Activo'" class="px-6 py-4">
               <span class="text-sm text-green-500">
-                fa
+                {{ user.status }}
               </span>
             </td>
-            <td class="px-6 py-4">
+            <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
               <span class="text-sm text-red-500">
-                sa
+                {{ user.status }}
               </span>
             </td>
         </tr>
