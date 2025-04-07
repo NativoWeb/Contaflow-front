@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-  import {defineProps, ref} from 'vue'
+  import { ref } from 'vue'
   import UserService from '@/services/userService';
 
   const sendM = new UserService();

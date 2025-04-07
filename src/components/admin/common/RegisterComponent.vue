@@ -189,7 +189,7 @@
 <script setup>
 
   import UserService from "@/services/userService";
-  import { reactive, defineProps, computed } from "vue";
+  import { reactive, computed } from "vue";
 
   const props = defineProps({
     apiUrl: String,

@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-  import {  reactive, defineProps, computed, ref } from 'vue';
+  import {  reactive, computed, ref } from 'vue';
   import UserService from '@/services/userService';
 
   const props = defineProps({

@@ -178,9 +178,8 @@
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
   import UserService from '@/services/userService';
-  import Cookies from "js-cookie";
   import { onMounted, ref } from "vue";
-import router from '@/router';
+  import router from '@/router';
   
   const getUser = new UserService();
   const userId = useRoute().params.id;
