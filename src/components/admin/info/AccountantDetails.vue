@@ -72,10 +72,10 @@
       <DeleteModal :id="data.id"/>
       <StatusModal :id="data.id" :status="data.status"/>
       <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
+      <button @click="goToClientDetails" class="btn-action">Clientes</button>
   </div>
 </div>
 
-<ClientsAccAudTable :role="'accountants'"/>
 
 <!-- Modal para asignar empresa -->
 <div v-if="isAssignModalOpen" 
@@ -173,23 +173,51 @@
 
 <script setup>
   import { useRoute } from 'vue-router';
-  import { ref } from 'vue';
   import StatusModal from '../crud/StatusModal.vue';
-  import ClientsAccAudTable from '../info/ClientsAccAudTable.vue';
   import SendInvitationModal from '../crud/SendInvitationModal.vue';
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
-  import GetServices from '@/services/APIService';
-
-  const isLoading = ref(false);
+  import UserService from '@/services/userService';
+  import Cookies from "js-cookie";
+  import { onMounted, ref } from "vue";
+import router from '@/router';
+  
+  const getUser = new UserService();
   const userId = useRoute().params.id;
-  const api = new GetServices();
-  const data = api.getData();
-  const err = api.getError();
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/accountants/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
+  const token = Cookies.get('jwt');
 
-  api.getDataApi(urlApi, isLoading);
+  const headers = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+  }
+  
+  const goToClientDetails = () => {
+    router.push(`clientes_contador/accountants/${userId}`)
+  }
+
+
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUser.getUserById(urlApi, headers)
+      data.value = getUser.getData().value;
+    }
+    catch(error){
+      err.value = getUser.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  });
+
+
 
 </script>

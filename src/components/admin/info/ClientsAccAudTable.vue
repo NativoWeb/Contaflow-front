@@ -1,86 +1,104 @@
 <template>
-	<div class="w-full bg-white flex flex-col md:flex-row p-8">
-		<div class="flex-1">
-			<h2 class="text-xl font-bold text-[#2A5CAA] p-3">Clientes</h2>
-			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
-                <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                          Nombre
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Número de Identificación
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Estado
-                        </th>
-                    </tr>
-                </thead>
-                <tbody v-if="data">
-                    <tr v-for="user in data" :key="user.id_number" 
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {{ user.first_name }} {{ user.last_name }}
-                        </th>
-                        <td class="px-6 py-4">
-                          {{ user.id_number }}
-                        </td>
-                        <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
-                          <span class="text-sm text-orange-500">
-                            {{ user.status }}
-                          </span>
-                        </td>
-                        <td v-if="user.status == 'Activo'" class="px-6 py-4">
-                          <span class="text-sm text-green-500">
-                            {{ user.status }}
-                          </span>
-                        </td>
-                        <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
-                          <span class="text-sm text-red-500">
-                            {{ user.status }}
-                          </span>
-                        </td>
-                    </tr>
-                    
-                    
-                    
-                  </tbody>
-                  <tr v-else colspan="5" class="flex flex-col justify-center">
-                    <td class="ml-2 my-6">No existen registrados</td>
-                  </tr>
-
-                  <div v-if="err">
-                    <span>{{ err }}</span>
-                    <img class="mt-10 w-[100px] h-[100px]" src="@/assets/error_status.svg" alt="">
-                  </div>
-                  <div v-if="isLoading"  class="loader flex flex-col items-center justify-center w-40 h-40 m-auto">
-                    <img src="@/assets/loader.svg" alt="carga">
-                  </div>
-                </table>
-		</div>
-		<div class="flex flex-col gap-6 ml-2 p-8">
-			<button class="btn-action">Eliminar Cliente</button>
-			<AssignClientsModal :apiUrl="`${VUE_APP_URL}/clients/`" :updateUrl="'/accountants/update/'" :user="data"/>
-		</div>
-	</div>
+  <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
+      <div class="w-full md:w-1/2">
+        <label for="table-search" class="sr-only">Buscar</label>
+        <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
+          <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+          <input  type="text" 
+          v-model="searchQuery"  
+          id="table-search-users" 
+          placeholder="Buscar..."
+          class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">
+      <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+        <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nombre</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Número de Identificación</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Correo</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Celular</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+          </tr>
+        </thead>
+        <tbody v-if="data">
+          <tr v-for="user in data.clients_data" :key="user.id"
+            class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+            <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
+            <td class="px-6 py-4">{{ user.username}}</td>
+            <td class="px-6 py-4">{{ user.id_number}}</td>
+            <td class="px-6 py-4">{{ user.phone_number }}</td>
+            <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
+              <span class="text-sm text-orange-500">
+                {{ user.status }}
+              </span>
+            </td>
+            <td v-if="user.status == 'Activo'" class="px-6 py-4">
+              <span class="text-sm text-green-500">
+                {{ user.status }}
+              </span>
+            </td>
+            <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
+              <span class="text-sm text-red-500">
+                {{ user.status }}
+              </span>
+            </td>
+        </tr>
+      </tbody>
+      <tr v-else colspan="5" class="flex flex-col justify-center">
+        <td class="ml-2 my-6">No existen registrados</td>
+      </tr>
+      </table>
+    </div>
+    <AssignClientsModal/>
 </template>
 
 <script setup>
-import GetServices from '@/services/APIService';
-import AssignClientsModal from '../crud/AssignClientsModal.vue';
-import { ref, defineProps } from 'vue';
-import { useRoute } from 'vue-router';
+  import Cookies from 'js-cookie';
+  import { onMounted, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import UserService from '@/services/userService';
+import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
+  
 
-const props = defineProps({ role: String })
-const api = new GetServices();
-const data = api.getData();
-const err = api.getError();
-const isLoading = ref(false);
-const VUE_APP_URL = process.env.VUE_APP_URL;
-const userId = useRoute().params.id;
-const uri = `/${props.role}/${userId}/`
-const urlApi = `${VUE_APP_URL}${uri}`
+  const userId = useRoute().params.id;
+  const userRole = useRoute().params.role;
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const urlApi = `${VUE_APP_URL}/${userRole}/${userId}/`
+  const token = Cookies.get('jwt');
+  const getUser = new UserService();
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
 
-api.getDataApi(urlApi, isLoading);
 
+  const headers = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+  }
+  console.log(urlApi)
+  
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUser.getUserById(urlApi, headers)
+      data.value = getUser.getData().value;
+    }
+    catch(error){
+      err.value = getUser.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
+
+  console.log(data)
 </script>

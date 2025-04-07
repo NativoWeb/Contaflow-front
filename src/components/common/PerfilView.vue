@@ -74,25 +74,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import Cookies from 'js-cookie';
 import getIdByToken from '@/hooks/getId';
-import EditPerfilModal from './crud/EditPerfilModal.vue';
-import GetServices from '@/services/APIService';
-import ChangePasswordPerfil from './crud/ChangePasswordPerfil.vue';
+import EditPerfilModal from '../admin/crud/EditPerfilModal.vue';
+import UserService from '@/services/userService';
+import ChangePasswordPerfil from '../admin/crud/ChangePasswordPerfil.vue';
 
 // Definición de variables
 const token = Cookies.get('jwt');
 const userId = getIdByToken(token);
-const isLoading = ref(false);
-const api = new GetServices();
-const data = api.getData();
-const err = api.getError();
+const getUserService = new UserService();
+const isLoading = getUserService.getLoader();
+const data = getUserService.getData();
+const err = getUserService.getError();
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const uri = `/users/${userId}/`;
 const urlApi = VUE_APP_URL + uri;
 
 
 // Obtener los datos de la API
-api.getDataApi(urlApi, isLoading);
+getUserService.getUserById(urlApi);
 </script>

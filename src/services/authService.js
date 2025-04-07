@@ -26,7 +26,7 @@ class AuthServices {
 
   // Servicio para el ingreso
   loginService = (user) => {
-    fetch(urlLogin, {
+    return fetch(urlLogin, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

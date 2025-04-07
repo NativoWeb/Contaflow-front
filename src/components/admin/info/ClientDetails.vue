@@ -89,25 +89,45 @@
 </template>
 
 <script setup>
-  import GetService from '@/services/APIService';
   import CompanysCliTable from './CompanysCliTable.vue';
   import { useRoute } from 'vue-router';
-  import { ref } from 'vue';
   import StatusModal from '../crud/StatusModal.vue';
   import SendInvitationModal from '../crud/SendInvitationModal.vue';
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
+  import UserService from '@/services/userService';
+import Cookies from 'js-cookie';
+import { onMounted, ref } from 'vue';
   
-  const isLoading = ref(false);
+  const getUser = new UserService();
   const userId = useRoute().params.id;
-  const api = new GetService();
-  const data = api.getData();
-  const err = api.getError();
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
-  
-  api.getDataApi(urlApi, isLoading)
+  const token = Cookies.get('jwt');
+  const headers = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+  }
+
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUser.getUserById(urlApi, headers)
+      data.value = getUser.getData().value;
+    }
+    catch(error){
+      err.value = getUser.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
 </script>
 
 

@@ -144,7 +144,7 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import Cookies from 'js-cookie';
-import AssignComConModal from '../crud/AssignComConModal.vue';
+import AssignComConModal from '../crud/assign/AssignComConModal.vue';
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const users = ref([]);
