@@ -2,7 +2,7 @@ import router from "@/router";
 import Cookies from "js-cookie";
 import { ref } from "vue";
 
-const token = Cookies.get('jwt');
+
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const urlLogin = `${VUE_APP_URL}/users/login/`;
 const urlChangePD = `${VUE_APP_URL}/users/password/`;
@@ -23,6 +23,11 @@ class AuthServices {
   getError (){
     this.errorMsg;
   }
+
+    getToken(){
+      return Cookies.get('jwt');
+    }
+  
 
   // Servicio para el ingreso
   loginService = (user) => {
@@ -55,7 +60,7 @@ class AuthServices {
       body: JSON.stringify(password),
       headers: {
         'Content-Type':'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${this.getToken()}`
       }
     })
     .then(res => res.json())
