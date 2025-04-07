@@ -146,9 +146,11 @@
 <script setup>
   import { reactive, computed, ref } from 'vue';
   import UserService from '@/services/userService';
+  import { defineProps } from 'vue';
 
   const props = defineProps({
     user: Object,
+    userId: Number,
   })
 
   const editService = new UserService();

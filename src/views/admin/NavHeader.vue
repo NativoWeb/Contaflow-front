@@ -147,7 +147,7 @@
             </router-link>
           </li>
             <li>
-            <router-link to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
+            <router-link to="/conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
@@ -251,6 +251,6 @@
   // Función para cerrar sesión
   const CerrarSesion = () => {
     Cookies.remove('jwt'); 
-    router.push('/');
+    router.push('/login');
   };
 </script>
