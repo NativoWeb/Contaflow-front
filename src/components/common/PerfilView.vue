@@ -73,6 +73,12 @@
   </section>
 </template>
 
+<!-- <script septup>
+  
+  
+ 
+</script> -->
+
 <script setup>
 import Cookies from 'js-cookie';
 import getIdByToken from '@/hooks/getId';
