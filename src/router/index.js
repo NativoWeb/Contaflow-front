@@ -28,6 +28,7 @@ import AuditorsView from "@/views/admin/AuditorsView.vue";
 import HomeView from "@/components/common/HomeView.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import NavHeader from "@/views/admin/NavHeader.vue";
+import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -181,6 +182,16 @@ const router = createRouter({
           path: 'auditor/clientes_auditor/:role/:id',
           name: 'ClientesAuditor',
           component: ClientsAccAudTable
+        },
+        {
+          path: 'contador/clientes_contador/accountants/detalles/cliente=:id',
+          name: 'ClientsDetailsAccountant',
+          component: AssignClientDetail
+        },
+        {
+          path: 'contador/clientes_contador/auditors/detalles/cliente=:id',
+          name: 'ClientsDetailsAuditor',
+          component: AssignClientDetail
         },
       ]
     },

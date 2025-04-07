@@ -190,24 +190,15 @@ import router from '@/router';
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/accountants/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
-  const token = Cookies.get('jwt');
-
-  const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-  }
   
   const goToClientDetails = () => {
     router.push(`clientes_contador/accountants/${userId}`)
   }
 
-
   onMounted(async () => {
     isLoading.value = true;
     try{
-      await getUser.getUserById(urlApi, headers)
+      await getUser.getUserById(urlApi)
       data.value = getUser.getData().value;
     }
     catch(error){

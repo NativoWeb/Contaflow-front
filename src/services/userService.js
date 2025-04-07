@@ -35,11 +35,15 @@ class UserService {
     return this.modal;
   }
 
-
-  async getUsers(urlApi, headers={}) {
+  async getUsers(urlApi) {
     try {
       const url = urlApi;
-      const response = await fetch(url, headers);
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.getToken()}` 
+        },
+      });
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`);
       const json = await response.json();
       this.data.value =  json;
@@ -49,10 +53,15 @@ class UserService {
     }
   }
 
-  async getUserById(urlApi, headers={}) {
+  async getUserById(urlApi) {
     try {
       const url = urlApi;
-      const response = await fetch(url, headers);
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.getToken()}` 
+        },
+      });
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
       const json = await response.json();
       this.data.value = json;

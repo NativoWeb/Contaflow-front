@@ -96,8 +96,8 @@
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
   import UserService from '@/services/userService';
-import Cookies from 'js-cookie';
-import { onMounted, ref } from 'vue';
+  import Cookies from 'js-cookie';
+  import { onMounted, ref } from 'vue';
   
   const getUser = new UserService();
   const userId = useRoute().params.id;
@@ -108,17 +108,11 @@ import { onMounted, ref } from 'vue';
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
   const token = Cookies.get('jwt');
-  const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-  }
 
   onMounted(async () => {
     isLoading.value = true;
     try{
-      await getUser.getUserById(urlApi, headers)
+      await getUser.getUserById(urlApi)
       data.value = getUser.getData().value;
     }
     catch(error){

@@ -64,7 +64,7 @@
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import UserService from '@/services/userService';
-import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
+  import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
   
 
   const userId = useRoute().params.id;

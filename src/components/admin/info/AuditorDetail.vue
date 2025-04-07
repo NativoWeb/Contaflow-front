@@ -101,10 +101,8 @@
   import DeleteModal from '../crud/DeleteModal.vue';
   import UserService from '@/services/userService';
   import { ref, onMounted } from 'vue';
-  import Cookies from 'js-cookie';
-import router from '@/router';
+  import router from '@/router';
   
-
   const getUser = new UserService();
   const userId = useRoute().params.id;
   const isLoading = ref(false);
@@ -113,19 +111,11 @@ import router from '@/router';
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/auditors/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
-  const token = Cookies.get('jwt');
-  
-  const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-  }
 
   onMounted(async () => {
     isLoading.value = true;
     try{
-      await getUser.getUserById(urlApi, headers)
+      await getUser.getUserById(urlApi)
       data.value = getUser.getData().value;
     }
     catch(error){
