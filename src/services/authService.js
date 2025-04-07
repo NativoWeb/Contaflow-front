@@ -24,9 +24,9 @@ class AuthServices {
     this.errorMsg;
   }
 
-    getToken(){
-      return Cookies.get('jwt');
-    }
+  getToken(){
+    return Cookies.get('jwt');
+  }
   
 
   // Servicio para el ingreso
