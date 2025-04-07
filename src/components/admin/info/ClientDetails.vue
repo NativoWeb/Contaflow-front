@@ -96,7 +96,6 @@
   import EditModal from '../crud/EditModal.vue';
   import DeleteModal from '../crud/DeleteModal.vue';
   import UserService from '@/services/userService';
-  import Cookies from 'js-cookie';
   import { onMounted, ref } from 'vue';
   
   const getUser = new UserService();
@@ -107,7 +106,6 @@
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
-  const token = Cookies.get('jwt');
 
   onMounted(async () => {
     isLoading.value = true;

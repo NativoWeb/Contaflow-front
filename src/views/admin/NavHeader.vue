@@ -103,7 +103,7 @@
             </router-link>
             </li>
             <li>
-            <router-link to="#" class="flex gap-2 justify-center items-center">
+            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
@@ -125,7 +125,7 @@
             </router-link>
             </li>
             <li>
-            <router-link to="#" class="flex gap-2 justify-center items-center">
+            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
@@ -159,7 +159,7 @@
               </router-link>
             </li>
             <li>
-            <router-link to="#" class="flex gap-2 justify-center items-center">
+            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
