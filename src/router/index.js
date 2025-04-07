@@ -26,9 +26,7 @@ import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
 import HomeView from "@/components/common/HomeView.vue";
-import AdminNav from "@/views/admin/AdminNav.vue";
-import ClientNav from "@/views/client/ClientNav.vue";
-import AuditorNav from "@/views/auditor/AuditorNav.vue";
+import AdminNav from "@/views/admin/NavHeader.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 
 import PruebasBorrable from "@/components/PruebasBorrable.vue";
@@ -39,28 +37,13 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/cliente',
-            name: 'ClienteNav',
-            component: ClientNav,
-        },
-        {
-            path: '/contador',
-            name: 'ContadorNav',
-            component: AdminNav,
-        },
-        {
-            path: '/auditor',
-            name: 'AuditorNav',
-            component: AuditorNav,
-        },
-        {
-            path: '/administrador',
-            name: 'AdministradorNav',
+            path: '',
+            name: 'NavHeader',
             component: AdminNav,
             beforeEnter: (to, from, next) => {
                 const token = Cookies.get('jwt')  
                   if (!token) {
-                    next('')
+                    next('/login')
                   }
                   else {
                     next()
@@ -206,7 +189,7 @@ const router = createRouter({
         },
 
         {
-            path: "",
+            path: "/login",
             name: "Login",
             component: LoginUser
         },
@@ -219,7 +202,7 @@ const router = createRouter({
                 const token = Cookies.get('jwt')
                 
                 if (!token) {
-                    next('')
+                    next('login')
                 }
                 else {
                     next()

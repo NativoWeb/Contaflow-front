@@ -75,6 +75,17 @@
             </router-link>
             </li>
           </div>
+
+          <!-- Cliente -->
+        
+        
+          <li v-if="data.role == 'CLIENTE'">
+            <router-link href="#" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/circulo.svg" alt="Ícono" class="icon-img">
+              <span>Mis Conciliaciones</span>
+            </router-link>
+          </li>
+          
         </div>
       </ul>
       <div v-if="err">
