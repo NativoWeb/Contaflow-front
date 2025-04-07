@@ -1,8 +1,6 @@
 import Cookies from "js-cookie";
 import { ref } from "vue";
 
-const token = Cookies.get('jwt');
-
 class UserService {
 
   data;
@@ -19,6 +17,10 @@ class UserService {
 
   getLoader(){
     return this.loader;
+  }
+
+  getToken(){
+    return Cookies.get('jwt');
   }
 
   getData(){
@@ -68,7 +70,7 @@ class UserService {
       method: method,  
       headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${this.getToken()}` 
         },
       body: JSON.stringify(data)
     })
@@ -96,7 +98,7 @@ class UserService {
       method: 'PATCH',  
       headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${this.getToken()}` 
         },
       body: JSON.stringify(data)
     })
@@ -124,7 +126,7 @@ class UserService {
       method: 'DELETE',  
       headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${this.getToken()}` 
         },
     })
     .then(response => {
