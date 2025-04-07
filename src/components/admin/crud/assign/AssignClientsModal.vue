@@ -66,6 +66,7 @@
   import { onMounted, ref } from 'vue';
   import UserService from '@/services/userService';
   import Cookies from 'js-cookie';
+  import router from '@/router';
 
   const showClientsModal = ref(false);
   const getUser = new UserService();

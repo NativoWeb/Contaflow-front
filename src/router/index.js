@@ -26,8 +26,8 @@ import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
 import HomeView from "@/components/common/HomeView.vue";
-import AdminNav from "@/views/admin/AdminNav.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
+import NavHeader from "@/views/admin/NavHeader.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -37,7 +37,7 @@ const router = createRouter({
     {
       path: '',
       name: 'NavHeader',
-      component: AdminNav,
+      component: NavHeader,
       beforeEnter: (to, from, next) => {
         const token = Cookies.get('jwt')  
         if (!token) {
