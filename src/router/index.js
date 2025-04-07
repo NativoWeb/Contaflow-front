@@ -189,7 +189,7 @@ const router = createRouter({
           component: AssignClientDetail
         },
         {
-          path: 'contador/clientes_contador/auditors/detalles/cliente=:id',
+          path: 'auditor/clientes_auditor/auditors/detalles/cliente=:id',
           name: 'ClientsDetailsAuditor',
           component: AssignClientDetail
         },

@@ -65,7 +65,6 @@
 
 <script setup>
   import { ref, defineProps, onMounted } from 'vue'
-  import Cookies from 'js-cookie';
   import UserService from '@/services/userService';
   import router from "@/router";
 
@@ -73,7 +72,6 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
-  const token = Cookies.get('jwt');
 
   const props = defineProps({
     apiUrl: String,
@@ -88,17 +86,11 @@
     router.push(`${props.routes}/${id}`)
   }
 
-  const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-  }
 
   onMounted(async () => {
     isLoading.value = true;
     try{
-      await getUser.getUsers(props.apiUrl, headers)
+      await getUser.getUsers(props.apiUrl)
       data.value = getUser.getData().value;
     }
     catch(error){

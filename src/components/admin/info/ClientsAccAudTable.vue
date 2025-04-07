@@ -60,7 +60,6 @@
 </template>
 
 <script setup>
-  import Cookies from 'js-cookie';
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import UserService from '@/services/userService';
@@ -71,25 +70,16 @@
   const userRole = useRoute().params.role;
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const urlApi = `${VUE_APP_URL}/${userRole}/${userId}/`
-  const token = Cookies.get('jwt');
   const getUser = new UserService();
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
 
-
-  const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-  }
-  console.log(urlApi)
   
   onMounted(async () => {
     isLoading.value = true;
     try{
-      await getUser.getUserById(urlApi, headers)
+      await getUser.getUserById(urlApi)
       data.value = getUser.getData().value;
     }
     catch(error){

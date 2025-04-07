@@ -65,7 +65,6 @@
 <script setup>
   import { onMounted, ref } from 'vue';
   import UserService from '@/services/userService';
-  import Cookies from 'js-cookie';
   import router from '@/router';
 
   const showClientsModal = ref(false);
@@ -73,22 +72,14 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
-  const token = Cookies.get('jwt');
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/clients/`
   const urlApi = VUE_APP_URL + uri;
 
-  const headers = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-  }
-
   onMounted(async () => {
     isLoading.value = true;
     try{
-      await getUser.getUsers(urlApi, headers)
+      await getUser.getUsers(urlApi)
       data.value = getUser.getData().value;
     }
     catch(er){

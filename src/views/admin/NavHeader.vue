@@ -7,7 +7,7 @@
       <ul v-if="data">
         <li>
           <div id="profile">
-            <img class="w-20 h-20" src="@/assets/img_usuario.svg" alt="sa">
+            <img class="w-20 h-20" src="@/assets/img_usuario.svg" alt="foto usuario">
             <span>{{ data.first_name }}</span>
             <span>{{ data.role }}</span>
           </div>
