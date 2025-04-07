@@ -66,8 +66,11 @@
   import { onMounted, ref } from 'vue';
   import UserService from '@/services/userService';
   import router from '@/router';
+  import { useRoute } from 'vue-router';
 
   const showClientsModal = ref(false);
+  const userId = useRoute().params.id;
+  const userRole = useRoute().params.role;
   const getUser = new UserService();
   const isLoading = ref(false);
   const data = ref(null);
@@ -95,7 +98,7 @@
   }
 
   const goToClientDetails = id => {
-    router.push(`detalles/cliente=${id}`)
+    router.push(`${userRole}=${userId}/detalles/cliente=${id}`)
   }
   
 </script>

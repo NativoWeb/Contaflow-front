@@ -193,12 +193,12 @@ const router = createRouter({
           component: ClientsAccAudTable
         },
         {
-          path: 'contador/clientes_contador/accountants/detalles/cliente=:id',
+          path: 'contador/clientes_contador/accountants/:role=:userId/detalles/cliente=:id',
           name: 'ClientsDetailsAccountant',
           component: AssignClientDetail
         },
         {
-          path: 'auditor/clientes_auditor/auditors/detalles/cliente=:id',
+          path: 'auditor/clientes_auditor/auditors/:role=:userId/detalles/cliente=:id',
           name: 'ClientsDetailsAuditor',
           component: AssignClientDetail
         },
