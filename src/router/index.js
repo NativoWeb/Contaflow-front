@@ -31,6 +31,14 @@ import NavHeader from "@/views/admin/NavHeader.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
 
 import TablaClients from "@/components/clients/TablaClients.vue";
+import TablaConciliacionn from "@/components/clients/TablaConciliacionn.vue";
+import TablaAuditore from "@/components/clients/TablaAuditore.vue";
+import TablaContador from "@/components/clients/TablaContador.vue";
+import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
+
+
+
+
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
 const router = createRouter({
@@ -194,6 +202,31 @@ const router = createRouter({
           name: 'ClientsDetailsAuditor',
           component: AssignClientDetail
         },
+        {
+          path: "/TablaConciliacionn",
+          name: "TablaConciliacionn",
+          component: TablaConciliacionn,
+        },
+        {
+          path: "/TablaClients",
+          name: "TablaClients",
+          component: TablaClients,
+        },
+        {
+          path: "/TablaAuditore",
+          name: "TablaAuditore",
+          component: TablaAuditore,
+        },
+        {
+          path: "/TablaEmpresas",
+          name: "TablaEmpresas",
+          component: TablaEmpresas,
+        },
+        {
+          path: "/TablaContador",
+          name: "TablaContador",
+          component: TablaContador,
+        }
       ]
     },
       {
@@ -216,11 +249,7 @@ const router = createRouter({
           }        
         }
       },
-      {
-        path: "/TablaClients",
-        name: "TablaClients",
-        component: TablaClients,
-      }
+
   ],
 });
 

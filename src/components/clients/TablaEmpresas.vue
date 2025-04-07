@@ -3,10 +3,10 @@
     <!-- Usando el componente Tabla con diferentes configuraciones -->
     <TablaView 
       :apiUrl="`${VUE_APP_URL}/clients/`"
-      :clientList="'Lista de Clientes'"
+      :clientList="'Lista de Empresas '"
       :roles="'Usuarios'"
-      :routes="'/clientes'"
-      :columns="['Nombre', 'Numero de documento', 'Correo', 'Celular', 'Estado']"
+      :routes="'/users'"
+      :columns="['Nit', 'Razón Social', 'Sector económico ', 'Dirección']"
     />
   </div>
 </template>
