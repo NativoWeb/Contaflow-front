@@ -30,6 +30,8 @@ import AdminNav from "@/views/admin/AdminNav.vue";
 import ClientNav from "@/views/client/ClientNav.vue";
 import AuditorNav from "@/views/auditor/AuditorNav.vue";
 
+import PruebasBorrable from "@/components/PruebasBorrable.vue";
+
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
 const router = createRouter({
@@ -213,6 +215,11 @@ const router = createRouter({
                 }        
             }
         },
+        {
+            path: '/pruebas',
+            name: 'PruebasBorrable',
+            component: PruebasBorrable,
+        }
     ],
 });
 
