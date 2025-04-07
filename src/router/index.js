@@ -26,195 +26,185 @@ import AccountantsView from "@/views/admin/AccountantsView.vue";
 import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
 import HomeView from "@/components/common/HomeView.vue";
-import AdminNav from "@/views/admin/NavHeader.vue";
+import AdminNav from "@/views/admin/AdminNav.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
-
-import PruebasBorrable from "@/components/PruebasBorrable.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        {
-            path: '',
-            name: 'NavHeader',
-            component: AdminNav,
-            beforeEnter: (to, from, next) => {
-                const token = Cookies.get('jwt')  
-                  if (!token) {
-                    next('/login')
-                  }
-                  else {
-                    next()
-                  }
-                  
-            },
-            children: [
-                {
-                    path: "usuarios",
-                    name: "usuarios",
-                    component: ManageUsers,
-                    beforeEnter: (to, from, next) => {
-                        // tomar el token y el id 
-                        const token = Cookies.get('jwt');
-                        const userId = getIdByToken(token);
-        
-                        // en caso de que no alla un token en las cookies redirecciona al registro
-                        if (!token) {
-                            next('')
-                        }
-                        else {
-                            fetch(`${VUE_APP_URL}/users/${userId}/`)
-                            .then(res => res.json())
-                            .then(json => {
-                                // si la contraseña es temporal ir directamente al cambio de contraseña
-                                if (json.is_temp_password){
-                                    next('/password');
-                                }
-                                // si la contraseña no es temporal ir directamente a user
-                                else {
-                                    next();
-                                }
-                            })
-                        }
-                    }
-                },
-                {
-                    path: 'contadores',
-                    component: AccountantsView,
-                    props: true
-                },
-                {
-                    path: 'clientes',
-                    component: ClientsView,
-                    props: true
-                },
-                {
-                  path: 'auditores',
-                  component: AuditorsView,
-                  props: true
-              },
-                {
-                    path: 'contador/:id',
-                    component: AccountantDetails,
-                    props: true
-                },
-                {
-                    path: 'cliente/:id',
-                    component: ClientDetails,
-                    props: true
-                },
-                {
-                    path: 'auditor/:id',
-                    component: AuditorDetail,
-                    props: true
-                },
-                {
-                    path: 'empresas',
-                    component: CompaniesView
-                },
-                {
-                    path: 'empresas/editar',
-                    name: 'EditarEmpresa',
-                    component: EditCompanies
-                },
-                {
-                    path: 'BancosERPs',
-                    name : 'BancosERPs',
-                    component: BancosERPs
-                },
-                {
-                    path: 'conciliacion', 
-                    name: 'EmpresaCon',
-                    component: EmpresaCon
-                },
-                {
-                    path: 'ListaCon',
-                    name: 'ListaCon',
-                    component: ListaCon
-                },
-                {
-                    path: 'ExtractoCon',
-                    name: 'ExtractoCon',
-                    component: ExtractoCon
-                },
-                {
-                    path: 'ResultadoCon',
-                    name: 'ResultadoCon',
-                    component: ResultadoCon
-                },
-                {
-                    path: 'ModificarCon',
-                    name: 'ModificarCon',
-                    component: ModificarCon
-                },
-                {
-                    path: 'ReporteEmpre',
-                    name: 'ReporteEmpre',
-                    component: ReporteEmpre
-                },
-                {
-                    path: 'ListaReporte',
-                    name: 'ListaReporte',
-                    component: ListaReporte
-                },
-                {
-                    path: 'ReporteAdmin',
-                    name: 'ReporteAdmin',
-                    component: ReporteAdmin
-                },
-
-                {
-                    path: 'perfil',
-                    name: 'Perfil',
-                    component: PerfilView
-                },  
-                {
-                    path: '/home',
-                    name: 'Home',
-                    component: HomeView
-                },
-                {
-                    path: 'contador/clientes_contador/:role/:id',
-                    name: 'ClientesContador',
-                    component: ClientsAccAudTable
-                },
-                {
-                    path: 'auditor/clientes_auditor/:role/:id',
-                    name: 'ClientesAuditor',
-                    component: ClientsAccAudTable
-                },
-            ]
-        },
-
-        {
-            path: "/login",
-            name: "Login",
-            component: LoginUser
-        },
-        
-        {
-            path: "/password",
-            component: ChangePasswordView,
-            // En caso de que no haya un token
-            beforeEnter: (to, from, next) => {
-                const token = Cookies.get('jwt')
-                
-                if (!token) {
-                    next('login')
-                }
-                else {
-                    next()
-                }        
-            }
-        },
-        {
-            path: '/pruebas',
-            name: 'PruebasBorrable',
-            component: PruebasBorrable,
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '',
+      name: 'NavHeader',
+      component: AdminNav,
+      beforeEnter: (to, from, next) => {
+        const token = Cookies.get('jwt')  
+        if (!token) {
+          next('/login')
         }
-    ],
+        else {
+          next()
+        }
+      },
+      children: [
+        {
+          path: "usuarios",
+          name: "usuarios",
+          component: ManageUsers,
+          beforeEnter: (to, from, next) => {
+            // tomar el token y el id 
+            const token = Cookies.get('jwt');
+            const userId = getIdByToken(token);
+
+            // en caso de que no alla un token en las cookies redirecciona al registro
+            if (!token) {
+              next('')
+            }
+            else {
+              fetch(`${VUE_APP_URL}/users/${userId}/`)
+              .then(res => res.json())
+              .then(json => {
+                // si la contraseña es temporal ir directamente al cambio de contraseña
+                if (json.is_temp_password){
+                  next('/password');
+                }
+                // si la contraseña no es temporal ir directamente a user
+                else {
+                  next();
+                }
+              })
+            }
+          }
+        },
+        {
+          path: 'contadores',
+          component: AccountantsView,
+          props: true
+        },
+        {
+          path: 'clientes',
+          component: ClientsView,
+          props: true
+        },
+        {
+        path: 'auditores',
+        component: AuditorsView,
+        props: true
+        },
+        {
+          path: 'contador/:id',
+          component: AccountantDetails,
+          props: true
+        },
+        {
+          path: 'cliente/:id',
+          component: ClientDetails,
+          props: true
+        },
+        {
+          path: 'auditor/:id',
+          component: AuditorDetail,
+          props: true
+        },
+        {
+          path: 'empresas',
+          component: CompaniesView
+        },
+        {
+          path: 'empresas/editar',
+          name: 'EditarEmpresa',
+          component: EditCompanies
+        },
+        {
+          path: 'BancosERPs',
+          name : 'BancosERPs',
+          component: BancosERPs
+        },
+        {
+          path: 'conciliacion', 
+          name: 'EmpresaCon',
+          component: EmpresaCon
+        },
+        {
+          path: 'ListaCon',
+          name: 'ListaCon',
+          component: ListaCon
+        },
+        {
+          path: 'ExtractoCon',
+          name: 'ExtractoCon',
+          component: ExtractoCon
+        },
+        {
+          path: 'ResultadoCon',
+          name: 'ResultadoCon',
+          component: ResultadoCon
+        },
+        {
+          path: 'ModificarCon',
+          name: 'ModificarCon',
+          component: ModificarCon
+        },
+        {
+          path: 'ReporteEmpre',
+          name: 'ReporteEmpre',
+          component: ReporteEmpre
+        },
+        {
+          path: 'ListaReporte',
+          name: 'ListaReporte',
+          component: ListaReporte
+        },
+        {
+          path: 'ReporteAdmin',
+          name: 'ReporteAdmin',
+          component: ReporteAdmin
+        },
+
+        {
+          path: 'perfil',
+          name: 'Perfil',
+          component: PerfilView
+        },  
+        {
+          path: '/home',
+          name: 'Home',
+          component: HomeView
+        },
+        {
+          path: 'contador/clientes_contador/:role/:id',
+          name: 'ClientesContador',
+          component: ClientsAccAudTable
+        },
+        {
+          path: 'auditor/clientes_auditor/:role/:id',
+          name: 'ClientesAuditor',
+          component: ClientsAccAudTable
+        },
+      ]
+    },
+      {
+        path: "/login",
+        name: "Login",
+        component: LoginUser
+      },
+      
+      {
+        path: "/password",
+        component: ChangePasswordView,
+        // En caso de que no haya un token
+        beforeEnter: (to, from, next) => {
+          const token = Cookies.get('jwt')
+          if (!token) {
+            next('/login')
+          }
+          else {
+            next()
+          }        
+        }
+      },
+  ],
 });
 
 export default router;
