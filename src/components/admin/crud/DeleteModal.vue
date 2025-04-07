@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-  import { defineProps, ref } from 'vue';
+  import { ref } from 'vue';
   import router from '@/router';
   import UserService from '@/services/userService';
 

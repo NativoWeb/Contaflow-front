@@ -142,7 +142,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import Cookies from 'js-cookie';
 import AssignComConModal from '../crud/assign/AssignComConModal.vue';
 

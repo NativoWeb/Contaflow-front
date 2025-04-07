@@ -64,8 +64,7 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, onMounted } from 'vue'
-  import Cookies from 'js-cookie';
+  import { ref,  onMounted } from 'vue'
   import UserService from '@/services/userService';
   import router from "@/router";
 
