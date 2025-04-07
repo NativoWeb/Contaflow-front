@@ -86,7 +86,6 @@
     router.push(`${props.routes}/${id}`)
   }
 
-
   onMounted(async () => {
     isLoading.value = true;
     try{
