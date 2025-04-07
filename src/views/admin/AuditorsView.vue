@@ -11,7 +11,6 @@
         :roles="'Auditores'"
         :routes="`auditor`"
         />
-
 </template>
 
 <script setup>

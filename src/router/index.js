@@ -30,6 +30,7 @@ import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import NavHeader from "@/views/admin/NavHeader.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
 
+import TablaClients from "@/components/clients/TablaClients.vue";
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
 const router = createRouter({
@@ -215,6 +216,11 @@ const router = createRouter({
           }        
         }
       },
+      {
+        path: "/TablaClients",
+        name: "TablaClients",
+        component: TablaClients,
+      }
   ],
 });
 
