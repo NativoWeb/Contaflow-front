@@ -1,6 +1,10 @@
 <template>
+ 
   <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
-      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
+    
+    <AssignClientsModal/>
+
+    <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
         <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
@@ -58,7 +62,7 @@
       </tr>
       </table>
     </div>
-    <AssignClientsModal/>
+    
 </template>
 
 <script setup>

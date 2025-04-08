@@ -199,7 +199,7 @@
       </button>
     </header>
   </div>
-    <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px] h-full">
+    <div class="flex-1 p-6 mt-[140px] w-full lg:ml-[280px]">
       <router-view/>
     </div>
   </div>

@@ -217,6 +217,8 @@ a:hover{
   transition: all 0.3s ease;
   text-align: center;
 }
+
+
 .btn-action:hover {
   background-color: #E5EAFF;
   transform: scale(1.05);
