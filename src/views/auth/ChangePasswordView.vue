@@ -23,8 +23,9 @@
 					<div class="flex flex-col w-full">
 						<label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2" for="confirmPassword">Confirmar Contraseña</label>
 						<div class="flex w-full">
-							<input class="flex-1 h-10 bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-l-full py-1 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-								:type="showRepeatPassword ? 'text' : 'password'" id="confirmPassword">
+							<input class="flex-1 h-10 bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-l-full py-1 px-4 focus:outline-none focus:bg-white focus:border-gray-500"	
+							v-model="password.confirm_password"
+							:type="showRepeatPassword ? 'text' : 'password'" id="confirmPassword">
 							<button class="w-12 flex items-center justify-center bg-[#08245B] text-white rounded-r-full" type="button"
 								@click="toggleShowRepeatPassword">
 								<img v-if="showRepeatPassword" src="@/assets/eyes-open.svg" alt="Ocultar contraseña" />
@@ -34,6 +35,7 @@
 					</div>
 
 					<button class="w-full md:w-40 bg-[#2A5CAA] text-white py-2 rounded-lg font-bold" type="submit">Enviar</button>
+				
 				</form>
 
 					<!-- Requisitos de la contraseña -->
@@ -59,11 +61,14 @@
 	const err = changePassword.getError();
 
 	const password = reactive({
-		new_password: ""
+		new_password: "",
+		confirm_password: ""
 	});
 
 	const showNewPassword = ref(false);
 	const showRepeatPassword = ref(false);
+
+
 
 	function toggleShowNewPassword() {
 		showNewPassword.value = !showNewPassword.value;
@@ -73,9 +78,14 @@
 		showRepeatPassword.value = !showRepeatPassword.value;
 	}
 
-
 	function btnChangePassword() {
-		return changePassword.changePasswordService(password);
+
+		if (password.new_password !== password.confirm_password) {
+			alert("Las contraseñas no coinciden.");
+			return;
+		}
+
+		changePassword.changePasswordService(password)
 	}
 
 	console.log(err);

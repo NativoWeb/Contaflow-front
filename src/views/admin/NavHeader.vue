@@ -1,5 +1,5 @@
 <template> 
-  <div class="navbar w-screen h-screen flex">
+  <div class="navbar h-screen flex">
     <nav :class="{ 'open': isOpen }"> 
       <div class="close-container none">
         <button class="close" @click="toggleSidebar">X</button>

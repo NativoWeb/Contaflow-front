@@ -66,7 +66,7 @@ class AuthServices {
     .then(res => res.json())
     .then(() => {
       alert("Contraseña cambiada de manera correcta");
-			window.location.href = "/";
+      router.push('/home')
     })
     .catch(err => {
       this.errorMsg = err;

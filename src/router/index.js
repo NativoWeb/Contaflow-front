@@ -36,7 +36,7 @@ import TablaAuditore from "@/components/clients/TablaAuditore.vue";
 import TablaContador from "@/components/clients/TablaContador.vue";
 import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
 
-
+import PruebasBorrable from "@/components/PruebasBorrable.vue";
 
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
@@ -69,7 +69,7 @@ const router = createRouter({
 
             // en caso de que no alla un token en las cookies redirecciona al registro
             if (!token) {
-              next('')
+              next('/login')
             }
             else {
               fetch(`${VUE_APP_URL}/users/${userId}/`)
@@ -249,7 +249,11 @@ const router = createRouter({
           }        
         }
       },
-
+      {
+        path: "/PruebasBorrable",
+        name: "PruebasBorrable",
+        component: PruebasBorrable,
+      }
   ],
 });
 
