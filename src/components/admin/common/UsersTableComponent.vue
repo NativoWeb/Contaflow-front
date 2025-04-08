@@ -28,7 +28,7 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="data.length > 0">
+        <tbody v-if="data && data.length > 0">
           <tr v-for="user in data" :key="user.id" @click="goToUserDetails(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>

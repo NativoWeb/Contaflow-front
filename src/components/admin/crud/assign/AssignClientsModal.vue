@@ -24,7 +24,7 @@
               <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
             </tr>
           </thead>
-          <tbody v-if="data">
+          <tbody v-if="data && data.length > 0">
             <tr v-for="user in data" :key="user.id" 
             @click="goToClientDetails(user.id)" 
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600"
@@ -57,6 +57,9 @@
           <tr v-else colspan="5" class="flex flex-col justify-center">
             <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
           </tr>
+          <div v-if="isLoading" class="flex justify-center items-start">
+            <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+          </div>
           <tr v-if="err" colspan="5" class="flex flex-col justify-center">
             <td class="ml-2 my-6">Ocurrio un error: {{ err }}</td>
           </tr>
@@ -80,7 +83,7 @@
   const userRole = useRoute().params.role;
   const getUser = new UserService();
   const isLoading = ref(false);
-  const data = ref(null);
+  const data = ref([]);
   const err = ref(null);
   const userData = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
