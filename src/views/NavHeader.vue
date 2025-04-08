@@ -16,7 +16,7 @@
         
         <div class="list-container">
           <li>
-            <router-link to="/home" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/home" class="flex gap-2 justify-center items-center">
               <img src="@/assets/home.svg" alt="Home Img">
               <span>Home</span>
             </router-link>
@@ -34,42 +34,42 @@
               </button>
               <ul :class="{ 'max-h-0 opacity-0': !isOpenDropdown, 'max-h-40 opacity-100': isOpenDropdown }" class=" overflow-hidden transition-all duration-500 ease-in-out mb-1 mt-2 flex items-start justify-start flex-col gap-2"
   >
-                <li><router-link to="/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
-                <li><router-link to="/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
-                <li><router-link to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
+                <li><router-link @click="toggleSidebar" to="/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
+                <li><router-link @click="toggleSidebar" to="/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
+                <li><router-link @click="toggleSidebar" to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
               </ul>
             </li>
 
             <li>
-              <router-link to="/empresas" class="flex gap-2 justify-center items-center">
+              <router-link @click="toggleSidebar" to="/empresas" class="flex gap-2 justify-center items-center">
                 <img src="@/assets/empresass.svg" alt="Empresas Img">
                 <span>Empresas</span>
               </router-link>
             </li>
 
             <li>
-            <router-link to="/BancosERPs" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/BancosERPs" class="flex gap-2 justify-center items-center">
               <img src="@/assets/BancoErps.svg" alt="Bancos Img">
               <span >Bancos y ERPs</span>
             </router-link>
             </li>
 
             <li>
-            <router-link to="/conciliacion" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Conciliacion Img">
               <span >Conciliaciones</span>
             </router-link>
             </li>
 
             <li>
-            <router-link to="/ReporteEmpre" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/ReporteEmpre" class="flex gap-2 justify-center items-center">
               <img src="@/assets/informe.svg" alt="Informe">
               <span >Reportes financieros y auditoría</span>
             </router-link>
             </li>
           
             <li>
-            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
@@ -79,31 +79,31 @@
           <!-- Cliente -->
           <div v-if="data.role == 'CLIENTE'" class="flex flex-col justify-center items-start gap-4">
             <li>
-            <router-link to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
             </li>
             <li>
-            <router-link to="/TablaEmpresas" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaEmpresas" class="flex gap-2 justify-center items-center">
               <img src="@/assets/empresass.svg" alt="Cuenta">
               <span >Mis Empresas</span>
             </router-link>
             </li>
             <li>
-            <router-link to="/TablaContador" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaContador" class="flex gap-2 justify-center items-center">
               <img src="@/assets/contador.svg" alt="Ícono" class="icon-img">
               <span>Mis Contadores</span>
             </router-link>
           </li>
             <li>
-            <router-link to="/TablaAuditore" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaAuditore" class="flex gap-2 justify-center items-center">
               <img src="@/assets/auditor.svg" alt="Cuenta">
               <span >Mis Auditores</span>
             </router-link>
             </li>
             <li>
-            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
@@ -113,19 +113,19 @@
           <!-- Auditor -->
           <div v-if="data.role == 'AUDITOR'" class="flex flex-col justify-center items-start gap-4">
             <li>
-            <router-link to="/TablaClients" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaClients" class="flex gap-2 justify-center items-center">
               <img src="@/assets/client.svg" alt="Ícono" class="icon-img">
               <span>Mis Clientes</span>
             </router-link>
           </li>
             <li>
-            <router-link to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
             </li>
             <li>
-            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
@@ -135,31 +135,31 @@
           <!-- Contador -->
           <div v-if="data.role == 'CONTADOR'" class="flex flex-col justify-center items-start gap-4">
             <li>
-            <router-link to="/TablaClients" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/TablaClients" class="flex gap-2 justify-center items-center">
               <img src="@/assets/client.svg" alt="Ícono" class="icon-img">
               <span>Mis Clientes</span>
             </router-link>
           </li>
           <li>
-            <router-link to="TablaEmpresas" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="TablaEmpresas" class="flex gap-2 justify-center items-center">
               <img src="@/assets/empresass.svg" alt="Ícono" class="icon-img">
               <span>Mis Empresas</span>
             </router-link>
           </li>
             <li>
-            <router-link to="/conciliacion" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
             </li>
             <li>
-              <router-link to="#" class="flex gap-2 justify-center items-center">
+              <router-link @click="toggleSidebar" to="#" class="flex gap-2 justify-center items-center">
                 <img src="@/assets/informe.svg" alt="Ícono" class="icon-img">
                 <span>Reportes</span>
               </router-link>
             </li>
             <li>
-            <router-link to="/perfil" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
               <img src="@/assets/manage-account.svg" alt="Cuenta">
               <span >Mi Cuenta</span>
             </router-link>
