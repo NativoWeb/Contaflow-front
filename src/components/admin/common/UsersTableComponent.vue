@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody v-if="data">
-          <tr v-for="user in data" :key="user.id" @click="goToUserDetails(user.id)"
+          <tr v-for="user in filteredData" :key="user.id" @click="goToUserDetails(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
             <td class="px-6 py-4">{{ user.id_number }}</td>
@@ -71,6 +71,8 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
+  
+  const searchQuery = ref('');
 
   const props = defineProps({
     apiUrl: String,
@@ -98,7 +100,22 @@
     }
   })
   
-  
+  import { computed } from 'vue';
+
+const filteredData = computed(() => {
+  if (!data.value) return [];
+
+  const query = searchQuery.value.toLowerCase();
+
+  return data.value.filter(user =>
+    `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) ||
+    user.id_number?.toString().toLowerCase().includes(query) ||
+    user.username?.toLowerCase().includes(query) ||
+    user.phone_number?.toString().toLowerCase().includes(query) ||
+    user.status?.toLowerCase().includes(query)
+  );
+});
+
 </script>
   
   

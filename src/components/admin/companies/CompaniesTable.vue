@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody v-if="company.length > 0">
-          <tr v-for="companies in company" :key="companies.nit"
+          <tr v-for="companies in FilterCompany" :key="companies.nit"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ companies.nit }}</td>
             <td class="px-6 py-4">{{ companies.name }}</td>
@@ -48,11 +48,13 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import Cookies from 'js-cookie';
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const company = ref([]);
+  const searchQuery = ref(""); // Agregado para la búsqueda
+
 
   fetch(`${VUE_APP_URL}/companies/`, {
     headers: {
@@ -65,4 +67,12 @@
   })
   .catch(err => company.value = err)
 
+  const FilterCompany = computed(() => {
+    return company.value.filter(companies =>
+    companies.nit.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    companies.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    companies.sector.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    companies.address.toLowerCase().includes(searchQuery.value.toLowerCase()) 
+    )
+  })
 </script>
