@@ -29,7 +29,9 @@
           </tr>
         </thead>
         <tbody v-if="company.length > 0">
-          <tr v-for="companies in FilterCompany" :key="companies.nit"
+          <tr v-for="companies in FilterCompany" 
+            :key="companies.nit"
+            @click="goToDetails(companies.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ companies.nit }}</td>
             <td class="px-6 py-4">{{ companies.name }}</td>
@@ -48,24 +50,34 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
-  import Cookies from 'js-cookie';
+  import router from '@/router';
+  import CompaniesService from '@/services/companiesService';
+  import { ref, computed, onMounted } from 'vue'
 
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const company = ref([]);
   const searchQuery = ref(""); // Agregado para la búsqueda
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const companiesService = new CompaniesService()
+  const company = ref([]);
+  const err = ref(null);
+  const isLoading = ref(false);
 
+  const goToDetails = (id) => {
+    router.push(`/company=${id}/`)
+  }
 
-  fetch(`${VUE_APP_URL}/companies/`, {
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
+  onMounted(async () => {
+    isLoading.value = true;
+    try {
+      await companiesService.getCompanies(`${VUE_APP_URL}/companies/`)
+      company.value = companiesService.getData().value;
+    }
+    catch(error){
+      err.value = companiesService.getError().value;
+    }
+    finally{
+      isLoading.value = false;
     }
   })
-  .then(res => res.json())
-  .then(json => {
-    company.value = json
-  })
-  .catch(err => company.value = err)
 
   const FilterCompany = computed(() => {
     return company.value.filter(companies =>
