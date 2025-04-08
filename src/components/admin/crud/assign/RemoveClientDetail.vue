@@ -2,14 +2,14 @@
   <div class=" mt-8" v-if="data">
     <button @click="removeClient" type="button" class="ml-4 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Remover Cliente</button>
 
-    <div class="gap-2 flex flex-col items-center justify-center">
+    <div class="w-full bg-white flex flex-col p-8 shadow-md" style="border-radius: 8px 8px 8px 8px;">
+      <!-- Sección de información -->
+      <div class="flex-1" >
+        <div class="gap-2 flex flex-col items-center justify-center">
       <img class="rounded-full w-20 h-20" src="@/assets/img_usuario.svg" alt="foto usuario">
         <h3>{{ data.first_name }} {{ data.last_name }}</h3>
         <h5>{{ data.username }}</h5>
     </div>
-    <div class="w-full bg-white flex flex-col p-8">
-      <!-- Sección de información -->
-      <div class="flex-1">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
         <!-- Primera fila -->
         <div>

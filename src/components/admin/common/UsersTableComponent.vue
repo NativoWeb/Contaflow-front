@@ -1,6 +1,6 @@
 <template>
     <!-- Contenedor de búsqueda y tabla -->
-    <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+    <div class="p-4 bg-white flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0 mt-8" style="border-radius: 8px 8px 0 0;">
       <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
@@ -17,7 +17,7 @@
       </div>
     </div>
     
-    <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">
+    <div class="overflow-x-auto p-3 bg-white shadow-md " style="border-radius: 0 0 8px 8px;">
       <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>

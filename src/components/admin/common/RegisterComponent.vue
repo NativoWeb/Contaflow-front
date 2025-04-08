@@ -1,10 +1,10 @@
 <template>
   <!-- Título de la página -->
-  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 rounded-lg shadow-md text-center md:text-left">
+  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 shadow-md text-center md:text-left" style="border-radius: 8px 8px 0 0;">
       {{ title }}
   </h2>
     <!-- Formulario -->
-     <form @submit.prevent="addUser" class="w-full p-6 bg-white">
+     <form @submit.prevent="addUser" class="w-full p-6 bg-white" style="border-radius: 0 0 8px 8px;">
     <!-- Primera fila -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div>

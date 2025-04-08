@@ -1,9 +1,10 @@
 <template>
   <!-- Título -->
-  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 rounded-lg shadow-md text-center md:text-left">
+  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 text-center md:text-left" style="border-radius: 8px 8px 0 0;" >
     Registro de Empresas
   </h2>
-  <form class="w-full p-6 bg-white" @submit.prevent="addCompany">
+
+  <form class="w-full p-6 bg-white" style="border-radius: 0 0 8px 8px;" @submit.prevent="addCompany">
     <!-- Primera fila -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div>
