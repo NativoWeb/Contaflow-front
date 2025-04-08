@@ -157,10 +157,8 @@
   const userId = useRoute().params.userId;
   const userRole = useRoute().params.role;
   const url = `${VUE_APP_URL}/${userRole}/update/${userId}/`;
-
-  console.log(userId)
-  console.log(userRole)
-
+  let clientsList = [];
+  let clients = ``;
 
   onMounted(async () => {
     isLoading.value = true;
@@ -169,6 +167,21 @@
       data.value = getUser.getData().value;
     }
     catch(er){
+      err.value = getUser.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
+
+  onMounted(async () => {
+    try{
+      await getUser.getUserById(`${VUE_APP_URL}/${userRole}/${userId}/`);
+      data.value = getUser.getData().value;
+      clientsList += [data.value.clients];
+      clients = clientsList ? clientsList.split(",") : [];
+    }
+    catch(err){
       err.value = getUser.getError().value;
     }
     finally{
@@ -185,8 +198,10 @@
   }
 
   const addClient = () => {
+    clients.push(clientId)
+    const uniqueClients = [...new Set(clients)];
     isLoading.value = true;
-    getUser.editUser(url, {clients: [clientId]}, isEditedToggle)
+    getUser.editUser(url, {clients: uniqueClients}, isEditedToggle)
     isLoading.value = false;
   }
 

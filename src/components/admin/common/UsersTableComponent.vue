@@ -56,8 +56,7 @@
         <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
       </tr>
       <tr v-if="err" colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">Ocurrio un error</td>
-        <span>{{ err }}</span>
+        <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
       </tr>
       </table>
     </div>
