@@ -158,8 +158,8 @@
       <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
         <!-- Contenido del Modal -->
         <div class="p-6 md:p-5 text-center">
-          <img src="@/assets/update.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
-          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">Se asigno el Cliente de manera de correcta</h3>
+          <img src="@/assets/remove_client.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
+          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">Se removio el Cliente de manera de correcta</h3>
 
           <button @click="isEditedToggle"
               type="button" 
@@ -239,7 +239,9 @@
     try{
       await getUser.getUserById(url);
       data.value = getUser.getData().value;
+      // Inicializar los clientes actuales del usuario
       clientsList.value += [data.value.clients];
+      // Separarlo en un array
       clients.value = clientsList.value.split(",");
     }
     catch(err){
@@ -260,7 +262,9 @@
 
   const removeClient = () => {
     isLoading.value = true;
+    // Filtrar a los clientes ya previamente asignados
     clients.value = clients.value.filter(id => id !== clientId);
+    // Set para evitar que se duplique
     const uniqueClients = [...new Set(clients.value) ]
     getUser.editUser(urlUpdate, {clients: uniqueClients}, isEditedToggle)
   }

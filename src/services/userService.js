@@ -10,9 +10,9 @@ class UserService {
 
   constructor (){
     this.loader = ref(false);
+    this.modal = ref(false);
     this.error = ref(null);
     this.data = ref(null);
-    this.modal = ref(false);
   }
 
   getLoader(){
