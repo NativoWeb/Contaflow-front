@@ -105,14 +105,14 @@
 
 
   <!-- Modal -->
-  <div v-if="modalVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
+  <div v-if="isResponse" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
     <div class="bg-white p-6 shadow-lg w-96 relative rounded-tl-3xl">
-      <button @click="modalVisible = false" 
+      <button @click="closeResponseModal()" 
         class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center">
         &times;
       </button>
       <p class="text-[#2A5CAA] font-bold mb-4 text-center">
-        ¡Empresa agregada con éxito!
+        !!EMPRESA AGREGADA!!
       </p>
       <p class="text-gray-800 font-medium mb-4 text-center">
         La empresa <span class="font-bold">{{ companyForm.name }}</span> ha sido agregada exitosamente a ContaFlow.
@@ -121,16 +121,16 @@
   </div>
 
   <!-- Modal de Error -->
-  <div v-if="errorModal" 
+  <div v-if="isError" 
     class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-    :class="{'scale-100': errorModal}">
+    :class="{'scale-100': isError}">
     <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg dark:bg-gray-800">
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4">
                 <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
-                <button @click="closeModal" 
+                <button @click="closeErrorModal()" 
                     class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
                     &times;
                 </button>
@@ -148,119 +148,88 @@
 
 
 <script setup>
-import Cookies from "js-cookie";
-import { computed, reactive, ref } from "vue";
+  import CompaniesService from "@/services/companiesService";
+  import { computed, reactive, ref } from "vue";
 
-const VUE_APP_URL = process.env.VUE_APP_URL;
+  const companyService = new CompaniesService();
+  const isLoading = ref(false);
+  const isResponse = ref(false);
+  const isError = ref(false);
+  const errorResponse = ref(null);
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const nitRegex = /^\d{7,8}-\d{1}$/;
+  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
+  const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
 
-const nitRegex = /^\d{7,8}-\d{1}$/;
-const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
-const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
-
-
-const companyForm = reactive({
-  nit: "",
-  name: "",
-  address: "",
-  sector: ""
-});
-
-const error = reactive({
-  nit: "",
-  name: "",
-  address: ""
-});
-
-// validacione
-const validateNit = () => {
-  if (!companyForm.nit.trim()) {
-    error.nit = "El NIT es obligatorio";
-  } else if (!nitRegex.test(companyForm.nit)) {
-    error.nit = "El NIT no es válido";
-  } else {
-    error.nit = "";
-  }
-}
-
-const validateName = () => {
-  if (!companyForm.name.trim()) {
-    error.name = "La razón social es obligatoria";
-  } else if (!nameRegex.test(companyForm.name)) {
-    error.name = "La razón social no es válida";
-  } else {
-    error.name = "";
-  }
-}
-
-const validateAddress = () => {
-  if (!companyForm.address.trim()) {
-    error.address = "La dirección es obligatoria";
-  } else if (!addressRegex.test(companyForm.address)) {
-    error.address = "La dirección no es válida";
-  } else {
-    error.address = "";
-  }
-}
-
-
-const isFormInvalid = computed(() => {
-  return (
-    !companyForm.nit.trim() ||
-    !companyForm.name.trim() ||
-    !companyForm.address.trim() ||
-    !companyForm.sector.trim() ||
-    Object.values(error).some(error => error !== "")
-  )
-})
-
-const modalVisible = ref(false);
-const errorModal = ref(false);
-const errorMessage = ref("");
-const isLoading = ref(false);
-
-const closeModal = () => {
-  modalVisible.value = false;
-  errorModal.value = false;
-  location.reload()
-}
-
-// Enviar datos al servidor sin validación
-function addCompany() {
-  // Validar el formulario antes de enviar
-  if (isFormInvalid.value) {
-    errorMessage.value = "Por favor, completa todos los campos correctamente.";
-    errorModal.value = true;
-    return;
-  }
-  // Enviar datos al servidor
-  isLoading.value = true;
-
-  fetch(`${VUE_APP_URL}/companies/register/`, {
-
-    method: 'POST',
-      body: JSON.stringify(companyForm),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}`
-      }
-    })
-  .then(res => {
-    isLoading.value = false;
-    if (!res.ok){
-      if (res.status === 401) throw new Error(`Acceso denegado`);
-      if (res.status === 403) throw new Error(`Tu rol no te permite editar un usuario`);
-      
-      throw new Error(`Ocurrio un error. intentalo de nuevo en otro momento`);
-    }
-    return res.json();
-  })
-  .then(() => {
-    modalVisible.value = true;
-  })
-  .catch(err => {
-    errorMessage.value = err;
-    errorModal.value = true;
-    isLoading.value = false;
+  const companyForm = reactive({
+    nit: "",
+    name: "",
+    address: "",
+    sector: ""
   });
-}
+
+  const error = reactive({
+    nit: "",
+    name: "",
+    address: ""
+  });
+
+  // validacione
+  const validateNit = () => {
+    if (!companyForm.nit.trim()) error.nit = "El NIT es obligatorio";
+    else if (!nitRegex.test(companyForm.nit)) error.nit = "El NIT no es válido";
+    else error.nit = "";
+  }
+
+  const validateName = () => {
+    if (!companyForm.name.trim()) error.name = "La razón social es obligatoria";
+    else if (!nameRegex.test(companyForm.name)) error.name = "La razón social no es válida";
+    else error.name = "";
+  }
+
+  const validateAddress = () => {
+    if (!companyForm.address.trim()) error.address = "La dirección es obligatoria";
+    else if (!addressRegex.test(companyForm.address)) error.address = "La dirección no es válida";
+    else error.address = "";
+  }
+
+
+  const isFormInvalid = computed(() => {
+    return (
+      !companyForm.nit.trim() ||
+      !companyForm.name.trim() ||
+      !companyForm.address.trim() ||
+      !companyForm.sector.trim() ||
+      Object.values(error).some(error => error !== "")
+    )
+  })
+
+  const closeErrorModal = () => {
+    isError.value = !isError.value;
+    location.reload();
+  }
+
+  const closeResponseModal = () => {
+    isResponse.value = !isResponse.value;
+    location.reload()
+  }
+
+  async function addCompany(){
+    isLoading.value = true;
+    const url = `${VUE_APP_URL}/companies/register/`;
+    const data = companyForm;
+
+    try {
+      await companyService.addCompany(url, data);
+      isResponse.value = true;
+    }
+    catch(err){
+      isResponse.value = false;
+      isError.value = true;
+      errorResponse.value = companyService.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  }
 </script>

@@ -12,8 +12,7 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
           </tr>
         </thead>
-        <div v-if="data">
-          <tbody v-if="data_companies_data">
+          <tbody v-if="data && data.companies_data > 0">
             <tr v-for="user in data.companies_data" :key="user.id" @click="goToClientDetails(user.id)" class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
               <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
               <td class="px-6 py-4">{{ user.id_number }}</td>
@@ -24,6 +23,8 @@
           <tr v-else class="flex flex-col justify-center">
             <td class="ml-2 my-6">No tiene empresas registradas</td>
           </tr>
+        <div v-if="isLoading" class="flex justify-center items-start">
+          <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
         </div>
         <tr v-if="err" colspan="5" class="flex flex-col justify-center">
           <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
