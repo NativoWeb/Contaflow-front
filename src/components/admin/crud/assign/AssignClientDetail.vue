@@ -180,6 +180,7 @@
       await getUser.getUserById(`${VUE_APP_URL}/${userRole}/${userId}/`);
       data.value = getUser.getData().value;
       clientsList += [data.value.clients];
+      // si el usuario tiene clientes o si no
       clients = clientsList ? clientsList.split(",") : [];
     }
     catch(err){
@@ -201,6 +202,7 @@
   const addClient = () => {
     isLoading.value = true;
     clients.push(clientId)
+    // set para evitar ids duplicados
     const uniqueClients = [...new Set(clients)];
     getUser.editUser(url, {clients: uniqueClients}, isEditedToggle)
     isLoading.value = false;
