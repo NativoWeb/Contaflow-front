@@ -35,8 +35,11 @@
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
+          <td class="ml-2 my-6">No existen empresas registrados</td>
         </tr>
+        <div v-if="isLoading" class="flex justify-center items-start">
+          <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+        </div>
         <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
           <td class="ml-2 my-6">Ocurrio un error</td>
         </tr>
@@ -45,21 +48,27 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import Cookies from 'js-cookie';
+  import { onMounted, ref } from 'vue'
+  import CompaniesService from '@/services/companiesService';
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
+  const companiesService = new CompaniesService()
   const company = ref([]);
+  const err = ref(null);
+  const isLoading = ref(false);
 
-  fetch(`${VUE_APP_URL}/companies/`, {
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
+  onMounted(async () => {
+    isLoading.value = true;
+    try {
+      await companiesService.getCompanies(`${VUE_APP_URL}/companies/`)
+      company.value = companiesService.getData().value;
+    }
+    catch(error){
+      err.value = companiesService.getError().value;
+    }
+    finally{
+      isLoading.value = false;
     }
   })
-  .then(res => res.json())
-  .then(json => {
-    company.value = json
-  })
-  .catch(err => company.value = err)
-
+  
 </script>
