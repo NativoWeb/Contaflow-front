@@ -28,8 +28,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
           </tr>
         </thead>
-        <tbody v-if="company && company.length > 0">
-          <tr v-for="companies in company" :key="companies.id" @click="goToDetails(companies.id)"
+        <tbody v-if="company.length > 0">
+          <tr v-for="companies in FilterCompany" :key="companies.nit"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ companies.nit }}</td>
             <td class="px-6 py-4">{{ companies.name }}</td>
@@ -38,11 +38,8 @@
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">No existen empresas registrados</td>
+          <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
         </tr>
-        <div v-if="isLoading" class="flex justify-center items-start">
-          <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
-        </div>
         <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
           <td class="ml-2 my-6">Ocurrio un error</td>
         </tr>
@@ -51,32 +48,31 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue'
-  import CompaniesService from '@/services/companiesService';
-import router from '@/router';
+  import { ref, computed } from 'vue'
+  import Cookies from 'js-cookie';
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
-  const companiesService = new CompaniesService()
   const company = ref([]);
-  const err = ref(null);
-  const isLoading = ref(false);
+  const searchQuery = ref(""); // Agregado para la búsqueda
 
-  const goToDetails = (id) => {
-    router.push(`/company=${id}/`)
-  }
 
-  onMounted(async () => {
-    isLoading.value = true;
-    try {
-      await companiesService.getCompanies(`${VUE_APP_URL}/companies/`)
-      company.value = companiesService.getData().value;
-    }
-    catch(error){
-      err.value = companiesService.getError().value;
-    }
-    finally{
-      isLoading.value = false;
+  fetch(`${VUE_APP_URL}/companies/`, {
+    headers: {
+      'Authorization': `Bearer ${Cookies.get('jwt')}`
     }
   })
-  
+  .then(res => res.json())
+  .then(json => {
+    company.value = json
+  })
+  .catch(err => company.value = err)
+
+  const FilterCompany = computed(() => {
+    return company.value.filter(companies =>
+    companies.nit.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    companies.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    companies.sector.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    companies.address.toLowerCase().includes(searchQuery.value.toLowerCase()) 
+    )
+  })
 </script>
