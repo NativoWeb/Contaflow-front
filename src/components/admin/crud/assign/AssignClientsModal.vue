@@ -13,7 +13,7 @@
     <div>
       <h3 class="text-xl font-semibold text-[#2A5CAA] mb-6">Clientes PYMES</h3>
 
-      <div class="overflow-x-auto max-h-[500px] h-[70%] min-h-[300px] p-3 bg-white shadow-md rounded-lg">
+      <div class="overflow-x-auto max-h-[500px] h-auto p-3 bg-white shadow-md rounded-lg">
         <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
           <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
             <tr>
@@ -25,7 +25,14 @@
             </tr>
           </thead>
           <tbody v-if="data">
-            <tr v-for="user in data" :key="user.id" @click="goToClientDetails(user.id)" class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+            <tr v-for="user in data" :key="user.id" 
+            @click="goToClientDetails(user.id)" 
+            class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600"
+            :class="{
+              'hidden': alreadyAssigned(user.id),
+              '': !alreadyAssigned(user.id)
+            }"
+            >
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
             <td class="px-6 py-4">{{ user.id_number }}</td>
             <td class="px-6 py-4">{{ user.username }}</td>
@@ -66,6 +73,7 @@
   import UserService from '@/services/userService';
   import router from '@/router';
   import { useRoute } from 'vue-router';
+  import Cookies from 'js-cookie';
 
   const showClientsModal = ref(false);
   const userId = useRoute().params.id;
@@ -74,15 +82,32 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
+  const userData = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/clients/`
   const urlApi = VUE_APP_URL + uri;
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${Cookies.get('jwt')}`
+  }
+
+  onMounted(async () => {
+    fetch(`${VUE_APP_URL}/${userRole}/${userId}/`, {headers})
+    .then(res => res.json())
+    .then(json => {
+      userData.value = json;
+      console.log(userData.value)
+    })
+    .catch(err => console.error(err))
+  })
 
   onMounted(async () => {
     isLoading.value = true;
     try{
       await getUser.getUsers(urlApi)
       data.value = getUser.getData().value;
+      console.log(data.value)
     }
     catch(er){
       err.value = getUser.getError().value;
@@ -92,12 +117,16 @@
     }
   })
 
+  const alreadyAssigned = (clientId) => {
+    return userData.value.clients.includes(clientId);
+  }
+
   const toggleShowClients = () => {
     showClientsModal.value = !showClientsModal.value;
   }
 
   const goToClientDetails = id => {
-    router.push(`${userRole}=${userId}/detalles/cliente=${id}`)
+    router.push(`${userRole}=${userId}/detalles_cliente=${id}`)
   }
   
 </script>

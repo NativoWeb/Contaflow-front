@@ -25,6 +25,7 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Correo</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Celular</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Acción</th>
           </tr>
         </thead>
         <tbody v-if="data">
@@ -44,11 +45,12 @@
                 {{ user.status }}
               </span>
             </td>
-            <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
+            <td v-if="user.status == 'Inactivo'" class="px-6 py-4">
               <span class="text-sm text-red-500">
                 {{ user.status }}
               </span>
             </td>
+            <td @click="redirectToRemove(user.id)" class="px-6 py-4 hover:underline text-[#08245B] text-sm text-xs uppercase">detalles</td>
         </tr>
       </tbody>
       <tr v-else colspan="5" class="flex flex-col justify-center">
@@ -64,7 +66,7 @@
   import { useRoute } from 'vue-router';
   import UserService from '@/services/userService';
   import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
-  
+import router from '@/router';
 
   const userId = useRoute().params.id;
   const userRole = useRoute().params.role;
@@ -74,8 +76,11 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
-
   
+  const redirectToRemove = id => {
+    router.push(`${userRole}=${userId}/remover_cliente=${id}`)
+  }
+
   onMounted(async () => {
     isLoading.value = true;
     try{
@@ -89,6 +94,4 @@
       isLoading.value = false;
     }
   })
-
-  console.log(data)
 </script>

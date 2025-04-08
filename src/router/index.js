@@ -27,7 +27,7 @@ import ClientsView from "@/views/admin/ClientsView.vue";
 import AuditorsView from "@/views/admin/AuditorsView.vue";
 import HomeView from "@/components/common/HomeView.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
-import NavHeader from "@/views/admin/NavHeader.vue";
+import NavHeader from "@/views/NavHeader.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
 
 import TablaClients from "@/components/clients/TablaClients.vue";
@@ -35,6 +35,7 @@ import TablaConciliacionn from "@/components/clients/TablaConciliacionn.vue";
 import TablaAuditore from "@/components/clients/TablaAuditore.vue";
 import TablaContador from "@/components/clients/TablaContador.vue";
 import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
+import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
 
 import PruebasBorrable from "@/components/PruebasBorrable.vue";
 
@@ -193,14 +194,24 @@ const router = createRouter({
           component: ClientsAccAudTable
         },
         {
-          path: 'contador/clientes_contador/accountants/:role=:userId/detalles/cliente=:id',
+          path: 'contador/clientes_contador/accountants/:role=:userId/detalles_cliente=:id',
           name: 'ClientsDetailsAccountant',
           component: AssignClientDetail
         },
         {
-          path: 'auditor/clientes_auditor/auditors/:role=:userId/detalles/cliente=:id',
+          path: 'auditor/clientes_auditor/auditors/:role=:userId/detalles_cliente=:id',
           name: 'ClientsDetailsAuditor',
           component: AssignClientDetail
+        },
+        {
+          path: 'contador/clientes_contador/accountants/:role=:userId/remover_cliente=:id',
+          name: 'RemoveClientsAccountant',
+          component: RemoveClientDetail
+        },
+        {
+          path: 'auditor/clientes_auditor/auditors/:role=:userId/remover_cliente=:id',
+          name: 'Remove',
+          component: RemoveClientDetail
         },
         {
           path: "/TablaConciliacionn",

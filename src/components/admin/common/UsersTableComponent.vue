@@ -79,7 +79,6 @@
     routes: String
   })
 
-  console.log(props.apiUrl)
 
   const goToUserDetails = id => {
     router.push(`${props.routes}/${id}`)
