@@ -28,8 +28,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
           </tr>
         </thead>
-        <tbody v-if="company.length > 0">
-          <tr v-for="companies in company" :key="companies.nit"
+        <tbody v-if="company && company.length > 0">
+          <tr v-for="companies in company" :key="companies.id" @click="goToDetails(companies.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ companies.nit }}</td>
             <td class="px-6 py-4">{{ companies.name }}</td>
@@ -53,12 +53,17 @@
 <script setup>
   import { onMounted, ref } from 'vue'
   import CompaniesService from '@/services/companiesService';
+import router from '@/router';
 
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const companiesService = new CompaniesService()
   const company = ref([]);
   const err = ref(null);
   const isLoading = ref(false);
+
+  const goToDetails = (id) => {
+    router.push(`/company=${id}/`)
+  }
 
   onMounted(async () => {
     isLoading.value = true;

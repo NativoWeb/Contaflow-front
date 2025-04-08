@@ -38,6 +38,7 @@ import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
 import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
 
 import PruebasBorrable from "@/components/PruebasBorrable.vue";
+import CompanyDetails from "@/components/admin/companies/companyDetails.vue";
 
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
@@ -237,6 +238,11 @@ const router = createRouter({
           path: "/TablaContador",
           name: "TablaContador",
           component: TablaContador,
+        },
+        {
+          path: "/company=:id",
+          name: "CompanyDetails",
+          component: CompanyDetails
         }
       ]
     },
