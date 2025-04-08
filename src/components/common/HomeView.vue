@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+  <div class="min-h-screen p-5 flex flex-col items-center">
     <!-- Encabezado -->
     <div class="bg-white shadow-md p-6 rounded-lg w-full max-w-4xl text-center">
       <h1 class="text-3xl font-bold text-gray-700">Bienvenido a Contaflow</h1>

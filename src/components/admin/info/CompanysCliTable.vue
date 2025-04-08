@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full bg-white flex flex-col md:flex-row p-8">
+	<div class="w-full bg-white flex flex-col md:flex-row p-4 mt-5" style="border-radius: 8px 8px 8px 8px;">
 		<div class="flex-1">
 			<h2 class="text-xl font-bold text-[#2A5CAA] p-3">Empresas</h2>
 			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
@@ -66,16 +66,16 @@
                   </tr>
                 </table>
 		</div>
-		<div class="flex flex-col gap-6 ml-2 p-8">
+		<div class="flex flex-col gap-6 ml-2 p-2 mt-8">
 			<button class="btn-action">Eliminar Empresas</button>
 			<AssignComConModal :apiUrl="`${VUE_APP_URL}/clients/`"/>
 		</div>
 	</div>
 
-  <div class="w-full bg-white flex flex-col md:flex-row p-8">
+  <div class="w-full bg-white flex flex-col md:flex-row mt-4 p-4" style="border-radius: 8px 8px 8px 8px;">
 		<div class="flex-1">
-			<h2 class="text-xl font-bold text-[#2A5CAA] p-3">Conciliaciones Realizadas</h2>
-			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
+			<h2 class="text-xl font-bold text-[#2A5CAA] ">Conciliaciones Realizadas</h2>
+			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400 p-4">
                 <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
                     <tr>
                         <th scope="col" class="px-6 py-3">

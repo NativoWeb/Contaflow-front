@@ -1,10 +1,10 @@
 <template>
   <!-- Título de la página -->
-  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 rounded-lg shadow-md text-center md:text-left">
+  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 shadow-md text-center md:text-left" style="border-radius: 6px 6px 0 0;">
     Información del usuario
   </h2>
 <div v-if="data">
-  <div class="w-full bg-white flex flex-col md:flex-row p-8">
+  <div class="w-full bg-[#FBFBFB] shadow-md flex flex-col md:flex-row p-8" style="border-radius: 0 0 8px 8px;">
       <!-- Sección de información -->
       <div class="flex-1">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
