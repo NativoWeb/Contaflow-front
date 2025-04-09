@@ -48,7 +48,7 @@ class CompaniesService {
       const response = await fetch(url, {
         headers: {
           'Content-Type':'application/json',
-          'Authorization': `Bearer ${this.getToken}`
+          'Authorization': `Bearer ${this.getToken()}`
         }
       });
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`);
