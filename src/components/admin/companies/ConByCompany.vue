@@ -6,17 +6,18 @@
       <table class="min-w-full text-sm text-left text-gray-700 bg-white border border-gray-200">
         <thead class="bg-[#F1F5F9] text-gray-600 uppercase text-xs">
           <tr>
-            <th class="px-6 py-4">Fecha</th>
+            <th class="px-6 py-4">Conciliacion</th>
             <th class="px-6 py-4">Monto</th>
             <th class="px-6 py-4">Estado</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="conciliations">
           <tr 
+            v-for="conciliation in conciliations" :key="conciliation.id"
             class="border-t hover:bg-gray-50 transition-colors"
           >
-            <td class="px-6 py-4">sa</td>
-            <td class="px-6 py-4">$sa</td>
+            <td class="px-6 py-4">{{ conciliation.account_number }}</td>
+            <td class="px-6 py-4">{{ conciliation.client }}</td>
             <td class="px-6 py-4">
               <span 
                 :class="{
@@ -25,7 +26,7 @@
                   'text-red-600 font-semibold': 'ds' === 'Fallido'
                 }"
               >
-              sa
+              {{ conciliation.company }}
               </span>
             </td>
           </tr>
@@ -39,4 +40,9 @@
 </template>
 
 <script setup>
+  const props = defineProps({
+    conciliations: Object
+  })
+
+  props
 </script>
