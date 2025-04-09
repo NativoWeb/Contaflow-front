@@ -6,7 +6,7 @@
       <!-- Información de la empresa -->
       <div class="flex-1">
         <h2 class="text-2xl font-bold text-[#2A5CAA] mb-6 text-center">Información de la Empresa</h2>
-        <div class="flex flex-col space-y-4 text-gray-700">
+        <div v-if="company" class="flex flex-col space-y-4 text-gray-700">
           <div class="flex justify-between items-center">
             <p class="font-semibold w-1/3">Razón Social:</p>
             <p class="w-2/3">{{ company.name }}</p>
@@ -37,20 +37,59 @@
       </div>
     </div>
   </section>
+
+      <!-- Manejo de errores -->
+      <div v-if="err" class="flex justify-center items-start">
+      <span>{{ err }}</span>
+    </div>
+
+    <!-- Cargador -->
+    <div v-if="isLoading" class="flex justify-center items-start">
+      <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32" />
+    </div>
     
 </template>
 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router';
 
-const company = ref({
-  name: 'ContaFlow S.A.S',
-  nit: '12345678-9',
-  address: 'Cra 45 #78-91, Medellín, Colombia',
-  sector: 'Tecnología e Informática',
-  createdAt: '2025-04-07T12:34:56Z'
-})
+
+import CompaniesService from '@/services/companiesService'
+
+const companiesService = new CompaniesService()
+const company = ref([]);
+const companyId = useRoute().params.id;
+const err = ref(null);
+const isLoading = ref(false);
+const VUE_APP_URL = process.env.VUE_APP_URL;
+const uri = `/company/${companyId}/`;
+const urlApi = VUE_APP_URL + uri;
+
+onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await companiesService.getCompanyById(urlApi)
+      company.value = companiesService.getData().value;
+    }
+    catch(error){
+      err.value = companiesService.getError().value;
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
+
+
+
+// const company = ref({
+//   name: 'ContaFlow S.A.S',
+//   nit: '12345678-9',
+//   address: 'Cra 45 #78-91, Medellín, Colombia',
+//   sector: 'Tecnología e Informática',
+//   createdAt: '2025-04-07T12:34:56Z'
+// })
 
 function formatDate(dateStr) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' }

@@ -240,8 +240,8 @@ const router = createRouter({
           component: TablaContador,
         },
         {
-          path: "/company=:id",
-          name: "CompanyDetails",
+          path: '/company/:id',
+          name: 'CompanyDetails',
           component: CompanyDetails
         }
       ]
