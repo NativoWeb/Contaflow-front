@@ -31,6 +31,10 @@
         <p class="font-semibold w-1/3">Fecha de Registro:</p>
         <!-- <p class="w-2/3">{{ formatDate(data.createdAt) }}</p> -->
       </div>
+      <div class="flex flex-col gap-4 md:w-1/5 w-full md:items-end mt-10">
+        <button class="w-full transition duration-300 ease-in-out hover:drop-shadow-lg hover:scale-105 bg-[#2A5CAA] text-white px-4 py-2 rounded-md hover:bg-blue-700">Editar</button>
+        <button class="w-full transition duration-300 ease-in-out hover:drop-shadow-lg hover:scale-105 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"> Eliminar </button>
+      </div>
     </div>
     <div class="flex justify-between items-center">
       <ConByCompany/>
