@@ -100,7 +100,6 @@
     .then(res => res.json())
     .then(json => {
       userData.value = json;
-      console.log(userData.value)
     })
     .catch(err => console.error(err))
   })
@@ -110,7 +109,6 @@
     try{
       await getUser.getUsers(urlApi)
       data.value = getUser.getData().value;
-      console.log(data.value)
     }
     catch(er){
       err.value = getUser.getError().value;

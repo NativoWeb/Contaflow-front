@@ -70,8 +70,8 @@
       </div>
     </div>
     <div class="flex gap-6 items-center justify-around w-[100%]">
-      <CompaniesClients :data="data"/>
-      <ConciliationsClients :data="data"/>
+      <CompaniesClients/>
+      <ConciliationsClients/>
     </div>
   </div>
 

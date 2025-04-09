@@ -165,7 +165,9 @@
     nit: "",
     name: "",
     address: "",
-    sector: ""
+    sector: "",
+    clients: [],
+    conciliations: []
   });
 
   const error = reactive({
@@ -227,6 +229,7 @@
       isResponse.value = false;
       isError.value = true;
       errorResponse.value = companyService.getError().value;
+      console.log(companyService.getError().value)
     }
     finally{
       isLoading.value = false;

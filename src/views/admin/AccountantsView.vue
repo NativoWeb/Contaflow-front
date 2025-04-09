@@ -29,6 +29,6 @@
     status: 'Pendiente',
     role: 'CONTADOR',
     clients: [],
+    conciliations: []
   }
-
 </script>

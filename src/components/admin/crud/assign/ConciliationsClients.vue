@@ -34,11 +34,11 @@
   </div>
   </template>
   
-  <script setup> 
-    
-    const props = defineProps({
-      data: Object
-    })
-    
-    console.log(props)
+  <script setup>
+import { useRoute } from 'vue-router';
+
+ 
+    const clientId = useRoute().params.id;
+
+    console.log(clientId)
   </script>

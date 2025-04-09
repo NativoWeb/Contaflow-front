@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-
 import UsersTableComponent from '@/components/admin/common/UsersTableComponent.vue';
 import RegisterComponent from '@/components/admin/common/RegisterComponent.vue';
 
@@ -29,6 +28,6 @@ const userData = {
   status: 'Pendiente',
   role: 'AUDITOR',
   clients: [],
+  conciliations: []
 }
-
 </script>

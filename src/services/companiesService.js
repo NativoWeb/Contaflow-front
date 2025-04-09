@@ -87,7 +87,7 @@ class CompaniesService {
         body: JSON.stringify(data),
         method: 'PATCH',
         headers:{
-          'Content-Type': 'application/json',
+          'Content-Type':'application/json',
           'Authorization': `Bearer ${this.getToken()}`
         }
       })
