@@ -2,44 +2,74 @@
   <section class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold text-[#2A5CAA] mb-6 text-center">Información de la Empresa</h2>
 
-    <div class="flex flex-col space-y-4 text-gray-700">
+    <div v-if="isLoading" class="text-center text-gray-500">
+      Cargando...
+    </div>
+
+    <div v-else-if="err" class="text-center text-red-500">
+      Error: {{ err }}
+    </div>
+
+    <div v-else-if="data" class="flex flex-col space-y-4 text-gray-700">
       <div class="flex justify-between items-center">
         <p class="font-semibold w-1/3">Razón Social:</p>
-        <p class="w-2/3">{{ company.name }}</p>
+        <p class="w-2/3">{{ data.name }}</p>
       </div>
       <div class="flex justify-between items-center">
         <p class="font-semibold w-1/3">NIT:</p>
-        <p class="w-2/3">{{ company.nit }}</p>
+        <p class="w-2/3">{{ data.nit }}</p>
       </div>
       <div class="flex justify-between items-center">
         <p class="font-semibold w-1/3">Dirección:</p>
-        <p class="w-2/3">{{ company.address }}</p>
+        <p class="w-2/3">{{ data.address }}</p>
       </div>
       <div class="flex justify-between items-center">
         <p class="font-semibold w-1/3">Sector Económico:</p>
-        <p class="w-2/3">{{ company.sector }}</p>
+        <p class="w-2/3">{{ data.sector }}</p>
       </div>
       <div class="flex justify-between items-center">
         <p class="font-semibold w-1/3">Fecha de Registro:</p>
-        <p class="w-2/3">{{ formatDate(company.createdAt) }}</p>
+        <!-- <p class="w-2/3">{{ formatDate(data.createdAt) }}</p> -->
       </div>
+    </div>
+    <div class="flex justify-between items-center">
+      <ConByCompany/>
+      <ClientsByCompany/>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+  import CompaniesService from '@/services/companiesService';
+  import { onMounted, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+import ConByCompany from './ConByCompany.vue';
+import ClientsByCompany from './ClientsByCompany.vue';
 
-const company = ref({
-  name: 'ContaFlow S.A.S',
-  nit: '12345678-9',
-  address: 'Cra 45 #78-91, Medellín, Colombia',
-  sector: 'Tecnología e Informática',
-  createdAt: '2025-04-07T12:34:56Z'
-})
 
-function formatDate(dateStr) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' }
-  return new Date(dateStr).toLocaleDateString('es-CO', options)
-}
+  const getCompany = new CompaniesService();
+  const companyId = useRoute().params.id;
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const uri = `/companies/${companyId}/`;
+  const urlApi = `${VUE_APP_URL}${uri}`;
+
+  onMounted(async () => {
+    isLoading.value = true;
+    try {
+      await getCompany.getCompanyById(urlApi);
+      data.value = getCompany.getData().value;
+      console.log(getCompany.getData().value)
+    }
+    catch(error){
+      err.value = getCompany.getError().value;
+      console.error(err)
+    }
+    finally{
+      isLoading.value = false;
+    }
+  })
+
 </script>
