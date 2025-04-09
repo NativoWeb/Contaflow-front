@@ -75,11 +75,9 @@
     try {
       await getCompany.getCompanyById(urlApi);
       data.value = getCompany.getData().value;
-      console.log(getCompany.getData().value)
     }
     catch(error){
       err.value = getCompany.getError().value;
-      console.error(err)
     }
     finally{
       isLoading.value = false;
