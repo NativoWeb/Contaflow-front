@@ -11,15 +11,16 @@
             <th class="px-6 py-4">Teléfono</th>
           </tr>
         </thead>
-        <tbody>
-          <tr 
-            class="border-t hover:bg-gray-50 transition-colors"
-          >
-            <td class="px-6 py-4 font-medium">sa</td>
-            <td class="px-6 py-4">sa</td>
-            <td class="px-6 py-4">sa</td>
+        <tbody v-if="employees">
+          <tr v-for="employee in employees" :key="employee.id" class="border-t hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 font-medium">{{ employee.first_name }} {{ employee.last_name }}</td>
+            <td class="px-6 py-4">{{ employee.username }}</td>
+            <td class="px-6 py-4">{{ employee.phone_number }}</td>
           </tr>
         </tbody>
+        <tr v-else>
+          <td>No funciono</td>
+        </tr>
       </table>
     </div>
 
@@ -29,4 +30,11 @@
 </template>
 
 <script setup>
+
+  const props = defineProps({
+    employees: Object
+  })
+
+  props
+  
 </script>
