@@ -68,7 +68,7 @@ class CompaniesService {
         method: 'POST',
         headers:{
           'Content-Type':'application/json',
-          'Authorization': `Bearer ${this.getToken}`
+          'Authorization': `Bearer ${this.getToken()}`
         }
       })
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
@@ -87,8 +87,8 @@ class CompaniesService {
         body: JSON.stringify(data),
         method: 'PATCH',
         headers:{
-          'Content-Type':'application/json',
-          'Authorization': `Bearer ${this.getToken}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.getToken()}`
         }
       })
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
@@ -107,7 +107,7 @@ class CompaniesService {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.getToken}`
+          'Authorization': `Bearer ${this.getToken()}`
         }
       })
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
