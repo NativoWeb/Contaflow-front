@@ -15,41 +15,38 @@
 
     <!-- Información de la empresa -->
     <div v-else-if="data">
-      <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 p-6">
-        <!-- Información a la izquierda -->
-        <div class="flex-1 space-y-4 text-gray-700 gap-4 ">
-          <div class="flex">
-            <p class="font-semibold w-60">Razón Social:</p>
-            <p>{{ data.name }}</p>
-          </div>
-          <div class="flex">
-            <p class="font-semibold w-60">NIT:</p>
-            <p>{{ data.nit }}</p>
-          </div>
-          <div class="flex">
-            <p class="font-semibold w-60">Dirección:</p>
-            <p>{{ data.address }}</p>
-          </div>
-          <div class="flex">
-            <p class="font-semibold w-60">Sector Económico:</p>
-            <p>{{ data.sector }}</p>
-          </div>
-          <div class="flex">
-            <p class="font-semibold w-60">Fecha de Registro:</p>
-            <!-- <p>{{ formatDate(data.createdAt) }}</p> -->
-          </div>
-        </div>
+      <div class="flex flex-col md:flex-row md:justify-center md:items-start gap-8 p-8">
+  <!-- Información centrada -->
+  <div class="flex-1 max-w-xl space-y-4 text-gray-700 ml-auto">
+    <div class="flex">
+      <p class="font-semibold w-60">NIT:</p>
+      <p>{{ data.nit }}</p>
+    </div>
+    <div class="flex">
+      <p class="font-semibold w-60">Razón Social:</p>
+      <p>{{ data.name }}</p>
+    </div>
+    <div class="flex">
+      <p class="font-semibold w-60">Dirección:</p>
+      <p>{{ data.address }}</p>
+    </div>
+    <div class="flex">
+      <p class="font-semibold w-60">Sector Económico:</p>
+      <p>{{ data.sector }}</p>
+    </div>
+    <div class="flex">
+      <p class="font-semibold w-60">Fecha de Registro:</p>
+      <!-- <p>{{ formatDate(data.createdAt) }}</p> -->
+    </div>
+  </div>
 
-        <!-- Botones a la derecha -->
-        <div class="flex flex-col gap-6 md:w-1/4 w-full md:items-end ">
-          <EditCompanyModal :infor="data" />
-          <button
-            class="w-full transition duration-300 ease-in-out hover:drop-shadow-lg hover:scale-105 bg-red-500 text-white px-5 py-2.5 rounded-xl hover:bg-red-600"
-          >
-            Eliminar
-          </button>
-        </div>
-      </div>
+  <!-- Botones a la derecha -->
+  <div class="flex flex-col gap-6 md:w-1/4 w-full md:items-end">
+    <EditCompanyModal :infor="data" />
+    <DeleteCompanyModal :id="data.id"/>
+  </div>
+</div>
+
     </div>
   </section>
 
@@ -80,6 +77,7 @@
   import ConByCompany from './ConByCompany.vue';
   import ClientsByCompany from './ClientsByCompany.vue';
 import EditCompanyModal from './EditCompanyModal.vue';
+import DeleteCompanyModal from './DeleteCompanyModal.vue';
 
   const getCompany = new CompaniesService();
   const companyId = useRoute().params.id;
@@ -87,7 +85,7 @@ import EditCompanyModal from './EditCompanyModal.vue';
   const data = ref(null);
   const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
-  const uri = `/companies/${companyId}/`;
+  const uri = `/companies/${companyId}`;
   const urlApi = `${VUE_APP_URL}${uri}`;
 
   onMounted(async () => {
