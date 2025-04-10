@@ -1,169 +1,133 @@
 <template>
-	<div class="w-full bg-white flex flex-col md:flex-row p-4 mt-5" style="border-radius: 8px 8px 8px 8px;">
-		<div class="flex-1">
-			<h2 class="text-xl font-bold text-[#2A5CAA] p-3">Empresas</h2>
-			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400">
-                <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
-                    <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Nit
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Razón Social
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          
-                          Sector económico
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Dirección
-                        </th>
-                    </tr>
-                </thead>
-                <tbody v-if="users.length > 0">
-                    <tr v-for="user in users" :key="user.id_number" 
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          
-                        </th>
-                        <td class="px-6 py-4">
-                          
-                        </td>
-                        <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
-                          <span class="text-sm text-orange-500">
-                            
-                          </span>
-                        </td>
-                        <td v-if="user.status == 'Activo'" class="px-6 py-4">
-                          <span class="text-sm text-green-500">
-                           
-                          </span>
-                        </td>
-                        <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
-                          <span class="text-sm text-red-500">
-                            
-                          </span>
-                        </td>
-                    </tr>
-                    
-                    
-                    
-                  </tbody>
-                  <tr v-else colspan="5" class="flex flex-col justify-center">
-                    <td class="ml-2 my-6">No existen empresas registradas</td>
-                  </tr>
-                </table>
-		</div>
-		<div class="flex flex-col gap-6 ml-2 p-2 mt-8">
-			<button class="btn-action">Eliminar Empresas</button>
-			<AssignComConModal :apiUrl="`${VUE_APP_URL}/clients/`"/>
-		</div>
-	</div>
+  
+  <div v-if="data">
+    <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+      
+      <AssignClientsModal/>
 
-  <div class="w-full bg-white flex flex-col md:flex-row mt-4 p-4" style="border-radius: 8px 8px 8px 8px;">
-		<div class="flex-1">
-			<h2 class="text-xl font-bold text-[#2A5CAA] ">Conciliaciones Realizadas</h2>
-			<table class="w-full text-sm text-left rtl:text-right text-[#193368] dark:text-gray-400 p-4">
-                <thead class="text-xs text-[#193368] uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] dark:bg-gray-700 dark:text-gray-400 ">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                          Fecha de Conciliación
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Número de Reporte 
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Empresa
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Banco
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Número de Cuenta
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                          Acción
-                        </th>
-                    </tr>
-                </thead>
-                <tbody v-if="users.length > 0">
-                    <tr v-for="user in users" :key="user.id_number" 
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          
-                        </th>
-                        <td class="px-6 py-4">
-                          
-                        </td>
-                        <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
-                          <span class="text-sm text-orange-500">
-                            
-                          </span>
-                        </td>
-                        <td v-if="user.status == 'Activo'" class="px-6 py-4">
-                          <span class="text-sm text-green-500">
-                           
-                          </span>
-                        </td>
-                        <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
-                          <span class="text-sm text-red-500">
-                            
-                          </span>
-                        </td>
-                    </tr>
-                    
-                    
-                    
-                  </tbody>
-                  <tr v-else colspan="5" class="flex flex-col justify-center">
-                    <td class="ml-2 my-6">No existen conciliaciones Realizadas</td>
-                  </tr>
-                </table>
-		</div>
-	</div>
+      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
+      <div class="w-full md:w-1/2">
+        <label for="table-search" class="sr-only">Buscar</label>
+        <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
+          <svg class="w-5 h-5 text-gray-400 dark:text-gray-300 mx-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+          <input  type="text" 
+          v-model="searchQuery"  
+          id="table-search-users" 
+          placeholder="Buscar..."
+          class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+      </div>
+    </div>
+      
+    <div class="flex flex-col gap-20">
+      <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+          <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
+            <tr>
+              <th scope="col" class="px-6 py-3">Nombre</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Razón Social</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Sector Económico</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
+            </tr>
+          </thead>
+          <tbody v-if="data && data.companies.length > 0">
+            <tr v-for="company in data.companies_data" :key="company.id" @click="goToCompanyDetails(company.id)"
+              class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+              <td class="px-6 py-4">{{ company.name }}</td>
+              <td class="px-6 py-4">{{ company.name}}</td>
+              <td class="px-6 py-4">{{ company.sector}}</td>
+              <td class="px-6 py-4">{{ company.address }}</td>
+              <!-- <td @click="redirectToRemove(user.id)" class="px-6 py-4 hover:underline text-[#08245B] text-sm text-xs uppercase">detalles</td> -->
+            </tr>
+          </tbody>
+          <tr v-else colspan="5" class="flex flex-col justify-center">
+            <td class="ml-2 my-6">No existen registrados</td>
+          </tr>
+          <div v-if="isLoading" class="flex justify-center items-start">
+            <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+          </div>
+          <tr v-if="err" colspan="5" class="flex flex-col justify-center">
+            <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="overflow-x-auto p-3 bg-white shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+          <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
+            <tr>
+              <th scope="col" class="px-6 py-3">Nombre</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Número de Identificación</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Correo</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Celular</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
+              <th scope="col" class="px-6 py-3  md:table-cell">Acción</th>
+            </tr>
+          </thead>
+          <tbody v-if="data && data.conciliations.length > 0">
+            <tr v-for="conciliation in data.conciliations_data" :key="conciliation.id"
+              class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+              <td class="px-6 py-4">{{ conciliation.account_number }}</td>
+              <td class="px-6 py-4">{{ conciliation.company }}</td>
+              <td class="px-6 py-4">{{ conciliation.client }}</td>
+              <td class="px-6 py-4">{{ conciliation.accountant }}</td>
+              <!-- <td @click="redirectToRemove(user.id)" class="px-6 py-4 hover:underline text-[#08245B] text-sm text-xs uppercase">detalles</td> -->
+            </tr>
+          </tbody>
+          <tr v-else colspan="5" class="flex flex-col justify-center">
+            <td class="ml-2 my-6">No existen registrados</td>
+          </tr>
+          <div v-if="isLoading" class="flex justify-center items-start">
+            <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+          </div>
+          <tr v-if="err" colspan="5" class="flex flex-col justify-center">
+            <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
+          </tr>
+        </table>
+      </div> 
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import Cookies from 'js-cookie';
-import AssignComConModal from '../crud/assign/AssignComConModal.vue';
+  import { onMounted, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import UserService from '@/services/userService';
+  import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
+  import router from '@/router';
 
-const VUE_APP_URL = process.env.VUE_APP_URL;
-const users = ref([]);
+  const userId = useRoute().params.id;
+  const VUE_APP_URL = process.env.VUE_APP_URL;
+  const urlApi = `${VUE_APP_URL}/clients/${userId}/`
+  const getUser = new UserService();
+  const isLoading = ref(false);
+  const data = ref(null);
+  const err = ref(null);
 
-const props = defineProps({
-    apiUrl: String,
-    roles: String
-  })
+  console.log(urlApi)
+  
+  // const redirectToRemove = id => {
+  //   router.push(`${userRole}=${userId}/remover_cliente=${id}`)
+  // }
 
 
-  fetch(props.apiUrl, {
-    headers: {
-      'Authorization': `Bearer ${Cookies.get('jwt')}`
+  const goToCompanyDetails = (id) => {
+    router.push(`/empresa=${id}/`)
+  }
+
+  onMounted(async () => {
+    isLoading.value = true;
+    try{
+      await getUser.getUserById(urlApi)
+      data.value = getUser.getData().value;
+    }
+    catch(error){
+      err.value = getUser.getError().value;
+    }
+    finally{
+      isLoading.value = false;
     }
   })
-  .then(res => res.json())
-  .then(json => {
-    users.value = json;
-  })
-  .catch(err => console.error(err))
-
 </script>

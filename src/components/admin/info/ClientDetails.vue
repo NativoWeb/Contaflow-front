@@ -72,9 +72,9 @@
     <DeleteModal :id="data.id"/>
     <StatusModal :id="data.id" :status="data.status"/>
     <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
+    <button class="btn-action" @click="goToConCompTable(data.id)">Clientes y Conciliaciones</button>
   </div>
 </div>
-<CompanysCliTable/>
 </div>
   
 <div v-if="err" class="flex justify-center items-start">
@@ -89,7 +89,6 @@
 </template>
 
 <script setup>
-  import CompanysCliTable from './CompanysCliTable.vue';
   import { useRoute } from 'vue-router';
   import StatusModal from '../crud/StatusModal.vue';
   import SendInvitationModal from '../crud/SendInvitationModal.vue';
@@ -97,6 +96,7 @@
   import DeleteModal from '../crud/DeleteModal.vue';
   import UserService from '@/services/userService';
   import { onMounted, ref } from 'vue';
+import router from '@/router';
   
   const getUser = new UserService();
   const userId = useRoute().params.id;
@@ -106,6 +106,10 @@
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
+
+  const goToConCompTable = (id) => {
+    router.push(`conciliaciones_empresas/${id}`)
+  }
 
   onMounted(async () => {
     isLoading.value = true;

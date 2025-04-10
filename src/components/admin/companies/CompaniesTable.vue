@@ -62,7 +62,7 @@
   const isLoading = ref(false);
 
   const goToDetails = (id) => {
-    router.push(`/company=${id}/`)
+    router.push(`/empresa=${id}/`)
   }
 
   onMounted(async () => {
