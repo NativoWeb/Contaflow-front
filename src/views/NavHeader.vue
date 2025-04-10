@@ -239,6 +239,7 @@
     try{
       await getUserService.getUserById(urlApi)
       data.value = getUserService.getData().value;
+      localStorage.setItem('id', data.value.id)
     }
     catch(error){
       err.value = getUserService.getError().value;
