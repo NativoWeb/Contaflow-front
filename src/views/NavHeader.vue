@@ -91,7 +91,7 @@
             </router-link>
             </li>
             <li>
-            <router-link @click="toggleSidebar" to="/TablaContador" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_de_contador" class="flex gap-2 justify-center items-center">
               <img src="@/assets/contador.svg" alt="Ícono" class="icon-img">
               <span>Mis Contadores</span>
             </router-link>
