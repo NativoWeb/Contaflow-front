@@ -76,8 +76,8 @@
   import CompaniesService from '@/services/companiesService'
   import ConByCompany from './ConByCompany.vue';
   import ClientsByCompany from './ClientsByCompany.vue';
-import EditCompanyModal from './EditCompanyModal.vue';
-import DeleteCompanyModal from './DeleteCompanyModal.vue';
+  import EditCompanyModal from './EditCompanyModal.vue';
+  import DeleteCompanyModal from './DeleteCompanyModal.vue';
 
   const getCompany = new CompaniesService();
   const companyId = useRoute().params.id;
