@@ -76,8 +76,8 @@
   import CompaniesService from '@/services/companiesService'
   import ConByCompany from './ConByCompany.vue';
   import ClientsByCompany from './ClientsByCompany.vue';
-import EditCompanyModal from './EditCompanyModal.vue';
-import DeleteCompanyModal from './DeleteCompanyModal.vue';
+  import EditCompanyModal from './EditCompanyModal.vue';
+  import DeleteCompanyModal from './DeleteCompanyModal.vue';
 
   const getCompany = new CompaniesService();
   const companyId = useRoute().params.id;
@@ -85,7 +85,7 @@ import DeleteCompanyModal from './DeleteCompanyModal.vue';
   const data = ref(null);
   const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
-  const uri = `/companies/${companyId}`;
+  const uri = `/companies/${companyId}/`;
   const urlApi = `${VUE_APP_URL}${uri}`;
 
   onMounted(async () => {
