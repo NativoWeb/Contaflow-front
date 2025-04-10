@@ -85,7 +85,7 @@ import DeleteCompanyModal from './DeleteCompanyModal.vue';
   const data = ref(null);
   const err = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
-  const uri = `/companies/${companyId}`;
+  const uri = `/companies/${companyId}/`;
   const urlApi = `${VUE_APP_URL}${uri}`;
 
   onMounted(async () => {
