@@ -40,6 +40,7 @@ import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetai
 import PruebasBorrable from "@/components/PruebasBorrable.vue";
 import CompanyDetails from "@/components/admin/companies/companyDetails.vue";
 import CompanysCliTable from "@/components/admin/info/CompanysCliTable.vue";
+import ConciliationDetails from "@/components/admin/conciliations/ConciliationDetails.vue";
 
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
@@ -249,6 +250,11 @@ const router = createRouter({
           path: '/empresa=:id',
           name: 'CompanyDetails',
           component: CompanyDetails
+        },
+        {
+          path: '/conciliation=:id',
+          name: 'ConciliationDetails',
+          component: ConciliationDetails
         }
       ]
     },
