@@ -30,17 +30,14 @@ import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import NavHeader from "@/views/NavHeader.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
 
-import TablaClients from "@/components/clients/TablaClients.vue";
-import TablaConciliacionn from "@/components/clients/TablaConciliacionn.vue";
-import TablaAuditore from "@/components/clients/TablaAuditore.vue";
-import TablaContador from "@/components/clients/TablaContador.vue";
-import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
 import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
 
 import PruebasBorrable from "@/components/PruebasBorrable.vue";
 import CompanyDetails from "@/components/admin/companies/companyDetails.vue";
 import CompanysCliTable from "@/components/admin/info/CompanysCliTable.vue";
 
+
+import TablaContador from "@/components/clients/TablaContador.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -220,35 +217,18 @@ const router = createRouter({
           name: 'Remove',
           component: RemoveClientDetail
         },
-        {
-          path: "/TablaConciliacionn",
-          name: "TablaConciliacionn",
-          component: TablaConciliacionn,
-        },
-        {
-          path: "/TablaClients",
-          name: "TablaClients",
-          component: TablaClients,
-        },
-        {
-          path: "/TablaAuditore",
-          name: "TablaAuditore",
-          component: TablaAuditore,
-        },
-        {
-          path: "/TablaEmpresas",
-          name: "TablaEmpresas",
-          component: TablaEmpresas,
-        },
-        {
-          path: "/TablaContador",
-          name: "TablaContador",
-          component: TablaContador,
-        },
+        
         {
           path: '/empresa=:id',
           name: 'CompanyDetails',
           component: CompanyDetails
+        },
+
+        {
+          path: '/TablaContador',
+          name:'TablaContador',
+          component: TablaContador
+
         }
       ]
     },
