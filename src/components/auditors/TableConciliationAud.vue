@@ -14,7 +14,7 @@
   <!-- Contenedor de búsqueda y selección de empresa -->
   <div class="p-4  bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
     <h2 class="text-xl font-bold text-[#193368] p-2 text-center md:text-left">
-      Lista de mis conciliaciones
+      Lista de mis Clientes
     </h2>
 
     <div class="w-full md:w-1/2">
@@ -32,9 +32,10 @@
     </div>
     </div>
   </div>
-   <!-- Tabla -->
-   <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
-    <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+
+ <!-- Tabla -->
+ <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
+  <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
             <th scope="col" class="px-6 py-3">Fecha</th>
@@ -58,10 +59,9 @@
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
-  </template>
-
+</div>
+</template>
 
 <script setup>
 
@@ -73,23 +73,23 @@ const isLoading = ref(false)
 const data = ref(null)
 const err = ref(null)
 const VUE_APP_URL = process.env.VUE_APP_URL
-const clientId = localStorage.getItem('id')
-const uri = `/clients/${clientId}/`
+const auditorsId = localStorage.getItem('id')
+const uri = `/auditors/${auditorsId}/`
 const urlApi = VUE_APP_URL + uri
 
 
 onMounted(async () => {
-    isLoading.value = true;
-    try{
-      await getUserService.getUserById(urlApi)
-      data.value = getUserService.getData().value;
-      console.log(data.value)
-    }
-    catch(error){
-      err.value = getUserService.getError().value;
-    }
-    finally{
-      isLoading.value = false;
-    }
-  })
+  isLoading.value = true;
+  try{
+    await getUserService.getUserById(urlApi)
+    data.value = getUserService.getData().value;
+    console.log(data.value)
+  }
+  catch(error){
+    err.value = getUserService.getError().value;
+  }
+  finally{
+    isLoading.value = false;
+  }
+})
 </script>

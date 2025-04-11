@@ -1,6 +1,16 @@
 <template>
 
-  <div class="p-6 flex flex-col w-full h-full">
+    <div v-if="isLoading" class="text-center text-gray-500">
+      Cargando...
+    </div>
+
+    <!-- Error -->
+    <div v-else-if="err" class="text-center text-red-500">
+      Error: {{ err }}
+    </div>
+
+
+  <div v-if="data" class="p-6 flex flex-col w-full h-full">
     <!-- Contenedor de búsqueda y selección de empresa -->
     <div class="p-4  bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       <h2 class="text-xl font-bold text-[#193368] p-2 text-center md:text-left">
@@ -35,36 +45,30 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="data">
-          <tr v-for="user in filteredData" :key="user.id" @click="goToUserDetails(user.id)"
+        <tbody v-if="data.accountants.length > 0">
+          <tr v-for="accountat in data.accountants_data" :key="accountat.id"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
-            <td class="px-6 py-4">{{ user.id_number }}</td>
-            <td class="px-6 py-4">{{ user.username }}</td>
-            <td class="px-6 py-4">{{ user.phone_number }}</td>
-            <td v-if="user.status == 'Pendiente'" class="px-6 py-4">
+            <td class="px-6 py-4">{{ accountat.first_name }} {{ accountat.last_name }}</td>
+            <td class="px-6 py-4">{{ accountat.id_number }}</td>
+            <td class="px-6 py-4">{{ accountat.username }}</td>
+            <td class="px-6 py-4">{{ accountat.phone_number }}</td>
+            <td v-if="accountat.status == 'Pendiente'" class="px-6 py-4">
               <span class="text-sm text-orange-500">
-                {{ user.status }}
+                {{ accountat.status }}
               </span>
             </td>
-            <td v-if="user.status == 'Activo'" class="px-6 py-4">
+            <td v-if="accountat.status == 'Activo'" class="px-6 py-4">
               <span class="text-sm text-green-500">
-                {{ user.status }}
+                {{ accountat.status }}
               </span>
             </td>
-            <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
+            <td v-if="accountat.status == 'Inactivo'" c class="px-6 py-4">
               <span class="text-sm text-red-500">
-                {{ user.status }}
+                {{ accountat.status }}
               </span>
             </td>
         </tr>
       </tbody>
-      <tr v-else colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">No existen contadores registrados</td>
-      </tr>
-      <tr v-if="err" colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
-      </tr>
       </table>
     </div>
   </div>
@@ -99,7 +103,4 @@ onMounted(async () => {
       isLoading.value = false;
     }
   })
-
-
-
 </script>

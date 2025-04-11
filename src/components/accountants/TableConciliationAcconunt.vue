@@ -32,9 +32,10 @@
     </div>
     </div>
   </div>
-   <!-- Tabla -->
-   <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
-    <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+
+ <!-- Tabla -->
+ <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
+  <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
             <th scope="col" class="px-6 py-3">Fecha</th>
@@ -58,10 +59,9 @@
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
-  </template>
-
+</div>
+</template>
 
 <script setup>
 
@@ -73,23 +73,23 @@ const isLoading = ref(false)
 const data = ref(null)
 const err = ref(null)
 const VUE_APP_URL = process.env.VUE_APP_URL
-const clientId = localStorage.getItem('id')
-const uri = `/clients/${clientId}/`
+const accountantId = localStorage.getItem('id')
+const uri = `/accountants/${accountantId}/`
 const urlApi = VUE_APP_URL + uri
 
 
 onMounted(async () => {
-    isLoading.value = true;
-    try{
-      await getUserService.getUserById(urlApi)
-      data.value = getUserService.getData().value;
-      console.log(data.value)
-    }
-    catch(error){
-      err.value = getUserService.getError().value;
-    }
-    finally{
-      isLoading.value = false;
-    }
-  })
+  isLoading.value = true;
+  try{
+    await getUserService.getUserById(urlApi)
+    data.value = getUserService.getData().value;
+    console.log(data.value)
+  }
+  catch(error){
+    err.value = getUserService.getError().value;
+  }
+  finally{
+    isLoading.value = false;
+  }
+})
 </script>

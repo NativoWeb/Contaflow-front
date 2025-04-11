@@ -14,7 +14,7 @@
   <!-- Contenedor de búsqueda y selección de empresa -->
   <div class="p-4  bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
     <h2 class="text-xl font-bold text-[#193368] p-2 text-center md:text-left">
-      Lista de mis conciliaciones
+      Lista de mis Empresas
     </h2>
 
     <div class="w-full md:w-1/2">
@@ -37,31 +37,24 @@
     <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
-            <th scope="col" class="px-6 py-3">Fecha</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Numero de conciliacion</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Empresa</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Banco</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Numero de cuenta</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Contador</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Auditor</th>
+            <th scope="col" class="px-6 py-3">Nit</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Razón Social</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Sector económico</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Direccion</th>
           </tr>
         </thead>
-        <tbody v-if="data.conciliations.length > 0">
-          <tr v-for="conciliation in data.conciliations_data" :key="conciliation.id"  class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">fecha</td>
-            <td class="px-6 py-4">{{ conciliation.account_number }}</td>
-            <td class="px-6 py-4">{{ conciliation.company}}</td>
-            <td class="px-6 py-4">banco</td>
-            <td class="px-6 py-4">n° cuenta</td>
-            <td class="px-6 py-4">{{ conciliation.accountant}}</td>
-            <td class="px-6 py-4">{{ conciliation.auditor }}</td>
+        <!-- <tbody v-if="data.companies.length > 0">
+          <tr v-for="company in data.companies_data" :key="company.id"  class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+            <td class="px-6 py-4">{{ company.nit }}</td>
+            <td class="px-6 py-4">{{ company.name }}</td>
+            <td class="px-6 py-4">{{ company.sector }}</td>
+            <td class="px-6 py-4">{{ company.address }}</td>
           </tr>
-        </tbody>
+        </tbody> -->
       </table>
     </div>
   </div>
   </template>
-
 
 <script setup>
 
@@ -73,23 +66,23 @@ const isLoading = ref(false)
 const data = ref(null)
 const err = ref(null)
 const VUE_APP_URL = process.env.VUE_APP_URL
-const clientId = localStorage.getItem('id')
-const uri = `/clients/${clientId}/`
+const accountantId = localStorage.getItem('id')
+const uri = `/accountants/${accountantId}/`
 const urlApi = VUE_APP_URL + uri
 
 
 onMounted(async () => {
-    isLoading.value = true;
-    try{
-      await getUserService.getUserById(urlApi)
-      data.value = getUserService.getData().value;
-      console.log(data.value)
-    }
-    catch(error){
-      err.value = getUserService.getError().value;
-    }
-    finally{
-      isLoading.value = false;
-    }
-  })
+  isLoading.value = true;
+  try{
+    await getUserService.getUserById(urlApi)
+    data.value = getUserService.getData().value;
+    console.log(data.value)
+  }
+  catch(error){
+    err.value = getUserService.getError().value;
+  }
+  finally{
+    isLoading.value = false;
+  }
+})
 </script>

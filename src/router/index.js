@@ -39,6 +39,16 @@ import ConciliationDetails from "@/components/admin/conciliations/ConciliationDe
 
 
 import TablaContador from "@/components/clients/TablaContador.vue";
+import TablaAuditore from "@/components/clients/TablaAuditore.vue";
+import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
+import TablaConciliacionn from "@/components/clients/TablaConciliacionn.vue";
+import TableClientsAccount from "@/components/accountants/TableClientsAccount.vue";
+import TableConciliationAcconunt from "@/components/accountants/TableConciliationAcconunt.vue";
+import TableConciliationAud from "@/components/auditors/TableConciliationAud.vue";
+import TableClientsAud from "@/components/auditors/TableClientsAud.vue";
+import TableCompanyAccount from "@/components/accountants/TableCompanyAccount.vue";
+
+
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -233,6 +243,46 @@ const router = createRouter({
           path: '/tabla_de_contador',
           name:'TablaContador',
           component: TablaContador
+        },
+        {
+          path: 'tabla_de_auditor',
+          name: TablaAuditore,
+          component: TablaAuditore
+        },
+        {
+          path: '/tabla_de_empresa',
+          name: 'TablaEMpresas',
+          component: TablaEmpresas
+        },
+        {
+          path: '/tabla_de_conciliaciones',
+          name: 'TablaConciliacionn',
+          component: TablaConciliacionn
+        },
+        {
+          path: '/lista_de_clientes',
+          name: 'TableClientsAccount',
+          component: TableClientsAccount
+        },
+        {
+          path: '/tabla_de_conciliacion',
+          name: 'TableConciliationAcconunt',
+          component: TableConciliationAcconunt
+        },
+        {
+          path: '/table_company',
+          name: 'TableCompanyAccount',
+          component: TableCompanyAccount
+        },
+        {
+          path: '/tabla_conciliacion_auditor',
+          name: 'TableConciliationAud',
+          component: TableConciliationAud
+        },
+        {
+          path: '/tabla_clientes_aud',
+          name: 'TableClientsAud',
+          component: TableClientsAud
         }
       ]
     },

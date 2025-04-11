@@ -79,13 +79,13 @@
           <!-- Cliente -->
           <div v-if="data.role == 'CLIENTE'" class="flex flex-col justify-center items-start gap-4">
             <li>
-            <router-link @click="toggleSidebar" to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_de_conciliaciones" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
             </li>
             <li>
-            <router-link @click="toggleSidebar" to="/TablaEmpresas" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_de_empresa" class="flex gap-2 justify-center items-center">
               <img src="@/assets/empresass.svg" alt="Cuenta">
               <span >Mis Empresas</span>
             </router-link>
@@ -97,7 +97,7 @@
             </router-link>
           </li>
             <li>
-            <router-link @click="toggleSidebar" to="/TablaAuditore" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_de_auditor" class="flex gap-2 justify-center items-center">
               <img src="@/assets/auditor.svg" alt="Cuenta">
               <span >Mis Auditores</span>
             </router-link>
@@ -113,13 +113,13 @@
           <!-- Auditor -->
           <div v-if="data.role == 'AUDITOR'" class="flex flex-col justify-center items-start gap-4">
             <li>
-            <router-link @click="toggleSidebar" to="/TablaClients" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_clientes_aud" class="flex gap-2 justify-center items-center">
               <img src="@/assets/client.svg" alt="Ícono" class="icon-img">
               <span>Mis Clientes</span>
             </router-link>
           </li>
             <li>
-            <router-link @click="toggleSidebar" to="/TablaConciliacionn" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_conciliacion_auditor" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
@@ -135,19 +135,19 @@
           <!-- Contador -->
           <div v-if="data.role == 'CONTADOR'" class="flex flex-col justify-center items-start gap-4">
             <li>
-            <router-link @click="toggleSidebar" to="/TablaClients" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/lista_de_clientes" class="flex gap-2 justify-center items-center">
               <img src="@/assets/client.svg" alt="Ícono" class="icon-img">
               <span>Mis Clientes</span>
             </router-link>
           </li>
           <li>
-            <router-link @click="toggleSidebar" to="TablaEmpresas" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="table_company" class="flex gap-2 justify-center items-center">
               <img src="@/assets/empresass.svg" alt="Ícono" class="icon-img">
               <span>Mis Empresas</span>
             </router-link>
           </li>
             <li>
-            <router-link @click="toggleSidebar" to="/conciliacion" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_de_conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
               <span >Mis Conciliaciones</span>
             </router-link>
