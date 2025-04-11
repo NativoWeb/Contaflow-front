@@ -48,23 +48,9 @@
             </li>
 
             <li>
-            <router-link @click="toggleSidebar" to="/BancosERPs" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/BancoErps.svg" alt="Bancos Img">
-              <span >Bancos y ERPs</span>
-            </router-link>
-            </li>
-
-            <li>
             <router-link @click="toggleSidebar" to="/conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Conciliacion Img">
               <span >Conciliaciones</span>
-            </router-link>
-            </li>
-
-            <li>
-            <router-link @click="toggleSidebar" to="/ReporteEmpre" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/informe.svg" alt="Informe">
-              <span >Reportes financieros y auditoría</span>
             </router-link>
             </li>
           

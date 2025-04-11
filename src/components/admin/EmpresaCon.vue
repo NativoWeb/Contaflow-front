@@ -2,7 +2,7 @@
   <div class="p-6 flex flex-col w-full h-full">
     <div class="p-4  bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       <h2 class="text-xl font-bold text-[#193368] p-2 text-center md:text-left">
-        Lista de Conciliaciones
+        Lista de empresas 1
       </h2>
 
       <div class="w-full md:w-1/2">

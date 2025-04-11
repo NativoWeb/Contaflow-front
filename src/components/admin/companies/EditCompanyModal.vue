@@ -96,8 +96,8 @@
     <div class="relative p-5 w-full max-w-md max-h-full">
       <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
         <div class="p-6 md:p-5 text-center">
-          <img src="@/assets/update.svg" alt="Icono de Éxito" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
-          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">La información del usuario se actualizó correctamente</h3>
+          <img src="@/assets/work_added.svg" alt="Icono de Éxito" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
+          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">La información del la empresa se actualizó correctamente</h3>
           <button @click="isEditedToggle" class="py-3 px-5 ms-3 text-sm font-medium focus:outline-none bg-[#08245B] hover:bg-[#2a4b8d] text-white rounded-lg border">
             Aceptar
           </button>

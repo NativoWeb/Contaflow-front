@@ -4,12 +4,10 @@ import ManageUsers from "@/components/admin/ManageUsers.vue";
 import ChangePasswordView from "@/views/auth/ChangePasswordView.vue";
 import getIdByToken from "@/hooks/getId";
 import ListaCon from "@/components/admin/ListaCon.vue";
-import BancosERPs from "@/components/admin/BancosERPs.vue";
 import EmpresaCon from "@/components/admin/EmpresaCon.vue";
 import ExtractoCon from "@/components/admin/ExtractoCon.vue";
 import ResultadoCon from "@/components/admin/ResultadoCon.vue.vue";
 import ModificarCon from "@/components/admin/ModificarCon.vue";
-import ReporteEmpre from "@/components/admin/ReporteEmpre.vue";
 import ListaReporte from "@/components/admin/ListaReporte.vue";
 import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
 import PerfilView from "@/components/common/PerfilView.vue";
@@ -144,11 +142,6 @@ const router = createRouter({
           component: EditCompanies
         },
         {
-          path: 'BancosERPs',
-          name : 'BancosERPs',
-          component: BancosERPs
-        },
-        {
           path: 'conciliacion', 
           name: 'EmpresaCon',
           component: EmpresaCon
@@ -173,11 +166,7 @@ const router = createRouter({
           name: 'ModificarCon',
           component: ModificarCon
         },
-        {
-          path: 'ReporteEmpre',
-          name: 'ReporteEmpre',
-          component: ReporteEmpre
-        },
+        
         {
           path: 'ListaReporte',
           name: 'ListaReporte',
