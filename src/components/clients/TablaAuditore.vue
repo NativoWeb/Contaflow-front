@@ -67,6 +67,9 @@
             </td>
           </tr>
         </tbody>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+        <td class="ml-2 my-6">No se encontraron auditores registrados.</td>
+      </tr>
     </table>
     </div>
     </div>

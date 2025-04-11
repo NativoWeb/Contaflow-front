@@ -6,7 +6,7 @@
     />
 
   <UsersTableComponent
-    :clientList="'Lista de Clientes'"
+    :clientList="'Clientes Registrados'"
     :apiUrl="`${VUE_APP_URL}/clients/`"
     :roles="'Clientes'"
     :routes="`cliente`"
@@ -22,7 +22,7 @@
   const userData = {
     first_name: '',
     last_name: '',
-    id_type: 'Seleccione',
+    id_type: 'Seleccione una opción',
     id_number: '',
     phone_number: '',
     username: '',

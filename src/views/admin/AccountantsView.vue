@@ -7,7 +7,7 @@
     />
 
   <UsersTableComponent       
-    :clientList="'Lista de Contadores'"
+    :clientList="'Contadores Registrados'"
     :apiUrl="`${VUE_APP_URL}/accountants/`"
     :roles="'Contadores'"
     :routes="`contador`"/>
@@ -22,7 +22,7 @@
   const userData = {
     first_name: '',
     last_name: '',
-    id_type: 'Seleccione',
+    id_type: 'Seleccione una opción',
     id_number: '',
     phone_number: '',
     username: '',

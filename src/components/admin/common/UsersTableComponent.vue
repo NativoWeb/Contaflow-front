@@ -11,7 +11,7 @@
           <input  type="text" 
           v-model="searchQuery"  
           id="table-search-users" 
-          placeholder="Buscar..."
+          placeholder="Buscar por nombre, correo o identificación..."
           class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
       </div>
@@ -45,7 +45,7 @@
                 {{ user.status }}
               </span>
             </td>
-            <td v-if="user.status == 'Inactivo'" c class="px-6 py-4">
+            <td v-if="user.status == 'Inactivo'" class="px-6 py-4">
               <span class="text-sm text-red-500">
                 {{ user.status }}
               </span>
@@ -53,10 +53,10 @@
         </tr>
       </tbody>
       <tr v-else colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
+        <td class="ml-2 my-6">No se encontraron {{ roles }} registrados.</td>
       </tr>
       <tr v-if="err" colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
+        <td class="ml-2 my-6">Ocurrió un error {{ err }}</td>
       </tr>
       </table>
     </div>

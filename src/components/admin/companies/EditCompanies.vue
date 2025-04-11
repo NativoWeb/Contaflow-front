@@ -15,11 +15,11 @@
 
                 <!-- Campos de información -->
                 <div class="flex flex-col">
-                    <label for="nombre" class="font-bold">NIT</label>
-                    <input type="text" id="nombre" name="nombre" required class="p-2 border border-gray-300 rounded-lg mb-2">
+                    <label for="nit" class="font-bold">NIT</label>
+                    <input type="text" id="nit" name="nit" required class="p-2 border border-gray-300 rounded-lg mb-2">
 
-                    <label for="direccion" class="font-bold">Razón Social</label>
-                    <input type="text" id="direccion" name="direccion" required class="p-2 border border-gray-300 rounded-lg mb-2">
+                    <label for="name" class="font-bold">Razón Social</label>
+                    <input type="text" id="name" name="name" required class="p-2 border border-gray-300 rounded-lg mb-2">
                     
                 </div>
                 
