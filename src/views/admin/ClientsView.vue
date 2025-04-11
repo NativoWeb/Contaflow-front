@@ -30,5 +30,7 @@
     role: 'CLIENTE',
     companies: [],
     conciliations: [],
+    accountants: [],
+    auditors: []
   }
 </script>
