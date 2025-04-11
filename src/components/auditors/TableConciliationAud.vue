@@ -58,6 +58,9 @@
             <td class="px-6 py-4">{{ conciliation.auditor }}</td>
           </tr>
         </tbody>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+          <td class="ml-2 my-6">No se encontraron conciliaciones registradas.</td>
+        </tr>
       </table>
   </div>
 </div>
@@ -83,7 +86,6 @@ onMounted(async () => {
   try{
     await getUserService.getUserById(urlApi)
     data.value = getUserService.getData().value;
-    console.log(data.value)
   }
   catch(error){
     err.value = getUserService.getError().value;

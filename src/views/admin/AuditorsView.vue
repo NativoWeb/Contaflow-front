@@ -8,7 +8,7 @@
     <UsersTableComponent
         :clientList="'Auditores Registrados'"
         :apiUrl="`${VUE_APP_URL}/auditors/`"
-        :roles="'Auditores'"
+        :roles="'auditores'"
         :routes="`auditor`"
         />
 </template>

@@ -83,7 +83,6 @@
     .then(res => res.json())
     .then(json => {
       userData.value = json;
-      console.log(userData.value)
     })
     .catch(err => console.error(err))
   })

@@ -29,48 +29,60 @@ class AuthServices {
   }
   
 
-  // Servicio para el ingreso
-  loginService = (user) => {
-    return fetch(urlLogin, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(user)
-    })
-    .then(res => {
-      if (!res.ok) throw new Error(`${res.status} - ${res.statusText}`)
-      return res.json();
-    })
-    .then(json => {
-      if (!json) return
+  loginService = async (user) => {
+    try {
+      const res = await fetch(urlLogin, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(user)
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.detail || res.statusText || 'Error desconocido');
+      }
+
+      const json = await res.json();
+      if (!json) throw new Error('No se recibieron datos del servidor');
+      
       Cookies.set('jwt', json.access);
-      json.is_temp_password ? router.push('/password') : router.push('/home')
-    })
-    .catch(err => {
-      this.errorMsg = err;
-      router.push(``)
-    })
+      json.is_temp_password ? router.push('/password') : router.push('/home');
+      return true;
+    } 
+    catch (err) {
+      this.errorMsg.value = err.message || 'Error al iniciar sesión';
+      return false;
+    }
   };
 
-  changePasswordService = (password) => {
-    fetch(urlChangePD, {
-      method: 'POST',
-      body: JSON.stringify(password),
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': `Bearer ${this.getToken()}`
+  changePasswordService = async (password) => {
+    try{
+      const res = await fetch(urlChangePD, {
+        method: 'POST',
+        body: JSON.stringify(password),
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': `Bearer ${this.getToken()}`
+        }
+      });
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.detail || res.statusText || 'Error al cambiar la contraseña');
       }
-    })
-    .then(res => res.json())
-    .then(() => {
-      alert("Contraseña cambiada de manera correcta");
-      router.push('/home')
-    })
-    .catch(err => {
-      this.errorMsg = err;
-    })
+
+      const json = await res.json();
+      if (!json) throw new Error('No se recibió respuesta del servidor');
+
+      this.data.value = 'Contraseña cambiada exitosamente';
+      return true
+    }
+    catch (err) {
+      this.errorMsg.value = err.message || 'Error al cambiar la contraseña';
+      return false;
+    }
   }
 }
 

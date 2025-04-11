@@ -79,7 +79,6 @@
       try{
         await getUserService.getUserById(urlApi)
         data.value = getUserService.getData().value;
-        console.log(data.value)
       }
       catch(error){
         err.value = getUserService.getError().value;
