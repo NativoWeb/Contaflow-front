@@ -39,10 +39,8 @@ import ConciliationDetails from "@/components/admin/conciliations/ConciliationDe
 
 
 import TablaContador from "@/components/clients/TablaContador.vue";
-<<<<<<< HEAD
 import AssignCompanyDetails from "@/components/admin/crud/assign/AssignCompanyDetails.vue";
 import RemoveCompanyDetail from "@/components/admin/crud/assign/RemoveCompanyDetail.vue";
-=======
 import TablaAuditore from "@/components/clients/TablaAuditore.vue";
 import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
 import TablaConciliacionn from "@/components/clients/TablaConciliacionn.vue";
@@ -52,8 +50,6 @@ import TableConciliationAud from "@/components/auditors/TableConciliationAud.vue
 import TableClientsAud from "@/components/auditors/TableClientsAud.vue";
 import TableCompanyAccount from "@/components/accountants/TableCompanyAccount.vue";
 
-
->>>>>>> c6e991757cc6680158793fafb67f08be5b90fe08
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 

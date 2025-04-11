@@ -97,7 +97,7 @@
         <!-- Contenido del Modal -->
         <div class="p-6 md:p-5 text-center">
           <img src="@/assets/remove_client.svg" alt="Icono de SVG convertido" class="mx-auto mb-4 w-20 h-20 dark:text-gray-200">
-          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">Se asigno el Cliente de manera de correcta</h3>
+          <h3 class="mb-2 text-xl font-bold text-[#2A5CAA]">Se removio el cliente de manera correcta</h3>
 
           <button @click="isEditedToggle"
               type="button" 
