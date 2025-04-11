@@ -1,5 +1,13 @@
 <template>
   
+  <div v-if="isLoading" class="flex justify-center items-start">
+    <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+  </div>
+  
+  <tr v-if="err" colspan="5" class="flex flex-col justify-center">
+    <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
+  </tr>
+
   <div v-if="data">
     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       
@@ -32,7 +40,7 @@
               <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
             </tr>
           </thead>
-          <tbody v-if="data && data.companies.length > 0">
+          <tbody v-if="data.companies.length > 0">
             <tr v-for="company in data.companies_data" :key="company.id" @click="goToCompanyDetails(company.id)"
               class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
               <td class="px-6 py-4">{{ company.name }}</td>
@@ -77,14 +85,9 @@
             </tr>
           </tbody>
           <tr v-else colspan="5" class="flex flex-col justify-center">
-            <td class="ml-2 my-6">No existen registrados</td>
+            <td class="ml-2 my-6">No existen empresas registrados</td>
           </tr>
-          <div v-if="isLoading" class="flex justify-center items-start">
-            <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
-          </div>
-          <tr v-if="err" colspan="5" class="flex flex-col justify-center">
-            <td class="ml-2 my-6">Ocurrio un error {{ err }}</td>
-          </tr>
+
         </table>
       </div> 
     </div>

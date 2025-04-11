@@ -31,13 +31,48 @@
         </div>
       </div>
     </div>
+
+    <div v-if="isLoading" 
+      class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
+      :class="{'scale-100': isLoading}">
+      <div class="relative w-full max-w-lg  p-6 transform transition-all duration-600 ease-in-out">
+          <!-- Modal content -->
+          <div class="relative dark:bg-gray-800">
+              <!-- Modal body -->
+              <div class="p-8 text-center space-y-4">
+                  <img src="@/assets/loader.svg" alt="">
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div v-if="err" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+      <div class="bg-white rounded-xl shadow-xl transform transition-all max-w-md w-full">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-2xl font-bold text-red-600">Error</h3>
+            <div class="flex items-center justify-between p-4">
+              <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
+              <button @click="closeModal" 
+                      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
+                  &times;
+              </button>
+            </div>
+          </div>
+          <div class="mb-6">
+            <p class="text-gray-700">{{ err }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
   <script setup>
   import AuthServices from '@/services/authService';
   import { reactive, ref } from 'vue';
   
   const authLogin = new AuthServices();
-  const errMsg = authLogin.getError();
+  const err = ref(false);
+  const isLoading = ref(false);
   const showPassword = ref(false);
   const eyeOpenIcon = ref(require('@/assets/VerPassword.svg')); 
   const eyeClosedIcon = ref(require('@/assets/OcultarPassword.svg'));
@@ -78,18 +113,34 @@
     }
   }
 
-  function login() {
-    validateEmail();
-    validatePassword();
+  async function login() {
+  validateEmail();
+  validatePassword();
 
-    if (errors.email || errors.password) {
-      errors.general = "Todos los campos son obligatorios y deben ser correctos.";
-      return;
-    }
-    console.log(errMsg)
-    
-    authLogin.loginService(authUser);
+  if (errors.email || errors.password) {
+    errors.general = "Por favor corrige los errores en el formulario";
+    return;
   }
+
+  isLoading.value = true;
+  errors.general = ""; // Limpiar errores anteriores
+  
+  try {
+    const success = await authLogin.loginService(authUser);
+    if (!success) {
+      err.value = authLogin.errorMsg.value || "Error al iniciar sesión";
+    }
+  } catch (error) {
+    err.value = error.message || "Ocurrió un error inesperado";
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+function closeModal() {
+  err.value = false;
+  location.reload()
+}
   
 </script>
 

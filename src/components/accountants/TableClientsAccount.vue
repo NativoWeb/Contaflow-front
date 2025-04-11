@@ -1,9 +1,7 @@
 <template>
-
   <div v-if="isLoading" class="text-center text-gray-500">
     Cargando...
   </div>
-
   <!-- Error -->
   <div v-else-if="err" class="text-center text-red-500">
     Error: {{ err }}
@@ -11,9 +9,9 @@
 
   <div v-if="data" class="p-6 flex flex-col w-full h-full">
     <!-- Contenedor de búsqueda y selección de empresa -->
-    <div class="p-4 bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+    <div class="p-4  bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       <h2 class="text-xl font-bold text-[#193368] p-2 text-center md:text-left">
-        Lista de mis clientes
+        Lista de mis Clientes
       </h2>
 
       <div class="w-full md:w-1/2">
@@ -31,17 +29,18 @@
         </div>
       </div>
     </div>
+    </div>
 
-    <!-- Tabla -->
-    <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
-      <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
+  <!-- Tabla -->
+  <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
+    <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
             <th scope="col" class="px-6 py-3">Nombre</th>
-            <th scope="col" class="px-6 py-3 md:table-cell">Número de identificación</th>
-            <th scope="col" class="px-6 py-3 md:table-cell">Correo</th>
-            <th scope="col" class="px-6 py-3 md:table-cell">Celular</th>
-            <th scope="col" class="px-6 py-3 md:table-cell">Estado</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Número de Identificación</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Correo</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Celular</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
         <tbody v-if="data.clients.length > 0">
@@ -68,15 +67,11 @@
             </td>
           </tr>
         </tbody>
-        <tr v-else>
-          <td colspan="5" class="text-center py-6">
-            No se encontraron clientes registrados.
-          </td>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+          <td class="ml-2 my-6">No se encontraron clientes registrados.</td>
         </tr>
       </table>
     </div>
-  </div>
-
 </template>
 
 
@@ -100,7 +95,6 @@ onMounted(async () => {
   try{
     await getUserService.getUserById(urlApi)
     data.value = getUserService.getData().value;
-    console.log(data.value)
   }
   catch(error){
     err.value = getUserService.getError().value;

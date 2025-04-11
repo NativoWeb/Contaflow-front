@@ -9,7 +9,7 @@
   <UsersTableComponent       
     :clientList="'Contadores Registrados'"
     :apiUrl="`${VUE_APP_URL}/accountants/`"
-    :roles="'Contadores'"
+    :roles="'contadores'"
     :routes="`contador`"/>
 
 </template>

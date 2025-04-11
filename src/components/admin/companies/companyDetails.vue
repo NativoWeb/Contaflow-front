@@ -1,6 +1,6 @@
 <template>
   <!-- Contenedor de la información de la empresa -->
-  <section class="max-w-5xl mx-auto mt-5 p-6 bg-white rounded-lg shadow-lg">
+  <section class="mt-5 p-6 bg-white rounded-lg shadow-lg">
     <h2 class="text-3xl font-bold text-[#2A5CAA] mb-5 text-center">Información de la Empresa</h2>
 
     <!-- Cargando -->
@@ -52,8 +52,8 @@
   </section>
 
   <!-- Segundo contenedor: Tablas de conciliaciones y clientes -->
-  <section v-if="data" class="max-w-5xl mx-auto mt-6 p-6 bg-white rounded-lg shadow-md">
-    <div class="grid gap-6">
+  <section v-if="data" class="mt-6 p-6 bg-white rounded-lg shadow-md">
+    <div class="flex gap-6">
       <ConByCompany :conciliations="data.conciliations_data" />
       <ClientsByCompany :employees="data.clients_data" />
     </div>

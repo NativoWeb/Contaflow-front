@@ -1,5 +1,16 @@
 <template>
+
+<div v-if="isLoading" class="text-center text-gray-500">
+    Cargando...
+  </div>
+
+  <!-- Error -->
+  <div v-else-if="err" class="text-center text-red-500">
+    Error: {{ err }}
+  </div>
+
     <!-- Contenedor de búsqueda y tabla -->
+  <div v-if="data">
     <div class="p-4 bg-white flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0 mt-8" style="border-radius: 8px 8px 0 0;">
       <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
       <div class="w-full md:w-1/2">
@@ -28,7 +39,7 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="data">
+        <tbody v-if="data.length > 0">
           <tr v-for="user in filteredData" :key="user.id" @click="goToUserDetails(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
@@ -55,11 +66,9 @@
       <tr v-else colspan="5" class="flex flex-col justify-center">
         <td class="ml-2 my-6">No se encontraron {{ roles }} registrados.</td>
       </tr>
-      <tr v-if="err" colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">Ocurrió un error {{ err }}</td>
-      </tr>
       </table>
     </div>
+  </div>
 </template>
 
 <script setup>

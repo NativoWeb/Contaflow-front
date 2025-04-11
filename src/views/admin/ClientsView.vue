@@ -8,7 +8,7 @@
   <UsersTableComponent
     :clientList="'Clientes Registrados'"
     :apiUrl="`${VUE_APP_URL}/clients/`"
-    :roles="'Clientes'"
+    :roles="'clientes'"
     :routes="`cliente`"
     />
 </template>
@@ -30,5 +30,7 @@
     role: 'CLIENTE',
     companies: [],
     conciliations: [],
+    accountants: [],
+    auditors: []
   }
 </script>
