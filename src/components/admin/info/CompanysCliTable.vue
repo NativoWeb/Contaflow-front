@@ -67,7 +67,7 @@
             </tr>
           </thead>
           <tbody v-if="data && data.conciliations.length > 0">
-            <tr v-for="conciliation in data.conciliations_data" :key="conciliation.id"
+            <tr v-for="conciliation in data.conciliations_data" :key="conciliation.id" @click="goToConciliationDetails(conciliation.id)"
               class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
               <td class="px-6 py-4">{{ conciliation.account_number }}</td>
               <td class="px-6 py-4">{{ conciliation.company }}</td>
@@ -115,6 +115,10 @@
 
   const goToCompanyDetails = (id) => {
     router.push(`/empresa=${id}/`)
+  }
+
+  const goToConciliationDetails = (id) => {
+    router.push(`/conciliation=${id}`)
   }
 
   onMounted(async () => {

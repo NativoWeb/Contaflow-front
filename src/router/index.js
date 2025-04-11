@@ -35,6 +35,7 @@ import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetai
 import PruebasBorrable from "@/components/PruebasBorrable.vue";
 import CompanyDetails from "@/components/admin/companies/companyDetails.vue";
 import CompanysCliTable from "@/components/admin/info/CompanysCliTable.vue";
+import ConciliationDetails from "@/components/admin/conciliations/ConciliationDetails.vue";
 
 
 import TablaContador from "@/components/clients/TablaContador.vue";
@@ -223,12 +224,15 @@ const router = createRouter({
           name: 'CompanyDetails',
           component: CompanyDetails
         },
-
         {
-          path: '/TablaContador',
+          path: '/conciliation=:id',
+          name: 'ConciliationDetails',
+          component: ConciliationDetails
+        },
+        {
+          path: '/tabla_de_contador',
           name:'TablaContador',
           component: TablaContador
-
         }
       ]
     },
