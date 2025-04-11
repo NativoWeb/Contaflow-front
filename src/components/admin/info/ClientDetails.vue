@@ -72,7 +72,7 @@
     <DeleteModal :id="data.id"/>
     <StatusModal :id="data.id" :status="data.status"/>
     <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
-    <button class="btn-action" @click="goToConCompTable(data.id)">Clientes y Conciliaciones</button>
+    <button class="btn-action" @click="goToConCompTable(data.id)">Empresas y Conciliaciones</button>
   </div>
 </div>
 </div>

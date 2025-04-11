@@ -84,12 +84,12 @@ class CompaniesService {
     try{
       const url = urlApi;
       const response = await fetch(url, {
-        body: JSON.stringify(data),
         method: 'PATCH',
         headers:{
           'Content-Type':'application/json',
           'Authorization': `Bearer ${this.getToken()}`
-        }
+        },
+        body: JSON.stringify(data)
       })
       if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
       const json = await response.json()

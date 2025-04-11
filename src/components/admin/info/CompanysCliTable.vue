@@ -3,7 +3,7 @@
   <div v-if="data">
     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
       
-      <AssignClientsModal/>
+      <AssignCompaniesModal/>
 
       <h2 class="text-lg font-semibold text-[#193368] dark:text-white">{{ clientList }}</h2>
       <div class="w-full md:w-1/2">
@@ -95,8 +95,8 @@
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import UserService from '@/services/userService';
-  import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
   import router from '@/router';
+  import AssignCompaniesModal from '../crud/assign/AssignCompaniesModal.vue';
 
   const userId = useRoute().params.id;
   const VUE_APP_URL = process.env.VUE_APP_URL;
@@ -106,15 +106,8 @@
   const data = ref(null);
   const err = ref(null);
 
-  console.log(urlApi)
-  
-  // const redirectToRemove = id => {
-  //   router.push(`${userRole}=${userId}/remover_cliente=${id}`)
-  // }
-
-
   const goToCompanyDetails = (id) => {
-    router.push(`/empresa=${id}/`)
+    router.push(`cliente=${userId}/remover_empresa=${id}`)
   }
 
   const goToConciliationDetails = (id) => {

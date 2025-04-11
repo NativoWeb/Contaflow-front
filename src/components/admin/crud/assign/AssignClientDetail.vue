@@ -202,6 +202,7 @@
   const addClient = () => {
     isLoading.value = true;
     clients.push(clientId)
+    console.log(clients)
     // set para evitar ids duplicados
     const uniqueClients = [...new Set(clients)];
     getUser.editUser(url, {clients: uniqueClients}, isEditedToggle)

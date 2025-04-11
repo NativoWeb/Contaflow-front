@@ -39,6 +39,8 @@ import ConciliationDetails from "@/components/admin/conciliations/ConciliationDe
 
 
 import TablaContador from "@/components/clients/TablaContador.vue";
+import AssignCompanyDetails from "@/components/admin/crud/assign/AssignCompanyDetails.vue";
+import RemoveCompanyDetail from "@/components/admin/crud/assign/RemoveCompanyDetail.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -218,11 +220,20 @@ const router = createRouter({
           name: 'Remove',
           component: RemoveClientDetail
         },
-        
         {
           path: '/empresa=:id',
           name: 'CompanyDetails',
           component: CompanyDetails
+        },
+        {
+          path: 'cliente/conciliaciones_empresas/cliente=:id/remover_empresa=:companyId',
+          name: 'RemoveCompany',
+          component: RemoveCompanyDetail
+        },
+        {
+          path: 'cliente/conciliaciones_empresas/cliente=:id/detalles_empresa=:companyId',
+          name: 'AssingCompanyDetails',
+          component: AssignCompanyDetails
         },
         {
           path: '/conciliation=:id',
