@@ -18,7 +18,7 @@
           <li>
             <router-link @click="toggleSidebar" to="/home" class="flex gap-2 justify-center items-center">
               <img src="@/assets/home.svg" alt="Home Img">
-              <span>Home</span>
+              <span>Página principal</span>
             </router-link>
           </li>
 

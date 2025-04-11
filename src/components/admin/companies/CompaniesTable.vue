@@ -1,7 +1,7 @@
 <template>
     <!-- Contenedor de búsqueda y tabla -->
     <div class="p-4 bg-white flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0 mt-8" style="border-radius: 8px 8px 0 0;">
-      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Lista de Empresas</h2>
+      <h2 class="text-lg font-semibold text-[#193368] dark:text-white">Empresas registradas</h2>
       <div class="w-full md:w-1/2">
         <label for="table-search" class="sr-only">Buscar</label>
         <div class="flex items-center bg-gray-50 border border-[#B4C3DF] rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600">
@@ -22,8 +22,8 @@
       <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
        <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
           <tr>
-            <th scope="col" class="px-6 py-3">Nit</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Razón Social</th>
+            <th scope="col" class="px-6 py-3">NIT</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Razón social</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Sector económico</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Dirección</th>
           </tr>
@@ -40,10 +40,10 @@
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">No existen {{ roles }} registrados</td>
+          <td class="ml-2 my-6">No se encontraron empresas registradas.</td>
         </tr>
         <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">Ocurrio un error</td>
+          <td class="ml-2 my-6">Ocurrió un error.</td>
         </tr>
       </table>
     </div>

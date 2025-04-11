@@ -31,10 +31,9 @@
         </label>
         <div>
           <select  v-model="userForm.id_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
-            <option selected disabled>Seleccione</option>
+            <option selected disabled>Seleccione una opción</option>
             <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
             <option value="Cedula_Extranjeria">Cédula de extranjería</option>
-            <option value="Pasaporte">Pasaporte </option>
         </select>
         </div>
       </div>
@@ -48,17 +47,17 @@
         </label>
         <input v-model="userForm.id_number" @input="validateIdentificationNumber"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-          type="text" placeholder="Ingrese su celular">
+          type="text" placeholder="Ingrese su número de identificación">
         <p v-if="errors.id_number" class="text-red-500 text-xs mt-1">{{ errors.id_number }}</p>
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Numero de Celular:
+          Número de celular:
         </label>
         <input v-model="userForm.phone_number" @input="validatePhoneNumber"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
 
-          type="text" inputmode="numeric" placeholder="Ingrese su correo">
+          type="text" inputmode="numeric" placeholder="Ingrese su número de celular">
         <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
       </div>
       <div>
@@ -128,7 +127,7 @@
             <div class="p-8 text-center space-y-4">
                 <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Invitación enviada con éxito!</h3>
                 <p class="text-lg text-gray-700 dark:text-gray-300">
-                    El usuario <strong>{{ userForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de Usere PYME.
+                    El usuario <strong>{{ userForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de usuario PYME.
                 </p>
                 <p class="text-lg text-gray-700 dark:text-gray-300">
                     <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
@@ -228,23 +227,23 @@
 
   // Validaciones
   const validateFirstName = () => {
-    errors.first_name = nameRegex.test(userForm.first_name) ? "" : "Solo se permiten letras y espacios.";
+    errors.first_name = nameRegex.test(userForm.first_name) ? "" : "El nombre solo puede contener letras y espacios.";
   };
 
   const validateLastName = () => {
-    errors.last_name = nameRegex.test(userForm.last_name) ? "" : "Solo se permiten letras y espacios.";
+    errors.last_name = nameRegex.test(userForm.last_name) ? "" : "El apellido solo puede contener letras y espacios.";
   };
 
   const validateIdentificationNumber = () => {
-    errors.id_number = id_numberRegex.test(userForm.id_number) ? "" : "Solo se permiten números (mínimo 7 y máximo 10 dígitos).";
+    errors.id_number = id_numberRegex.test(userForm.id_number) ? "" : "Ingrese un número válido de identificación.";
   };
 
   const validatePhoneNumber = () => {
-    errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Solo se permiten números (máximo 10 dígitos).";
+    errors.phone_number = phoneRegex.test(userForm.phone_number) ? "" : "Ingrese un número de celular válido.";
   };
 
   const validateEmail = () => {
-    errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese un correo válido.";
+    errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese una dirección de correo electrónico válida.";
   };
 
   const isFormInvalid = computed(() => {

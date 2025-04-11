@@ -51,6 +51,9 @@
             <td class="px-6 py-4">{{ company.address }}</td>
           </tr>
         </tbody>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+          <td class="ml-2 my-6">No se encontraron empresas registradas.</td>
+        </tr>
       </table>
     </div>
   </div>

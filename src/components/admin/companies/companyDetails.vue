@@ -5,7 +5,8 @@
 
     <!-- Cargando -->
     <div v-if="isLoading" class="text-center text-gray-500">
-      Cargando...
+      <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32" />
+
     </div>
 
     <!-- Error -->
@@ -23,7 +24,7 @@
       <p>{{ data.nit }}</p>
     </div>
     <div class="flex">
-      <p class="font-semibold w-60">Razón Social:</p>
+      <p class="font-semibold w-60">Razón social:</p>
       <p>{{ data.name }}</p>
     </div>
     <div class="flex">
@@ -31,11 +32,11 @@
       <p>{{ data.address }}</p>
     </div>
     <div class="flex">
-      <p class="font-semibold w-60">Sector Económico:</p>
+      <p class="font-semibold w-60">Sector económico:</p>
       <p>{{ data.sector }}</p>
     </div>
     <div class="flex">
-      <p class="font-semibold w-60">Fecha de Registro:</p>
+      <p class="font-semibold w-60">Fecha de registro:</p>
       <!-- <p>{{ formatDate(data.createdAt) }}</p> -->
     </div>
   </div>
@@ -57,16 +58,7 @@
       <ClientsByCompany :employees="data.clients_data" />
     </div>
   </section>
-
-  <!-- Manejo de errores duplicado (puedes eliminar si ya está arriba) -->
-  <div v-if="err" class="flex justify-center items-start">
-    <span>{{ err }}</span>
-  </div>
-
-  <!-- Cargador duplicado (puedes eliminar si ya está arriba) -->
-  <div v-if="isLoading" class="flex justify-center items-start">
-    <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32" />
-  </div>
+ 
 </template>
 
 

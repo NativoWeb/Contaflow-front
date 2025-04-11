@@ -50,7 +50,10 @@
             <td class="px-6 py-4">{{ company.sector }}</td>
             <td class="px-6 py-4">{{ company.address }}</td>
           </tr>
-        </tbody> -->
+        </tbody>
+        <tr v-else colspan="5" class="flex flex-col justify-center">
+        <td class="ml-2 my-6">No se encontraron registrados.</td>
+      </tr> -->
       </table>
     </div>
   </div>

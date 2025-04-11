@@ -112,10 +112,10 @@
         &times;
       </button>
       <p class="text-[#2A5CAA] font-bold mb-4 text-center">
-        !!EMPRESA AGREGADA!!
+        ¡Empresa agregada!
       </p>
       <p class="text-gray-800 font-medium mb-4 text-center">
-        La empresa <span class="font-bold">{{ companyForm.name }}</span> ha sido agregada exitosamente a ContaFlow.
+        La empresa <span class="font-bold">{{ companyForm.name }}</span> fue registrada exitosamente en ContaFlow.
       </p>
     </div>
   </div>
@@ -178,9 +178,12 @@
 
   // validacione
   const validateNit = () => {
-    if (!companyForm.nit.trim()) error.nit = "El NIT es obligatorio";
-    else if (!nitRegex.test(companyForm.nit)) error.nit = "El NIT no es válido";
-    else error.nit = "";
+    if (!companyForm.nit.trim()) 
+    error.nit = "El NIT es obligatorio";
+    else if (!nitRegex.test(companyForm.nit)) 
+    error.nit = "El formato del NIT no es válido. Ejemplo: 12345678-9";
+    else 
+    error.nit = "";
   }
 
   const validateName = () => {
