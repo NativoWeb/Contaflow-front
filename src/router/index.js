@@ -1,53 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Cookies from 'js-cookie';
-import ManageUsers from "@/components/admin/ManageUsers.vue";
-import ChangePasswordView from "@/views/auth/ChangePasswordView.vue";
 import getIdByToken from "@/hooks/getId";
-import ListaCon from "@/components/admin/ListaCon.vue";
-import EmpresaCon from "@/components/admin/EmpresaCon.vue";
-import ExtractoCon from "@/components/admin/ExtractoCon.vue";
-import ResultadoCon from "@/components/admin/ResultadoCon.vue.vue";
-import ModificarCon from "@/components/admin/ModificarCon.vue";
-import ListaReporte from "@/components/admin/ListaReporte.vue";
-import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
-import PerfilView from "@/components/common/PerfilView.vue";
-
-//Empresa Admin
-import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
-import EditCompanies from "@/components/admin/companies/EditCompanies.vue";
-import CompaniesView from "@/views/companies/CompaniesView.vue";
-
-import AuditorDetail from "@/components/admin/info/AuditorDetail.vue";
-import ClientDetails from "@/components/admin/info/ClientDetails.vue";
-import LoginUser from "@/views/auth/LoginView.vue";
-import AccountantsView from "@/views/admin/AccountantsView.vue";
-import ClientsView from "@/views/admin/ClientsView.vue";
-import AuditorsView from "@/views/admin/AuditorsView.vue";
-import HomeView from "@/components/common/HomeView.vue";
-import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import NavHeader from "@/views/NavHeader.vue";
-import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
-
-import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
-
-import PruebasBorrable from "@/components/PruebasBorrable.vue";
-import CompanyDetails from "@/components/admin/companies/companyDetails.vue";
-import CompanysCliTable from "@/components/admin/info/CompanysCliTable.vue";
-import ConciliationDetails from "@/components/admin/conciliations/ConciliationDetails.vue";
-
-
-import TablaContador from "@/components/clients/TablaContador.vue";
-import AssignCompanyDetails from "@/components/admin/crud/assign/AssignCompanyDetails.vue";
-import RemoveCompanyDetail from "@/components/admin/crud/assign/RemoveCompanyDetail.vue";
-import TablaAuditore from "@/components/clients/TablaAuditore.vue";
-import TablaEmpresas from "@/components/clients/TablaEmpresas.vue";
-import TablaConciliacionn from "@/components/clients/TablaConciliacionn.vue";
-import TableClientsAccount from "@/components/accountants/TableClientsAccount.vue";
-import TableConciliationAcconunt from "@/components/accountants/TableConciliationAcconunt.vue";
-import TableConciliationAud from "@/components/auditors/TableConciliationAud.vue";
-import TableClientsAud from "@/components/auditors/TableClientsAud.vue";
-import TableCompanyAccount from "@/components/accountants/TableCompanyAccount.vue";
-
+import authRoutes from "./authRoutes";
+import adminRoutes from "./adminRoutes";
+import commonRoutes from "./commonRoutes";
+import clientRoutes from "./clientRoutes";
+import accountantRoutes from "./accountantRoutes";
+import auditorRoutes from "./auditorRoutes";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -60,256 +20,35 @@ const router = createRouter({
       component: NavHeader,
       beforeEnter: (to, from, next) => {
         const token = Cookies.get('jwt')  
+        const userId = getIdByToken(token);
+
         if (!token) {
           next('/login')
         }
         else {
-          next()
+          if (userId.statu === 'Inactivo') {
+            alert(`Tu cuenta esta inactivo, no puedes acceder a Contaflow!`);
+            Cookies.remove('jwt');
+            next('login')
+          }
+          else {
+            fetch(`${VUE_APP_URL}/users/${userId}/`)
+            .then(res => res.json())
+            .then(json => {
+              json.is_temp_password ? next('/password') : next()
+            })
+          }
         }
       },
       children: [
-        {
-          path: "usuarios",
-          name: "usuarios",
-          component: ManageUsers,
-          beforeEnter: (to, from, next) => {
-            // tomar el token y el id 
-            const token = Cookies.get('jwt');
-            const userId = getIdByToken(token);
-
-            // en caso de que no alla un token en las cookies redirecciona al registro
-            if (!token) {
-              next('/login')
-            }
-            else {
-              fetch(`${VUE_APP_URL}/users/${userId}/`)
-              .then(res => res.json())
-              .then(json => {
-                // si la contraseña es temporal ir directamente al cambio de contraseña
-                if (json.is_temp_password){
-                  next('/password');
-                }
-                // si la contraseña no es temporal ir directamente a user
-                else {
-                  next();
-                }
-              })
-            }
-          }
-        },
-        {
-          path: 'contadores',
-          component: AccountantsView,
-          props: true
-        },
-        {
-          path: 'clientes',
-          component: ClientsView,
-          props: true
-        },
-        {
-        path: 'auditores',
-        component: AuditorsView,
-        props: true
-        },
-        {
-          path: 'contador/:id',
-          component: AccountantDetails,
-          props: true
-        },
-        {
-          path: '/cliente/conciliaciones_empresas/:id',
-          name: "ConciliationsCompanyInfo",
-          component: CompanysCliTable
-        },
-        {
-          path: 'cliente/:id',
-          component: ClientDetails,
-          props: true
-        },
-        {
-          path: 'auditor/:id',
-          component: AuditorDetail,
-          props: true
-        },
-        {
-          path: 'empresas',
-          component: CompaniesView
-        },
-        {
-          path: 'empresas/editar',
-          name: 'EditarEmpresa',
-          component: EditCompanies
-        },
-        {
-          path: 'conciliacion', 
-          name: 'EmpresaCon',
-          component: EmpresaCon
-        },
-        {
-          path: 'ListaCon',
-          name: 'ListaCon',
-          component: ListaCon
-        },
-        {
-          path: 'ExtractoCon',
-          name: 'ExtractoCon',
-          component: ExtractoCon
-        },
-        {
-          path: 'ResultadoCon',
-          name: 'ResultadoCon',
-          component: ResultadoCon
-        },
-        {
-          path: 'ModificarCon',
-          name: 'ModificarCon',
-          component: ModificarCon
-        },
-        
-        {
-          path: 'ListaReporte',
-          name: 'ListaReporte',
-          component: ListaReporte
-        },
-        {
-          path: 'ReporteAdmin',
-          name: 'ReporteAdmin',
-          component: ReporteAdmin
-        },
-
-        {
-          path: 'perfil',
-          name: 'Perfil',
-          component: PerfilView
-        },  
-        {
-          path: '/home',
-          name: 'Home',
-          component: HomeView
-        },
-        {
-          path: 'contador/clientes_contador/:role/:id',
-          name: 'ClientesContador',
-          component: ClientsAccAudTable
-        },
-        {
-          path: 'auditor/clientes_auditor/:role/:id',
-          name: 'ClientesAuditor',
-          component: ClientsAccAudTable
-        },
-        {
-          path: 'contador/clientes_contador/accountants/:role=:userId/detalles_cliente=:id',
-          name: 'ClientsDetailsAccountant',
-          component: AssignClientDetail
-        },
-        {
-          path: 'auditor/clientes_auditor/auditors/:role=:userId/detalles_cliente=:id',
-          name: 'ClientsDetailsAuditor',
-          component: AssignClientDetail
-        },
-        {
-          path: 'contador/clientes_contador/accountants/:role=:userId/remover_cliente=:id',
-          name: 'RemoveClientsAccountant',
-          component: RemoveClientDetail
-        },
-        {
-          path: 'auditor/clientes_auditor/auditors/:role=:userId/remover_cliente=:id',
-          name: 'Remove',
-          component: RemoveClientDetail
-        },
-        {
-          path: '/empresa=:id',
-          name: 'CompanyDetails',
-          component: CompanyDetails
-        },
-        {
-          path: 'cliente/conciliaciones_empresas/cliente=:id/remover_empresa=:companyId',
-          name: 'RemoveCompany',
-          component: RemoveCompanyDetail
-        },
-        {
-          path: 'cliente/conciliaciones_empresas/cliente=:id/detalles_empresa=:companyId',
-          name: 'AssingCompanyDetails',
-          component: AssignCompanyDetails
-        },
-        {
-          path: '/conciliation=:id',
-          name: 'ConciliationDetails',
-          component: ConciliationDetails
-        },
-        {
-          path: '/tabla_de_contador',
-          name:'TablaContador',
-          component: TablaContador
-        },
-        {
-          path: 'tabla_de_auditor',
-          name: TablaAuditore,
-          component: TablaAuditore
-        },
-        {
-          path: '/tabla_de_empresa',
-          name: 'TablaEMpresas',
-          component: TablaEmpresas
-        },
-        {
-          path: '/tabla_de_conciliaciones',
-          name: 'TablaConciliacionn',
-          component: TablaConciliacionn
-        },
-        {
-          path: '/lista_de_clientes',
-          name: 'TableClientsAccount',
-          component: TableClientsAccount
-        },
-        {
-          path: '/tabla_de_conciliacion',
-          name: 'TableConciliationAcconunt',
-          component: TableConciliationAcconunt
-        },
-        {
-          path: '/table_company',
-          name: 'TableCompanyAccount',
-          component: TableCompanyAccount
-        },
-        {
-          path: '/tabla_conciliacion_auditor',
-          name: 'TableConciliationAud',
-          component: TableConciliationAud
-        },
-        {
-          path: '/tabla_clientes_aud',
-          name: 'TableClientsAud',
-          component: TableClientsAud
-        }
-      ]
+        ...adminRoutes,
+        ...commonRoutes,
+        ...clientRoutes,
+        ...accountantRoutes,
+        ...auditorRoutes
+      ],
     },
-      {
-        path: "/login",
-        name: "Login",
-        component: LoginUser
-      },
-      
-      {
-        path: "/password",
-        component: ChangePasswordView,
-        // En caso de que no haya un token
-        beforeEnter: (to, from, next) => {
-          const token = Cookies.get('jwt')
-          if (!token) {
-            next('/login')
-          }
-          else {
-            next()
-          }        
-        }
-      },
-      {
-        path: "/PruebasBorrable",
-        name: "PruebasBorrable",
-        component: PruebasBorrable,
-      }
+      ...authRoutes,
   ],
 });
 
