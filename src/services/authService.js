@@ -2,10 +2,10 @@ import router from "@/router";
 import Cookies from "js-cookie";
 import { ref } from "vue";
 
-
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const urlLogin = `${VUE_APP_URL}/users/login/`;
 const urlChangePD = `${VUE_APP_URL}/users/password/`;
+const urlForgotPD = `${VUE_APP_URL}/users/request_password/`
 
 class AuthServices {
   data;
@@ -83,6 +83,30 @@ class AuthServices {
       this.errorMsg.value = err.message || 'Error al cambiar la contraseña';
       return false;
     }
+  }
+
+  recievedPasswordEmail = async (username) => {
+    const res = await fetch(urlForgotPD, {
+        method: 'PATCH',
+        body: JSON.stringify(username),
+        headers: {
+          'Content-Type':'application/json',
+      }
+    });
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.detail || res.statusText || 'Error al cambiar la contraseña');
+    }
+
+    const json = await res.json();
+    if (!json) throw new Error('No se recibió respuesta del servidor');
+
+    this.data.value = 'Contraseña cambiada exitosamente';
+    return true
+  }
+  catch (err) {
+    this.errorMsg.value = err.message || 'Error al cambiar la contraseña';
+    return false;
   }
 }
 

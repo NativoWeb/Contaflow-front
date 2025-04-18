@@ -2,12 +2,18 @@ import LoginUser from "@/views/auth/LoginView.vue";
 import ChangePasswordView from "@/views/auth/ChangePasswordView.vue";
 import Cookies from 'js-cookie';
 import getIdByToken from "@/hooks/getId";
+import ForgetPasswordView from "@/views/auth/forgetPasswordView.vue";
 
 const authRoutes = [
   {
     path: "/login",
     name: "Login",
     component: LoginUser
+  },
+  {
+    path: "/olvido_acceso/",
+    name: "ForgotPassword",
+    component: ForgetPasswordView
   },
   {
     path: "/password",

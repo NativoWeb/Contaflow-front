@@ -24,7 +24,7 @@
 
             <p v-if="errors.password" class="error-message">{{ errors.password }}</p>
   
-            <p><a href="#">¿Olvidó su contraseña?</a></p>
+            <p><router-link to="/olvido_acceso">¿Olvidó su contraseña?</router-link></p>
             <button class="btn-login" type="submit">Ingresar</button>
             <p v-if="errors.general" class="error-message">{{ errors.general }}</p>
           </form>
