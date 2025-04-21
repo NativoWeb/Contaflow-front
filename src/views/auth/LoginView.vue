@@ -16,7 +16,7 @@
   
             <label for="password">Contraseña</label>
           <div :class="['input-group', { 'error': errors.password }]">
-            <input :type="showPassword ? 'text' : 'password'" v-model="authUser.password" id="password" @input="validatePassword" />
+            <input :type="showPassword ? 'text' : 'password'" v-model="authUser.password" id="password" autocomplete="on" @input="validatePassword" />
             <button type="button" @click="togglePasswordVisibility" class="toggle-password">
               <img :src="showPassword ? eyeOpenIcon : eyeClosedIcon" alt="Toggle Password" class="password-icon" />
             </button>

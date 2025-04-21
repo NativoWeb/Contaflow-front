@@ -3,9 +3,11 @@ import Cookies from "js-cookie";
 import { ref } from "vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
+const id = localStorage.getItem('id')
 const urlLogin = `${VUE_APP_URL}/users/login/`;
 const urlChangePD = `${VUE_APP_URL}/users/password/`;
 const urlForgotPD = `${VUE_APP_URL}/users/request_password/`
+const urlPassword = `${VUE_APP_URL}/users/ChangePasswordUser/${id}/`
 
 class AuthServices {
   data;
@@ -108,6 +110,35 @@ class AuthServices {
     this.errorMsg.value = err.message || 'Error al cambiar la contraseña';
     return false;
   }
-}
+
+  ChangePasswordUser = async (ChangePasswordUser) => {
+    try{
+      const res = await fetch(urlPassword, {
+        method: 'PATCH',
+        body: JSON.stringify(ChangePasswordUser),
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': `Bearer ${this.getToken()}`
+        }
+      });
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.detail || res.statusText || 'Error al cambiar la contraseña');
+      }
+
+      const json = await res.json();
+      if (!json) throw new Error('No se recibió respuesta del servidor');
+
+      this.data.value = 'Contraseña cambiada exitosamente';
+      return true
+    }
+    catch (err) {
+      this.errorMsg.value = err.message || 'Error al cambiar la contraseña';
+      return false;
+    }
+
+    }
+  }
+
 
 export default AuthServices;

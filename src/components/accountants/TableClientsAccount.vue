@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    </div>
+
 
   <!-- Tabla -->
   <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
@@ -72,6 +72,7 @@
         </tr>
       </table>
     </div>
+  </div>
 </template>
 
 
