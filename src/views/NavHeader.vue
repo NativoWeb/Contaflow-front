@@ -133,9 +133,9 @@
             </router-link>
           </li>
             <li>
-            <router-link @click="toggleSidebar" to="/tabla_de_conciliacion" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/conciliaciones" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
-              <span >Mis Conciliaciones</span>
+              <span >Conciliaciones</span>
             </router-link>
             </li>
             <li>
