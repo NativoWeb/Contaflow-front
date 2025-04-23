@@ -8,7 +8,7 @@
   <div class="p-10 relative w-full max-w-3xl bg-white rounded-lg shadow-lg dark:bg-gray-800">
     <!-- Encabezado -->
     <div>
-      <h3 class="text-xl font-semibold text-[#2A5CAA]">Editar registro</h3>
+      <h3 class="text-xl font-semibold text-[#2A5CAA]">Modificar mi información</h3>
     </div>
 
     <!-- Contenido -->
