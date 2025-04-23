@@ -15,13 +15,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Nombres:</label>
-            <input v-model="editUser.first_name" @input="validateFirstName" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.first_name" @input="validateFirstName" type="text" class="text-left text-[#193368] w-full bg-white border border-gray-300 rounded-full py-2 px-3">
             <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Apellidos:</label>
-            <input v-model="editUser.last_name" @input="validateLastName" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.last_name" @input="validateLastName" type="text" class="text-left text-[#193368] w-full bg-white border border-gray-300 rounded-full py-2 px-3">
             <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name }}</p>
           </div>
           <div>
@@ -36,12 +36,12 @@
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Número de Celular:</label>
-            <input v-model="editUser.phone_number" @input="validatePhoneNumber" type="text" class="text-left text-[#193368] w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.phone_number" @input="validatePhoneNumber" type="text" class="text-left text-[#193368] w-full bg-white border border-gray-300 rounded-full py-2 px-3">
             <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
           </div>
           <div>
             <label class="block text-sm font-semibold text-[#193368]">Correo Electrónico:</label>
-            <input v-model="editUser.username" @input="validateEmail" type="email" class="text-left w-full text-[#193368] bg-gray-100 border border-gray-300 rounded-full py-2 px-3">
+            <input v-model="editUser.username" @input="validateEmail" type="email" class="text-left w-full text-[#193368] bg-white border border-gray-300 rounded-full py-2 px-3">
             <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
           </div>
         </div>
@@ -171,16 +171,26 @@
     }
   }
 
-  function toggleShowEditModal(){
-     // Si el modal se va a cerrar, reseteamos los datos
+  const clearErrors = () => {
+  errors.first_name = "";
+  errors.last_name = "";
+  errors.phone_number = "";
+  errors.username = "";
+};
+
+
+function toggleShowEditModal(){
   if (showEditModal.value) {
+    // El modal se va a cerrar, así que reseteamos todo
     editUser.first_name = props.user.first_name;
     editUser.last_name = props.user.last_name;
     editUser.phone_number = props.user.phone_number;
     editUser.username = props.user.username;
+    clearErrors(); // <--- Aquí limpiamos los errores
   }
-    showEditModal.value = !showEditModal.value;
-  }
+  showEditModal.value = !showEditModal.value;
+}
+
 
   // Estado de errores
   const errors = reactive({

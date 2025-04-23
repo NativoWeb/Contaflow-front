@@ -9,7 +9,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Nombres:
+          Nombres:<span class="text-red-500">*</span>
         </label>
         <input v-model="userForm.first_name" @input="validateFirstName"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
@@ -18,7 +18,7 @@
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Apellidos:
+          Apellidos:<span class="text-red-500">*</span>
         </label>
         <input v-model="userForm.last_name" @input="validateLastName"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
@@ -27,7 +27,7 @@
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Tipo de Identificación:
+          Tipo de Identificación:<span class="text-red-500">*</span>
         </label>
         <div>
           <select  v-model="userForm.id_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
@@ -43,7 +43,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Número de Identificación:
+          Número de Identificación:<span class="text-red-500">*</span>
         </label>
         <input v-model="userForm.id_number" @input="validateIdentificationNumber"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
@@ -52,7 +52,7 @@
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Número de celular:
+          Número de celular:<span class="text-red-500">*</span>
         </label>
         <input v-model="userForm.phone_number" @input="validatePhoneNumber"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
@@ -62,7 +62,7 @@
       </div>
       <div>
         <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Correo Electrónico:
+          Correo Electrónico:<span class="text-red-500">*</span>
         </label>
         <input v-model="userForm.username" @input="validateEmail"
           class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
