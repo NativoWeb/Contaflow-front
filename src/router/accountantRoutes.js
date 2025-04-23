@@ -1,6 +1,7 @@
 import TableClientsAccount from "@/components/accountants/TableClientsAccount.vue";
-import TableConciliationAcconunt from "@/components/accountants/TableConciliationAcconunt.vue";
 import TableCompanyAccount from "@/components/accountants/TableCompanyAccount.vue";
+import ConciliationsInfo from "@/components/accountants/ConciliationsInfo.vue";
+import CreateConciliations from "@/components/accountants/CreateConciliations.vue";
 
 const accountantRoutes = [
   {
@@ -9,9 +10,14 @@ const accountantRoutes = [
     component: TableClientsAccount
   },
   {
-    path: '/tabla_de_conciliacion',
+    path: '/conciliaciones',
     name: 'TableConciliationAcconunt',
-    component: TableConciliationAcconunt
+    component: ConciliationsInfo
+  },
+  {
+    path: 'conciliaciones/crear_conciliacion',
+    name: 'CreateConciliation',
+    component: CreateConciliations
   },
   {
     path: '/table_company',

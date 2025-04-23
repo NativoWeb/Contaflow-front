@@ -64,6 +64,9 @@
       </table>
   </div>
 </div>
+<div v-else>
+  <h4>No hay conciliaciones</h4>
+</div>
 </template>
 
 <script setup>
