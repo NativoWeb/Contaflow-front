@@ -144,8 +144,8 @@ const uri = `/companies/update/${props.infor.id}/`;
 const url = VUE_APP_URL + uri;
 
 const nitRegex = /^\d{7,8}-\d{1}$/;
-const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
-const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
+const nameRegex =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/;
+const addressRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.#-]+$/;
 
 const editCompany = reactive({
   name: props.infor.name,

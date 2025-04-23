@@ -60,7 +60,7 @@
             class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500"
             aria-describedby="sectorHelp"
           >
-            <option value="">Seleccione un sector</option>
+            <option value="">Seleccione un sector111</option>
             <option value="Comercio y Ventas">Comercio y Ventas</option>
             <option value="Restaurantes y Gastronomia">Restaurantes y Gastronomía</option>
             <option value="Construccion e Infraestructura">Construcción e Infraestructura</option>
@@ -126,14 +126,14 @@
         </div>
 
         <div>
-          <label for="id_type" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Tipo de Identificación:</label>
+          <label for="sector" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Tipo de Identificación:</label>
           <select
             v-model="companyForm.id_type"
-            id="id_type"
+            id="sector"
             class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500"
-            aria-describedby="idTypeHelp"
+            aria-describedby="sectorHelp"
           >
-            <option value="">Seleccione un tipo de identificación</option>
+            <option value="">Seleccione</option>
             <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
             <option value="Cedula_Extranjeria">Cédula de extranjería</option>
           </select>
@@ -238,8 +238,8 @@
   const errorResponse = ref(null);
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const nitRegex = /^\d{7,8}-\d{1}$/;
-  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;  // Permite letras, espacios y tildes
-  const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
+  const nameRegex =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/;  // Permite letras, espacios y tildes
+  const addressRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.#-]+$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
   const id_numberRegex = /^[0-9]{7,10}$/;  // Solo números, minimo 7 y máximo 10 caracteres
   const phoneRegex = /^[0-9]{10,10}$/;  // Solo números, máximo 10 caracteres
@@ -253,6 +253,7 @@
     email: "",
     first_name: "",
     last_name: "",
+    id_type: 'Seleccione una opción',
     id_number: "",
     phone_number: "",
 
