@@ -36,6 +36,7 @@
   >
                 <li><router-link @click="toggleSidebar" to="/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
                 <li><router-link @click="toggleSidebar" to="/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
+                <li><router-link @click="toggleSidebar" to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
               </ul>
             </li>
 
@@ -47,9 +48,23 @@
             </li>
 
             <li>
+            <router-link @click="toggleSidebar" to="/BancosERPs" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/BancoErps.svg" alt="Bancos Img">
+              <span >Bancos y ERPs</span>
+            </router-link>
+            </li>
+
+            <li>
             <router-link @click="toggleSidebar" to="/conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Conciliacion Img">
               <span >Conciliaciones</span>
+            </router-link>
+            </li>
+
+            <li>
+            <router-link @click="toggleSidebar" to="/ReporteEmpre" class="flex gap-2 justify-center items-center">
+              <img src="@/assets/informe.svg" alt="Informe">
+              <span >Reportes financieros y auditoría</span>
             </router-link>
             </li>
           
@@ -132,9 +147,9 @@
             </router-link>
           </li>
             <li>
-            <router-link @click="toggleSidebar" to="/conciliaciones" class="flex gap-2 justify-center items-center">
+            <router-link @click="toggleSidebar" to="/tabla_de_conciliacion" class="flex gap-2 justify-center items-center">
               <img src="@/assets/conciliacion.svg" alt="Cuenta">
-              <span >Conciliaciones</span>
+              <span >Mis Conciliaciones</span>
             </router-link>
             </li>
             <li>

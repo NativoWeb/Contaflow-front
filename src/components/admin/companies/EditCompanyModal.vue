@@ -22,7 +22,7 @@
           <div>
             <label class="text-[#193368] mb-1 text-lg font-semibold">Razón Social</label>
             <input v-model="editCompany.name" @input="validateName" type="text" 
-              class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
           </div>
 
@@ -30,7 +30,7 @@
           <div>
             <label class="text-[#193368] mb-1 text-lg font-semibold">NIT</label>
             <input v-model="editCompany.nit" type="text" @input="validateNit"
-              class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <p v-if="errors.nit" class="text-red-500 text-xs mt-1">{{ errors.nit }}</p>
           </div>
 
@@ -38,7 +38,7 @@
           <div>
             <label class="text-[#193368] mb-1 text-lg font-semibold">Dirección</label>
             <input v-model="editCompany.address" @input="validateAddress" type="text"
-              class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <p v-if="errors.address" class="text-red-500 text-xs mt-1">{{ errors.address }}</p>
           </div>
 
@@ -46,7 +46,7 @@
           <div>
             <label class="text-[#193368] mb-1 text-lg font-semibold">Sector Económico</label>
             <select v-model="editCompany.sector"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="">Seleccione un sector</option>
               <option value="Comercio y Ventas">Comercio y Ventas</option>
               <option value="Restaurantes y Gastronomia">Restaurantes y Gastronomía</option>

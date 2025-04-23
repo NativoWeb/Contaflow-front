@@ -8,7 +8,7 @@
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div>
-          <label for="nit" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">NIT:</label>
+          <label for="nit" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">NIT:<span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.nit"
             @input="validateNit"
@@ -22,7 +22,7 @@
         </div>
 
         <div>
-          <label for="name" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Razón Social:</label>
+          <label for="name" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Razón Social:<span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.name"
             @input="validateName"
@@ -36,7 +36,7 @@
         </div>
 
         <div>
-          <label for="address" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Dirección:</label>
+          <label for="address" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Dirección:<span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.address"
             @input="validateAddress"
@@ -53,7 +53,7 @@
       <!-- Segunda fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
         <div>
-          <label for="sector" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Sector económico:</label>
+          <label for="sector" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Sector económico:<span class="text-red-500">*</span></label>
           <select
             v-model="companyForm.sector"
             id="sector"
@@ -75,7 +75,7 @@
         </div>
 
         <div>
-          <label for="email" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Correo Empresarial:</label>
+          <label for="email" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Correo Empresarial:<span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.email"
             @input="validateEmail"
@@ -98,7 +98,7 @@
       <!-- Primera fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div>
-          <label for="first_name" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Nombres:</label>
+          <label for="first_name" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Nombres:<span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.first_name"
             @input="validateFirstName"
@@ -112,7 +112,7 @@
         </div>
 
         <div>
-          <label for="last_name" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Apellidos:</label>
+          <label for="last_name" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Apellidos:<span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.last_name"
             @input="validateLastName"
@@ -126,7 +126,7 @@
         </div>
 
         <div>
-          <label for="sector" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Tipo de Identificación:</label>
+          <label for="sector" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Tipo de Identificación:<span class="text-red-500">*</span></label>
           <select
             v-model="companyForm.id_type"
             id="sector"
@@ -143,8 +143,7 @@
       <!-- Segunda fila -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
         <div>
-          <label for="id_number" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Número de Identificación:</label>
-          <input
+          <label for="id_number" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Número de Identificación: <span class="text-red-500">*</span></label>          <input
             v-model="companyForm.id_number"
             @input="validateIdentificationNumber"
             id="id_number"
@@ -157,7 +156,7 @@
         </div>
 
         <div>
-          <label for="phone_number" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Número de celular:</label>
+          <label for="phone_number" class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Número de celular: <span class="text-red-500">*</span></label>
           <input
             v-model="companyForm.phone_number"
             @input="validatePhoneNumber"
