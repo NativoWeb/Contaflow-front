@@ -17,7 +17,7 @@
           <div class="grid grid-cols-1 gap-5 mb-5">
             <div>
               <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-                Anterior Contraseña:
+                Contraseña actual:
               </label>
               <div class="flex w-full">
                 <input class="flex-1 bg-[#F5F5F5] text-gray-700 border border-gray-300 py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500 rounded-l-full"
@@ -99,9 +99,10 @@
         <div class="p-6">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-bold text-green-600">Éxito</h3>
-            <button  class="text-gray-500 hover:text-gray-700">
-              &times;
-            </button>
+            <button @click="isEditedToggle" class="text-gray-500 hover:text-gray-700">
+  &times;
+</button>
+
           </div>
           <div class="mb-6">
             <p class="text-gray-700">{{ success }}</p>
@@ -120,7 +121,7 @@
   </template>
   
   <script setup>
-  import { reactive, ref } from 'vue';
+  import { reactive, ref , computed } from 'vue';
   import AuthServices from '@/services/authService';
 
 
@@ -133,14 +134,6 @@
   const showOldPassword = ref(false);
   const showNewPassword = ref(false);
   const showRepeatPassword = ref(false);
-
-  defineProps({
-  user: {
-    type: Object,
-    required: true
-  }
-});
-
 
   const err = ref(false);
 const success = ref(false);
@@ -165,43 +158,85 @@ const isLoading = ref(false);
   function toggleShowRepeatPassword() {
     showRepeatPassword.value = !showRepeatPassword.value;
   }
+
+  // funcion para limpiar el formulario
+  function resetPasswordForm() {
+  password.old_password = "";
+  password.new_password = "";
+  password.confirm_password = "";
+  showOldPassword.value = false;
+  showNewPassword.value = false;
+  showRepeatPassword.value = false;
+}
+
   
   // Función para abrir/cerrar el modal
+  // function toggleShowPasswordModal() {
+  //   showPasswordModal.value = !showPasswordModal.value;
+  // }
   function toggleShowPasswordModal() {
-    showPasswordModal.value = !showPasswordModal.value;
+  showPasswordModal.value = !showPasswordModal.value;
+  if (!showPasswordModal.value) {
+    resetPasswordForm(); // limpiamos el formulario al cerrarlo
   }
-  
+}
+
+
+  const hasNoChange = computed(() => {
+  return (
+    !password.old_password.trim() ||
+    !password.new_password.trim() ||
+    !password.confirm_password.trim()
+  );
+});
+
+const isEditedToggle = () => {
+    isLoading.value = false;
+    success.value = !success.value;
+    if (success.value == false){
+      location.reload()
+    }
+  }
+
   // Función para manejar el cambio de contraseña
-    async function btnChangePassword() {
-        if (password.new_password !== password.confirm_password) {
-            err.value = "Las contraseñas no coinciden.";
-            return;
-        }
-
-        // Limpiamos los estados de error y éxito antes de realizar la solicitud
-        err.value = false;
-        success.value = false;
-        isLoading.value = true;
-
-        try {
-            // Hacemos la solicitud para cambiar la contraseña
-            const successResult = await ChangePassword.ChangePasswordUser(password);
-
-            if (successResult) {
-                success.value = "Contraseña cambiada exitosamente."; // Actualizamos el mensaje de éxito
-            } else {
-                err.value = ChangePassword.errorMsg.value || "Error al cambiar la contraseña"; // Actualizamos el mensaje de error
-            }
-        } catch (error) {
-            err.value = error.message || "Ocurrió un error inesperado";
-        } finally {
-            isLoading.value = false; // Desactivamos el loading
-        }
+  async function btnChangePassword() {
+    // Primero, validamos si las contraseñas coinciden
+    if (password.new_password !== password.confirm_password) {
+      err.value = "Las contraseñas no coinciden.";
+      return;
+    }
+    if (password.old_password == password.new_password){
+      err.value = "La nueva contraseña debe ser diferente a la anterior."
     }
 
 
-  function closeModal() {
-  err.value = false;
-}
+    // Limpiamos los estados de error y éxito antes de realizar la solicitud
+    err.value = false;
+    success.value = false;
+    isLoading.value = true;
+
+    try {
+      // Hacemos la solicitud para cambiar la contraseña
+      const successResult = await ChangePassword.ChangePasswordUser(password);
+
+      if (successResult) {
+        success.value = "Contraseña cambiada exitosamente."; // Actualizamos el mensaje de éxito
+      } else {
+        err.value = ChangePassword.errorMsg.value || "Error al cambiar la contraseña"; // Actualizamos el mensaje de error
+      }
+      
+    } catch (error) {
+      err.value = error.message || "Ocurrió un error inesperado";
+    } finally {
+      isLoading.value = false; // Desactivamos el loading
+    }
+  }
+
+    function closeModal() {
+      err.value = false;
+    }
+
+
+
   </script>
   

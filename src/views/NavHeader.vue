@@ -36,7 +36,6 @@
   >
                 <li><router-link @click="toggleSidebar" to="/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
                 <li><router-link @click="toggleSidebar" to="/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
-                <li><router-link @click="toggleSidebar" to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
               </ul>
             </li>
 

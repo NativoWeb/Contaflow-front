@@ -39,8 +39,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="data.clients.length > 0">
-          <tr v-for="user in data.clients_data" :key="user.id"  @click="redirectToRemove(user.id)"
+        <tbody v-if="filteredClients.length > 0">
+          <tr v-for="user in filteredClients" :key="user.id"  @click="redirectToRemove(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
             <td class="px-6 py-4">{{ user.username}}</td>
@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, computed } from 'vue';
   import { useRoute } from 'vue-router';
   import UserService from '@/services/userService';
   import AssignClientsModal from '../crud/assign/AssignClientsModal.vue';
@@ -86,10 +86,30 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
+
+  // Agregar propiedades faltantes
+  const clientList = ref('Clientes'); // Asumiendo que esta es la lista que deseas mostrar como título
+  const searchQuery = ref(''); // Este es el modelo para el campo de búsqueda
   
+   // Filtrar los clientes según la búsqueda
+   const filteredClients = computed(() => {
+    if (!data.value || !searchQuery.value) return data.value.clients_data || [];
+    return data.value.clients_data.filter(user => {
+      return user.first_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+             user.last_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+             user.username.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+             user.id_number.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+             user.status.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+             user.phone_number.toLowerCase().includes(searchQuery.value.toLowerCase());
+    });
+  });
+
+
   const redirectToRemove = id => {
     router.push(`${userRole}=${userId}/remover_cliente=${id}`)
   }
+
+
 
   onMounted(async () => {
     isLoading.value = true;

@@ -181,6 +181,13 @@
   }
 
   function toggleShowEditModal(){
+    // Si el modal se va a cerrar, reseteamos los datos
+  if (showEditModal.value) {
+    editUser.first_name = props.user.first_name;
+    editUser.last_name = props.user.last_name;
+    editUser.phone_number = props.user.phone_number;
+    editUser.username = props.user.username;
+  }
     showEditModal.value = !showEditModal.value;
   }
 

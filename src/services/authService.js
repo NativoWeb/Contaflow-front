@@ -111,11 +111,11 @@ class AuthServices {
     return false;
   }
 
-  ChangePasswordUser = async (ChangePasswordUser) => {
+  ChangePasswordUser = async (passwordData) => {
     try{
       const res = await fetch(urlPassword, {
         method: 'PATCH',
-        body: JSON.stringify(ChangePasswordUser),
+        body: JSON.stringify(passwordData),
         headers: {
           'Content-Type':'application/json',
           'Authorization': `Bearer ${this.getToken()}`

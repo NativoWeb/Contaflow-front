@@ -10,7 +10,7 @@
 						<label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2" for="newPassword">Nueva
 							Contraseña</label>
 						<div class="flex w-full">
-							<input class="flex-1 h-10 bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-l-full py-1 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+							<input autocomplete="on" class="flex-1 h-10 bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-l-full py-1 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
 								v-model="password.new_password" :type="showNewPassword ? 'text' : 'password'" id="newPassword">
 							<button class="w-12 flex items-center justify-center bg-[#08245B] text-white rounded-r-full" type="button"
 								@click="toggleShowNewPassword">
@@ -23,7 +23,7 @@
 					<div class="flex flex-col w-full">
 						<label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2" for="confirmPassword">Confirmar Contraseña</label>
 						<div class="flex w-full">
-							<input class="flex-1 h-10 bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-l-full py-1 px-4 focus:outline-none focus:bg-white focus:border-gray-500"	
+							<input autocomplete="on" class="flex-1 h-10 bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-l-full py-1 px-4 focus:outline-none focus:bg-white focus:border-gray-500"	
 							v-model="password.confirm_password"
 							:type="showRepeatPassword ? 'text' : 'password'" id="confirmPassword">
 							<button class="w-12 flex items-center justify-center bg-[#08245B] text-white rounded-r-full" type="button"

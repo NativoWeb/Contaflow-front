@@ -2,8 +2,8 @@
   <div class="w-full mt-10">
     <h3 class="text-2xl font-semibold text-[#2A5CAA] mb-6 border-b pb-2">🧑‍💼 Empleados Asociados</h3>
 
-    <div v-if="loading" class="text-gray-500 mt-3 text-sm text-center">Cargando clientes...</div>
-    <div v-if="error" class="text-red-500 mt-3 text-sm text-center">Error: {{ error }}</div>
+    <!-- <div v-if="loading" class="text-gray-500 mt-3 text-sm text-center">Cargando clientes...</div>
+    <div v-if="error" class="text-red-500 mt-3 text-sm text-center">Error: {{ error }}</div> -->
 
     <div v-if="employees" class="overflow-x-auto shadow rounded-lg">
       <table class="min-w-full text-sm text-left text-gray-700 bg-white border border-gray-200">
@@ -32,7 +32,7 @@
 <script setup>
 
   const props = defineProps({
-    employees: Array
+    employees: Array,
   })
 
   console.log(props.employees)

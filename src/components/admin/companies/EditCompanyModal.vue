@@ -63,7 +63,7 @@
 
           <!-- Botones -->
           <div class="flex justify-center space-x-3 dark:border-gray-700">
-            <button @click="toggleShowEditModal"
+            <button @click="toggleShowEditModal" type="submit"
               class="px-5 py-2.5 text-[#193368] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 
                 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 
                 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -187,6 +187,13 @@ const isEditedToggle = () => {
 };
 
 const toggleShowEditModal = () => {
+  // Si el modal se va a cerrar, reseteamos los datos
+  if (showEditModal.value) {
+    editCompany.name = props.infor.name;
+    editCompany.nit = props.infor.nit;
+    editCompany.address = props.infor.address;
+    editCompany.sector = props.infor.sector;
+  }
   showEditModal.value = !showEditModal.value;
 };
 

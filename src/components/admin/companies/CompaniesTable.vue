@@ -42,9 +42,7 @@
         <tr v-else colspan="5" class="flex flex-col justify-center">
           <td class="ml-2 my-6">No se encontraron empresas registradas.</td>
         </tr>
-        <tr v-if="errors" colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">Ocurrió un error.</td>
-        </tr>
+       
       </table>
     </div>
 </template>

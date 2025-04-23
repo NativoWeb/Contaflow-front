@@ -69,8 +69,8 @@
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
       <EditModal :user="data" :title="'Actualizar Auditor'"/>
-      <DeleteModal :id="data.id"/>
-      <StatusModal :id="data.id" :status="data.status"/>
+      <DeleteModal :id="String(data.id)" />
+      <StatusModal :id="String(data.id)" :status="data.status" />
       <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
       <button @click="goToClientDetails" class="btn-action">Clientes</button>
   </div>
@@ -112,6 +112,9 @@
   const uri = `/auditors/${userId}/`;
   const urlApi = VUE_APP_URL + uri;
 
+  defineProps(['id']);
+
+  
   onMounted(async () => {
     isLoading.value = true;
     try{

@@ -39,7 +39,7 @@
 
         <!-- Botón Cambiar Contraseña (solo en escritorio) -->
         <div class="hidden md:flex items-end">
-          <ChangePasswordPerfil :user="data" />
+          <ChangePasswordPerfil />
         </div>
 
         <!-- Tercera fila -->
@@ -57,7 +57,7 @@
       <!-- Botones en móvil (se muestran debajo de todo) -->
       <div class="mt-4 flex flex-col gap-4 md:hidden">
         <EditPerfilModal :user="data" />
-        <ChangePasswordPerfil :user="data" />
+        <ChangePasswordPerfil />
       </div>
     </div>
 

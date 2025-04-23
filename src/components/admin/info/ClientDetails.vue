@@ -69,8 +69,10 @@
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
     <EditModal :user="data" :title="'Actualizar Cliente'"/>
-    <DeleteModal :id="data.id"/>
-    <StatusModal :id="data.id" :status="data.status"/>
+    <!-- <DeleteModal :id="data.id"/>
+    <StatusModal :id="data.id" :status="data.status"/> -->
+    <DeleteModal :id="String(data.id)" />
+    <StatusModal :id="String(data.id)" :status="data.status" />
     <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
     <button class="btn-action" @click="goToConCompTable(data.id)">Empresas y Conciliaciones</button>
   </div>
@@ -106,6 +108,9 @@ import router from '@/router';
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const uri = `/clients/${userId}/`
   const urlApi = VUE_APP_URL + uri;
+
+  defineProps(['id']);
+
 
   const goToConCompTable = (id) => {
     router.push(`conciliaciones_empresas/${id}`)

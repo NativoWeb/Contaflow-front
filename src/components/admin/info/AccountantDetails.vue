@@ -1,4 +1,6 @@
 <template>
+<!-- CONTENEDOR RAÍZ PARA HEREDAR ATRIBUTOS -->
+<div v-bind="$attrs">
   <!-- Título de la página -->
   <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 shadow-md text-center md:text-left" style="border-radius: 6px 6px 0 0;">
     Información del usuario
@@ -69,8 +71,9 @@
   <!-- Sección de botones -->
   <div class="flex flex-col gap-6 ml-2 p-8">
       <EditModal :user="data" :title="'Actualizar Contador'"/>
-      <DeleteModal :id="data.id"/>
-      <StatusModal :id="data.id" :status="data.status"/>
+      <DeleteModal :id="String(data.id)" />
+      <!-- <StatusModal  :id="data.id" :status="data.status"/> -->
+      <StatusModal  :id="String(data.id)" :status="data.status"/>
       <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
       <button @click="goToClientDetails" class="btn-action">Clientes</button>
   </div>
@@ -78,15 +81,15 @@
 
 
 <!-- Modal para asignar empresa -->
-<div v-if="isAssignModalOpen" 
+<!-- <div v-if="isAssignModalOpen" 
    class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 p-4">
 <div class="p-10 relative w-[80%] bg-white rounded-lg shadow-lg dark:bg-gray-800">
-  <!-- Encabezado -->
+
   <div>
     <h3 class="text-xl font-semibold text-[#2A5CAA]">Asignar empresa</h3>
   </div>
 
-  <!-- Contenedor de las tablas con flexbox -->
+
 <div class="tables-container flex flex-wrap gap-4 p-2">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
       <h2 class="text-xl font-bold text-[#2A5CAA] p-3">Empresas</h2>
@@ -139,7 +142,7 @@
   </div>
 </div>
 </div>
-</div>
+</div> -->
 </div>
   
   <div v-if="err" class="flex justify-center items-start">
@@ -150,6 +153,7 @@
 <!-- cargador -->
 <div v-if="isLoading" class="flex justify-center items-start">
   <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+</div>
 </div>
 </template>
 
@@ -180,6 +184,7 @@
   import UserService from '@/services/userService';
   import { onMounted, ref } from "vue";
   import router from '@/router';
+  
   
   const getUser = new UserService();
   const userId = useRoute().params.id;
