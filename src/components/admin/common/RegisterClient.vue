@@ -4,11 +4,13 @@
     <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 text-center md:text-left rounded-t-lg">
       Registro de Empresas
     </h2>
-    
 
 
-<div class="grid md:grid-cols-3 md:gap-6">
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="m-auto w-[80%] flex flex-col">
+      <div>
+
+     
+      <div class="relative z-0 w-full mb-5 group">
       <input 
         v-model="clientForm.nit"
         @input="validateNit"
@@ -49,7 +51,6 @@
       <label for="floating_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Razón Social *</label>
       <p v-if="error.name" class="text-red-500 text-xs mt-1">{{ error.name }}</p>
     </div>
-  </div>
 
   <!-- Fila: Dirección + Sector Económico -->
   <div class="grid md:grid-cols-2 md:gap-6">
@@ -89,52 +90,50 @@
       <label for="floating_sector" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sector económico *</label>
     </div>
   </div>
-  
-  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+  </div>
 
+  <div>
 
-
-  <h2 class="text-lg font-bold text-[#2A5CAA] bg-white p-3 text-center md:text-left">
-  Información del director ejecutivo
-</h2>
-
-  <!-- Primera fila -->
-  <div class="grid md:grid-cols-3 md:gap-6">
+    <h2 class="text-lg font-bold text-[#2A5CAA]  p-3 text-center md:text-left">
+      Información del director ejecutivo
+    </h2>
+    
+    <!-- Primera fila -->
     <div class="relative z-0 w-full mb-5 group">
       <input 
-        v-model="clientForm.first_name"
-        @input="validateFirstName"
-        type="text" 
-        id="floating_first_name" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
-        required 
+      v-model="clientForm.first_name"
+      @input="validateFirstName"
+      type="text" 
+      id="floating_first_name" 
+      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+      placeholder=" " 
+      required 
       />
       <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombres *</label>
       <p v-if="error.first_name" class="text-red-500 text-xs mt-1">{{ error.first_name }}</p>
     </div>
-
+    
     <div class="relative z-0 w-full mb-5 group">
       <input 
-        v-model="clientForm.last_name"
-        @input="validateLastName"
+      v-model="clientForm.last_name"
+      @input="validateLastName"
         type="text" 
         id="floating_last_name" 
         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
         placeholder=" " 
         required 
-      />
-      <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Apellidos *</label>
-      <p v-if="error.last_name" class="text-red-500 text-xs mt-1">{{ error.last_name }}</p>
-    </div>
-
-    <div class="relative z-0 w-full mb-5 group">
-      <select
+        />
+        <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Apellidos *</label>
+        <p v-if="error.last_name" class="text-red-500 text-xs mt-1">{{ error.last_name }}</p>
+      </div>
+      
+      <div class="relative z-0 w-full mb-5 group">
+        <select
         v-model="clientForm.id_type"
         id="floating_id_type"
         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         required
-      >
+        >
         <option value="" disabled selected></option>
         <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
         <option value="Cedula_Extranjeria">Cédula de extranjería</option>
@@ -142,56 +141,57 @@
       <label for="floating_id_type" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tipo de Identificación *</label>
     </div>
   </div>
-
+  
   <!-- Segunda fila -->
   <div class="grid md:grid-cols-3 md:gap-6">
     <div class="relative z-0 w-full mb-5 group">
       <input 
-        v-model="clientForm.id_number"
-        @input="validateIdentificationNumber"
-        type="text" 
-        id="floating_id_number" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
-        required 
+      v-model="clientForm.id_number"
+      @input="validateIdentificationNumber"
+      type="text" 
+      id="floating_id_number" 
+      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+      placeholder=" " 
+      required 
       />
       <label for="floating_id_number" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Número de Identificación *</label>
       <p v-if="error.id_number" class="text-red-500 text-xs mt-1">{{ error.id_number }}</p>
     </div>
-
+    
     <div class="relative z-0 w-full mb-5 group">
       <input 
-        v-model="clientForm.phone_number"
-        @input="validatePhoneNumber"
-        type="text" 
-        id="floating_phone_number" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
-        required 
+      v-model="clientForm.phone_number"
+      @input="validatePhoneNumber"
+      type="text" 
+      id="floating_phone_number" 
+      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+      placeholder=" " 
+      required 
       />
       <label for="floating_phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Número de celular *</label>
       <p v-if="error.phone_number" class="text-red-500 text-xs mt-1">{{ error.phone_number }}</p>
     </div>
-
+    
     <div class="relative z-0 w-full mb-5 group flex items-end">
       <button
-        :disabled="isFormInvalid"
-        type="submit"
-        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        :class="{
-          'hover:bg-blue-800': !isFormInvalid,
-          'cursor-not-allowed bg-blue-400': isFormInvalid
-        }"
+      :disabled="isFormInvalid"
+      type="submit"
+      class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      :class="{
+        'hover:bg-blue-800': !isFormInvalid,
+        'cursor-not-allowed bg-blue-400': isFormInvalid
+      }"
       >
-        Añadir Empresa
-      </button>
-    </div>
+      Añadir Empresa
+    </button>
   </div>
-  </form>
-  
-  <!-- Modal de carga -->
-  <div v-if="isLoading" class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0" :class="{'scale-100': isLoading}">
-    <div class="relative w-full max-w-lg p-6 transform transition-all duration-600 ease-in-out">
+</div>
+</div>
+</form>
+
+<!-- Modal de carga -->
+<div v-if="isLoading" class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0" :class="{'scale-100': isLoading}">
+  <div class="relative w-full max-w-lg p-6 transform transition-all duration-600 ease-in-out">
       <div class="relative dark:bg-gray-800">
         <div class="p-8 text-center space-y-4">
           <img src="@/assets/loader.svg" alt="Cargando...">
@@ -199,7 +199,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Modal de éxito -->
   <div v-if="isResponse" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
     <div class="bg-white p-6 shadow-lg w-96 relative rounded-tl-3xl">
@@ -210,7 +210,7 @@
       </p>
     </div>
   </div>
-
+  
   <!-- Modal de error -->
   <div v-if="isError" class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0" :class="{'scale-100': isError}">
     <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
@@ -231,7 +231,7 @@
 <script setup>
   import UserService from "@/services/userService";
   import { computed, reactive, ref } from "vue";
-
+  
   const sendEmailService = new UserService();
   const isLoading = ref(false);
   const isResponse = ref(false);
