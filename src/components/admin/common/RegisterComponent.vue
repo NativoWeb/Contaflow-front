@@ -262,10 +262,8 @@
     modalVisible.value = true;
   }
 
-
   function addUser() {
     if (isFormInvalid.value) return; // No hacer nada si el formulario está inválido
     sendEmailService.sendEmail(props.apiUrl, userForm, toggle, 'POST');
   }
 </script>
-
