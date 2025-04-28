@@ -155,6 +155,7 @@
 </template>
 
 <script setup>
+
   import { ref,  onMounted } from 'vue'
   import UserService from '@/services/userService';
   import router from "@/router";
@@ -164,7 +165,6 @@
   const isLoading = ref(false);
   const data = ref(null);
   const err = ref(null);
-  
   const searchQuery = ref('');
 
   const props = defineProps({
@@ -206,7 +206,4 @@
       user.status?.toLowerCase().includes(query)
     );
   });
-
 </script>
-  
-  

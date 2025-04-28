@@ -14,7 +14,7 @@
   </div>
 
   <!-- Contenido principal -->
-  <div v-if="data" class=" w-[1529px] m-auto bg-white rounded-xl shadow-sm overflow-hidden">
+  <div v-if="data" class="w-[1529px] m-auto bg-white rounded-xl shadow-sm overflow-hidden">
     <!-- Encabezado con título y búsqueda -->
     <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white border-b border-gray-100">
       <div>
@@ -155,21 +155,23 @@
 
 <script setup>
   import UserService from '@/services/userService';
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
 
   const isLoading = ref(false);
   const data = ref("");
   const err = ref("");
   const getUser = new UserService();
+  const id = localStorage.getItem('id')
   const VUE_APP_URL = process.env.VUE_APP_URL;
-
-  console.log(VUE_APP_URL)
+  const url = `${VUE_APP_URL}/accountants/${id}/`;
+  const searchQuery = ref('');
 
   onMounted(async () => {
     isLoading.value = false;
     try{
-      await getUser.getUserById();
+      await getUser.getUserById(url);
       data.value = getUser.getData().value;
+      console.log(data.value)
     }
     catch(error){
       err.value = getUser.getError().value;
@@ -177,5 +179,19 @@
     finally{
       isLoading.value = false;
     }
+  })
+
+  const filteredData = computed(() => {
+    if (!data.value) return [];
+
+    const query = searchQuery.value.toLowerCase();
+
+    return data.value.filter(user => 
+      `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) || 
+      user.id_number?.toString().toLowerCase().includes(query) ||
+      user.username?.toLowerCase().includes(query) ||
+      user.phone_number?.toString().toLowerCase().includes(query) ||
+      user.status?.toLowerCase().includes(query)
+    )
   })
 </script>
