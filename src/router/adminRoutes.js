@@ -13,8 +13,8 @@ import ListaReporte from "@/components/admin/ListaReporte.vue";
 import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
-import CompanysCliTable from "@/components/admin/info/CompanysCliTable.vue";
 import ConciliationDetails from "@/components/admin/conciliations/ConciliationDetails.vue";
+import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
 
 const adminRoutes = [
   // registro y tabla de usuarios y empresas
@@ -96,11 +96,6 @@ const adminRoutes = [
     name: 'ClientesAuditor',
     component: ClientsAccAudTable
   },
-  {
-    path: '/cliente/conciliaciones_empresas/:id',
-    name: "ConciliationsCompanyInfo",
-    component: CompanysCliTable
-  },
   // relaciones detalles, asignaciones y remover
   {
     path: 'contador/clientes_contador/accountants/:role=:userId/detalles_cliente=:id',
@@ -111,6 +106,16 @@ const adminRoutes = [
     path: 'auditor/clientes_auditor/auditors/:role=:userId/detalles_cliente=:id',
     name: 'ClientsDetailsAuditor',
     component: AssignClientDetail
+  },
+  {
+    path: 'contador/clientes_contador/accountants/:role=:userId/remover_cliente=:id',
+    name: 'ClientsRemoveAccountant',
+    component: RemoveClientDetail
+  },
+  {
+    path: 'contador/clientes_contador/auditors/:role=:userId/remover_cliente=:id',
+    name: 'ClientsRemoveAuditors',
+    component: RemoveClientDetail
   },
   // conciliaciones
   {

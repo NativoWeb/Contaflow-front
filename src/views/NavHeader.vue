@@ -4,170 +4,261 @@
       <div class="close-container none">
         <button class="close" @click="toggleSidebar">X</button>
       </div>
-      <ul v-if="data">
-        <li>
-          <div id="profile">
-            <img class="w-20 h-20" src="@/assets/img_usuario.svg" alt="foto usuario">
-            <span>{{ data.first_name }}</span>
-            <span>{{ data.role }}</span>
+      <ul v-if="data" class="space-y-1">
+  <!-- User Profile -->
+  <li class="px-4 py-4 border-b border-gray-200">
+    <div class="flex items-center space-x-3">
+      <img class="w-12 h-12 rounded-full object-cover" src="@/assets/img_usuario.svg" alt="User profile">
+      <div>
+        <p class="font-medium text-gray-900">{{ data.first_name }}</p>
+        <p class="text-sm text-gray-500 capitalize">{{ data.role.toLowerCase() }}</p>
+      </div>
+    </div>
+  </li>
+
+  <!-- Main Navigation -->
+  <div class="px-2 py-3 space-y-1">
+    <!-- Common Items -->
+    <li>
+      <router-link 
+        @click="toggleSidebar" 
+        to="/home" 
+        class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+        active-class="bg-blue-50 text-blue-600 font-medium"
+      >
+        <img src="@/assets/home.svg" alt="Home" class="w-5 h-5 mr-3">
+        <span class="text-sm">Página principal</span>
+      </router-link>
+    </li>
+
+    <!-- ADMIN Content -->
+    <template v-if="data.role == 'ADMIN'">
+      <!-- Dropdown Menu -->
+      <li>
+        <button 
+          type="button" 
+          class="flex items-center justify-between w-full px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          @click="toggleDropdown"
+        >
+          <div class="flex items-center">
+            <img src="@/assets/usuario.svg" alt="Users" class="w-5 h-5 mr-3">
+            <span class="text-sm">Gestión de usuarios</span>
           </div>
-        </li>
-        
-        
-        <div class="list-container">
+          <svg 
+            class="w-4 h-4 transition-transform" 
+            :class="{ 'rotate-180': isOpenDropdown }" 
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <ul 
+          class="pl-4 mt-1 space-y-1 overflow-hidden transition-all duration-300"
+          :class="{ 'max-h-0': !isOpenDropdown, 'max-h-40': isOpenDropdown }"
+        >
           <li>
-            <router-link @click="toggleSidebar" to="/home" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/home.svg" alt="Home Img">
-              <span>Página principal</span>
-            </router-link>
-          </li>
-
-          <!-- Componentes del Administrador -->
-          <div v-if="data.role == 'ADMIN'" class="flex flex-col justify-center items-start gap-4">
-            <li class="">
-              <button type="button" class="flex justify-center items-center transition duration-75" @click="toggleDropdown">
-                <img src="@/assets/usuario.svg" alt="Ícono" class="icon-img">
-                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap mr-2">Gestión de usuarios</span>
-                <svg class="w-3 h-3 transition-transform md:ml-1" :class="{ 'rotate-180': isOpenDropdown }" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                </svg>
-              </button>
-              <ul :class="{ 'max-h-0 opacity-0': !isOpenDropdown, 'max-h-40 opacity-100': isOpenDropdown }" class=" overflow-hidden transition-all duration-500 ease-in-out mb-1 mt-2 flex items-start justify-start flex-col gap-2"
-  >
-                <li><router-link @click="toggleSidebar" to="/contadores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Contador</router-link></li>
-                <li><router-link @click="toggleSidebar" to="/auditores" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Auditor</router-link></li>
-                <li><router-link @click="toggleSidebar" to="/clientes" class="flex items-center w-full p-2 text-[#08245B] pl-8">Registro de Cliente PYME</router-link></li>
-              </ul>
-            </li>
-
-            <li>
-              <router-link @click="toggleSidebar" to="/empresas" class="flex gap-2 justify-center items-center">
-                <img src="@/assets/empresass.svg" alt="Empresas Img">
-                <span>Empresas</span>
-              </router-link>
-            </li>
-
-            <li>
-            <router-link @click="toggleSidebar" to="/BancosERPs" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/BancoErps.svg" alt="Bancos Img">
-              <span >Bancos y ERPs</span>
-            </router-link>
-            </li>
-
-            <li>
-            <router-link @click="toggleSidebar" to="/conciliacion" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/conciliacion.svg" alt="Conciliacion Img">
-              <span >Conciliaciones</span>
-            </router-link>
-            </li>
-
-            <li>
-            <router-link @click="toggleSidebar" to="/ReporteEmpre" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/informe.svg" alt="Informe">
-              <span >Reportes financieros y auditoría</span>
-            </router-link>
-            </li>
-          
-            <li>
-            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/manage-account.svg" alt="Cuenta">
-              <span >Mi Cuenta</span>
-            </router-link>
-            </li>
-          </div>
-
-          <!-- Cliente -->
-          <div v-if="data.role == 'CLIENTE'" class="flex flex-col justify-center items-start gap-4">
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_de_conciliaciones" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/conciliacion.svg" alt="Cuenta">
-              <span >Mis Conciliaciones</span>
-            </router-link>
-            </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_de_empresa" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/empresass.svg" alt="Cuenta">
-              <span >Mis Empresas</span>
-            </router-link>
-            </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_de_contador" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/contador.svg" alt="Ícono" class="icon-img">
-              <span>Mis Contadores</span>
-            </router-link>
-          </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_de_auditor" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/auditor.svg" alt="Cuenta">
-              <span >Mis Auditores</span>
-            </router-link>
-            </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/manage-account.svg" alt="Cuenta">
-              <span >Mi Cuenta</span>
-            </router-link>
-            </li>
-          </div>
-          
-          <!-- Auditor -->
-          <div v-if="data.role == 'AUDITOR'" class="flex flex-col justify-center items-start gap-4">
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_clientes_aud" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/client.svg" alt="Ícono" class="icon-img">
-              <span>Mis Clientes</span>
-            </router-link>
-          </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_conciliacion_auditor" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/conciliacion.svg" alt="Cuenta">
-              <span >Mis Conciliaciones</span>
-            </router-link>
-            </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/manage-account.svg" alt="Cuenta">
-              <span >Mi Cuenta</span>
-            </router-link>
-            </li>
-          </div>
-
-          <!-- Contador -->
-          <div v-if="data.role == 'CONTADOR'" class="flex flex-col justify-center items-start gap-4">
-            <li>
-            <router-link @click="toggleSidebar" to="/lista_de_clientes" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/client.svg" alt="Ícono" class="icon-img">
-              <span>Mis Clientes</span>
+            <router-link 
+              @click="toggleSidebar" 
+              to="/contadores" 
+              class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+              active-class="bg-blue-50 text-blue-600"
+            >
+              Registro de Contador
             </router-link>
           </li>
           <li>
-            <router-link @click="toggleSidebar" to="table_company" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/empresass.svg" alt="Ícono" class="icon-img">
-              <span>Mis Empresas</span>
+            <router-link 
+              @click="toggleSidebar" 
+              to="/auditores" 
+              class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+              active-class="bg-blue-50 text-blue-600"
+            >
+              Registro de Auditor
             </router-link>
           </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/tabla_de_conciliacion" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/conciliacion.svg" alt="Cuenta">
-              <span >Mis Conciliaciones</span>
+          <li>
+            <router-link 
+              @click="toggleSidebar" 
+              to="/clientes" 
+              class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+              active-class="bg-blue-50 text-blue-600"
+            >
+              Registro de Cliente PYME
             </router-link>
-            </li>
-            <li>
-              <router-link @click="toggleSidebar" to="#" class="flex gap-2 justify-center items-center">
-                <img src="@/assets/informe.svg" alt="Ícono" class="icon-img">
-                <span>Reportes</span>
-              </router-link>
-            </li>
-            <li>
-            <router-link @click="toggleSidebar" to="/perfil" class="flex gap-2 justify-center items-center">
-              <img src="@/assets/manage-account.svg" alt="Cuenta">
-              <span >Mi Cuenta</span>
-            </router-link>
-            </li>
-          </div>
-          
-        </div>
-      </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/BancosERPs" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/BancoErps.svg" alt="Banks" class="w-5 h-5 mr-3">
+          <span class="text-sm">Bancos y ERPs</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/conciliacion" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/conciliacion.svg" alt="Reconciliation" class="w-5 h-5 mr-3">
+          <span class="text-sm">Conciliaciones</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/ReporteEmpre" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/informe.svg" alt="Reports" class="w-5 h-5 mr-3">
+          <span class="text-sm">Reportes financieros y auditoría</span>
+        </router-link>
+      </li>
+    </template>
+
+    <!-- CLIENTE Content -->
+    <template v-if="data.role == 'CLIENTE'">
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_de_conciliaciones" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/conciliacion.svg" alt="Reconciliations" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Conciliaciones</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_de_empresa" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/empresass.svg" alt="Companies" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Empresas</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_de_contador" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/contador.svg" alt="Accountants" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Contadores</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_de_auditor" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/auditor.svg" alt="Auditors" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Auditores</span>
+        </router-link>
+      </li>
+    </template>
+
+    <!-- AUDITOR Content -->
+    <template v-if="data.role == 'AUDITOR'">
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_clientes_aud" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/client.svg" alt="Clients" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Clientes</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_conciliacion_auditor" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/conciliacion.svg" alt="Reconciliations" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Conciliaciones</span>
+        </router-link>
+      </li>
+    </template>
+
+    <!-- CONTADOR Content -->
+    <template v-if="data.role == 'CONTADOR'">
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="crear_conciliacion" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/conciliacion.svg" alt="crear conciliacion" class="w-5 h-5 mr-3">
+          <span class="text-sm">Crear Conciliación</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/lista_de_clientes" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/client.svg" alt="Clients" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Clientes</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_de_conciliacion" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
+          <img src="@/assets/conciliacion.svg" alt="Reconciliations" class="w-5 h-5 mr-3">
+          <span class="text-sm">Mis Conciliaciones</span>
+        </router-link>
+      </li>
+    </template>
+
+    <!-- Common Bottom Item -->
+    <li class="pt-2 border-t border-gray-200">
+      <router-link 
+        @click="toggleSidebar" 
+        to="/perfil" 
+        class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+        active-class="bg-blue-50 text-blue-600 font-medium"
+      >
+        <img src="@/assets/manage-account.svg" alt="Account" class="w-5 h-5 mr-3">
+        <span class="text-sm">Mi Cuenta</span>
+      </router-link>
+    </li>
+  </div>
+</ul>
       <div v-if="err">
         <span>{{ err }}</span>
         <img class="mt-10 w-[100px] h-[100px]" src="@/assets/error_status.svg" alt="">

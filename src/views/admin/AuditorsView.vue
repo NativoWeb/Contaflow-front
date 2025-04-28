@@ -28,6 +28,6 @@ const userData = {
   status: 'Pendiente',
   role: 'AUDITOR',
   clients: [],
-  conciliations: []
+  conciliations: [],
 }
 </script>

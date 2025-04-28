@@ -1,189 +1,199 @@
 <template>
-  <!-- Título de la página -->
-  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 shadow-md text-center md:text-left" style="border-radius: 8px 8px 0 0;">
-      {{ title }}
-  </h2>
+  <!-- Contenedor principal -->
+  <div class="m-w-[1577px] mx-auto p-4 md:p-6">
+    <!-- Título de la página -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-xl p-4 shadow-sm">
+      <h2 class="text-xl md:text-2xl font-bold text-blue-800 text-center md:text-left">
+        {{ title }}
+      </h2>
+    </div>
+
     <!-- Formulario -->
-     <form @submit.prevent="addUser" class="w-full p-6 bg-white" style="border-radius: 0 0 8px 8px;">
-    <!-- Primera fila -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Nombres:<span class="text-red-500">*</span>
-        </label>
-        <input v-model="userForm.first_name" @input="validateFirstName"
-          class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-          type="text" placeholder="Ingrese sus nombres">
-        <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Apellidos:<span class="text-red-500">*</span>
-        </label>
-        <input v-model="userForm.last_name" @input="validateLastName"
-          class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-          type="text" placeholder="Ingrese sus apellidos">
-        <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name }}</p>
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Tipo de Identificación:<span class="text-red-500">*</span>
-        </label>
-        <div>
-          <select  v-model="userForm.id_type" class="w-full bg-[#F5F5F5] border border-gray-300 text-[#08245B] py-3 px-4 rounded-full focus:outline-none focus:bg-white focus:border-gray-500">
+    <form @submit.prevent="addUser" class="bg-white rounded-b-xl shadow-sm p-6 md:p-8">
+      <!-- Primera fila -->
+      <div class="flex flex-col md:flex-row gap-6 mb-6">
+        <!-- Nombres -->
+        <div class="flex-1">
+          <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+            Nombres:<span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="userForm.first_name" 
+            @input="validateFirstName"
+            class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+            type="text" 
+            placeholder="Ingrese sus nombres"
+          >
+          <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
+        </div>
+
+        <!-- Apellidos -->
+        <div class="flex-1">
+          <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+            Apellidos:<span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="userForm.last_name" 
+            @input="validateLastName"
+            class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+            type="text" 
+            placeholder="Ingrese sus apellidos"
+          >
+          <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name }}</p>
+        </div>
+
+        <!-- Tipo de Identificación -->
+        <div class="flex-1">
+          <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+            Tipo de Identificación:<span class="text-red-500">*</span>
+          </label>
+          <select 
+            v-model="userForm.id_type" 
+            class="w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 rounded-lg focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+          >
             <option selected disabled>Seleccione una opción</option>
             <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
             <option value="Cedula_Extranjeria">Cédula de extranjería</option>
-        </select>
+          </select>
         </div>
       </div>
-    </div>
 
-    <!-- Segunda fila -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Número de Identificación:<span class="text-red-500">*</span>
-        </label>
-        <input v-model="userForm.id_number" @input="validateIdentificationNumber"
-          class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-          type="text" placeholder="Ingrese su número de identificación">
-        <p v-if="errors.id_number" class="text-red-500 text-xs mt-1">{{ errors.id_number }}</p>
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Número de celular:<span class="text-red-500">*</span>
-        </label>
-        <input v-model="userForm.phone_number" @input="validatePhoneNumber"
-          class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
+      <!-- Segunda fila -->
+      <div class="flex flex-col md:flex-row gap-6 mb-6">
+        <!-- Número de Identificación -->
+        <div class="flex-1">
+          <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+            Número de Identificación:<span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="userForm.id_number" 
+            @input="validateIdentificationNumber"
+            class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+            type="text" 
+            placeholder="Ingrese su número de identificación"
+          >
+          <p v-if="errors.id_number" class="text-red-500 text-xs mt-1">{{ errors.id_number }}</p>
+        </div>
 
-          type="text" inputmode="numeric" placeholder="Ingrese su número de celular">
-        <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Correo Electrónico:<span class="text-red-500">*</span>
-        </label>
-        <input v-model="userForm.username" @input="validateEmail"
-          class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
-          type="email" placeholder="Ingrese su correo">
-        <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
-      </div>
-    </div>
+        <!-- Número de celular -->
+        <div class="flex-1">
+          <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+            Número de celular:<span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="userForm.phone_number" 
+            @input="validatePhoneNumber"
+            class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+            type="text" 
+            inputmode="numeric" 
+            placeholder="Ingrese su número de celular"
+          >
+          <p v-if="errors.phone_number" class="text-red-500 text-xs mt-1">{{ errors.phone_number }}</p>
+        </div>
 
-    <!-- Botón de Añadir Usuario -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <div class="md:col-span-2"></div> <!-- Espacio vacío para empujar el botón a la derecha -->
-      <div class="flex items-end">
-        <button type="submit"
+        <!-- Correo Electrónico -->
+        <div class="flex-1">
+          <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+            Correo Electrónico:<span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="userForm.username" 
+            @input="validateEmail"
+            class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+            type="email" 
+            placeholder="Ingrese su correo"
+          >
+          <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
+        </div>
+      </div>
+
+      <!-- Botón de enviar -->
+      <div class="flex justify-end mt-8">
+        <button 
+          type="submit"
           :disabled="isFormInvalid"
-          class="w-full bg-[#08245B] text-white font-bold py-3 px-4 rounded-full shadow-md shadow-gray-500/50 focus:outline-none focus:shadow-outline"
-          :class="{
-            'hover:bg-[#2a4b8d]': !isFormInvalid,
-            'text-gray-500 cursor-not-allowed': isFormInvalid
-          }">
-          
-          <span class="text-white">
-            Añadir usuario
-          </span>
+          class="bg-blue-800 hover:bg-blue-900 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          :class="{'opacity-50 cursor-not-allowed': isFormInvalid}"
+        >
+          Añadir usuario
         </button>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 
-  <!-- Modal -->
-  <div v-if="isLoading" 
-    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-    :class="{'scale-100': isLoading}">
-    <div class="relative w-full max-w-lg  p-6 transform transition-all duration-600 ease-in-out">
-        <!-- Modal content -->
-        <div class="relative dark:bg-gray-800">
-            <!-- Modal body -->
-            <div class="p-8 text-center space-y-4">
-                <img src="@/assets/loader.svg" alt="">
-            </div>
-        </div>
+  <!-- Modal de carga -->
+  <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
+    <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center">
+      <img src="@/assets/loader.svg" alt="Cargando..." class="w-16 h-16 animate-spin">
+      <p class="mt-4 text-gray-700">Procesando solicitud...</p>
     </div>
   </div>
 
-
-
-
-  <!-- Modal -->
-  <div v-if="modalVisible" 
-    class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-    :class="{'scale-100': modalVisible}">
-    <div class="relative w-full max-w-lg bg-white  p-6 transform transition-all duration-600 ease-in-out">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg dark:bg-gray-800">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 ">
-                <button @click="closeModal" 
-                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
-                    &times;
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="p-8 text-center space-y-4">
-                <h3 class="mb-2 text-2xl font-semibold text-[#2A5CAA] dark:text-white">¡Invitación enviada con éxito!</h3>
-                <p class="text-lg text-gray-700 dark:text-gray-300">
-                    El usuario <strong>{{ userForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de usuario PYME.
-                </p>
-                <p class="text-lg text-gray-700 dark:text-gray-300">
-                    <img src="@/assets/correo.svg" alt="Correo" class="inline-block h-6 w-6 mr-3" />
-                    Se ha enviado un correo a <strong>{{ userForm.username }}</strong> con un enlace de activación.
-                </p>
-            </div>
-        </div>
-    </div>
-  </div>
-
-<!-- Modal de Error -->
-<div v-if="err" 
-  class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0"
-  :class="{'scale-100': err}">
-  <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
-      <!-- Modal content -->
-      <div class="relative bg-white rounded-lg dark:bg-gray-800">
-          <!-- Modal header -->
-          <div class="flex items-center justify-between p-4">
-              <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
-              <button @click="closeModal" 
-                      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">
-                  &times;
-              </button>
-          </div>
-          <!-- Modal body -->
-          <div class="p-8 text-center space-y-4">
-              <p class="text-lg text-gray-700 dark:text-gray-300">
-                  <strong>{{ err }}</strong>
-              </p>
-          </div>
+  <!-- Modal de éxito -->
+  <div v-if="modalVisible" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
+    <div class="bg-white rounded-xl shadow-xl p-6 max-w-md w-full mx-4">
+      <div class="flex justify-end">
+        <button 
+          @click="closeModal" 
+          class="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
+      
+      <div class="text-center p-4">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        
+        <h3 class="text-xl font-bold text-blue-800 mb-2">¡Invitación enviada con éxito!</h3>
+        <p class="text-gray-700 mb-4">
+          El usuario <strong>{{ userForm.first_name }}</strong> ha sido invitado a unirse a ContaFlow con el rol de usuario PYME.
+        </p>
+        <div class="flex items-center justify-center text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          Se ha enviado un correo a <strong class="ml-1">{{ userForm.username }}</strong>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-
-
+  <!-- Modal de Error -->
+  <div v-if="err" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
+    <div class="bg-white rounded-xl shadow-xl p-6 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center">
+          <div class="mx-auto flex items-center justify-center h-10 w-10 rounded-full bg-red-100 mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-red-600">¡Error!</h3>
+        </div>
+        <button 
+          @click="closeModal" 
+          class="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="text-center p-4">
+        <p class="text-gray-700">
+          <strong>{{ err }}</strong>
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
-
-<style>
-  
-  .fixed {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .modal-enter-active, .modal-leave-active {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .modal-enter, .modal-leave-to {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  .modal-background {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-
-</style>
 
 <script setup>
 
@@ -258,8 +268,12 @@
     );
   });
 
+  const toggle = () => {
+    modalVisible.value = true;
+  }
+
   function addUser() {
     if (isFormInvalid.value) return; // No hacer nada si el formulario está inválido
-    sendEmailService.sendEmail(props.apiUrl, userForm, 'POST');
+    sendEmailService.sendEmail(props.apiUrl, userForm, toggle, 'POST');
   }
 </script>

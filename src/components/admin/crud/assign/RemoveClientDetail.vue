@@ -3,13 +3,7 @@
     <!-- Header con botón -->
     <div class="flex justify-between items-center mb-8 max-w-6xl mx-auto">
       <h1 class="text-2xl font-bold text-gray-900">Detalles del Usuario</h1>
-      <button 
-        @click="addClient" 
-        type="button" 
-        class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        Asignar Cliente
-      </button>
+      <button @click="removeClient" class="ml-4 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 mt-6">Remover Empresa</button>
     </div>
 
     <!-- Tarjeta principal -->
@@ -149,7 +143,7 @@
         </svg>
       </div>
       <h3 class="text-xl font-bold text-gray-900 mb-2">Operación exitosa</h3>
-      <p class="text-gray-600 mb-6">Se asignó el cliente correctamente</p>
+      <p class="text-gray-600 mb-6">Se removio el Cliente correctamente</p>
       <button 
         @click="isEditedToggle"
         type="button" 
@@ -222,8 +216,8 @@
   const userId = useRoute().params.userId;
   const userRole = useRoute().params.role;
   const url = `${VUE_APP_URL}/${userRole}/update/${userId}/`;
-  let clientsList = [];
-  let clients = ``;
+  let clientsList = ref([]);
+  let clients = ref(``);
 
   onMounted(async () => {
     isLoading.value = true;
@@ -243,9 +237,9 @@
     try{
       await getUser.getUserById(`${VUE_APP_URL}/${userRole}/${userId}/`);
       data.value = getUser.getData().value;
-      clientsList += [data.value.clients];
+      clientsList.value += [data.value.clients];
       // si el usuario tiene clientes o si no
-      clients = clientsList ? clientsList.split(",") : [];
+      clients.value = clientsList.value ? clientsList.value.split(",") : [];
     }
     catch(err){
       err.value = getUser.getError().value;
@@ -263,12 +257,13 @@
     }
   }
 
-  const addClient = () => {
+  const removeClient = () => {
     isLoading.value = true;
-    clients.push(clientId)
-    // set para evitar ids duplicados
-    const uniqueClients = [...new Set(clients)];
-    getUser.editUser(url, {clients: uniqueClients}, isEditedToggle)
+    clients.value = clients.value.filter(id  => id !== clientId)
+    const uniqueClients = [...new Set(clients.value)];
+
+    getUser.editUser(url, { clients: uniqueClients }, isEditedToggle)
+
     isLoading.value = false;
   }
 </script>

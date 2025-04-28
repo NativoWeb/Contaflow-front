@@ -125,7 +125,6 @@
         </tbody>
       </table>
     </div>
-    
 
     <!-- <div v-if="filteredData.length > 0" class="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
       <div class="text-sm text-gray-500">
@@ -155,34 +154,21 @@
 </template>
 
 <script setup>
-  import { ref,  onMounted } from 'vue'
   import UserService from '@/services/userService';
-  import router from "@/router";
-  import { computed } from 'vue';
+  import { onMounted, ref } from 'vue';
 
-  const getUser = new UserService();
   const isLoading = ref(false);
-  const data = ref(null);
-  const err = ref(null);
-  
-  const searchQuery = ref('');
+  const data = ref("");
+  const err = ref("");
+  const getUser = new UserService();
+  const VUE_APP_URL = process.env.VUE_APP_URL;
 
-  const props = defineProps({
-    apiUrl: String,
-    clientList: String,
-    roles: String,
-    routes: String
-  })
-
-
-  const goToUserDetails = id => {
-    router.push(`${props.routes}/${id}`)
-  }
+  console.log(VUE_APP_URL)
 
   onMounted(async () => {
-    isLoading.value = true;
+    isLoading.value = false;
     try{
-      await getUser.getUsers(props.apiUrl)
+      await getUser.getUserById();
       data.value = getUser.getData().value;
     }
     catch(error){
@@ -192,21 +178,4 @@
       isLoading.value = false;
     }
   })
-  
-  const filteredData = computed(() => {
-    if (!data.value) return [];
-
-    const query = searchQuery.value.toLowerCase();
-
-    return data.value.filter(user =>
-      `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) ||
-      user.id_number?.toString().toLowerCase().includes(query) ||
-      user.username?.toLowerCase().includes(query) ||
-      user.phone_number?.toString().toLowerCase().includes(query) ||
-      user.status?.toLowerCase().includes(query)
-    );
-  });
-
 </script>
-  
-  

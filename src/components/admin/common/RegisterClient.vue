@@ -199,9 +199,10 @@
   </div>
   
   <!-- Modal de éxito -->
-  <div v-if="isResponse" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
+  <div v-if="modalVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]"
+  :class="{'scale-100': modalVisible}">
     <div class="bg-white p-6 shadow-lg w-96 relative rounded-tl-3xl">
-      <button @click="closeResponseModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center">&times;</button>
+      <button @click="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center">&times;</button>
       <p class="text-[#2A5CAA] font-bold mb-4 text-center">¡Empresa agregada!</p>
       <p class="text-gray-800 font-medium mb-4 text-center">
         La empresa <span class="font-bold">{{ clientForm.name }}</span> fue registrada exitosamente en ContaFlow.
@@ -210,15 +211,15 @@
   </div>
   
   <!-- Modal de error -->
-  <div v-if="isError" class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0" :class="{'scale-100': isError}">
+  <div v-if="err" class="fixed top-0 left-0 right-0 z-50 w-full h-full flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 transition-all duration-500 ease-in-out transform scale-0" :class="{'scale-100': err}">
     <div class="relative w-full max-w-lg bg-white p-6 transform transition-all duration-600 ease-in-out">
       <div class="relative bg-white rounded-lg dark:bg-gray-800">
         <div class="flex items-center justify-between p-4">
           <h3 class="text-2xl font-semibold text-red-600 dark:text-red-400">¡Error!</h3>
-          <button @click="closeErrorModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">&times;</button>
+          <button @click="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300">&times;</button>
         </div>
         <div class="p-8 text-center space-y-4">
-          <p class="text-lg text-gray-700 dark:text-gray-300"><strong>{{ errorMessage }}</strong></p>
+          <p class="text-lg text-gray-700 dark:text-gray-300"><strong>{{ err }}</strong></p>
         </div>
       </div>
     </div>
@@ -228,13 +229,12 @@
 
 <script setup>
   import UserService from "@/services/userService";
-  import { computed, reactive, ref } from "vue";
+  import { computed, reactive } from "vue";
   
   const sendEmailService = new UserService();
-  const isLoading = ref(false);
-  const isResponse = ref(false);
-  const isError = ref(false);
-  const errorResponse = ref(null);
+  const modalVisible = sendEmailService.getModal();
+  const err = sendEmailService.getError();
+  const isLoading = sendEmailService.getLoader();
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const nitRegex = /^\d{7,8}-\d{1}$/;
   const nameRegex =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/; // Permite letras, espacios y tildes
@@ -245,16 +245,19 @@
   const clientForm = reactive({
     nit: "",
     name: "",
-    username: "",
     address: "",
     sector: "Seleccione un sector",
-
-    // Informacion directivo
     first_name: "",
     last_name: "",
     id_type: 'Seleccione una opción',
     id_number: "",
     phone_number: "",
+    username: "",
+    status: 'Pendiente',
+    role: 'CLIENTE',
+    accountants: [],
+    auditors: [],
+    conciliations: []
   });
 
   const error = reactive({
@@ -262,8 +265,6 @@
     name: "",
     address: "",
     username: "",
-    
-    // Informacion directivo
     id_number: "",
     first_name: "",
     last_name: "",
@@ -291,7 +292,7 @@
   const validateFirstName = () => {
     if (!clientForm.first_name.trim()) error.first_name = "El nombre solo puede contener letras.";
     else if (!nameRegex.test(clientForm.first_name)) error.first_name = "La dirección no es válida";
-    else error.email = "";
+    else error.first_name = "";
   }
 
   const validateLastName = () => {
@@ -327,32 +328,22 @@
     )
   })
 
-  const closeErrorModal = () => {
-    isError.value = !isError.value;
+  const closeModal = () => {
+    modalVisible.value = false;
+    err.value = false;
     location.reload();
   }
 
-  const closeResponseModal = () => {
-    isResponse.value = !isResponse.value;
-    location.reload()
+  const toggle = () => {
+    modalVisible.value = true;
   }
 
   async function addClient(){
-    isLoading.value = true;
-    const url = `${VUE_APP_URL}/clients/register/`;
-    const data = clientForm;
+    if (isFormInvalid.value) return;
 
-    try {
-      await sendEmailService.sendEmail(url, data, 'POST');
-      isResponse.value = true;
-    }
-    catch(err){
-      isResponse.value = false;
-      isError.value = true;
-      errorResponse.value = sendEmailService.getError().value;
-    }
-    finally{
-      isLoading.value = false;
-    }
+    const url = `${VUE_APP_URL}/clients/email/`;
+    const data = clientForm;
+    
+    sendEmailService.sendEmail(url, data, toggle, 'POST');
   }
 </script>

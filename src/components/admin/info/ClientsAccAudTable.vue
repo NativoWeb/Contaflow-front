@@ -88,8 +88,8 @@
   const err = ref(null);
 
   // Agregar propiedades faltantes
-  const clientList = ref('Clientes'); // Asumiendo que esta es la lista que deseas mostrar como título
-  const searchQuery = ref(''); // Este es el modelo para el campo de búsqueda
+  const clientList = ref('Clientes');
+  const searchQuery = ref('');
   
    // Filtrar los clientes según la búsqueda
    const filteredClients = computed(() => {
@@ -104,12 +104,9 @@
     });
   });
 
-
   const redirectToRemove = id => {
     router.push(`${userRole}=${userId}/remover_cliente=${id}`)
   }
-
-
 
   onMounted(async () => {
     isLoading.value = true;
