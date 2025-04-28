@@ -343,7 +343,7 @@
     const data = clientForm;
 
     try {
-      await sendEmailService.sendEmail(url, data, toggle, 'POST');
+      await sendEmailService.sendEmail(url, data, 'POST');
       isResponse.value = true;
     }
     catch(err){
