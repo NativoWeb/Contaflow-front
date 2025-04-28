@@ -18,7 +18,7 @@
     <!-- Encabezado con título y búsqueda -->
     <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white border-b border-gray-100">
       <div>
-        <h2 class="text-xl font-semibold text-gray-800">{{ clientList }}</h2>
+        <h2 class="text-xl font-semibold text-gray-800">Selecciona un cliente</h2>
       </div>
       
       <div class="mt-4 md:mt-0 w-full md:w-64">
@@ -74,7 +74,7 @@
             <tr 
               v-for="user in filteredData" 
               :key="user.id" 
-              @click="goToUserDetails(user.id)"
+              @click="goToSelectExtract(user.id)"
               class="hover:bg-gray-50 cursor-pointer transition-colors"
             >
               <td class="px-6 py-4 whitespace-nowrap">
@@ -154,7 +154,8 @@
 </template>
 
 <script setup>
-  import UserService from '@/services/userService';
+  import router from '@/router';
+import UserService from '@/services/userService';
   import { computed, onMounted, ref } from 'vue';
 
   const isLoading = ref(false);
@@ -180,6 +181,10 @@
       isLoading.value = false;
     }
   })
+
+  const goToSelectExtract = (id) => {
+    router.push(`cliente=${id}/seleccionar_extracto/`)
+  }
 
   const filteredData = computed(() => {
     if (!data.value) return [];
