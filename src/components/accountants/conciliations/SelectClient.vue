@@ -186,7 +186,7 @@
 
     const query = searchQuery.value.toLowerCase();
 
-    return data.value.filter(user => 
+    return data.value.clients_data.filter(user => 
       `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) || 
       user.id_number?.toString().toLowerCase().includes(query) ||
       user.username?.toLowerCase().includes(query) ||
