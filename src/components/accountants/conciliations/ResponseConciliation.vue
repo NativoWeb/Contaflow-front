@@ -1,7 +1,7 @@
 <template>
   <section class="p-5">
     <h2 class="text-xl font-bold text-blue-700">Respuesta de n8n:</h2>
-    <pre class="bg-gray-100 p-4 rounded">{{ data }}</pre>
+    <div class="container_conciliation bg-gray-100 p-4 rounded w-[70%] flex flex-col gap-6 text-left" v-html="data"></div>
   </section>
 </template>
 
@@ -9,6 +9,7 @@
 import Cookies from 'js-cookie';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { marked } from 'marked';
 
 
 const conciliationId = useRoute().params.conciliationId
@@ -30,7 +31,7 @@ onMounted(async () => {
     })
     const json = await res.json() 
     json.conciliations_data.forEach( el => {
-      if (el.id == conciliationId) data.value = el.response
+      if (el.id == conciliationId) data.value = marked.parse(el.response)
     })
   }
   catch(err){
@@ -39,3 +40,16 @@ onMounted(async () => {
 })
 
 </script>
+
+<style>
+.container_conciliation > p{
+  text-align:left;
+  color:black;
+  margin:2px;
+}
+
+.container_conciliation > ul {
+  display:flex;
+  flex-direction:column;
+}
+</style>
