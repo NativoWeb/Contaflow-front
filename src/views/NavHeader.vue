@@ -235,7 +235,7 @@
       <li>
         <router-link 
           @click="toggleSidebar" 
-          to="/tabla_de_conciliacion" 
+          to="/lista_conciliaciones" 
           class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
           active-class="bg-blue-50 text-blue-600 font-medium"
         >

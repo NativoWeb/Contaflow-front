@@ -6,6 +6,7 @@ import SelectClient from "@/components/accountants/conciliations/SelectClient.vu
 import CreateConciliation from "@/components/accountants/conciliations/CreateConciliation.vue";
 import ResponseConciliation from "@/components/accountants/conciliations/ResponseConciliation.vue";
 import SelectAuditor from "@/components/accountants/conciliations/SelectAuditor.vue";
+import ConciliationsList from "@/components/accountants/conciliations/ConciliationsList.vue";
 
 const accountantRoutes = [
   {
@@ -52,6 +53,11 @@ const accountantRoutes = [
     path: '/conciliacion_informacion/conciliacion=:conciliationId',
     name: "ConciliationInformation",
     component: ResponseConciliation
+  },
+  {
+    path: '/lista_conciliaciones',
+    name: 'ConciliationsList',
+    component: ConciliationsList
   }
 ]
 
