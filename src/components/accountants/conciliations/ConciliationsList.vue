@@ -1,11 +1,11 @@
 <template>
-  <!-- Estado de carga
+  <!-- Estado de carga -->
   <div v-if="isLoading" class="flex flex-col items-center justify-center p-8">
     <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
     <p class="text-gray-600">Cargando datos...</p>
   </div>
 
-   Estado de error 
+   <!-- Estado de error  -->
   <div v-else-if="err" class="flex flex-col items-center justify-center p-6 bg-red-50 rounded-lg">
     <svg class="w-10 h-10 text-red-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -13,7 +13,7 @@
     <p class="text-red-600 font-medium text-center">Error al cargar los datos: {{ err }}</p>
   </div>-
 
-  Contenido principal 
+  <!-- Contenido principal  -->
   <div v-if="data" class="w-[1529px] m-auto bg-white rounded-xl shadow-sm overflow-hidden">
      Encabezado con título y búsqueda 
     <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white border-b border-gray-100">
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-     Tabla de datos 
+     <!-- Tabla de datos  -->
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -72,33 +72,32 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <template v-if="filteredData.length > 0">
             <tr 
-              v-for="user in filteredData" 
-              :key="user.id" 
-              @click="goToSelectAuditor(user.id)"
+              v-for="conciliation in filteredData" 
+              :key="conciliation.id" 
               class="hover:bg-gray-50 cursor-pointer transition-colors"
             >
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                    <span class="text-blue-600 font-medium">{{ user.first_name.charAt(0) }}{{ user.last_name.charAt(0) }}</span>
+                    <span class="text-blue-600 font-medium">{{ conciliation.accountant }}</span>
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">{{ user.first_name }} {{ user.last_name }}</div>
-                    <div class="text-sm text-gray-500 md:hidden">{{ user.id_number }}</div>
+                    <div class="text-sm font-medium text-gray-900">{{ conciliation.accountant }}</div>
+                    <div class="text-sm text-gray-500 md:hidden">{{ conciliation.accountant }}</div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
-                {{ user.id_number }}
+                {{ conciliation.accountant }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
-                {{ user.username }}
+                {{ conciliation.accountant }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
-                {{ user.phone_number || 'N/A' }}
+                {{ conciliation.accountant || 'N/A' }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span 
+                <!-- <span 
                   :class="{
                     'bg-green-100 text-green-800': user.status === 'Activo',
                     'bg-red-100 text-red-800': user.status === 'Inactivo',
@@ -107,7 +106,7 @@
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                 >
                   {{ user.status }}
-                </span>
+                </span> -->
               </td>
             </tr>
           </template>
@@ -124,7 +123,7 @@
           </tr>
         </tbody>
       </table>
-    </div> -->
+    </div> 
 
     <!-- <div v-if="filteredData.length > 0" class="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
       <div class="text-sm text-gray-500">
@@ -149,7 +148,7 @@
         </button>
       </div>
     </div> -->
-  <!-- </div> -->
+  </div>
   <div class="py-[20px]"></div>
 </template>
 
@@ -158,16 +157,16 @@
   import Cookies from 'js-cookie';
   // import UserService from '@/services/userService';
   // import { computed, onMounted, ref } from 'vue';
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
 
   const isLoading = ref(false);
-  // const data = ref("");
+  const data = ref([]);
   // const err = ref("");
   // const getUser = new UserService();
   const id = localStorage.getItem('id')
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const url = `${VUE_APP_URL}/accountants/${id}/`;
-  // const searchQuery = ref('');
+  const searchQuery = ref('');
 
   onMounted(async () => {
     isLoading.value = false;
@@ -179,7 +178,8 @@
         }
       })
       const json = await res.json()
-      console.log(json.conciliations_data)
+      data.value = json.conciliations_data
+      console.log(data.value)
     }
     catch(error){
       console.log(error)
@@ -193,17 +193,21 @@
   //   router.push(`cliente=${id}/seleccionar_auditor/`)
   // }
 
-  // const filteredData = computed(() => {
-  //   if (!data.value) return [];
+  const filteredData = computed(() => {
+  if (!data.value) return [];
 
-  //   const query = searchQuery.value.toLowerCase();
+  const query = searchQuery.value.toLowerCase();
 
-  //   return data.value.clients_data.filter(user => 
-  //     `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) || 
-  //     user.id_number?.toString().toLowerCase().includes(query) ||
-  //     user.username?.toLowerCase().includes(query) ||
-  //     user.phone_number?.toString().toLowerCase().includes(query) ||
-  //     user.status?.toLowerCase().includes(query)
-  //   )
-  // })
+  return data.value.filter(conciliation => {
+    const accountant = conciliation.accountant ?? '';
+    const auditor = conciliation.auditor ?? '';
+    const client = conciliation.client ?? '';
+
+    return (
+      accountant.toString().toLowerCase().includes(query) ||
+      auditor.toString().toLowerCase().includes(query) ||
+      client.toString().toLowerCase().includes(query)
+    );
+  });
+});
 </script>
