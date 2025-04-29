@@ -18,7 +18,7 @@
     <!-- Encabezado con título y búsqueda -->
     <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white border-b border-gray-100">
       <div>
-        <h2 class="text-xl font-semibold text-gray-800">Selecciona un cliente</h2>
+        <h2 class="text-xl font-semibold text-gray-800">Selecciona un Auditor del cliente: CASSA</h2>
       </div>
       
       <div class="mt-4 md:mt-0 w-full md:w-64">
@@ -74,7 +74,7 @@
             <tr 
               v-for="user in filteredData" 
               :key="user.id" 
-              @click="goToSelectAuditor(user.id)"
+              @click="goToSelectExtract(user.id)"
               class="hover:bg-gray-50 cursor-pointer transition-colors"
             >
               <td class="px-6 py-4 whitespace-nowrap">
@@ -171,7 +171,7 @@ import UserService from '@/services/userService';
     isLoading.value = false;
     try{
       await getUser.getUserById(url);
-      data.value = getUser.getData().value;
+      data.value = getUser.getData().value.clients_data[0].auditors_data;
       console.log(data.value)
     }
     catch(error){
@@ -182,8 +182,8 @@ import UserService from '@/services/userService';
     }
   })
 
-  const goToSelectAuditor = (id) => {
-    router.push(`cliente=${id}/seleccionar_auditor/`)
+  const goToSelectExtract = (id) => {
+    router.push(`auditor=${id}/seleccionar_extracto/`)
   }
 
   const filteredData = computed(() => {
@@ -191,7 +191,7 @@ import UserService from '@/services/userService';
 
     const query = searchQuery.value.toLowerCase();
 
-    return data.value.clients_data.filter(user => 
+    return data.value.filter(user => 
       `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) || 
       user.id_number?.toString().toLowerCase().includes(query) ||
       user.username?.toLowerCase().includes(query) ||

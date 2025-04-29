@@ -113,7 +113,7 @@ const adminRoutes = [
     component: RemoveClientDetail
   },
   {
-    path: 'contador/clientes_contador/auditors/:role=:userId/remover_cliente=:id',
+    path: 'auditor/clientes_auditor/auditors/:role=:userId/remover_cliente=:id',
     name: 'ClientsRemoveAuditors',
     component: RemoveClientDetail
   },
