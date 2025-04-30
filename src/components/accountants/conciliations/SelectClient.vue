@@ -155,14 +155,14 @@
 
 <script setup>
   import router from '@/router';
-import UserService from '@/services/userService';
+  import UserService from '@/services/userService';
   import { computed, onMounted, ref } from 'vue';
 
   const isLoading = ref(false);
   const data = ref("");
   const err = ref("");
   const getUser = new UserService();
-  const id = localStorage.getItem('id')
+  const id = localStorage.getItem('id');
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const url = `${VUE_APP_URL}/accountants/${id}/`;
   const searchQuery = ref('');

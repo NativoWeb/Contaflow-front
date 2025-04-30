@@ -1,77 +1,92 @@
 <template>
-  <section class="w-full bg-white shadow-md  h-full">
-    <h2 class="text-left text-[#2A5CAA] font-bold text-3xl mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-3" >
+  <section class="w-full bg-white shadow-lg rounded-xl p-6 md:p-10">
+    <h2 class="text-left text-[#2A5CAA] font-extrabold text-4xl mb-10 bg-gradient-to-r from-[#f0f4ff] to-[#e0eaff] p-4 rounded-lg shadow-sm">
       Carga de Extractos Bancarios y Contables
     </h2>
-      
+  
+    <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
+      <div class="bg-white rounded-xl shadow-2xl p-8 transform transition-all duration-300 scale-95 animate-pulse-once">
+        <div class="flex flex-col items-center justify-center space-y-4">
+          <div class="relative">
+            <svg class="w-16 h-16 text-blue-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+          <p class="text-gray-700 font-medium">Procesando, por favor espere...</p>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="err" colspan="5" class="flex flex-col justify-center">
+      <span class="ml-2 my-6">Ocurrio un error {{ err }}</span>
+    </div>
+    
     <form @submit.prevent="sendFiles">
-      <div class="flex flex-wrap justify-center gap-20 p-3">
+      <div class="flex flex-wrap justify-center gap-10 md:gap-16">
 
         <!-- Extractos Bancarios -->
         <div 
-        class="drop-zone w-[48%] h-64 md:w-1/3 border-2 border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center text-center p-6 cursor-pointer transition-all hover:border-blue-500 hover:bg-blue-100"
-        :class="{ 'is-active': isDraggingBank }"
-        @dragover.prevent="isDraggingBank = true"
-        @dragleave="isDraggingBank = false"
-        @drop="(event) => dropFile(event, 'bank')"
-        @click="selectFile('bank')"
+          class="w-full md:w-1/3 h-64 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 flex flex-col items-center justify-center text-center p-6 cursor-pointer transition-all duration-300 hover:border-blue-500 hover:bg-blue-50 shadow-sm hover:shadow-md"
+          :class="{ 'ring-2 ring-blue-400': isDraggingBank }"
+          @dragover.prevent="isDraggingBank = true"
+          @dragleave="isDraggingBank = false"
+          @drop="(event) => dropFile(event, 'bank')"
+          @click="selectFile('bank')"
         >
-        <input type="file" ref="fileInputBank" accept=".pdf, .xls, .xlsx"  hidden @change="(event) => handleFileChange(event, 'bank')">
-        
-          <div v-if="!fileBank" class="flex flex-col justify-center">
-            <img src="@/assets/Archivos.svg" alt="Upload Icon" class="h-10 mb-3">
-            <p>Subir Extracto Bancario</p>
+          <input type="file" ref="fileInputBank" accept=".pdf, .xls, .xlsx" hidden @change="(event) => handleFileChange(event, 'bank')">
+
+          <div v-if="!fileBank" class="flex flex-col items-center">
+            <img src="@/assets/Archivos.svg" alt="Upload Icon" class="h-12 mb-3 opacity-70">
+            <p class="text-gray-600 font-medium">Subir Extracto Bancario</p>
           </div>
 
-          <div v-else class="flex flex-col justify-center">
-            <img v-if="fileBank.type == 'application/pdf'" src="@/assets/pdf.svg" alt="Upload Icon" class="h-10 mb-3">
-            <img v-else src="@/assets/xls.svg" alt="Upload Icon" class="h-10 mb-3">
-            <p class="text-sm font-bold">{{ fileNameBank }}</p>
+          <div v-else class="flex flex-col items-center">
+            <img :src="fileBank.type == 'application/pdf' ? require('@/assets/pdf.svg') : require('@/assets/xls.svg')" alt="File Icon" class="h-12 mb-3">
+            <p class="text-sm font-bold text-gray-800 truncate max-w-[90%]">{{ fileNameBank }}</p>
           </div>
         </div>
-      
+
         <!-- Extractos Contables -->
         <div 
-        class="drop-zone w-1/2 h-64 md:w-1/3 border-2 border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center text-center p-6 cursor-pointer transition-all hover:border-blue-500 hover:bg-blue-100"
-        :class="{ 'is-active': isDraggingAccounting }"
-        @dragover.prevent="isDraggingAccounting = true"
-        @dragleave="isDraggingAccounting = false"
-        @drop="(event) => dropFile(event, 'accounting')"
-        @click="selectFile('accounting')"
+          class="w-full md:w-1/3 h-64 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 flex flex-col items-center justify-center text-center p-6 cursor-pointer transition-all duration-300 hover:border-blue-500 hover:bg-blue-50 shadow-sm hover:shadow-md"
+          :class="{ 'ring-2 ring-blue-400': isDraggingAccounting }"
+          @dragover.prevent="isDraggingAccounting = true"
+          @dragleave="isDraggingAccounting = false"
+          @drop="(event) => dropFile(event, 'accounting')"
+          @click="selectFile('accounting')"
         >
-          <input type="file" ref="fileInputAccounting" accept=".pdf, .xls, .xlsx"  hidden @change="(event) => handleFileChange(event, 'accounting')">
-          
-          <div>
-            <div v-if="!fileAccounting" class="flex flex-col justify-center">
-            <img src="@/assets/Archivos.svg" alt="Upload Icon" class="h-10 mb-3">
-            <p>Subir Extracto Bancario</p>
-            </div>
+          <input type="file" ref="fileInputAccounting" accept=".pdf, .xls, .xlsx" hidden @change="(event) => handleFileChange(event, 'accounting')">
 
-            <div v-else class="flex flex-col justify-center">
-              <img v-if="fileAccounting.type == 'application/pdf'" src="@/assets/pdf.svg" alt="Upload Icon" class="h-10 mb-3">
-              <img v-else src="@/assets/xls.svg" alt="Upload Icon" class="h-10 mb-3">
-              <p class="text-sm font-bold">{{ fileNameAccounting }}</p>
-            </div>
+          <div v-if="!fileAccounting" class="flex flex-col items-center">
+            <img src="@/assets/Archivos.svg" alt="Upload Icon" class="h-12 mb-3 opacity-70">
+            <p class="text-gray-600 font-medium">Subir Extracto Contable</p>
+          </div>
+
+          <div v-else class="flex flex-col items-center">
+            <img :src="fileAccounting.type == 'application/pdf' ? require('@/assets/pdf.svg') : require('@/assets/xls.svg')" alt="File Icon" class="h-12 mb-3">
+            <p class="text-sm font-bold text-gray-800 truncate max-w-[90%]">{{ fileNameAccounting }}</p>
           </div>
         </div>
       </div>
-      <div class="flex justify-center mt-6 p-3">
+
+      <div class="flex justify-center mt-10">
         <button
           type="submit"
           :disabled="!fileBank || !fileAccounting"
           :class="[
-            'px-6 py-3 text-white text-lg font-semibold rounded-full transition duration-300',
+            'px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 shadow-md',
             (!fileBank || !fileAccounting)
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-[#08245B] hover:bg-[#2a4b8d]'
-          ]"> 
-        Procesar Conciliación
+              ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+              : 'bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800 text-white'
+          ]"
+        >
+          Procesar Conciliación
         </button>
       </div>
     </form>
   </section>
 </template>
-
 
 <script setup>
 import router from "@/router";
@@ -81,6 +96,7 @@ import { useRoute } from "vue-router";
 
 const clientId = useRoute().params.id;
 const accountantId = localStorage.getItem('id');
+const isLoading = ref(false);
 const auditorId = useRoute().params.auditorId;
 const isDraggingBank = ref(false);
 const isDraggingAccounting = ref(false);
@@ -133,6 +149,7 @@ const dropFile = (event, type) => {
 };
 
 const sendFiles = async () => {
+  isLoading.value = true;
   const formData = new FormData();
   formData.append('data', fileBank.value);
   formData.append('data', fileAccounting.value);
@@ -148,6 +165,9 @@ const sendFiles = async () => {
   }
   catch (err) {
     console.log(err)
+  }
+  finally{
+    isLoading.value = false;
   }
 }
 

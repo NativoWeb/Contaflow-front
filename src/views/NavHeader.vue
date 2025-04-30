@@ -187,6 +187,18 @@
           class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
           active-class="bg-blue-50 text-blue-600 font-medium"
         >
+          <img src="@/assets/sign.svg" alt="Clients" class="w-5 h-5 mr-3">
+          <span class="text-sm">Conciliacones por Firmar</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link 
+          @click="toggleSidebar" 
+          to="/tabla_clientes_aud" 
+          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          active-class="bg-blue-50 text-blue-600 font-medium"
+        >
           <img src="@/assets/client.svg" alt="Clients" class="w-5 h-5 mr-3">
           <span class="text-sm">Mis Clientes</span>
         </router-link>

@@ -126,14 +126,20 @@ a:hover{
     gap:20px;
   }
 
+  ul > div{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    align-items:center;
+    width:90%;
+    height:50%;
+  }
+
   .loader{
     margin:auto;
   }
 
-  ul a{
-    font-size: 20px;
-  }
-  
+
   .profile{
     width:100%;
     max-width:220px;
@@ -142,6 +148,10 @@ a:hover{
 
   ul li {
     text-align: center;
+  }
+
+  a span{
+    font-size:4rem
   }
 
   nav {

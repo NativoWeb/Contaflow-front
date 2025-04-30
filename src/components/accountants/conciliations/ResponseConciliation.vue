@@ -1,6 +1,6 @@
 <template>
   <section class="p-5">
-    <h2 class="text-xl font-bold text-blue-700">Respuesta de n8n:</h2>
+    <h1 class="text-2xl font-semibold text-[#08245b]">Conciliación</h1>
     <div class="container_conciliation bg-gray-100 p-4 rounded w-[70%] flex flex-col gap-6 text-left" v-html="data"></div>
   </section>
 </template>

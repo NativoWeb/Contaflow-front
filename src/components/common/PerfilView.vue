@@ -1,77 +1,68 @@
-<template>
-  <section v-if="data" class="w-full bg-white shadow-md" style="border-radius:8px 8px 8px 8px;">
-    <!-- Contenedor del título con imagen -->
-    <div class="flex items-center gap-4 h-[99px] mb-6 bg-gradient-to-r from-gray-100 to-[#E5EAFF] p-6 rounded-md">
-      <img src="@/assets/img_usuario.svg" alt="Empresa Logo" class="w-16 h-16 object-cover rounded-full">
-      <h2 class="text-[#2A5CAA] font-bold text-2xl">{{ data.first_name }} {{ data.last_name }}</h2>
+<template>  
+  <section v-if="data" class="w-full max-w-6xl mx-auto bg-white border border-gray-200 rounded-xl p-6 md:p-10 shadow-sm">
+    
+    <!-- Header con imagen y nombre -->
+    <div class="flex items-center gap-6 mb-10 bg-gradient-to-r from-white to-gray-100 p-6 rounded-lg">
+      <img
+        src="@/assets/img_usuario.svg"
+        alt="Foto del usuario"
+        class="w-20 h-20 rounded-full object-cover border border-gray-300 shadow-sm"
+      />
+      <div>
+        <h1 class="text-3xl font-semibold text-gray-800">
+          {{ data.first_name }} {{ data.last_name }}
+        </h1>
+        <p class="text-sm text-gray-500 mt-1">Información de usuario</p>
+      </div>
     </div>
 
-    <div class="w-full p-6">
-      <!-- Diseño adaptable con Grid -->
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-3">
+    <!-- Contenido en grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Campos del usuario -->
+      <div v-for="(label, key) in {
+          'Nombre': data.first_name,
+          'Apellido': data.last_name,
+          'Número de Identificación': data.id_number,
+          'Correo': data.username,
+          'Celular': data.phone_number,
+          'Rol': data.role
+        }" :key="key" class="space-y-1">
         
-        <!-- Primera fila -->
-        <div>
-          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Nombre:</label>
-          <p class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-6 text-left">{{ data.first_name }}</p>
-        </div>
-
-        <div>
-          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Apellido:</label>
-          <p class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-6 text-left">{{ data.last_name }}</p>
-        </div>
-
-        <!-- Botón Editar Perfil (solo en escritorio) -->
-        <div class="hidden md:flex items-end">
-          <EditPerfilModal :user="data" />
-        </div>
-
-        <!-- Segunda fila -->
-        <div>
-          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Número de Identificación:</label>
-          <p class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-6 text-left">{{ data.id_number }}</p>
-        </div>
-
-        <div>
-          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Correo:</label>
-          <p class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-6 text-left">{{ data.username }}</p>
-        </div>
-
-        <!-- Botón Cambiar Contraseña (solo en escritorio) -->
-        <div class="hidden md:flex items-end">
-          <ChangePasswordPerfil />
-        </div>
-
-        <!-- Tercera fila -->
-        <div>
-          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Celular:</label>
-          <p class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-6 text-left">{{ data.phone_number }}</p>
-        </div>
-
-        <div>
-          <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">Rol:</label>
-          <p class="w-full bg-[#F5F5F5] text-gray-700 border border-gray-300 rounded-full py-3 px-6 text-left">{{ data.role }}</p>
-        </div>
+        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider">
+          {{ key }}
+        </label>
+        <p class="bg-gray-50 text-gray-800 border border-gray-200 rounded-md px-4 py-2 text-sm">
+          {{ label }}
+        </p>
       </div>
 
-      <!-- Botones en móvil (se muestran debajo de todo) -->
-      <div class="mt-4 flex flex-col gap-4 md:hidden">
+      <!-- Botones en escritorio -->
+      <div class="hidden md:flex flex-col justify-end gap-4">
         <EditPerfilModal :user="data" />
         <ChangePasswordPerfil />
       </div>
     </div>
 
-    <!-- Manejo de errores -->
-    <div v-if="err" class="flex justify-center items-start">
-      <span>{{ err }}</span>
+    <!-- Botones en móvil -->
+    <div class="mt-8 flex flex-col gap-4 md:hidden">
+      <EditPerfilModal :user="data" />
+      <ChangePasswordPerfil />
     </div>
 
-    <!-- Cargador -->
-    <div v-if="isLoading" class="flex justify-center items-start">
-      <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32" />
+    <!-- Error -->
+    <div v-if="err" class="mt-6 text-red-500 text-center font-medium">
+      {{ err }}
+    </div>
+
+    <!-- Loader -->
+    <div v-if="isLoading" class="flex justify-center mt-12">
+      <img src="@/assets/loader.svg" alt="Cargando" class="h-16 w-16 animate-spin opacity-70" />
     </div>
   </section>
 </template>
+
+
 
 <script setup>
 import Cookies from 'js-cookie';
