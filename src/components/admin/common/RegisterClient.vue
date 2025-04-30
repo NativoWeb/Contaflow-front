@@ -8,7 +8,7 @@
     <div class="m-auto w-[80%] flex flex-col">
       
       <div>
-      <div class="relative z-0 w-full mb-5 group">
+      <div class="relative w-full mb-5 group">
       <input 
         v-model="clientForm.nit"
         @input="validateNit"
