@@ -11,7 +11,7 @@
     <!-- Formulario -->
     <form @submit.prevent="addUser" class="bg-white rounded-b-xl shadow-sm p-6 md:p-8">
       <!-- Primera fila -->
-      <div class="flex flex-col md:flex-row gap-6 mb-6">
+      <div class="flex flex-col  gap-6 mb-6">
         <!-- Nombres -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
@@ -23,6 +23,7 @@
             class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
             type="text" 
             placeholder="Ingrese sus nombres"
+            required
           >
           <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name }}</p>
         </div>
@@ -59,7 +60,7 @@
       </div>
 
       <!-- Segunda fila -->
-      <div class="flex flex-col md:flex-row gap-6 mb-6">
+      <div class="flex flex-col gap-6 mb-6">
         <!-- Número de Identificación -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">

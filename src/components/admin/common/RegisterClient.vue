@@ -1,79 +1,84 @@
 <template>
   <!-- Título -->
-  <form @submit.prevent="addClient" class="m-auto mt-[20px] w-[90%]" :style="{ borderRadius: '0 0 8px 8px' }">
-    <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 text-center md:text-left rounded-t-lg">
-      Registro de Empresas
-    </h2>
+  <div class="m-w-[1577px] mx-auto p-4 md:p-6">
+    <!-- Título de la página -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-xl p-4 shadow-sm">
+      <h2 class="text-xl md:text-2xl font-bold text-blue-800 text-center md:text-left">
+        Registro de Cliente PYMES
+      </h2>
+    </div>
 
-    <div class="m-auto w-[80%] flex flex-col">
-      
-      <div>
-      <div class="relative w-full mb-5 group">
-      <input 
-        v-model="clientForm.nit"
-        @input="validateNit"
-        type="text" 
-        id="nit" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" "
-        required 
-      />
-      <label for="nit" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">NIT *</label>
+  <form @submit.prevent="addClient" class="bg-white rounded-b-xl shadow-sm p-6 md:p-8">
+
+    <div class="p-6 flex flex-col gap-6 mb-6">
+      <div class="flex-1">
+        <label for="nit" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">NIT *</label>
+        <input 
+          v-model="clientForm.nit"
+          @input="validateNit"
+          type="text" 
+          id="nit" 
+          class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200" 
+          placeholder="Ingrese el NIT"
+          required 
+        />
       <p v-if="error.nit" class="text-red-500 text-xs mt-1">{{ error.nit }}</p>
     </div>
     
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="email" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Correo Electrónico *</label>
       <input 
         v-model="clientForm.username"
         @input="validateUseranme"
         type="email" 
         id="email" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
+        class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200" 
+        placeholder="Ingrese el correo electronico" 
         required 
       />
-      <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Correo Electrónico *</label>
       <p v-if="error.username" class="text-red-500 text-xs mt-1">{{ error.username }}</p>
     </div>
     
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="name" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Razón Social *</label>
       <input 
         v-model="clientForm.name"
         @input="validateName"
         type="text" 
         id="name" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
+        class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200" 
+        placeholder="Ingrese la razón social" 
         required 
       />
-      <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Razón Social *</label>
       <p v-if="error.name" class="text-red-500 text-xs mt-1">{{ error.name }}</p>
     </div>
 
   <!-- Fila: Dirección + Sector Económico -->
-  <div class="grid md:grid-cols-2 md:gap-6">
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="address" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Dirección *</label>
+
       <input 
         v-model="clientForm.address"
         @input="validateAddress"
         type="text" 
         id="address" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
+        class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200" 
+        placeholder="Ingrese la dirección" 
         required 
       />
-      <label for="address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección *</label>
       <p v-if="error.address" class="text-red-500 text-xs mt-1">{{ error.address }}</p>
     </div>
     
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="sector" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Sector económico *</label>
+
       <select
         v-model="clientForm.sector"
         id="sector"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        class="w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 rounded-lg focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
         required
       >
-        <option value="" disabled selected></option>
+        <option selected disabled>Seleccione un sector económico</option>
         <option value="Comercio y Ventas">Comercio y Ventas</option>
         <option value="Restaurantes y Gastronomia">Restaurantes y Gastronomía</option>
         <option value="Construccion e Infraestructura">Construcción e Infraestructura</option>
@@ -85,88 +90,90 @@
         <option value="Educacion y Formacion">Educación y Formación</option>
         <option value="Tecnologia e Informatica">Tecnología e Informática</option>
       </select>
-      <label for="sector" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sector económico *</label>
+
     </div>
-  </div>
-  </div>
 
   <div>
 
-    <h2 class="text-lg font-bold text-[#2A5CAA]  p-3 text-center md:text-left">
+    <h2 class="text-lg font-bold text-[#2A5CAA] text-left">
       Información del director ejecutivo
     </h2>
     
     <!-- Primera fila -->
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="first_name" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Nombres * </label>
       <input 
       v-model="clientForm.first_name"
       @input="validateFirstName"
       type="text" 
-      id="first_name" 
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-      placeholder=" " 
+      id="first_name"
+      class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+      placeholder="Ingrese el nombre del director" 
       required 
       />
-      <label for="first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombres *</label>
+
       <p v-if="error.first_name" class="text-red-500 text-xs mt-1">{{ error.first_name }}</p>
     </div>
     
     <div class="relative z-0 w-full mb-5 group">
+      <label for="last_name" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Apellidos *</label>
       <input 
       v-model="clientForm.last_name"
       @input="validateLastName"
         type="text" 
         id="last_name" 
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-        placeholder=" " 
+        class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+        placeholder="Ingrese el apellido del director" 
         required 
         />
-        <label for="last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Apellidos *</label>
+  
         <p v-if="error.last_name" class="text-red-500 text-xs mt-1">{{ error.last_name }}</p>
       </div>
       
-      <div class="relative z-0 w-full mb-5 group">
+      <div class="flex-1">
+        <label for="id_type" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Tipo de Identificación *</label>
+
         <select
         v-model="clientForm.id_type"
         id="id_type"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        class="w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 rounded-lg focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
         required
         >
-        <option value="" disabled selected></option>
+        <option disabled selected>Seleccione un tipo de cedula</option>
         <option value="Cedula_Ciudadania">Cédula de ciudadanía</option>
         <option value="Cedula_Extranjeria">Cédula de extranjería</option>
       </select>
-      <label for="id_type" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tipo de Identificación *</label>
+
     </div>
   </div>
   
   <!-- Segunda fila -->
-  <div class="grid md:grid-cols-3 md:gap-6">
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="id_number" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Número de Identificación *</label>
       <input 
       v-model="clientForm.id_number"
       @input="validateIdentificationNumber"
       type="text" 
-      id="id_number" 
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-      placeholder=" " 
+      id="id_number"
+      class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
+      placeholder="Numero de Identificación" 
       required 
       />
-      <label for="id_number" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Número de Identificación *</label>
       <p v-if="error.id_number" class="text-red-500 text-xs mt-1">{{ error.id_number }}</p>
     </div>
     
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
+      <label for="phone_number" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Número de celular *</label>
+
       <input 
       v-model="clientForm.phone_number"
       @input="validatePhoneNumber"
       type="text" 
       id="phone_number" 
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-      placeholder=" " 
+      class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200" 
+      placeholder="Numero de telefono" 
       required 
       />
-      <label for="phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Número de celular *</label>
       <p v-if="error.phone_number" class="text-red-500 text-xs mt-1">{{ error.phone_number }}</p>
     </div>
     
@@ -183,7 +190,6 @@
       Añadir Empresa
     </button>
   </div>
-</div>
 </div>
 </form>
 
@@ -223,6 +229,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -281,6 +288,12 @@
     if (!clientForm.name.trim()) error.name = "La razón social es obligatoria";
     else if (!nameRegex.test(clientForm.name)) error.name = "La razón social no es válida";
     else error.name = "";
+  }
+
+  const validateUseranme = () => {
+    if (!clientForm.username.trim()) error.username = "El correo electronico es obligatorio";
+    else if (!nameRegex.test(clientForm.username)) error.username = "El correo electronico no es válido";
+    else error.username = "";
   }
 
   const validateAddress = () => {
