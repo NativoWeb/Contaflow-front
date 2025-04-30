@@ -34,7 +34,18 @@
 						</div>
 					</div>
 
-					<button class="w-full md:w-40 bg-[#2A5CAA] text-white py-2 rounded-lg font-bold" type="submit">Enviar</button>
+
+        <button
+          class="w-full md:w-40 bg-[#2A5CAA] text-white py-2 rounded-lg font-bold"
+          type="submit"
+          :disabled="isFormInvalid"
+          :class="{
+            'hover:bg-[#2a4b8d]': !isFormInvalid,
+            'text-gray-500 cursor-not-allowed': isFormInvalid
+          }">
+          Enviar
+        </button>
+
 				
 				</form>
 
@@ -103,7 +114,7 @@
 	</template>
 
 <script setup>
-	import { reactive, ref } from 'vue';
+	import { reactive, ref, computed } from 'vue';
 import AuthServices from '@/services/authService';
 import { useRouter } from 'vue-router';
 
@@ -129,6 +140,11 @@ function toggleShowRepeatPassword() {
   showRepeatPassword.value = !showRepeatPassword.value;
 }
 
+const isFormInvalid = computed(() => {
+  return password.new_password.trim() === "" || password.confirm_password.trim() === "";
+});
+
+  
 async function btnChangePassword() {
   // Validación básica
   if (password.new_password !== password.confirm_password) {
