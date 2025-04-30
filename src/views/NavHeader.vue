@@ -93,19 +93,7 @@
       <li>
         <router-link 
           @click="toggleSidebar" 
-          to="/BancosERPs" 
-          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
-          active-class="bg-blue-50 text-blue-600 font-medium"
-        >
-          <img src="@/assets/BancoErps.svg" alt="Banks" class="w-5 h-5 mr-3">
-          <span class="text-sm">Bancos y ERPs</span>
-        </router-link>
-      </li>
-
-      <li>
-        <router-link 
-          @click="toggleSidebar" 
-          to="/conciliacion" 
+          to="/conciliaciones_lista" 
           class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
           active-class="bg-blue-50 text-blue-600 font-medium"
         >
@@ -114,7 +102,7 @@
         </router-link>
       </li>
 
-      <li>
+      <!-- <li>
         <router-link 
           @click="toggleSidebar" 
           to="/ReporteEmpre" 
@@ -124,7 +112,7 @@
           <img src="@/assets/informe.svg" alt="Reports" class="w-5 h-5 mr-3">
           <span class="text-sm">Reportes financieros y auditoría</span>
         </router-link>
-      </li>
+      </li> -->
     </template>
 
     <!-- CLIENTE Content -->

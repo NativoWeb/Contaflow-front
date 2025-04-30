@@ -5,8 +5,6 @@ import AuditorDetail from "@/components/admin/info/AuditorDetail.vue";
 import ClientDetails from "@/components/admin/info/ClientDetails.vue";
 import AccountantDetails from "@/components/admin/info/AccountantDetails.vue";
 import ListaCon from "@/components/admin/ListaCon.vue";
-import EmpresaCon from "@/components/admin/EmpresaCon.vue";
-import ExtractoCon from "@/components/admin/ExtractoCon.vue";
 import ResultadoCon from "@/components/admin/ResultadoCon.vue.vue";
 import ModificarCon from "@/components/admin/ModificarCon.vue";
 import ListaReporte from "@/components/admin/ListaReporte.vue";
@@ -49,21 +47,10 @@ const adminRoutes = [
     component: AuditorDetail,
     props: true
   },
-  // conciliaciones
   {
-    path: 'conciliacion', 
-    name: 'EmpresaCon',
-    component: EmpresaCon
-  },
-  {
-    path: 'ListaCon',
+    path: '/conciliaciones_lista',
     name: 'ListaCon',
     component: ListaCon
-  },
-  {
-    path: 'ExtractoCon',
-    name: 'ExtractoCon',
-    component: ExtractoCon
   },
   {
     path: 'ResultadoCon',
