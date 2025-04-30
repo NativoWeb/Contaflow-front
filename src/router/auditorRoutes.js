@@ -1,5 +1,6 @@
 import TableConciliationAud from "@/components/auditors/TableConciliationAud.vue";
 import TableClientsAud from "@/components/auditors/TableClientsAud.vue";
+import ConciliationsToSign from "@/components/auditors/conciliations/ConciliationsToSign.vue";
 
 const auditorRoutes = [
   {
@@ -11,6 +12,11 @@ const auditorRoutes = [
     path: '/tabla_clientes_aud',
     name: 'TableClientsAud',
     component: TableClientsAud
+  },
+  {
+    path: '/conciliaciones_firmar',
+    name: 'ConciliationsToSign',
+    component: ConciliationsToSign
   }
 ]
 
