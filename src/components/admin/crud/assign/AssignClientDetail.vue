@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6" v-if="data">
+  <div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6" v-if="clientData">
     <!-- Header con botón -->
     <div class="flex justify-between items-center mb-8 max-w-6xl mx-auto">
       <h1 class="text-2xl font-bold text-gray-900">Detalles del Usuario</h1>
@@ -23,29 +23,21 @@
             alt="Foto de usuario"
           >
         </div>
-        <h2 class="text-2xl font-bold text-white">{{ data.first_name }} {{ data.last_name }}</h2>
-        <p class="text-blue-100 mt-1">{{ data.username }}</p>
+        <h2 class="text-2xl font-bold text-white text-xl">{{ clientData.name }}</h2>
+        <p class="text-blue-100 mt-1">{{ clientData.username }}</p>
       </div>
 
       <!-- Sección de información -->
       <div class="p-6 md:p-8">
+        <h3 class="text-xl text-center my-8 font-semibold text-blue-800">Información empresa</h3>
         <!-- Primera fila -->
         <div class="flex flex-col md:flex-row gap-6 mb-6">
           <div class="flex-1">
             <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Nombres:
+              Nombre Cliente PYMES:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.first_name }}
-            </div>
-          </div>
-          
-          <div class="flex-1">
-            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Apellidos:
-            </label>
-            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.last_name }}
+              {{ clientData.name }}
             </div>
           </div>
         </div>
@@ -54,21 +46,19 @@
         <div class="flex flex-col md:flex-row gap-6 mb-6">
           <div class="flex-1">
             <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Tipo de Identificación:
+              Nit:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              <template v-if="data.id_type == 'Cedula_Ciudadania'">Cédula de Ciudadanía</template>
-              <template v-else-if="data.id_type == 'Cedula_Extranjeria'">Cédula de Extranjería</template>
-              <template v-else-if="data.id_type == 'Pasaporte'">Pasaporte</template>
+              {{ clientData.nit }}
             </div>
           </div>
-          
+                    
           <div class="flex-1">
             <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Número de Identificación:
+              Correo Electrónico:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.id_number }}
+              {{ clientData.username }}
             </div>
           </div>
         </div>
@@ -80,42 +70,65 @@
               Número de Celular:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.phone_number }}
+              {{ clientData.phone_number }}
             </div>
           </div>
-          
+
           <div class="flex-1">
             <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Correo Electrónico:
+              Dirección:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.username }}
+              {{ clientData.address }}
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Sector:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ clientData.sector }}
             </div>
           </div>
         </div>
 
         <!-- Cuarta fila -->
+        <h3 class="text-xl text-center my-8 font-semibold text-blue-800">Información representante</h3>
         <div class="flex flex-col md:flex-row gap-6">
           <div class="flex-1">
             <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Rol:
+              Nombre:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.role }}
+              {{ clientData.first_name }} {{  clientData.last_name }}
             </div>
           </div>
           
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6">
+
           <div class="flex-1">
             <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-              Estado:
+              Tipo de Identificación:
             </label>
             <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
-              {{ data.status }}
+              <span v-if="clientData.id_type == 'Cedula_Ciudadania'">Cédula de Ciudadanía</span>
+              <span v-else-if="clientData.id_type == 'Cedula_Extranjeria'">Cédula de Extranjería</span>
+              <span v-else-if="clientData.id_type == 'Pasaporte'">Pasaporte</span>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Numero de Identificación:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ clientData.id_number }}
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
     <!-- Sección inferior -->
     <div class="max-w-6xl mx-auto mt-8">
@@ -123,8 +136,9 @@
         <ConciliationsClients/>
       </div>
     </div>
+  </div>
+    </div>
 
-<!-- Loading Modal -->
 <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
   <div class="bg-white rounded-xl shadow-2xl p-8 transform transition-all duration-300 scale-95 animate-pulse-once">
     <div class="flex flex-col items-center justify-center space-y-4">
@@ -214,6 +228,7 @@
   const getUser = new UserService();
   const isLoading = ref(false);
   const data = ref(null);
+  const clientData = ref(null);
   const err = ref(null);
   const alertEditedModal = ref("");
   const VUE_APP_URL = process.env.VUE_APP_URL;
@@ -229,7 +244,8 @@
     isLoading.value = true;
     try {
       await getUser.getUserById(urlApi)
-      data.value = getUser.getData().value;
+      clientData.value = getUser.getData().value;
+      console.log(clientData.value)
     }
     catch(er){
       err.value = getUser.getError().value;

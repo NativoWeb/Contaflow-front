@@ -33,7 +33,7 @@
               '': !alreadyAssigned(user.id)
             }"
             >
-            <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
+            <td class="px-6 py-4 font-semibold text-base">{{ user.name }}</td>
             <td class="px-6 py-4">{{ user.id_number }}</td>
             <td class="px-6 py-4">{{ user.username }}</td>
             <td class="px-6 py-4">{{ user.phone_number }}</td>
