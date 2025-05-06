@@ -10,8 +10,8 @@ class ConciliationService {
   constructor() {
     this.loader = ref(false);  // Maneja el estado de carga
     this.modal = ref(false);   // Modal para mostrar el estado de carga o errores
-    this.error = ref(null);    // Maneja el estado de error
-    this.data = ref(null);     // Datos de la conciliación
+    this.error = ref("");    // Maneja el estado de error
+    this.data = ref("");     // Datos de la conciliación
   }
 
   getLoader() {
@@ -36,8 +36,7 @@ class ConciliationService {
 
   // Método para enviar los archivos
   async sendFile(urlApi, fileBank, fileAccounting) {
-    this.loader.value = true; // Activar el estado de carga
-
+    this.loader.value = true;
     const formData = new FormData();
     formData.append('data', fileBank);
     formData.append('data', fileAccounting);
@@ -53,18 +52,17 @@ class ConciliationService {
       }
 
       const json = await response.json();
-      this.data.value = json; // Almacenamos la respuesta de la API
-      
-        // Llamado a la funcion de la otra peticion - guardar los archivos en la base de datos y el resultado de la conciliacion
-      }
+      if (!json) throw new Error('No se recibió respuesta del servidor');
+      this.data.value = json;
+      return true;
+     }
       catch (err) {
         this.error.value = err;
       }
       finally{
-        this.isLoading.value = false;
+        this.loader.value = false;
       }
-
     }
   }
 
-  export default new ConciliationService();
+  export default ConciliationService;

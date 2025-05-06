@@ -22,7 +22,7 @@
       <span class="ml-2 my-6">Ocurrio un error {{ err }}</span>
     </div>
     
-    <form @submit.prevent="sendFiles">
+    <form @submit.prevent="sendExtracts">
       <div class="flex flex-wrap justify-center gap-10 md:gap-16">
 
         <!-- Extractos Bancarios -->
@@ -91,7 +91,7 @@
 <script setup>
 import router from "@/router";
 import Cookies from "js-cookie";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import conciliationService from "@/services/conciliationService";
 
@@ -100,7 +100,6 @@ const clientId = useRoute().params.id;
 const auditorId = useRoute().params.auditorId;
 const auditorName = useRoute().params.auditorName;
 const accountantId = localStorage.getItem('id');
-const isLoading = ref(false);
 const isDraggingBank = ref(false);
 const isDraggingAccounting = ref(false);
 const fileNameBank = ref(null);
@@ -110,13 +109,13 @@ const fileInputBank = ref(null);
 const fileInputAccounting = ref(null);
 const fileBank = ref(null);
 const fileAccounting = ref(null);
-
-const sendFile = new conciliationService
+const conService = new conciliationService();
 const err = ref(null);
+const isLoading = ref(false);
 const data = ref(null);
 const VUE_APP_URL = process.env.VUE_APP_URL;
-const uri = `/accountants/${accountantId}/`;
-const urlApi = VUE_APP_URL + uri;
+
+console.log(VUE_APP_URL)
 
 const selectFile = (type) => {
   if (type === "bank") fileInputBank.value.click();
@@ -157,23 +156,22 @@ const dropFile = (event, type) => {
   }
 };
 
-onMounted (async() => {
+const sendExtracts = async () => {
   isLoading.value = true;
   try{
-    await sendFile.getUserById(urlApi)
-    data.value = sendFile.getData().value.conciliations_data
+    await conService.sendFile(`http://localhost:5678/webhook-test/contaflow`, fileBank.value, fileAccounting.value)
+    data.value = conService.getData().value
+    console.log(data.value)
     sendToBack(data.value[0].text)
     }
     catch(error){
-      err.value = sendFile.getError().value
+      console.log(error)
+      err.value = conService.getError().value
     }
     finally{
       isLoading.value = false
     }
-  })
-
-
-
+}
 
 
 // Convertir a servicio
