@@ -19,7 +19,7 @@ const data = ref(null)
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const accountantId = localStorage.getItem('id');
 
-// Convertir a servicio
+
 onMounted(async () => {
   isLoading.value = true;
   try{
