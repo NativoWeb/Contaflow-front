@@ -132,18 +132,6 @@
       <li>
         <router-link 
           @click="toggleSidebar" 
-          to="/tabla_de_empresa" 
-          class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
-          active-class="bg-blue-50 text-blue-600 font-medium"
-        >
-          <img src="@/assets/empresass.svg" alt="Companies" class="w-5 h-5 mr-3">
-          <span class="text-sm">Mis Empresas</span>
-        </router-link>
-      </li>
-
-      <li>
-        <router-link 
-          @click="toggleSidebar" 
           to="/tabla_de_contador" 
           class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
           active-class="bg-blue-50 text-blue-600 font-medium"

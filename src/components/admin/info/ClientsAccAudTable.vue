@@ -42,7 +42,7 @@
         <tbody v-if="filteredClients.length > 0">
           <tr v-for="user in filteredClients" :key="user.id"  @click="redirectToRemove(user.id)"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
+            <td class="px-6 py-4 font-semibold text-base">{{ user.name }}</td>
             <td class="px-6 py-4">{{ user.username}}</td>
             <td class="px-6 py-4">{{ user.id_number}}</td>
             <td class="px-6 py-4">{{ user.phone_number }}</td>

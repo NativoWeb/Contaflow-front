@@ -22,7 +22,7 @@
       <span class="ml-2 my-6">Ocurrio un error {{ err }}</span>
     </div>
     
-    <form @submit.prevent="sendFiles">
+    <form @submit.prevent="sendExtracts">
       <div class="flex flex-wrap justify-center gap-10 md:gap-16">
 
         <!-- Extractos Bancarios -->
@@ -93,13 +93,13 @@ import router from "@/router";
 import Cookies from "js-cookie";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import conciliationService from "@/services/conciliationService.js";
 
 const clientName = useRoute().params.nameClient;
 const clientId = useRoute().params.id;
 const auditorId = useRoute().params.auditorId;
 const auditorName = useRoute().params.auditorName;
 const accountantId = localStorage.getItem('id');
-const isLoading = ref(false);
 const isDraggingBank = ref(false);
 const isDraggingAccounting = ref(false);
 const fileNameBank = ref(null);
@@ -110,6 +110,10 @@ const fileInputAccounting = ref(null);
 const fileBank = ref(null);
 const fileAccounting = ref(null);
 const VUE_APP_URL = process.env.VUE_APP_URL;
+const conService = new conciliationService();
+const err = ref(null);
+const isLoading = ref(false);
+const data = ref(null);
 
 const selectFile = (type) => {
   if (type === "bank") fileInputBank.value.click();
@@ -150,29 +154,24 @@ const dropFile = (event, type) => {
   }
 };
 
-// Convertir a servicio
-const sendFiles = async () => {
+const sendExtracts = async () => {
   isLoading.value = true;
-  const formData = new FormData();
-  formData.append('data', fileBank.value);
-  formData.append('data', fileAccounting.value);
-
-  try {
-    const res = await fetch(`http://localhost:5678/webhook-test/contaflow`, {
-      method: 'POST',
-      body: formData
-    })
-    const json = await res.json()
-    sendToBack(json[0].text)
-    // Llamado a la funcion de la otra peticion - guardar los archivos en la base de datos y el resultado de la conciliacion
-  }
-  catch (err) {
-    console.log(err)
-  }
-  finally{
-    isLoading.value = false;
-  }
+  try{
+    await conService.sendFile(`http://localhost:5678/webhook-test/contaflow`, fileBank.value, fileAccounting.value)
+    data.value = conService.getData().value
+    console.log(data.value)
+    sendToBack(data.value[0].text)
+    }
+    catch(error){
+      console.log(error)
+      err.value = conService.getError().value
+    }
+    finally{
+      isLoading.value = false
+    }
 }
+
+  
 
 // Convertir a servicio
 const sendToBack = async (dataConciliation) => {
