@@ -54,7 +54,7 @@ class ConciliationService {
 
       const json = await response.json();
       this.data.value = json; // Almacenamos la respuesta de la API
-      
+
         // Llamado a la funcion de la otra peticion - guardar los archivos en la base de datos y el resultado de la conciliacion
       }
       catch (err) {
@@ -64,7 +64,9 @@ class ConciliationService {
         this.isLoading.value = false;
       }
 
-    }
-  }
+    }}
+
+    
+
 
   export default new ConciliationService();

@@ -91,9 +91,8 @@
 <script setup>
 import router from "@/router";
 import Cookies from "js-cookie";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
-import conciliationService from "@/services/conciliationService";
 
 const clientName = useRoute().params.nameClient;
 const clientId = useRoute().params.id;
@@ -110,13 +109,7 @@ const fileInputBank = ref(null);
 const fileInputAccounting = ref(null);
 const fileBank = ref(null);
 const fileAccounting = ref(null);
-
-const sendFile = new conciliationService
-const err = ref(null);
-const data = ref(null);
 const VUE_APP_URL = process.env.VUE_APP_URL;
-const uri = `/accountants/${accountantId}/`;
-const urlApi = VUE_APP_URL + uri;
 
 const selectFile = (type) => {
   if (type === "bank") fileInputBank.value.click();
@@ -157,24 +150,29 @@ const dropFile = (event, type) => {
   }
 };
 
-onMounted (async() => {
+// Convertir a servicio
+const sendFiles = async () => {
   isLoading.value = true;
-  try{
-    await sendFile.getUserById(urlApi)
-    data.value = sendFile.getData().value.conciliations_data
-    sendToBack(data.value[0].text)
-    }
-    catch(error){
-      err.value = sendFile.getError().value
-    }
-    finally{
-      isLoading.value = false
-    }
-  })
+  const formData = new FormData();
+  formData.append('data', fileBank.value);
+  formData.append('data', fileAccounting.value);
 
-
-
-
+  try {
+    const res = await fetch(`http://localhost:5678/webhook-test/contaflow`, {
+      method: 'POST',
+      body: formData
+    })
+    const json = await res.json()
+    sendToBack(json[0].text)
+    // Llamado a la funcion de la otra peticion - guardar los archivos en la base de datos y el resultado de la conciliacion
+  }
+  catch (err) {
+    console.log(err)
+  }
+  finally{
+    isLoading.value = false;
+  }
+}
 
 // Convertir a servicio
 const sendToBack = async (dataConciliation) => {
