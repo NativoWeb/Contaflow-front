@@ -64,5 +64,4 @@ class ConciliationService {
       }
     }
   }
-
-  export default ConciliationService;
+export default ConciliationService;

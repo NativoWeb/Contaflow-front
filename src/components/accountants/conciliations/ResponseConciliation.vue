@@ -6,38 +6,39 @@
 </template>
 
 <script setup>
-import Cookies from 'js-cookie';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { marked } from 'marked';
+import UserService from '@/services/userService';
 
 
+const getUserService = new UserService()
 const conciliationId = useRoute().params.conciliationId
 const isLoading = ref(false);
 const data = ref(null)
-// const err = ref(null)
+const err = ref(null);
 const VUE_APP_URL = process.env.VUE_APP_URL;
+const uri = `/accountants/${accountantId}/`;
 const accountantId = localStorage.getItem('id');
-
 
 onMounted(async () => {
   isLoading.value = true;
-  try{
-    const res = await fetch(`${VUE_APP_URL}/accountants/${accountantId}/`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}` 
-      }
-    })
-    const json = await res.json() 
-    json.conciliations_data.forEach( el => {
+  try {
+    await  getUserService.getUserById(`${VUE_APP_URL}${uri}`)
+    data.value = getUserService.getData().value
+    data.value.conciliation_data.forEach(el => {
       if (el.id == conciliationId) data.value = marked.parse(el.response)
     })
   }
-  catch(err){
-    console.log(err)
+  
+  catch (error) {
+    err.value = getUserService.getError().value
+  } finally {
+    isLoading.value = false;
   }
 })
+
+
 
 </script>
 

@@ -93,7 +93,7 @@ import router from "@/router";
 import Cookies from "js-cookie";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import conciliationService from "@/services/conciliationService";
+import conciliationService from "@/services/conciliationService.js";
 
 const clientName = useRoute().params.nameClient;
 const clientId = useRoute().params.id;
@@ -109,13 +109,11 @@ const fileInputBank = ref(null);
 const fileInputAccounting = ref(null);
 const fileBank = ref(null);
 const fileAccounting = ref(null);
+const VUE_APP_URL = process.env.VUE_APP_URL;
 const conService = new conciliationService();
 const err = ref(null);
 const isLoading = ref(false);
 const data = ref(null);
-const VUE_APP_URL = process.env.VUE_APP_URL;
-
-console.log(VUE_APP_URL)
 
 const selectFile = (type) => {
   if (type === "bank") fileInputBank.value.click();
@@ -173,6 +171,7 @@ const sendExtracts = async () => {
     }
 }
 
+  
 
 // Convertir a servicio
 const sendToBack = async (dataConciliation) => {
