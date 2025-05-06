@@ -94,10 +94,12 @@ import Cookies from "js-cookie";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
+const clientName = useRoute().params.nameClient;
 const clientId = useRoute().params.id;
+const auditorId = useRoute().params.auditorId;
+const auditorName = useRoute().params.auditorName;
 const accountantId = localStorage.getItem('id');
 const isLoading = ref(false);
-const auditorId = useRoute().params.auditorId;
 const isDraggingBank = ref(false);
 const isDraggingAccounting = ref(false);
 const fileNameBank = ref(null);
@@ -148,6 +150,7 @@ const dropFile = (event, type) => {
   }
 };
 
+// Convertir a servicio
 const sendFiles = async () => {
   isLoading.value = true;
   const formData = new FormData();
@@ -171,7 +174,7 @@ const sendFiles = async () => {
   }
 }
 
-
+// Convertir a servicio
 const sendToBack = async (dataConciliation) => {
   try {
     const res = await fetch(`${VUE_APP_URL}/conciliations/register/`, {
@@ -179,8 +182,11 @@ const sendToBack = async (dataConciliation) => {
       body: JSON.stringify({
         'response': dataConciliation,
         'client': clientId,
+        'company': clientName,
         'accountant': accountantId,
-        'auditor': auditorId
+        'auditor': auditorId,
+        'auditor_name': auditorName,
+        'bank': "Param"
       }),
       headers: {
         'Content-Type': 'application/json',

@@ -14,7 +14,7 @@
   <!-- Contenedor de búsqueda y selección de empresa -->
   <div class="p-4  bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
     <h2 class="text-xl font-bold text-[#193368] p-2 text-center md:text-left">
-      Lista de mis Clientes
+      Lista de mis conciliaciones
     </h2>
 
     <div class="w-full md:w-1/2">
@@ -42,32 +42,36 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Numero de conciliacion</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Empresa</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Banco</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Numero de cuenta</th>
-            <th scope="col" class="px-6 py-3  md:table-cell">Contador</th>
             <th scope="col" class="px-6 py-3  md:table-cell">Auditor</th>
+            <th scope="col" class="px-6 py-3  md:table-cell">Estado conciliacion</th>
           </tr>
         </thead>
-        <tbody v-if="data.conciliations.length > 0">
-          <tr v-for="conciliation in data.conciliations_data" :key="conciliation.id"  class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">fecha</td>
-            <td class="px-6 py-4">{{ conciliation.account_number }}</td>
+        <tbody v-if="data.length > 0">
+          <tr v-for="conciliation in data" 
+          :key="conciliation.id"
+          @click="redirectToConciliationDetails(conciliation.id)"
+          class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+            <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
+            <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
             <td class="px-6 py-4">{{ conciliation.company}}</td>
-            <td class="px-6 py-4">banco</td>
-            <td class="px-6 py-4">n° cuenta</td>
-            <td class="px-6 py-4">{{ conciliation.accountant}}</td>
-            <td class="px-6 py-4">{{ conciliation.auditor }}</td>
+            <td class="px-6 py-4">{{ conciliation.bank }}</td>
+            <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
+            <td class="px-6 py-4">{{ conciliation.status }}</td>
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
-        <td class="ml-2 my-6">No se encontraron conciliaciones registradas.</td>
-      </tr>
+          <td class="ml-2 my-6">No se encontraron conciliaciones registradas.</td>
+        </tr>
       </table>
   </div>
+</div>
+<div v-else>
+  <h4>No hay conciliaciones</h4>
 </div>
 </template>
 
 <script setup>
-
+import router from '@/router'
 import UserService from '@/services/userService'
 import { ref, onMounted } from 'vue'
 
@@ -85,7 +89,8 @@ onMounted(async () => {
   isLoading.value = true;
   try{
     await getUserService.getUserById(urlApi)
-    data.value = getUserService.getData().value;
+    data.value = getUserService.getData().value.conciliations_data;
+    console.log(data.value)
   }
   catch(error){
     err.value = getUserService.getError().value;
@@ -94,4 +99,13 @@ onMounted(async () => {
     isLoading.value = false;
   }
 })
+
+const redirectToConciliationDetails = (id) => {
+  router.push(`/detalles_conciliacion_auditor=${id}`)
+}
+
+const formateDate = date => {
+  const new_date = new Date(date)
+  return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
+  }
 </script>

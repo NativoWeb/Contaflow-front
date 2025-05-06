@@ -46,7 +46,7 @@
         </tr>
       </thead>
       <tbody v-if="data.clients.length > 0">
-        <tr v-for="client in data.clients_data" :key="client.id"
+        <tr v-for="client in data.clients_data" :key="client.id" @click="redirectToClientDetails(client.id)"
           class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
           <td class="px-6 py-4">{{ client.first_name }} {{ client.last_name }}</td>
           <td class="px-6 py-4">{{ client.id_number }}</td>
@@ -79,6 +79,7 @@
 
 <script setup>
 
+import router from '@/router'
 import UserService from '@/services/userService'
 import { ref, onMounted } from 'vue'
 
@@ -91,6 +92,9 @@ const auditorsId = localStorage.getItem('id')
 const uri = `/auditors/${auditorsId}/`
 const urlApi = VUE_APP_URL + uri
 
+const redirectToClientDetails = (id) => {
+  router.push(`/detalles_cliente_auditor=${id}`)
+}
 
 onMounted(async () => {
   isLoading.value = true;

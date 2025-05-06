@@ -248,6 +248,7 @@
   const addressRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.#-]+$/;
   const id_numberRegex = /^[0-9]{7,10}$/; // Solo números, minimo 7 y máximo 10 caracteres
   const phoneRegex = /^[0-9]{10,10}$/; // Solo números, máximo 10 caracteres
+  const usernameRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Formato de email
 
   const clientForm = reactive({
     nit: "",
@@ -292,7 +293,7 @@
 
   const validateUseranme = () => {
     if (!clientForm.username.trim()) error.username = "El correo electronico es obligatorio";
-    else if (!nameRegex.test(clientForm.username)) error.username = "El correo electronico no es válido";
+    else if (!usernameRegex.test(clientForm.username)) error.username = "El correo electronico no es válido";
     else error.username = "";
   }
 

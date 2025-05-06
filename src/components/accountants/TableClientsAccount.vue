@@ -13,11 +13,11 @@
     <p class="text-red-600 font-medium text-center">Error al cargar los datos: {{ err }}</p>
   </div>
 
-  <div v-if="data" class="w-[1529px] m-auto bg-white rounded-xl shadow-sm overflow-hidden">
+  <div v-if="data && userData" class="w-[1529px] m-auto bg-white rounded-xl shadow-sm overflow-hidden">
     <!-- Encabezado con título y búsqueda -->
     <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white border-b border-gray-100">
       <div>
-        <h2 class="text-xl font-semibold text-gray-800">Lista de mis clientes cliente</h2>
+        <h2 class="text-xl font-semibold text-gray-800">Lista de mis clientes {{ userData.first_name }} {{ userData.last_name }}</h2>
       </div>
 
       <div class="mt-4 md:mt-0 w-full md:w-64">
@@ -73,6 +73,7 @@
               v-for="user in filteredData" 
               :key="user.id"
               class="hover:bg-gray-50 cursor-pointer transition-colors"
+              @click="redirectToClientInfo(user.id)"
             >
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
@@ -128,39 +129,45 @@
 
 <script setup>
 
+import router from '@/router'
 import UserService from '@/services/userService'
 import { ref, onMounted, computed } from 'vue'
 
 const getUserService = new UserService()
 const isLoading = ref(false)
 const data = ref(null)
+const userData = ref(null)
 const err = ref(null)
 const VUE_APP_URL = process.env.VUE_APP_URL
 const accountantId = localStorage.getItem('id')
 const uri = `/accountants/${accountantId}/`
 const urlApi = VUE_APP_URL + uri
-const searchQuery = ref('');
+const searchQuery = ref('')
 
+const redirectToClientInfo = (id) => {
+  router.push(`/informacion_cliente/${id}`)
+}
 
 onMounted(async () => {
   isLoading.value = true;
   try{
     await getUserService.getUserById(urlApi)
-    data.value = getUserService.getData().value.clients_data;
-    console.log(data.value)
+    data.value = getUserService.getData().value.clients_data
+    userData.value = getUserService.getData().value
+    console.log(userData.value)
   }
   catch(error){
     err.value = getUserService.getError().value;
   }
   finally{
-    isLoading.value = false;
+    isLoading.value = false
   }
 })
 
 const filteredData = computed(() => {
-    if (!data.value) return [];
+    if (!data.value) return []
 
-    const query = searchQuery.value.toLowerCase();
+    const query = searchQuery.value.toLowerCase()
 
     return data.value.filter(user => 
       `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) || 
