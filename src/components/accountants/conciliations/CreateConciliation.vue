@@ -159,8 +159,7 @@ const sendExtracts = async () => {
   try{
     await conService.sendFile(`http://localhost:5678/webhook-test/contaflow`, fileBank.value, fileAccounting.value)
     data.value = conService.getData().value
-    console.log(data.value)
-    sendToBack(data.value[0].text)
+    sendToBack(data.value[0].output)
     }
     catch(error){
       console.log(error)
@@ -171,9 +170,6 @@ const sendExtracts = async () => {
     }
 }
 
-  
-
-// Convertir a servicio
 const sendToBack = async (dataConciliation) => {
   try {
     const res = await fetch(`${VUE_APP_URL}/conciliations/register/`, {
@@ -185,7 +181,6 @@ const sendToBack = async (dataConciliation) => {
         'accountant': accountantId,
         'auditor': auditorId,
         'auditor_name': auditorName,
-        'bank': "Param"
       }),
       headers: {
         'Content-Type': 'application/json',

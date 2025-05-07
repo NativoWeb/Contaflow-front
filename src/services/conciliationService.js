@@ -54,7 +54,6 @@ class ConciliationService {
       const json = await response.json();
       if (!json) throw new Error('No se recibió respuesta del servidor');
       this.data.value = json;
-      return true;
      }
       catch (err) {
         this.error.value = err;
