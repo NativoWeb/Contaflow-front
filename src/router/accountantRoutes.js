@@ -47,12 +47,7 @@ const accountantRoutes = [
     component: CreateConciliation
   },
   {
-    path: '/respuesta_conciliacion',
-    name: "ResponseConciliation",
-    component: ResponseConciliation
-  },
-  {
-    path: '/conciliacion_informacion/conciliacion=:conciliationId',
+    path: '/conciliacion_informacion/conciliacion',
     name: "ConciliationInformation",
     component: ResponseConciliation
   },

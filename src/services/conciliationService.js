@@ -34,6 +34,41 @@ class ConciliationService {
     return this.modal;
   }
 
+  async getConciliations(url){
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.getToken()}` 
+        },
+      });
+      if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
+      const json = await response.json();
+      this.data.value = json;
+    }
+    catch (err) {
+      this.error.value = err;
+    }
+  }
+
+  async getConciliationById(url){
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.getToken()}` 
+        },
+      });
+      if (!response.ok) throw new Error(`${response.status} error de tipo: ${response.statusText}`)
+      const json = await response.json();
+      this.data.value = json;
+    }
+    catch (err) {
+      this.error.value = err;
+    }
+  }
+  
+
   // Método para enviar los archivos
   async sendFile(urlApi, fileBank, fileAccounting) {
     this.loader.value = true;
@@ -62,5 +97,32 @@ class ConciliationService {
         this.loader.value = false;
       }
     }
+
+    async saveConciliation(urlApi, dataConciliation) {
+      try {
+        const response = await fetch(urlApi, {
+          method: 'POST',
+          body: JSON.stringify(dataConciliation),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Cookies.get('jwt')}` 
+          }
+        })
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const json = await response.json();
+        if (!json) throw new Error('No se recibió respuesta del servidor');
+        this.data.value = json;
+      }
+      catch (err) {
+        this.error.value = err;
+      }
+      finally{
+        this.loader.value = false;
+      }
+    }
   }
+
 export default ConciliationService;

@@ -98,7 +98,7 @@
   import DeleteModal from '../crud/DeleteModal.vue';
   import UserService from '@/services/userService';
   import { onMounted, ref } from 'vue';
-import router from '@/router';
+  import router from '@/router';
   
   const getUser = new UserService();
   const userId = useRoute().params.id;
@@ -110,7 +110,6 @@ import router from '@/router';
   const urlApi = VUE_APP_URL + uri;
 
   defineProps(['id']);
-
 
   const goToConCompTable = (id) => {
     router.push(`conciliaciones_empresas/${id}`)

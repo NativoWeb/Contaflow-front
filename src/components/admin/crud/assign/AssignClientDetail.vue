@@ -245,7 +245,6 @@
     try {
       await getUser.getUserById(urlApi)
       clientData.value = getUser.getData().value;
-      console.log(clientData.value)
     }
     catch(er){
       err.value = getUser.getError().value;

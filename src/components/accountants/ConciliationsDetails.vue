@@ -1,84 +1,149 @@
 <template>
-  <div class="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6 flex flex-col gap-6">
-  
-  <!-- Título -->
-  <div class="flex justify-between items-center border-b pb-4">
-    <h2 class="text-2xl font-semibold text-gray-800">Conciliación Bancaria</h2>
-    <button @click="redirectToCreateConciliation" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
-      Nueva Conciliación
-    </button>
-  </div>
+  <section v-if="data" class="p-5">
+   <div class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
+   <h1 class="text-2xl font-bold text-gray-800">Resumen de Conciliación Bancaria</h1>
+<!-- Información general  -->
+<div class="flex flex-col items-start">
+     <p><span class="font-semibold">Auditor:</span> {{ data.auditor_name }}</p>
+     <p><span class="font-semibold">Banco:</span> {{ data.response.Banco }}</p>
+     <p><span class="font-semibold">Cliente:</span> {{ data.company }}</p>
+     <p><span class="font-semibold">Identificación:</span> #{{ data.identification_number }}</p>
+     <p><span class="font-semibold">Estado:</span> {{ data.response.conciliacionBancaria.estado }}</p>
+     <!-- <p><span class="font-semibold">Errores:</span> Sí</p>   -->
+     <p><span class="font-semibold">Firma:</span> Pendiente</p>  
+     <p><span class="font-semibold">Fecha de creación:</span> {{ formateDate(data.created_at) }}</p>
+   </div> 
 
-  <!-- Filtros -->
-  <div class="flex flex-wrap gap-4 items-end">
-    <div class="flex flex-col">
-      <label class="text-sm text-gray-600 mb-1">Fecha inicial</label>
-      <input type="date" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500" />
-    </div>
-    <div class="flex flex-col">
-      <label class="text-sm text-gray-600 mb-1">Fecha final</label>
-      <input type="date" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500" />
-    </div>
-    <div class="flex flex-col">
-      <label class="text-sm text-gray-600 mb-1">Cuenta bancaria</label>
-      <select class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500">
-        <option>Seleccione una cuenta</option>
-        <option>Cuenta Corriente - Bancolombia</option>
-        <option>Cuenta de Ahorros - Davivienda</option>
-      </select>
-    </div>
-    <button class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md transition">
-      Buscar
-    </button>
-  </div>
+    <!-- Errores  -->
+   <div v-if="data.response.conciliacionBancaria.errores.length > 0" class="space-y-8">
+      <!-- Error por tipo -->
+      <!-- Depósitos  -->
+     <div v-if="data.response.conciliacionBancaria.errores[0].detalles.length > 0">
+       <h2 class="text-xl font-semibold text-blue-700">Diferencia en los depósitos</h2>
+       <table class="w-full table-auto mt-2 border text-left text-gray-700">
+         <thead class="bg-blue-100">
+           <tr>
+             <th class="px-4 py-2">Fecha</th>
+             <th class="px-4 py-2">Estado Banco</th>
+             <th class="px-4 py-2">Auxiliar</th>
+             <th class="px-4 py-2">Diferencia</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr 
+           v-for="details in data.response.conciliacionBancaria.errores[0].detalles"
+           :key="details"
+           class="border-t">
+           <td class="px-4 py-2">{{ details.fecha }}</td>
+           <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
+           <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
+           <td class="px-4 py-2">{{ details.diferencia }}</td></tr>
+         </tbody>
+       </table>
+     </div>
+     <div v-else>
+       <h2>En los depósitos no hay diferencias</h2>
+     </div>
 
-  <!-- Tablas de conciliación -->
-  <div class="flex flex-col lg:flex-row gap-6">
-    <!-- Transacciones bancarias -->
-    <div class="flex-1 border rounded-lg p-4 bg-gray-50 shadow-sm">
-      <h3 class="text-lg font-medium mb-3 text-gray-700">Transacciones Bancarias</h3>
-      <ul class="space-y-2">
-        <li class="flex justify-between items-center bg-white px-3 py-2 rounded shadow">
-          <span>Transferencia #4567</span>
-          <span>$1.200.000</span>
-        </li>
-        <li class="flex justify-between items-center bg-white px-3 py-2 rounded shadow">
-          <span>Pago Nómina</span>
-          <span>$3.400.000</span>
-        </li>
-      </ul>
-    </div>
+      <!-- Cheques  -->
+     <div v-if="data.response.conciliacionBancaria.errores[1].detalles.length > 0">
+       <h2 class="text-xl font-semibold text-blue-700">Diferencia en los cheques</h2>
+       <table class="w-full table-auto mt-2 border text-left text-gray-700">
+         <thead class="bg-blue-100">
+           <tr>
+             <th class="px-4 py-2">Fecha</th>
+             <th class="px-4 py-2">Estado Banco</th>
+             <th class="px-4 py-2">Auxiliar</th>
+             <th class="px-4 py-2">Diferencia</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr 
+           v-for="details in data.response.conciliacionBancaria.errores[1].detalles"
+           :key="details"
+           class="border-t">
+           <td class="px-4 py-2">{{ details.fecha }}</td>
+           <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
+           <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
+           <td class="px-4 py-2">{{ details.diferencia }}</td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <div v-else>
+       <h2>En los cheques no hay diferencias</h2>
+     </div>
 
-    <!-- Registros contables -->
-    <div class="flex-1 border rounded-lg p-4 bg-gray-50 shadow-sm">
-      <h3 class="text-lg font-medium mb-3 text-gray-700">Registros Contables</h3>
-      <ul class="space-y-2">
-        <li class="flex justify-between items-center bg-white px-3 py-2 rounded shadow">
-          <span>Ingreso #984</span>
-          <span>$1.200.000</span>
-        </li>
-        <li class="flex justify-between items-center bg-white px-3 py-2 rounded shadow">
-          <span>Pago Servicios</span>
-          <span>$3.400.000</span>
-        </li>
-      </ul>
-    </div>
-  </div>
+      <!-- Saldo final  -->
+     <div v-if="data.response.conciliacionBancaria.errores[2].detalles.length > 0">
+       <h2 class="text-xl font-semibold text-blue-700">Diferencia en el saldo final</h2>
+       <table class="w-full table-auto mt-2 border text-left text-gray-700">
+         <thead class="bg-blue-100">
+           <tr>
+             <th class="px-4 py-2">Fecha</th>
+             <th class="px-4 py-2">Estado Banco</th>
+             <th class="px-4 py-2">Auxiliar</th>
+             <th class="px-4 py-2">Diferencia</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr 
+           v-for="details in data.response.conciliacionBancaria.errores[2].detalles"
+           :key="details"
+           class="border-t">
+           <td class="px-4 py-2">{{ details.fecha }}</td>
+           <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
+           <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
+           <td class="px-4 py-2">{{ details.diferencia }}</td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+   </div>
+   <div v-else>
+     <h1>En el saldo final no diferencias</h1>
+   </div>
+    
 
-  <!-- Botón de conciliación -->
-  <div class="flex justify-end">
-    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md font-medium transition">
-      Conciliar Seleccionados
-    </button>
-  </div>
-
-</div>
+ </div>
+ </section>
 </template>
 
 <script setup>
-  import router from '@/router';
+import UserService from '@/services/userService';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-  const redirectToCreateConciliation = () => {
-    router.push(`conciliaciones/crear_conciliacion`)
+const userService = new UserService();
+const data = ref("");
+const accountantId = localStorage.getItem('id');
+const conciliationId = useRoute().params.id;
+const VUE_APP_URL = process.env.VUE_APP_URL;
+const urlApi = `${VUE_APP_URL}/accountants/${accountantId}/`
+const isLoading = ref(false);
+
+onMounted(async () => {
+  isLoading.value = true;
+  try {
+    await userService.getUserById(urlApi)
+    data.value = userService.getData().value.conciliations_data;
+    data.value.forEach(el => {
+      if (el.id == conciliationId) {
+        data.value = el;
+        console.log(data.value);
+      }
+    })
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    isLoading.value = false;
+  }
+})
+
+const formateDate = date => {
+  const new_date = new Date(date)
+  return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
   }
 </script>
