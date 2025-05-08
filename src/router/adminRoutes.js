@@ -11,8 +11,8 @@ import ListaReporte from "@/components/admin/ListaReporte.vue";
 import ReporteAdmin from "@/components/admin/ReporteAdmin.vue";
 import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
-import ConciliationDetails from "@/components/admin/conciliations/ConciliationDetails.vue";
 import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
+import ConciliationsDetails from "@/components/admin/ConciliationsDetails.vue";
 
 const adminRoutes = [
   // registro y tabla de usuarios y empresas
@@ -104,12 +104,11 @@ const adminRoutes = [
     name: 'ClientsRemoveAuditors',
     component: RemoveClientDetail
   },
-  // conciliaciones
   {
-    path: '/conciliation=:id',
-    name: 'ConciliationDetails',
-    component: ConciliationDetails
-  },
+    path: '/admin/detalles_conciliacion=:id',
+    name: 'AdminConcilationsDetails',
+    component: ConciliationsDetails
+  }
 ]
 
 export default adminRoutes;

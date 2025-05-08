@@ -111,28 +111,22 @@
 </template>
 
 <script setup>
-import UserService from '@/services/userService';
+import ConciliationService from '@/services/conciliationService';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-const userService = new UserService();
+const conciliationsService = new ConciliationService();
 const data = ref("");
-const clientId = localStorage.getItem('id');
 const conciliationId = useRoute().params.id;
 const VUE_APP_URL = process.env.VUE_APP_URL;
-const urlApi = `${VUE_APP_URL}/clients/${clientId}/`
+const urlApi = `${VUE_APP_URL}/conciliations/${conciliationId}/`
 const isLoading = ref(false);
 
 onMounted(async () => {
   isLoading.value = true;
   try {
-    await userService.getUserById(urlApi)
-    data.value = userService.getData().value.conciliations_data;
-    data.value.forEach(el => {
-      if (el.id == conciliationId) {
-        data.value = el;
-      }
-    })
+    await conciliationsService.getConciliationById(urlApi)
+    data.value = conciliationsService.getData().value;
   }
   catch(error){
     console.log(error)

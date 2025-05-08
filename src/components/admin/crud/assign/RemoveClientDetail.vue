@@ -12,7 +12,7 @@
       <div class="flex flex-col items-center bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center">
         <div class="relative mb-4">
           <img 
-            class="w-24 h-24 rounded-full border-4 border-white shadow-md" 
+            class="w-24 h-24 shadow-md" 
             src="@/assets/img_usuario.svg" 
             alt="Foto de usuario"
           >
