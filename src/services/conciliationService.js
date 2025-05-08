@@ -123,6 +123,27 @@ class ConciliationService {
         this.loader.value = false;
       }
     }
+
+    async signConciliation(urlApi, signData){
+      try {
+        const response = await fetch(urlApi, {
+          method: 'PATCH',
+          body: JSON.stringify(signData),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Cookies.get('jwt')}`
+          }
+        })
+        if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`)
+
+        const json = await response.json();
+        if (!json) throw new Error('Hubo un error en el servidor');
+        this.data.value = json;
+      }
+      catch (err) {
+        this.error.value = err;
+      }
+    }
   }
 
 export default ConciliationService;

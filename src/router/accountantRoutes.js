@@ -9,6 +9,7 @@ import SelectAuditor from "@/components/accountants/conciliations/SelectAuditor.
 import ConciliationsList from "@/components/accountants/conciliations/ConciliationsList.vue";
 import ClientDetails from "@/components/accountants/ClientDetails.vue";
 import ConciliationsDetails from "@/components/accountants/ConciliationsDetails.vue";
+import ConciliationsClientsList from "@/components/accountants/ConciliationsClientsList.vue";
 
 const accountantRoutes = [
   {
@@ -40,6 +41,11 @@ const accountantRoutes = [
     path: '/cliente=:id/:nameClient/seleccionar_auditor',
     name: 'SelectAuditor',
     component: SelectAuditor
+  },
+  {
+    path: '/lista_conciliaciones_cliente=:id',
+    name: 'ClientsConciliationsList',
+    component: ConciliationsClientsList
   },
   {
     path: '/cliente=:id/:nameClient/seleccionar_auditor/auditor=:auditorId/:auditorName/seleccionar_extracto',

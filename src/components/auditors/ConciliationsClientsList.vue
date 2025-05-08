@@ -33,7 +33,7 @@
     </div>
   </div>
 
- <!-- Tabla -->
+ <!-- Tabla --> 
  <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
   <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
@@ -47,19 +47,14 @@
           </tr>
         </thead>
         <tbody v-if="data.length > 0">
-          <tr v-for="conciliation in filteredData" 
+          <tr v-for="conciliation in data" 
           :key="conciliation.id"
           @click="redirectToConciliationDetails(conciliation.id)"
-          class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600"
-          :class="{
-            'hidden': !isStatusPending(conciliation.status),
-            '': isStatusPending(conciliation.status)
-          }"
-          >
+          class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
             <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
             <td class="px-6 py-4">{{ conciliation.company}}</td>
-            <td class="px-6 py-4">{{ conciliation.bank }}</td>
+            <td class="px-6 py-4">{{ conciliation.response.Banco }}</td>
             <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
             <td class="px-6 py-4">{{ conciliation.status }}</td>
           </tr>
@@ -76,67 +71,48 @@
 </template>
 
 <script setup>
-  import Cookies from 'js-cookie';
-  import router from '@/router'
-  import { onMounted, ref, computed } from 'vue';
+import router from '@/router'
+import UserService from '@/services/userService'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router';
 
-  const data = ref([]);
-  const id = localStorage.getItem('id')
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const url = `${VUE_APP_URL}/auditors/${id}/`;
-  const searchQuery = ref('');
+const getUserService = new UserService()
+const clientId = useRoute().params.id;
+const isLoading = ref(false)
+const data = ref([])
+const clientsData = ref(null)
+// const conciliations = ref(null)
+const err = ref(null)
+const VUE_APP_URL = process.env.VUE_APP_URL
+const auditorId = localStorage.getItem('id')
+const uri = `/auditors/${auditorId}/`
+const urlApi = VUE_APP_URL + uri
 
-  onMounted(async () => {
-    // isLoading.value = false;
-    try{
-      const res = await fetch(url, {
-        headers:{
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Cookies.get('jwt')}` 
+onMounted(async () => {
+  isLoading.value = true
+  try{
+    await getUserService.getUserById(urlApi)
+    clientsData.value = getUserService.getData().value.clients_data
+    clientsData.value.find(el => el.id == clientId)
+    if (clientsData.value){
+      clientsData.value.forEach(el => {
+        if (el.id == clientId) {
+          data.value = el.conciliations_data.filter(el => el.auditor == auditorId)
+          console.log(data.value)
         }
       })
-      const json = await res.json()
-      data.value = json.conciliations_data
-      console.log(data.value)
     }
-    catch(error){
-      console.log(error)
-    }
-    finally{
-      // isLoading.value = false;
-    }
-  })
-
-  // const goToSelectAuditor = (id) => {
-  //   router.push(`cliente=${id}/seleccionar_auditor/`)
-  // }
-
-  const filteredData = computed(() => {
-  if (!data.value) return [];
-
-  const query = searchQuery.value.toLowerCase();
-
-  return data.value.filter(conciliation => {
-    const accountant = conciliation.accountant ?? '';
-    const auditor = conciliation.auditor ?? '';
-    const client = conciliation.client ?? '';
-
-    return (
-      accountant.toString().toLowerCase().includes(query) ||
-      auditor.toString().toLowerCase().includes(query) ||
-      client.toString().toLowerCase().includes(query)
-    );
-  });
-});
-
-const isStatusPending = (status) => {
-  if (status == 'Pendiente'){
-    return status == 'Pendiente'
   }
-}
+  catch(error){
+    err.value = getUserService.getError().value
+  }
+  finally{
+    isLoading.value = false
+  }
+})
 
 const redirectToConciliationDetails = (id) => {
-  router.push(`/auditor/firmar_conciliacion=${id}`)
+  router.push(`/auditor/informacion_cliente/${id}`)
 }
 
 const formateDate = date => {

@@ -8,11 +8,7 @@
       <p><span class="font-semibold">Auditor:</span> {{ data.auditor_name }}</p>
       <p><span class="font-semibold">Banco:</span> {{ data.response.Banco }}</p>
       <p><span class="font-semibold">Cliente:</span> {{ data.company }}</p>
-      <!-- <p><span class="font-semibold">Identificación:</span> {{ data.identification_number }}</p> -->
       <p><span class="font-semibold">Estado:</span> {{ data.response.conciliacionBancaria.estado }}</p>
-      <!-- <p><span class="font-semibold">Errores:</span> Sí</p>   -->
-      <!-- <p><span class="font-semibold">Status:</span> Pendiente</p>   -->
-      <!-- <p><span class="font-semibold">Fecha de creación:</span> {{ formateDate(data.created_at) }}</p> -->
     </div> 
 
      <!-- Errores  -->

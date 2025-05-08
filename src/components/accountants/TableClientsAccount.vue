@@ -145,7 +145,7 @@ const urlApi = VUE_APP_URL + uri
 const searchQuery = ref('')
 
 const redirectToClientInfo = (id) => {
-  router.push(`/informacion_cliente/${id}`)
+  router.push(`/lista_conciliaciones_cliente=${id}`)
 }
 
 onMounted(async () => {

@@ -54,7 +54,7 @@
             <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
             <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
             <td class="px-6 py-4">{{ conciliation.company}}</td>
-            <td class="px-6 py-4">{{ conciliation.bank }}</td>
+            <td class="px-6 py-4">{{ conciliation.response.Banco }}</td>
             <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
             <td class="px-6 py-4">{{ conciliation.status }}</td>
           </tr>

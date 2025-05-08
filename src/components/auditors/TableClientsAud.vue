@@ -93,7 +93,7 @@ const uri = `/auditors/${auditorsId}/`
 const urlApi = VUE_APP_URL + uri
 
 const redirectToClientDetails = (id) => {
-  router.push(`/detalles_cliente_auditor=${id}`)
+  router.push(`/auditor/lista_conciliaciones_cliente=${id}`)
 }
 
 onMounted(async () => {
