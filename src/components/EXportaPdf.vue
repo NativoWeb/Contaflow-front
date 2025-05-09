@@ -15,20 +15,7 @@
       Descargar excel
     </button> 
 
-    <button
-  ref="dropdownBtn"
-  class="btn btn-primary dropdown-toggle text-white"
-  type="button"
-  data-bs-toggle="dropdown"
-  aria-expanded="false"
->
-  Descargar
-</button>
-<ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="#" @click.prevent="PDF">Descargar PDF</a></li>
-  <li><a class="dropdown-item" href="#" @click.prevent="excel">Descargar Excel</a></li>
-</ul>
-
+   
 
 
     <!-- Contenido para exportar a PDF -->
