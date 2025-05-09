@@ -161,6 +161,7 @@
 
   const isLoading = ref(false)
   const clientName = useRoute().params.name;
+  const clientId = useRoute().params.id;
   const data = ref("")
   const err = ref("")
   const clientData = ref("")
@@ -170,13 +171,21 @@
   const url = `${VUE_APP_URL}/accountants/${id}/`
   const searchQuery = ref('')
 
+  console.log(clientId)
+
   onMounted(async () => {
     isLoading.value = false;
     try{
       await getUser.getUserById(url);
-      data.value = getUser.getData().value.clients_data[0].auditors_data;
-      clientData.value = getUser.getData().value.clients_data[0]
-      console.log(clientData.value)
+      clientData.value = getUser.getData().value.clients_data
+      clientData.value.find(el => el.id == clientId)
+      if (clientData.value){
+        clientData.value.forEach(el => {
+          if (el.id == clientId) {
+            data.value = el.auditors_data
+          }
+        })
+      }
     }
     catch(error){
       err.value = getUser.getError().value;

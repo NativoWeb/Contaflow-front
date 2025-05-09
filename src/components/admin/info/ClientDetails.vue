@@ -1,151 +1,140 @@
 <template>
-  <!-- Título de la página -->
-  <h2 class="text-xl font-bold bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#2A5CAA] p-4 shadow-md text-center md:text-left" style="border-radius: 6px 6px 0 0;">
-    Información del usuario
-  </h2>
-<div v-if="data">
-  <div class="w-full bg-[#FBFBFB] shadow-md flex flex-col md:flex-row p-8" style="border-radius: 0 0 8px 8px;">
-    <!-- Sección de información -->
-    <div class="flex-1">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-      <!-- Primera fila -->
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Nombres:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.first_name }}</p>
+  <div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6" v-if="data">
+    <!-- Tarjeta principal -->
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <!-- Sección superior -->
+      <div class="flex flex-col items-center bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center">
+        <div class="relative mb-4">
+          <img 
+            class="w-24 h-24 shadow-md" 
+            src="@/assets/img_usuario.svg" 
+            alt="Foto de usuario"
+          >
+        </div>
+        <h2 class="text-2xl font-bold text-white text-xl">{{ data.name }}</h2>
+        <p class="text-blue-100 mt-1">{{ data.username }}</p>
       </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Apellidos:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.last_name }}</p>
-      </div>
+      
+              <!-- Botones de acción -->
+        <div class="flex flex-col md:flex-row justify-center gap-4 mt-10">
+          <EditModal :user="data" :title="'Actualizar Cliente'" />
+          <DeleteModal :id="String(data.id)" />
+          <StatusModal :id="String(data.id)" :status="data.status" />
+          <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`" />
+        </div>
 
-      <!-- Segunda fila -->
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Tipo de Identificación:
-        </label>
-        <p v-if="data.id_type == 'Cedula_Ciudadania'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Ciudadania</p>
-        <p v-if="data.id_type == 'Cedula_Extranjeria'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Cedula de Extranjeria</p>
-        <p v-if="data.id_type == 'Pasaporte'" class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">Pasaporte</p>
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Número de Identificación:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.id_number}}</p>
-      </div>
+      <!-- Información -->
+      <div class="p-6 md:p-8">
+        <h3 class="text-xl text-center my-8 font-semibold text-blue-800">Información Personal</h3>
 
-      <!-- Tercera fila -->
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Número de Celular:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.phone_number}}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Tipo de Identificación:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              <span v-if="data.id_type === 'Cedula_Ciudadania'">Cédula de Ciudadanía</span>
+              <span v-else-if="data.id_type === 'Cedula_Extranjeria'">Cédula de Extranjería</span>
+              <span v-else-if="data.id_type === 'Pasaporte'">Pasaporte</span>
+              <span v-else>{{ data.id_type }}</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Número de Identificación:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ data.id_number }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Número de Celular:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ data.phone_number }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Correo Electrónico:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ data.username }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Rol:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ data.role }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
+              Estado:
+            </label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 text-gray-700">
+              {{ data.status }}
+            </div>
+          </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-8">
+          <div class="flex justify-center">
+        <ConciliationsClients/>
       </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Correo Electrónico:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.username }}</p>
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Rol:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.role}}</p>           
-      </div>
-      <div>
-        <label class="block uppercase tracking-wide text-[#193368] text-xs font-bold mb-2">
-          Estado:
-        </label>
-        <p class="text-left w-full bg-[#F5F5F5] border border-gray-300 rounded-full py-3 px-4">{{ data.status}}</p>           
+    </div>
       </div>
     </div>
   </div>
 
-  <!-- Sección de botones -->
-  <div class="flex flex-col gap-6 ml-2 p-8">
-    <EditModal :user="data" :title="'Actualizar Cliente'"/>
-    <!-- <DeleteModal :id="data.id"/>
-    <StatusModal :id="data.id" :status="data.status"/> -->
-    <DeleteModal :id="String(data.id)" />
-    <StatusModal :id="String(data.id)" :status="data.status" />
-    <SendInvitationModal :user="data" :apiUrl="`${VUE_APP_URL}/users/email/${data.id}`"/>
-    <button class="btn-action" @click="goToConCompTable(data.id)">Empresas y Conciliaciones</button>
+  <!-- Error -->
+  <div v-if="err" class="flex justify-center items-start mt-10">
+    <span class="text-red-600">{{ err }}</span>
   </div>
-</div>
-</div>
-  
-<div v-if="err" class="flex justify-center items-start">
-  <span>{{ err }}</span>
-</div>
 
-<!-- cargador -->
-<div v-if="isLoading" class="flex justify-center items-start">
-  <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
-</div>
-
+  <!-- Cargando -->
+  <div v-if="isLoading" class="flex justify-center items-start">
+    <img src="@/assets/loader.svg" alt="carga" class="mt-20 h-32 w-32">
+  </div>
 </template>
 
 <script setup>
-  import { useRoute } from 'vue-router';
-  import StatusModal from '../crud/StatusModal.vue';
-  import SendInvitationModal from '../crud/SendInvitationModal.vue';
-  import EditModal from '../crud/EditModal.vue';
-  import DeleteModal from '../crud/DeleteModal.vue';
-  import UserService from '@/services/userService';
-  import { onMounted, ref } from 'vue';
-import router from '@/router';
-  
-  const getUser = new UserService();
-  const userId = useRoute().params.id;
-  const isLoading = ref(false);
-  const data = ref(null);
-  const err = ref(null);
-  const VUE_APP_URL = process.env.VUE_APP_URL;
-  const uri = `/clients/${userId}/`
-  const urlApi = VUE_APP_URL + uri;
+import { useRoute } from 'vue-router';
+import StatusModal from '../crud/StatusModal.vue';
+import SendInvitationModal from '../crud/SendInvitationModal.vue';
+import EditModal from '../crud/EditModal.vue';
+import DeleteModal from '../crud/DeleteModal.vue';
+import UserService from '@/services/userService';
+import { onMounted, ref } from 'vue';
+import ConciliationsClients from '../crud/assign/ConciliationsClients.vue';
 
-  defineProps(['id']);
+const getUser = new UserService();
+const userId = useRoute().params.id;
+const isLoading = ref(false);
+const data = ref(null);
+const err = ref(null);
+const VUE_APP_URL = process.env.VUE_APP_URL;
+const uri = `/clients/${userId}/`;
+const urlApi = VUE_APP_URL + uri;
 
+defineProps(['id']);
 
-  const goToConCompTable = (id) => {
-    router.push(`conciliaciones_empresas/${id}`)
+onMounted(async () => {
+  isLoading.value = true;
+  try {
+    await getUser.getUserById(urlApi);
+    data.value = getUser.getData().value;
+  } catch (error) {
+    err.value = getUser.getError().value;
+  } finally {
+    isLoading.value = false;
   }
-
-  onMounted(async () => {
-    isLoading.value = true;
-    try{
-      await getUser.getUserById(urlApi)
-      data.value = getUser.getData().value;
-    }
-    catch(error){
-      err.value = getUser.getError().value;
-    }
-    finally{
-      isLoading.value = false;
-    }
-  })
+});
 </script>
-
-
-<style>
-.tables-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-.tables-container > div {
-  width: 100%; 
-}
-
-@media (min-width: 768px) {
-  .tables-container > div {
-    width: 48%;
-  }
-}
-</style>

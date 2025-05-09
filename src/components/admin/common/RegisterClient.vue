@@ -115,7 +115,7 @@
       <p v-if="error.first_name" class="text-red-500 text-xs mt-1">{{ error.first_name }}</p>
     </div>
     
-    <div class="relative z-0 w-full mb-5 group">
+    <div class="flex-1">
       <label for="last_name" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Apellidos *</label>
       <input 
       v-model="clientForm.last_name"
@@ -177,17 +177,14 @@
       <p v-if="error.phone_number" class="text-red-500 text-xs mt-1">{{ error.phone_number }}</p>
     </div>
     
-    <div class="relative z-0 w-full mb-5 group flex items-end">
+    <div class="flex justify-end mt-8">
       <button
       :disabled="isFormInvalid"
       type="submit"
-      class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      :class="{
-        'hover:bg-blue-800': !isFormInvalid,
-        'cursor-not-allowed bg-blue-400': isFormInvalid
-      }"
+       class="bg-blue-800 hover:bg-blue-900 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        :class="{'opacity-50 cursor-not-allowed': isFormInvalid}"
       >
-      Añadir Empresa
+      Añadir Cliente
     </button>
   </div>
 </div>

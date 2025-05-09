@@ -1,7 +1,7 @@
 <template>
   <section v-if="data" class="p-5">
    <div class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
-   <h1 class="text-2xl font-bold text-gray-800">Resumen de Conciliación Bancaria</h1>
+   <h1  class="text-2xl font-bold text-gray-800">Resumen de Conciliación Bancaria</h1>
 <!-- Información general  -->
 <div class="flex flex-col items-start">
      <p><span class="font-semibold">Auditor:</span> {{ data.auditor_name }}</p>
@@ -10,7 +10,7 @@
      <p><span class="font-semibold">Identificación:</span> #{{ data.identification_number }}</p>
      <p><span class="font-semibold">Estado:</span> {{ data.response.conciliacionBancaria.estado }}</p>
      <!-- <p><span class="font-semibold">Errores:</span> Sí</p>   -->
-     <p><span class="font-semibold">Firma:</span>{{ data.status }}</p>  
+     <p><span class="font-semibold">Firma:</span> {{ data.status }}</p>  
      <p><span class="font-semibold">Fecha de creación:</span> {{ formateDate(data.created_at) }}</p>
    </div> 
 
@@ -98,6 +98,7 @@
            </tr>
          </tbody>
        </table>
+
      </div>
    </div>
    <div v-else>
@@ -110,29 +111,22 @@
 </template>
 
 <script setup>
-import UserService from '@/services/userService';
+import ConciliationService from '@/services/conciliationService';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-const userService = new UserService();
+const conciliationsService = new ConciliationService();
 const data = ref("");
-const accountantId = localStorage.getItem('id');
 const conciliationId = useRoute().params.id;
 const VUE_APP_URL = process.env.VUE_APP_URL;
-const urlApi = `${VUE_APP_URL}/accountants/${accountantId}/`
+const urlApi = `${VUE_APP_URL}/conciliations/${conciliationId}/`
 const isLoading = ref(false);
 
 onMounted(async () => {
   isLoading.value = true;
   try {
-    await userService.getUserById(urlApi)
-    data.value = userService.getData().value.conciliations_data;
-    data.value.forEach(el => {
-      if (el.id == conciliationId) {
-        data.value = el;
-        console.log(data.value);
-      }
-    })
+    await conciliationsService.getConciliationById(urlApi)
+    data.value = conciliationsService.getData().value;
   }
   catch(error){
     console.log(error)
@@ -146,4 +140,5 @@ const formateDate = date => {
   const new_date = new Date(date)
   return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
   }
+
 </script>

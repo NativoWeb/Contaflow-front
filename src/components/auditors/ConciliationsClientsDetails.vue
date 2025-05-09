@@ -10,7 +10,7 @@
      <p><span class="font-semibold">Identificación:</span> #{{ data.identification_number }}</p>
      <p><span class="font-semibold">Estado:</span> {{ data.response.conciliacionBancaria.estado }}</p>
      <!-- <p><span class="font-semibold">Errores:</span> Sí</p>   -->
-     <p><span class="font-semibold">Firma:</span>{{ data.status }}</p>  
+     <p><span class="font-semibold">Firma:</span> {{ data.status }}</p>  
      <p><span class="font-semibold">Fecha de creación:</span> {{ formateDate(data.created_at) }}</p>
    </div> 
 
@@ -116,10 +116,10 @@ import { useRoute } from 'vue-router';
 
 const userService = new UserService();
 const data = ref("");
-const accountantId = localStorage.getItem('id');
+const auditorId = localStorage.getItem('id');
 const conciliationId = useRoute().params.id;
 const VUE_APP_URL = process.env.VUE_APP_URL;
-const urlApi = `${VUE_APP_URL}/accountants/${accountantId}/`
+const urlApi = `${VUE_APP_URL}/auditors/${auditorId}/`
 const isLoading = ref(false);
 
 onMounted(async () => {

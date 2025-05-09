@@ -25,7 +25,8 @@
       </svg>
       <input 
         type="text"  
-        id="table-search-users" 
+        id="table-search-users"
+        v-model="searchQuery"
         placeholder="Buscar..."
         class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
@@ -46,17 +47,32 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado conciliacion</th>
           </tr>
         </thead>
-        <tbody v-if="data.length > 0">
+        <tbody v-if="filteredData.length > 0">
           <tr v-for="conciliation in filteredData" 
           :key="conciliation.id"
           @click="redirectToConciliationDetails(conciliation.id)"
-          class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+          class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600"
+          :class="{
+            'hidden': !isStatusPending(conciliation.status),
+            '': isStatusPending(conciliation.status)
+          }"
+          >
             <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
             <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
             <td class="px-6 py-4">{{ conciliation.company}}</td>
             <td class="px-6 py-4">{{ conciliation.bank }}</td>
             <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
-            <td class="px-6 py-4">{{ conciliation.status }}</td>
+            <td class="px-6 py-4">                
+              <span 
+                :class="{
+                  'bg-green-100 text-green-800': conciliation.status === 'Firmada',
+                  'bg-red-100 text-red-800': conciliation.status === 'Rechazada',
+                  'bg-yellow-100 text-yellow-800': conciliation.status === 'Pendiente'
+                }"
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                  {{ conciliation.status }}
+              </span>
+            </td>
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
@@ -71,23 +87,19 @@
 </template>
 
 <script setup>
-  // import router from '@/router';
   import Cookies from 'js-cookie';
   import router from '@/router'
-  // import UserService from '@/services/userService';
   import { onMounted, ref, computed } from 'vue';
 
-  // const isLoading = ref(false);
   const data = ref([]);
-  // const err = ref("");
-  // const getUser = new UserService();
   const id = localStorage.getItem('id')
   const VUE_APP_URL = process.env.VUE_APP_URL;
   const url = `${VUE_APP_URL}/auditors/${id}/`;
   const searchQuery = ref('');
+  const isLoading = ref(false);
 
   onMounted(async () => {
-    // isLoading.value = false;
+    isLoading.value = true;
     try{
       const res = await fetch(url, {
         headers:{
@@ -103,42 +115,35 @@
       console.log(error)
     }
     finally{
-      // isLoading.value = false;
+      isLoading.value = false
     }
   })
 
-  // const goToSelectAuditor = (id) => {
-  //   router.push(`cliente=${id}/seleccionar_auditor/`)
-  // }
-
-  const filteredData = computed(() => {
-  if (!data.value) return [];
-
-  const query = searchQuery.value.toLowerCase();
-
-  return data.value.filter(conciliation => {
-    const accountant = conciliation.accountant ?? '';
-    const auditor = conciliation.auditor ?? '';
-    const client = conciliation.client ?? '';
-
-    return (
-      accountant.toString().toLowerCase().includes(query) ||
-      auditor.toString().toLowerCase().includes(query) ||
-      client.toString().toLowerCase().includes(query)
-    );
-  });
-});
-
-// const isStatusPending = (status) => {
-//   return data.value.status.includes(status);
-// }
+const isStatusPending = (status) => {
+  if (status == 'Pendiente'){
+    return status == 'Pendiente'
+  }
+}
 
 const redirectToConciliationDetails = (id) => {
-  router.push(`/firmar_conciliacion=${id}`)
+  router.push(`/auditor/firmar_conciliacion=${id}`)
 }
 
 const formateDate = date => {
   const new_date = new Date(date)
   return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
   }
+
+const filteredData = computed(() => {
+  if (!data.value) return [];
+
+  const query = searchQuery.value.toLowerCase();
+
+  return data.value.filter(conciliation =>
+    conciliation.identification_number?.toString().toLowerCase().includes(query) || 
+    conciliation.company?.toLowerCase().includes(query) ||
+    conciliation.response.Banco?.toLowerCase().includes(query) ||
+    conciliation.auditor_name?.toLowerCase().includes(query)
+  );
+});
 </script>

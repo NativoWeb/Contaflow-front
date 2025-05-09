@@ -27,6 +27,7 @@
           type="text"  
           id="table-search-users" 
           placeholder="Buscar..."
+          v-model="searchQuery"
           class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
       </div>
@@ -45,8 +46,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado</th>
           </tr>
         </thead>
-        <tbody v-if="data.accountants.length > 0">
-          <tr v-for="accountat in data.accountants_data" :key="accountat.id"
+        <tbody v-if="filteredData.length > 0">
+            <tr v-for="accountat in filteredData" :key="accountat.id"
             class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ accountat.first_name }} {{ accountat.last_name }}</td>
             <td class="px-6 py-4">{{ accountat.id_number }}</td>
@@ -80,7 +81,7 @@
 <script setup>
 
 import UserService from '@/services/userService'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 const getUserService = new UserService()
 const isLoading = ref(false)
@@ -90,6 +91,7 @@ const VUE_APP_URL = process.env.VUE_APP_URL
 const clientId = localStorage.getItem('id')
 const uri = `/clients/${clientId}/`
 const urlApi = VUE_APP_URL + uri
+const searchQuery = ref('');
 
 
 onMounted(async () => {
@@ -105,4 +107,18 @@ onMounted(async () => {
       isLoading.value = false;
     }
   })
+
+  const filteredData = computed(() => {
+    if (!data.value) return [];
+
+    const query = searchQuery.value.toLowerCase();
+
+    return data.value.accountants_data.filter(user =>
+      `${user.first_name} ${user.last_name}`.toLowerCase().includes(query) ||
+      user.id_number?.toString().toLowerCase().includes(query) ||
+      user.username?.toLowerCase().includes(query) ||
+      user.phone_number?.toString().toLowerCase().includes(query) ||
+      user.status?.toLowerCase().includes(query)
+    );
+  });
 </script>

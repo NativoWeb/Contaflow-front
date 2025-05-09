@@ -27,6 +27,7 @@
         type="text"  
         id="table-search-users" 
         placeholder="Buscar..."
+        v-model="searchQuery"
         class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
     </div>
@@ -46,17 +47,27 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado conciliacion</th>
           </tr>
         </thead>
-        <tbody v-if="data.length > 0">
-          <tr v-for="conciliation in data" 
+        <tbody v-if="filteredData.length > 0">
+          <tr v-for="conciliation in filteredData" 
           :key="conciliation.id"
           @click="redirectToConciliationDetails(conciliation.id)"
           class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
             <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
             <td class="px-6 py-4">{{ conciliation.company}}</td>
-            <td class="px-6 py-4">{{ conciliation.bank }}</td>
+            <td class="px-6 py-4">{{ conciliation.response.Banco }}</td>
             <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
-            <td class="px-6 py-4">{{ conciliation.status }}</td>
+            <td class="px-6 py-4">                
+              <span 
+                :class="{
+                  'bg-green-100 text-green-800': conciliation.status === 'Firmada',
+                  'bg-red-100 text-red-800': conciliation.status === 'Rechazada',
+                  'bg-yellow-100 text-yellow-800': conciliation.status === 'Pendiente'
+                }"
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                  {{ conciliation.status }}
+              </span>
+            </td>
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
@@ -73,7 +84,7 @@
 <script setup>
 import router from '@/router'
 import UserService from '@/services/userService'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 const getUserService = new UserService()
 const isLoading = ref(false)
@@ -83,6 +94,7 @@ const VUE_APP_URL = process.env.VUE_APP_URL
 const accountantId = localStorage.getItem('id')
 const uri = `/accountants/${accountantId}/`
 const urlApi = VUE_APP_URL + uri
+const searchQuery = ref('');
 
 
 onMounted(async () => {
@@ -108,4 +120,18 @@ const formateDate = date => {
   const new_date = new Date(date)
   return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
   }
+
+
+      const filteredData = computed(() => {
+    if (!data.value) return [];
+
+    const query = searchQuery.value.toLowerCase();
+
+    return data.value.filter(conciliation =>
+      conciliation.identification_number?.toString().toLowerCase().includes(query) || 
+      conciliation.company?.toLowerCase().includes(query) ||
+      conciliation.response.Banco?.toLowerCase().includes(query) ||
+      conciliation.auditor_name?.toLowerCase().includes(query)
+    );
+  });
 </script>

@@ -27,14 +27,14 @@
         type="text"  
         id="table-search-users" 
         placeholder="Buscar..."
-        v-model="searchQuery"
+         v-model="searchQuery"
         class="w-full p-2 text-sm text-[#193368] bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
     </div>
     </div>
   </div>
 
- <!-- Tabla -->
+ <!-- Tabla --> 
  <div class="overflow-x-auto p-4 bg-white shadow-md rounded-lg">
   <table class="w-full text-sm text-left text-gray-800 dark:text-gray-400">
         <thead class="text-xs uppercase bg-gradient-to-r from-[#F8F8F8] to-[#E5EAFF] text-[#193368]">
@@ -53,7 +53,7 @@
           @click="redirectToConciliationDetails(conciliation.id)"
           class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
             <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
-            <td class="px-6 py-4">#{{ conciliation.identification_number }}</td>
+            <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
             <td class="px-6 py-4">{{ conciliation.company}}</td>
             <td class="px-6 py-4">{{ conciliation.response.Banco }}</td>
             <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
@@ -81,38 +81,49 @@
 </div>
 </template>
 
-
 <script setup>
 import router from '@/router'
 import UserService from '@/services/userService'
 import { ref, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router';
 
 const getUserService = new UserService()
+const clientId = useRoute().params.id;
 const isLoading = ref(false)
-const data = ref(null)
+const data = ref([])
+const clientsData = ref(null)
+// const conciliations = ref(null)
 const err = ref(null)
 const VUE_APP_URL = process.env.VUE_APP_URL
-const clientId = localStorage.getItem('id')
-const uri = `/clients/${clientId}/`
+const accountantId = localStorage.getItem('id')
+const uri = `/accountants/${accountantId}/`
 const urlApi = VUE_APP_URL + uri
 const searchQuery = ref('');
 
 onMounted(async () => {
-    isLoading.value = true;
-    try{
-      await getUserService.getUserById(urlApi)
-      data.value = getUserService.getData().value.conciliations_data;
+  isLoading.value = true
+  try{
+    await getUserService.getUserById(urlApi)
+    clientsData.value = getUserService.getData().value.clients_data
+    clientsData.value.find(el => el.id == clientId)
+    if (clientsData.value){
+      clientsData.value.forEach(el => {
+        if (el.id == clientId) {
+          data.value = el.conciliations_data.filter(el => el.accountant == accountantId)
+        }
+      })
     }
-    catch(error){
-      err.value = getUserService.getError().value;
-    }
-    finally{
-      isLoading.value = false;
-    }
-  })
+  }
+  catch(error){
+    err.value = getUserService.getError().value
+  }
+  finally{
+    isLoading.value = false
+  }
+})
 
-  const redirectToConciliationDetails = (id) => {
-  router.push(`/admin/detalles_conciliacion_cliente=${id}`)
+const redirectToConciliationDetails = (id) => {
+  router.push(`/detalles_conciliacion=${id}`)
 }
 
 const formateDate = date => {

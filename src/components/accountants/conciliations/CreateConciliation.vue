@@ -90,7 +90,6 @@
 
 <script setup>
 import router from "@/router";
-import Cookies from "js-cookie";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import conciliationService from "@/services/conciliationService.js";
@@ -109,7 +108,6 @@ const fileInputBank = ref(null);
 const fileInputAccounting = ref(null);
 const fileBank = ref(null);
 const fileAccounting = ref(null);
-const VUE_APP_URL = process.env.VUE_APP_URL;
 const conService = new conciliationService();
 const err = ref(null);
 const isLoading = ref(false);
@@ -159,8 +157,17 @@ const sendExtracts = async () => {
   try{
     await conService.sendFile(`http://localhost:5678/webhook-test/contaflow`, fileBank.value, fileAccounting.value)
     data.value = conService.getData().value
-    console.log(data.value)
-    sendToBack(data.value[0].text)
+
+    localStorage.setItem('conciliationData', 
+    JSON.stringify({
+      'response': data.value[0].output,
+      'client': clientId,
+      'company': clientName,
+      'accountant': accountantId,
+      'auditor': auditorId,
+      'auditor_name': auditorName,
+    }))
+    router.push({ name:"ConciliationInformation"})
     }
     catch(error){
       console.log(error)
@@ -169,35 +176,5 @@ const sendExtracts = async () => {
     finally{
       isLoading.value = false
     }
-}
-
-  
-
-// Convertir a servicio
-const sendToBack = async (dataConciliation) => {
-  try {
-    const res = await fetch(`${VUE_APP_URL}/conciliations/register/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        'response': dataConciliation,
-        'client': clientId,
-        'company': clientName,
-        'accountant': accountantId,
-        'auditor': auditorId,
-        'auditor_name': auditorName,
-        'bank': "Param"
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('jwt')}` 
-      }
-    })
-    const json = await res.json()
-    const conciliationId = json.id;
-    router.push(`/conciliacion_informacion/conciliacion=${conciliationId}`)
-  }
-  catch(err){
-    console.log(err);
-  }
 }
 </script>

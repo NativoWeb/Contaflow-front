@@ -15,7 +15,7 @@
         <!-- Nombres -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-            Nombres:<span class="text-red-500">*</span>
+            Nombres: *
           </label>
           <input 
             v-model="userForm.first_name" 
@@ -31,7 +31,7 @@
         <!-- Apellidos -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-            Apellidos:<span class="text-red-500">*</span>
+            Apellidos: *
           </label>
           <input 
             v-model="userForm.last_name" 
@@ -46,7 +46,7 @@
         <!-- Tipo de Identificación -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-            Tipo de Identificación:<span class="text-red-500">*</span>
+            Tipo de Identificación: *
           </label>
           <select 
             v-model="userForm.id_type" 
@@ -64,7 +64,7 @@
         <!-- Número de Identificación -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-            Número de Identificación:<span class="text-red-500">*</span>
+            Número de Identificación: *
           </label>
           <input 
             v-model="userForm.id_number" 
@@ -79,7 +79,7 @@
         <!-- Número de celular -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-            Número de celular:<span class="text-red-500">*</span>
+            Número de celular: *
           </label>
           <input 
             v-model="userForm.phone_number" 
@@ -95,7 +95,7 @@
         <!-- Correo Electrónico -->
         <div class="flex-1">
           <label class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">
-            Correo Electrónico:<span class="text-red-500">*</span>
+            Correo Electrónico: *
           </label>
           <input 
             v-model="userForm.username" 
