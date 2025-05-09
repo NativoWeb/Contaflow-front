@@ -47,8 +47,8 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado conciliacion</th>
           </tr>
         </thead>
-        <tbody v-if="filteredData.length > 0">
-          <tr v-for="conciliation in filteredData" 
+        <tbody v-if="conciliacionesPendientes.length > 0">
+          <tr v-for="conciliation in conciliacionesPendientes" 
           :key="conciliation.id"
           @click="redirectToConciliationDetails(conciliation.id)"
           class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600"
@@ -76,7 +76,7 @@
           </tr>
         </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">No se encontraron conciliaciones registradas.</td>
+          <td class="ml-2 my-6">No se encontraron conciliaciones por firmar.</td>
         </tr>
       </table>
   </div>
@@ -109,7 +109,6 @@
       })
       const json = await res.json()
       data.value = json.conciliations_data
-      console.log(data.value)
     }
     catch(error){
       console.log(error)
@@ -146,4 +145,8 @@ const filteredData = computed(() => {
     conciliation.auditor_name?.toLowerCase().includes(query)
   );
 });
+
+  const conciliacionesPendientes = computed(() => {
+  return filteredData.value.filter(c => c.status === 'Pendiente')
+})
 </script>

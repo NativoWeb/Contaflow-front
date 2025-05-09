@@ -109,7 +109,6 @@ onMounted(async () => {
       clientsData.value.forEach(el => {
         if (el.id == clientId) {
           data.value = el.conciliations_data.filter(el => el.auditor == auditorId)
-          console.log(data.value)
         }
       })
     }

@@ -171,7 +171,6 @@
   const url = `${VUE_APP_URL}/accountants/${id}/`
   const searchQuery = ref('')
 
-  console.log(clientId)
 
   onMounted(async () => {
     isLoading.value = false;

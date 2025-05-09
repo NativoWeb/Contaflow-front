@@ -154,7 +154,6 @@
     try{
       await getUser.getUsers(props.apiUrl)
       data.value = getUser.getData().value;
-      console.log(data.value)
     }
     catch(error){
       err.value = getUser.getError().value;

@@ -15,10 +15,10 @@
    </div> 
 
     <!-- Errores  -->
-   <div v-if="data.response.conciliacionBancaria.errores.length > 0" class="space-y-8">
+   <div v-if="data.response.conciliacionBancaria.comparaciones.length > 0" class="space-y-8">
       <!-- Error por tipo -->
       <!-- Depósitos  -->
-     <div v-if="data.response.conciliacionBancaria.errores[0].detalles.length > 0">
+     <div v-if="data.response.conciliacionBancaria.comparaciones[0].detalles.length > 0">
        <h2 class="text-xl font-semibold text-blue-700">Diferencia en los depósitos</h2>
        <table class="w-full table-auto mt-2 border text-left text-gray-700">
          <thead class="bg-blue-100">
@@ -31,7 +31,7 @@
          </thead>
          <tbody>
            <tr 
-           v-for="details in data.response.conciliacionBancaria.errores[0].detalles"
+           v-for="details in data.response.conciliacionBancaria.comparaciones[0].detalles"
            :key="details"
            class="border-t">
            <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -46,7 +46,7 @@
      </div>
 
       <!-- Cheques  -->
-     <div v-if="data.response.conciliacionBancaria.errores[1].detalles.length > 0">
+     <div v-if="data.response.conciliacionBancaria.comparaciones[1].detalles.length > 0">
        <h2 class="text-xl font-semibold text-blue-700">Diferencia en los cheques</h2>
        <table class="w-full table-auto mt-2 border text-left text-gray-700">
          <thead class="bg-blue-100">
@@ -59,7 +59,7 @@
          </thead>
          <tbody>
            <tr 
-           v-for="details in data.response.conciliacionBancaria.errores[1].detalles"
+           v-for="details in data.response.conciliacionBancaria.comparaciones[1].detalles"
            :key="details"
            class="border-t">
            <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -75,9 +75,11 @@
      </div>
 
       <!-- Saldo final  -->
-     <div v-if="data.response.conciliacionBancaria.errores[2].detalles.length > 0">
+     <div v-if="data.response.conciliacionBancaria.comparaciones[2]">
        <h2 class="text-xl font-semibold text-blue-700">Diferencia en el saldo final</h2>
-       <table class="w-full table-auto mt-2 border text-left text-gray-700">
+       <table 
+       v-if="data.response.conciliacionBancaria.comparaciones[2].detalles.length > 0"
+       class="w-full table-auto mt-2 border text-left text-gray-700">
          <thead class="bg-blue-100">
            <tr>
              <th class="px-4 py-2">Fecha</th>
@@ -88,7 +90,7 @@
          </thead>
          <tbody>
            <tr 
-           v-for="details in data.response.conciliacionBancaria.errores[2].detalles"
+           v-for="details in data.response.conciliacionBancaria.comparaciones[2].detalles"
            :key="details"
            class="border-t">
            <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -117,6 +119,7 @@ import { useRoute } from 'vue-router';
 
 const conciliationsService = new ConciliationService();
 const data = ref("");
+const err = ref("");
 const conciliationId = useRoute().params.id;
 const VUE_APP_URL = process.env.VUE_APP_URL;
 const urlApi = `${VUE_APP_URL}/conciliations/${conciliationId}/`
@@ -129,7 +132,7 @@ onMounted(async () => {
     data.value = conciliationsService.getData().value;
   }
   catch(error){
-    console.log(error)
+    err.value = error;
   }
   finally{
     isLoading.value = false;

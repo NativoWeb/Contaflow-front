@@ -170,7 +170,6 @@ const sendExtracts = async () => {
     router.push({ name:"ConciliationInformation"})
     }
     catch(error){
-      console.log(error)
       err.value = conService.getError().value
     }
     finally{

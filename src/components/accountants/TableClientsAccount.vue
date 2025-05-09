@@ -149,7 +149,6 @@ onMounted(async () => {
     await getUserService.getUserById(urlApi)
     data.value = getUserService.getData().value.clients_data
     userData.value = getUserService.getData().value
-    console.log(userData.value)
   }
   catch(error){
     err.value = getUserService.getError().value;

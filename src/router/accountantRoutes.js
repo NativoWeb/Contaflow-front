@@ -6,7 +6,6 @@ import CreateConciliation from "@/components/accountants/conciliations/CreateCon
 import ResponseConciliation from "@/components/accountants/conciliations/ResponseConciliation.vue";
 import SelectAuditor from "@/components/accountants/conciliations/SelectAuditor.vue";
 import ConciliationsList from "@/components/accountants/conciliations/ConciliationsList.vue";
-import ClientDetails from "@/components/accountants/ClientDetails.vue";
 import ConciliationsDetails from "@/components/accountants/ConciliationsDetails.vue";
 import ConciliationsClientsList from "@/components/accountants/ConciliationsClientsList.vue";
 
@@ -55,11 +54,6 @@ const accountantRoutes = [
     path: '/lista_conciliaciones',
     name: 'ConciliationsList',
     component: ConciliationsList
-  },
-  {
-    path: '/informacion_cliente/:id',
-    name: 'ClientDetails',
-    component: ClientDetails
   },
   {
     path: '/detalles_conciliacion=:id',

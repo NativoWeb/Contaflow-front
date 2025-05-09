@@ -12,11 +12,11 @@
     </div> 
 
      <!-- Errores  -->
-    <div v-if="data.response.conciliacionBancaria.errores.length > 0" class="space-y-8">
+    <div v-if="data.response.conciliacionBancaria.comparaciones.length > 0" class="space-y-8">
        <!-- Error por tipo -->
        <!-- Depósitos  -->
-      <div v-if="data.response.conciliacionBancaria.errores[0].detalles.length > 0">
-        <h2 class="text-xl font-semibold text-blue-700">Diferencia en los depósitos</h2>
+      <div v-if="data.response.conciliacionBancaria.comparaciones[0].detalles.length > 0">
+        <h2 class="text-xl font-semibold text-[#08245B]">Diferencia en los depósitos</h2>
         <table class="w-full table-auto mt-2 border text-left text-gray-700">
           <thead class="bg-blue-100">
             <tr>
@@ -28,7 +28,7 @@
           </thead>
           <tbody>
             <tr 
-            v-for="details in data.response.conciliacionBancaria.errores[0].detalles"
+            v-for="details in data.response.conciliacionBancaria.comparaciones[0].detalles"
             :key="details"
             class="border-t">
             <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -43,8 +43,8 @@
       </div>
 
        <!-- Cheques  -->
-      <div v-if="data.response.conciliacionBancaria.errores[1].detalles.length > 0">
-        <h2 class="text-xl font-semibold text-blue-700">Diferencia en los cheques</h2>
+      <div v-if="data.response.conciliacionBancaria.comparaciones[1].detalles.length > 0">
+        <h2 class="text-xl font-semibold text-[#08245B]">Diferencia en los cheques</h2>
         <table class="w-full table-auto mt-2 border text-left text-gray-700">
           <thead class="bg-blue-100">
             <tr>
@@ -56,7 +56,7 @@
           </thead>
           <tbody>
             <tr 
-            v-for="details in data.response.conciliacionBancaria.errores[1].detalles"
+            v-for="details in data.response.conciliacionBancaria.comparaciones[1].detalles"
             :key="details"
             class="border-t">
             <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -72,9 +72,11 @@
       </div>
 
        <!-- Saldo final  -->
-      <div v-if="data.response.conciliacionBancaria.errores[2].detalles.length > 0">
-        <h2 class="text-xl font-semibold text-blue-700">Diferencia en el saldo final</h2>
-        <table class="w-full table-auto mt-2 border text-left text-gray-700">
+      <div v-if="data.response.conciliacionBancaria.comparaciones[2]">
+        <h2 class="text-xl font-semibold text-[#08245B]">Diferencia en el saldo final</h2>
+        <table 
+        v-if="data.response.conciliacionBancaria.comparaciones[2].detalles.length > 0"
+        class="w-full table-auto mt-2 border text-left text-gray-700">
           <thead class="bg-blue-100">
             <tr>
               <th class="px-4 py-2">Fecha</th>
@@ -85,7 +87,7 @@
           </thead>
           <tbody>
             <tr 
-            v-for="details in data.response.conciliacionBancaria.errores[2].detalles"
+            v-for="details in data.response.conciliacionBancaria.comparaciones[2].detalles"
             :key="details"
             class="border-t">
             <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -98,8 +100,12 @@
       </div>
 
       <div class="flex gap-20">
-        <button @click="redirectBack">Cancelar</button>
-        <button @click="isAcceptToogle">Guardar</button>
+        <button 
+        class="w-full max-w-xs bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        @click="redirectBack">Cancelar</button>
+        <button 
+        class="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        @click="isAcceptToogle">Guardar</button>
       </div>
     </div>
     <div v-else>
@@ -128,13 +134,21 @@
       </div>
       <h3 class="text-xl font-bold text-gray-900 mb-2">¿Deseas guardar esta conciliación?</h3>
       <p class="text-gray-600 mb-6">La conciliación será enviada al auditor para su revisión.</p>
-      <button 
-        @click="sendConciliation"
-        type="button" 
-        class="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        Aceptar
-      </button>
+      <div class="flex gap-4 w-full max-w-xs">
+        <button 
+          @click="cancel"
+            type="button"
+            class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2.5 px-6 rounded-lg transition-colors duration-200">
+              Cancelar
+        </button>
+            
+        <button 
+          @click="sendConciliation"
+            type="button" 
+            class="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            Aceptar
+        </button>
+        </div>
     </div>
   </div>
 </div>
@@ -190,6 +204,10 @@ const sendConciliation = async () => {
     isLoading.value = false;
     localStorage.removeItem("conciliationData");
   }
+}
+
+const cancel = () => {
+  location.reload()
 }
 
 const isAcceptToogle = () => {

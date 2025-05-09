@@ -13,6 +13,8 @@ import ClientsAccAudTable from "@/components/admin/info/ClientsAccAudTable.vue";
 import AssignClientDetail from "@/components/admin/crud/assign/AssignClientDetail.vue";
 import RemoveClientDetail from "@/components/admin/crud/assign/RemoveClientDetail.vue";
 import ConciliationsDetails from "@/components/admin/ConciliationsDetails.vue";
+import AdminsView from "@/views/admin/AdminsView.vue";
+import AdminDetails from "@/components/admin/info/AdminDetails.vue";
 
 const adminRoutes = [
   // registro y tabla de usuarios y empresas
@@ -31,6 +33,11 @@ const adminRoutes = [
     component: AuditorsView,
     props: true
   },
+  {
+    path: 'administradores',
+    component: AdminsView,
+    props: true
+  },
   // detalles de cada usuario y empresas
   {
     path: 'contador/:id',
@@ -40,6 +47,11 @@ const adminRoutes = [
   {
     path: 'cliente/:id',
     component: ClientDetails,
+    props: true
+  },
+  {
+    path: 'administrador/:id',
+    component: AdminDetails,
     props: true
   },
   {

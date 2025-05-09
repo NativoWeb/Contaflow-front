@@ -100,7 +100,6 @@ onMounted(async () => {
   try{
     await conciliationsService.getConciliations(url)
     data.value = conciliationsService.getData().value;
-    console.log(data.value)
   }
   catch(error){
     console.log(error)

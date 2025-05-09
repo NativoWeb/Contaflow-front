@@ -47,31 +47,33 @@
             <th scope="col" class="px-6 py-3  md:table-cell">Estado conciliacion</th>
           </tr>
         </thead>
-        <tbody v-if="filteredData.length > 0">
-          <tr v-for="conciliation in filteredData" 
-          :key="conciliation.id"
-          @click="redirectToConciliationDetails(conciliation.id)"
-          class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
-            <td class="px-6 py-4">#{{ conciliation.identification_number }}</td>
-            <td class="px-6 py-4">{{ conciliation.company}}</td>
-            <td class="px-6 py-4">{{ conciliation.response.Banco }}</td>
-            <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
-            <td class="px-6 py-4">                
-              <span 
-                :class="{
-                  'bg-green-100 text-green-800': conciliation.status === 'Firmada',
-                  'bg-red-100 text-red-800': conciliation.status === 'Rechazada',
-                  'bg-yellow-100 text-yellow-800': conciliation.status === 'Pendiente'
-                }"
-                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                  {{ conciliation.status }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
+          <tbody v-if="conciliacionesFirmadas.length > 0">
+            <tr 
+              v-for="conciliation in conciliacionesFirmadas" 
+              :key="conciliation.id"
+              @click="redirectToConciliationDetails(conciliation.id)"
+              class="cursor-pointer bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600"
+            >
+              <td class="px-6 py-4">{{ formateDate(conciliation.created_at) }}</td>
+              <td class="px-6 py-4"># {{ conciliation.identification_number }}</td>
+              <td class="px-6 py-4">{{ conciliation.company }}</td>
+              <td class="px-6 py-4">{{ conciliation.response.Banco }}</td>
+              <td class="px-6 py-4">{{ conciliation.auditor_name }}</td>
+              <td class="px-6 py-4">                
+                <span 
+                  :class="{
+                    'bg-green-100 text-green-800': conciliation.status === 'Firmada',
+                    'bg-red-100 text-red-800': conciliation.status === 'Rechazada',
+                    'bg-yellow-100 text-yellow-800': conciliation.status === 'Pendiente'
+                  }"
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                    {{ conciliation.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
         <tr v-else colspan="5" class="flex flex-col justify-center">
-          <td class="ml-2 my-6">No se encontraron conciliaciones registradas.</td>
+          <td class="ml-2 my-6">Todavia no tienes conciliaciones firmadas.</td>
         </tr>
       </table>
   </div>
@@ -112,7 +114,7 @@ onMounted(async () => {
   })
 
   const redirectToConciliationDetails = (id) => {
-  router.push(`/admin/detalles_conciliacion_cliente=${id}`)
+  router.push(`/detalles_conciliacion_cliente=${id}`)
 }
 
 const formateDate = date => {
@@ -132,4 +134,9 @@ const formateDate = date => {
       conciliation.auditor_name?.toLowerCase().includes(query)
     );
   });
+
+  const conciliacionesFirmadas = computed(() => {
+  return filteredData.value.filter(c => c.status === 'Firmada')
+})
+
 </script>

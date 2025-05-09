@@ -1,9 +1,8 @@
 <template>
   
-<button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Descargar<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-</svg>
-</button>
+  <button @click="downloadPDF" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+    Descargar PDF
+  </button>
 
 <!-- Dropdown menu -->
 <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
@@ -35,11 +34,11 @@
       </div> 
       
       <!-- Errores  -->
-      <div v-if="data.response.conciliacionBancaria.errores.length > 0" class="space-y-8">
+      <div v-if="data.response.conciliacionBancaria.comparaciones.length > 0" class="space-y-8">
         <!-- Error por tipo -->
         <!-- Depósitos  -->
-        <div v-if="data.response.conciliacionBancaria.errores[0].detalles.length > 0">
-          <h2 class="text-xl font-semibold text-blue-700">Diferencia en los depósitos</h2>
+        <div v-if="data.response.conciliacionBancaria.comparaciones[0].detalles.length > 0">
+          <h2 class="text-xl font-semibold text-[#08245B]">Diferencia en los depósitos</h2>
           <table class="w-full table-auto mt-2 border text-left text-gray-700">
             <thead class="bg-blue-100">
               <tr>
@@ -51,7 +50,7 @@
             </thead>
             <tbody>
               <tr 
-              v-for="details in data.response.conciliacionBancaria.errores[0].detalles"
+              v-for="details in data.response.conciliacionBancaria.comparaciones[0].detalles"
               :key="details"
               class="border-t">
               <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -66,8 +65,8 @@
         </div>
         
         <!-- Cheques  -->
-        <div v-if="data.response.conciliacionBancaria.errores[1].detalles.length > 0">
-          <h2 class="text-xl font-semibold text-blue-700">Diferencia en los cheques</h2>
+        <div v-if="data.response.conciliacionBancaria.comparaciones[1].detalles.length > 0">
+          <h2 class="text-xl font-semibold text-[#08245B]">Diferencia en los cheques</h2>
           <table class="w-full table-auto mt-2 border text-left text-gray-700">
             <thead class="bg-blue-100">
               <tr>
@@ -79,7 +78,7 @@
             </thead>
             <tbody>
               <tr 
-              v-for="details in data.response.conciliacionBancaria.errores[1].detalles"
+              v-for="details in data.response.conciliacionBancaria.comparaciones[1].detalles"
               :key="details"
               class="border-t">
                 <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -95,9 +94,11 @@
         </div>
         
         <!-- Saldo final  -->
-        <div v-if="data.response.conciliacionBancaria.errores[2].detalles.length > 0">
-          <h2 class="text-xl font-semibold text-blue-700">Diferencia en el saldo final</h2>
-          <table class="w-full table-auto mt-2 border text-left text-gray-700">
+        <div v-if="data.response.conciliacionBancaria.comparaciones[2]">
+          <h2 class="text-xl font-semibold text-[#08245B]">Diferencia en el saldo final</h2>
+          <table 
+          v-if="data.response.conciliacionBancaria.comparaciones[2].detalles.length > 0"
+          class="w-full table-auto mt-2 border text-left text-gray-700">
             <thead class="bg-blue-100">
               <tr>
                 <th class="px-4 py-2">Fecha</th>
@@ -108,7 +109,7 @@
             </thead>
             <tbody>
               <tr 
-              v-for="details in data.response.conciliacionBancaria.errores[2].detalles"
+              v-for="details in data.response.conciliacionBancaria.comparaciones[2].detalles"
               :key="details"
               class="border-t">
               <td class="px-4 py-2">{{ details.fecha }}</td>
@@ -167,7 +168,7 @@ const formateDate = date => {
   return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
   }
 
-const PDF = () => {
+const downloadPDF = () => {
   const element = document.getElementById('element-to-pdf');
   const opt = {
     margin:       0.5,

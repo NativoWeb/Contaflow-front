@@ -37,7 +37,7 @@
       <li>
         <button 
           type="button" 
-          class="flex items-center justify-between w-full px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+          class="flex items-center justify-between w-full px-3 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
           @click="toggleDropdown"
         >
           <div class="flex items-center">
@@ -57,6 +57,17 @@
           class="pl-4 mt-1 space-y-1 overflow-hidden transition-all duration-300"
           :class="{ 'max-h-0': !isOpenDropdown, 'max-h-40': isOpenDropdown }"
         >
+          <li>
+            <router-link 
+              @click="toggleSidebar" 
+              to="/administradores" 
+              class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
+              active-class="bg-blue-50 text-blue-600"
+            >
+              Registro de Admins
+            </router-link>
+          </li>
+
           <li>
             <router-link 
               @click="toggleSidebar" 
