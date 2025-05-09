@@ -8,6 +8,7 @@ import commonRoutes from "./commonRoutes";
 import clientRoutes from "./clientRoutes";
 import accountantRoutes from "./accountantRoutes";
 import auditorRoutes from "./auditorRoutes";
+import EXportaPdf from "@/components/EXportaPdf.vue";
 
 const VUE_APP_URL = process.env.VUE_APP_URL;
 
@@ -49,7 +50,14 @@ const router = createRouter({
       ],
     },
       ...authRoutes,
+
+      {
+        path: "/BtnPdf",
+        name: "BtnPdf",
+        component: EXportaPdf
+      }
   ],
+
 });
 
 export default router;

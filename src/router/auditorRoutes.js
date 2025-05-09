@@ -34,7 +34,8 @@ const auditorRoutes = [
     path: '/detalles_cliente_auditor=:id',
     name: 'ClientDetailsAuditor',
     component: SignConciliation
-  }
+  },
+  
 ]
 
 export default  auditorRoutes;
