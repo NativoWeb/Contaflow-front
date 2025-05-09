@@ -1,119 +1,139 @@
 <template>
+  
+<button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Descargar<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+</svg>
+</button>
+
+<!-- Dropdown menu -->
+<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click.prevent="PDF">Descargar PDF</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click.prevent="excel">Descargar Excel</a>
+      </li>
+    </ul>
+</div>
+
+<!-- Contenido para exportar a PDF -->
+<div id="element-to-pdf">
   <section v-if="data" class="p-5">
-   <div class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
-   <h1  class="text-2xl font-bold text-gray-800">Resumen de Conciliación Bancaria</h1>
-<!-- Información general  -->
-<div class="flex flex-col items-start">
-     <p><span class="font-semibold">Auditor:</span> {{ data.auditor_name }}</p>
-     <p><span class="font-semibold">Banco:</span> {{ data.response.Banco }}</p>
-     <p><span class="font-semibold">Cliente:</span> {{ data.company }}</p>
-     <p><span class="font-semibold">Identificación:</span> #{{ data.identification_number }}</p>
-     <p><span class="font-semibold">Estado:</span> {{ data.response.conciliacionBancaria.estado }}</p>
-     <!-- <p><span class="font-semibold">Errores:</span> Sí</p>   -->
-     <p><span class="font-semibold">Firma:</span> {{ data.status }}</p>  
-     <p><span class="font-semibold">Fecha de creación:</span> {{ formateDate(data.created_at) }}</p>
-   </div> 
-
-    <!-- Errores  -->
-   <div v-if="data.response.conciliacionBancaria.errores.length > 0" class="space-y-8">
-      <!-- Error por tipo -->
-      <!-- Depósitos  -->
-     <div v-if="data.response.conciliacionBancaria.errores[0].detalles.length > 0">
-       <h2 class="text-xl font-semibold text-blue-700">Diferencia en los depósitos</h2>
-       <table class="w-full table-auto mt-2 border text-left text-gray-700">
-         <thead class="bg-blue-100">
-           <tr>
-             <th class="px-4 py-2">Fecha</th>
-             <th class="px-4 py-2">Estado Banco</th>
-             <th class="px-4 py-2">Auxiliar</th>
-             <th class="px-4 py-2">Diferencia</th>
-           </tr>
-         </thead>
-         <tbody>
-           <tr 
-           v-for="details in data.response.conciliacionBancaria.errores[0].detalles"
-           :key="details"
-           class="border-t">
-           <td class="px-4 py-2">{{ details.fecha }}</td>
-           <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
-           <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
-           <td class="px-4 py-2">{{ details.diferencia }}</td></tr>
-         </tbody>
-       </table>
-     </div>
-     <div v-else>
-       <h2>En los depósitos no hay diferencias</h2>
-     </div>
-
-      <!-- Cheques  -->
-     <div v-if="data.response.conciliacionBancaria.errores[1].detalles.length > 0">
-       <h2 class="text-xl font-semibold text-blue-700">Diferencia en los cheques</h2>
-       <table class="w-full table-auto mt-2 border text-left text-gray-700">
-         <thead class="bg-blue-100">
-           <tr>
-             <th class="px-4 py-2">Fecha</th>
-             <th class="px-4 py-2">Estado Banco</th>
-             <th class="px-4 py-2">Auxiliar</th>
-             <th class="px-4 py-2">Diferencia</th>
-           </tr>
-         </thead>
-         <tbody>
-           <tr 
-           v-for="details in data.response.conciliacionBancaria.errores[1].detalles"
-           :key="details"
-           class="border-t">
-           <td class="px-4 py-2">{{ details.fecha }}</td>
-           <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
-           <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
-           <td class="px-4 py-2">{{ details.diferencia }}</td>
-           </tr>
-         </tbody>
-       </table>
-     </div>
-     <div v-else>
-       <h2>En los cheques no hay diferencias</h2>
-     </div>
-
-      <!-- Saldo final  -->
-     <div v-if="data.response.conciliacionBancaria.errores[2].detalles.length > 0">
-       <h2 class="text-xl font-semibold text-blue-700">Diferencia en el saldo final</h2>
-       <table class="w-full table-auto mt-2 border text-left text-gray-700">
-         <thead class="bg-blue-100">
-           <tr>
-             <th class="px-4 py-2">Fecha</th>
-             <th class="px-4 py-2">Estado Banco</th>
-             <th class="px-4 py-2">Auxiliar</th>
-             <th class="px-4 py-2">Diferencia</th>
-           </tr>
-         </thead>
-         <tbody>
-           <tr 
-           v-for="details in data.response.conciliacionBancaria.errores[2].detalles"
-           :key="details"
-           class="border-t">
-           <td class="px-4 py-2">{{ details.fecha }}</td>
-           <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
-           <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
-           <td class="px-4 py-2">{{ details.diferencia }}</td>
-           </tr>
-         </tbody>
-       </table>
-
-     </div>
-   </div>
-   <div v-else>
-     <h1>En el saldo final no diferencias</h1>
-   </div>
-    
-
- </div>
- </section>
+    <div class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
+      <h1  class="text-2xl font-bold text-gray-800">Resumen de Conciliación Bancaria</h1>
+      <!-- Información general  -->
+       <div class="flex flex-col items-start">
+        <p><span class="font-semibold">Auditor:</span> {{ data.auditor_name }}</p>
+        <p><span class="font-semibold">Banco:</span> {{ data.response.Banco }}</p>
+        <p><span class="font-semibold">Cliente:</span> {{ data.company }}</p>
+        <p><span class="font-semibold">Identificación:</span> #{{ data.identification_number }}</p>
+        <p><span class="font-semibold">Estado:</span> {{ data.response.conciliacionBancaria.estado }}</p>
+        <!-- <p><span class="font-semibold">Errores:</span> Sí</p>   -->
+        <p><span class="font-semibold">Firma:</span> {{ data.status }}</p>  
+        <p><span class="font-semibold">Fecha de creación:</span> {{ formateDate(data.created_at) }}</p>
+      </div> 
+      
+      <!-- Errores  -->
+      <div v-if="data.response.conciliacionBancaria.errores.length > 0" class="space-y-8">
+        <!-- Error por tipo -->
+        <!-- Depósitos  -->
+        <div v-if="data.response.conciliacionBancaria.errores[0].detalles.length > 0">
+          <h2 class="text-xl font-semibold text-blue-700">Diferencia en los depósitos</h2>
+          <table class="w-full table-auto mt-2 border text-left text-gray-700">
+            <thead class="bg-blue-100">
+              <tr>
+                <th class="px-4 py-2">Fecha</th>
+                <th class="px-4 py-2">Estado Banco</th>
+                <th class="px-4 py-2">Auxiliar</th>
+                <th class="px-4 py-2">Diferencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+              v-for="details in data.response.conciliacionBancaria.errores[0].detalles"
+              :key="details"
+              class="border-t">
+              <td class="px-4 py-2">{{ details.fecha }}</td>
+              <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
+              <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
+              <td class="px-4 py-2">{{ details.diferencia }}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-else>
+          <h2>En los depósitos no hay diferencias</h2>
+        </div>
+        
+        <!-- Cheques  -->
+        <div v-if="data.response.conciliacionBancaria.errores[1].detalles.length > 0">
+          <h2 class="text-xl font-semibold text-blue-700">Diferencia en los cheques</h2>
+          <table class="w-full table-auto mt-2 border text-left text-gray-700">
+            <thead class="bg-blue-100">
+              <tr>
+                <th class="px-4 py-2">Fecha</th>
+                <th class="px-4 py-2">Estado Banco</th>
+                <th class="px-4 py-2">Auxiliar</th>
+                <th class="px-4 py-2">Diferencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+              v-for="details in data.response.conciliacionBancaria.errores[1].detalles"
+              :key="details"
+              class="border-t">
+                <td class="px-4 py-2">{{ details.fecha }}</td>
+                <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
+                <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
+                <td class="px-4 py-2">{{ details.diferencia }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-else>
+          <h2>En los cheques no hay diferencias</h2>
+        </div>
+        
+        <!-- Saldo final  -->
+        <div v-if="data.response.conciliacionBancaria.errores[2].detalles.length > 0">
+          <h2 class="text-xl font-semibold text-blue-700">Diferencia en el saldo final</h2>
+          <table class="w-full table-auto mt-2 border text-left text-gray-700">
+            <thead class="bg-blue-100">
+              <tr>
+                <th class="px-4 py-2">Fecha</th>
+                <th class="px-4 py-2">Estado Banco</th>
+                <th class="px-4 py-2">Auxiliar</th>
+                <th class="px-4 py-2">Diferencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+              v-for="details in data.response.conciliacionBancaria.errores[2].detalles"
+              :key="details"
+              class="border-t">
+              <td class="px-4 py-2">{{ details.fecha }}</td>
+              <td class="px-4 py-2">{{ details.estadoBanco || "No asignado"}}</td>
+              <td class="px-4 py-2">{{ details.auxiliar || "No asignado"}}</td>
+              <td class="px-4 py-2">{{ details.diferencia }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div v-else>
+        <h1>En el saldo final no diferencias</h1>
+      </div>
+    </div>
+  </section>
+</div>
 </template>
 
 <script setup>
 import UserService from '@/services/userService';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import html2pdf from 'html2pdf.js';
+// import exportFromJSON from 'export-from-json'
 
 const userService = new UserService();
 const data = ref("");
@@ -146,5 +166,19 @@ const formateDate = date => {
   const new_date = new Date(date)
   return `${new_date.getDate()}/${new_date.getMonth() + 1}/${new_date.getFullYear()}`
   }
+
+const PDF = () => {
+  const element = document.getElementById('element-to-pdf');
+  const opt = {
+    margin:       0.5,
+    filename:     'Exportado_pdf.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 3 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+
+  html2pdf().from(element).set(opt).save();
+}
+
 
 </script>
