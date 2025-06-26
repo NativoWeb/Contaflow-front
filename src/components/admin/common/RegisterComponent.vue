@@ -98,13 +98,13 @@
             Correo Electrónico: *
           </label>
           <input 
-            v-model="userForm.username" 
+            v-model="userForm.email" 
             @input="validateEmail"
             class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200"
             type="email" 
             placeholder="Ingrese su correo"
           >
-          <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
+          <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
         </div>
       </div>
 
@@ -226,7 +226,7 @@
   last_name: "",
   id_number: "",
   phone_number: "",
-  username: "",
+  email: "",
   });  
 
 
@@ -254,17 +254,17 @@
   };
 
   const validateEmail = () => {
-    errors.username = emailRegex.test(userForm.username) ? "" : "Ingrese una dirección de correo electrónico válida.";
+    errors.email = emailRegex.test(userForm.email) ? "" : "Ingrese una dirección de correo electrónico válida.";
   };
 
   const isFormInvalid = computed(() => {
     return (
-      !userForm.first_name.trim() ||
-      !userForm.last_name.trim() ||
-      !userForm.id_type ||
-      !userForm.id_number.trim() ||
-      !userForm.phone_number.trim() ||
-      !userForm.username.trim()||
+      !userForm.first_name?.trim() ||
+      !userForm.last_name?.trim() ||
+      !userForm.id_type === 'Seleccione una opción' ||
+      !userForm.id_number?.trim() ||
+      !userForm.phone_number?.trim() ||
+      !userForm.email?.trim()||
       Object.values(errors).some(error => error !== "")
     );
   });
@@ -275,6 +275,7 @@
 
   function addUser() {
     if (isFormInvalid.value) return; // No hacer nada si el formulario está inválido
+    userForm.username = userForm.email; 
     sendEmailService.sendEmail(props.apiUrl, userForm, toggle, 'POST');
   }
 </script>

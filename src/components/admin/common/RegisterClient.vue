@@ -28,8 +28,8 @@
     <div class="flex-1">
       <label for="email" class="block uppercase tracking-wide text-blue-800 text-xs font-bold mb-2">Correo Electrónico *</label>
       <input 
-        v-model="clientForm.username"
-        @input="validateUseranme"
+        v-model="clientForm.email"
+        @input="validateEmail"
         type="email" 
         id="email" 
         class="w-full bg-gray-50 text-gray-700 border border-gray-200 rounded-lg py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 transition-colors duration-200" 
@@ -288,10 +288,10 @@
     else error.name = "";
   }
 
-  const validateUseranme = () => {
-    if (!clientForm.username.trim()) error.username = "El correo electronico es obligatorio";
-    else if (!usernameRegex.test(clientForm.username)) error.username = "El correo electronico no es válido";
-    else error.username = "";
+  const validateEmail = () => {
+    if (!clientForm.email.trim()) error.email = "El correo electronico es obligatorio";
+    else if (!usernameRegex.test(clientForm.email)) error.email = "El correo electronico no es válido";
+    else error.email = "";
   }
 
   const validateAddress = () => {
@@ -329,7 +329,7 @@
       !clientForm.nit.trim() ||
       !clientForm.name.trim() ||
       !clientForm.address.trim() ||
-      !clientForm.username.trim() ||
+      !clientForm.email.trim() ||
       !clientForm.first_name.trim() ||
       !clientForm.last_name.trim() ||
       !clientForm.id_number.trim() ||
@@ -351,7 +351,7 @@
 
   async function addClient(){
     if (isFormInvalid.value) return;
-
+    clientForm.username = clientForm.email;
     const url = `${VUE_APP_URL}/clients/email/`;
     const data = clientForm;
     

@@ -26,6 +26,7 @@
     id_number: '',
     phone_number: '',
     username: '',
+    email: '',
     status: 'Pendiente',
     role: 'CONTADOR',
     clients: [],

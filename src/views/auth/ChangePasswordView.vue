@@ -177,7 +177,7 @@ async function btnChangePassword() {
 }
 
 function validatePasswordRequirements(pwd) {
-	const regexpPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,12}$/.test(pwd)
+	const regexpPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(pwd);
   return regexpPassword
 }
 
