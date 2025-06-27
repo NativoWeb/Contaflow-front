@@ -155,7 +155,7 @@ const dropFile = (event, type) => {
 const sendExtracts = async () => {
   isLoading.value = true;
   try{
-    await conService.sendFile(`http://localhost:5678/webhook-test/contaflow`, fileBank.value, fileAccounting.value)
+    await conService.sendFile(`http://167.235.235.61:5678/webhook/contaflow`, fileBank.value, fileAccounting.value)
     data.value = conService.getData().value
 
     localStorage.setItem('conciliationData', 
